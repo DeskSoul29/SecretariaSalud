@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 11-08-2022 a las 21:02:40
+-- Tiempo de generación: 12-08-2022 a las 21:22:31
 -- Versión del servidor: 8.0.27
 -- Versión de PHP: 7.4.26
 
@@ -166,21 +166,23 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user` int NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `apellido` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
   `provincia` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `municipio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `rol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `user`, `name`, `pass`, `provincia`, `municipio`, `rol`) VALUES
-(1, 1004802359, 'Jhan Carlos Ramirez Navarro', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Comunera', 'Socorro', 'admin');
+INSERT INTO `users` (`id`, `user`, `nombre`, `apellido`, `pass`, `provincia`, `municipio`, `rol`) VALUES
+(1, 1004802359, 'Jhan Carlos ', 'Ramirez Navarro', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Comunera', 'Socorro', 'admin'),
+(2, 123456, 'Prueba', '', '$2a$08$x70h1//7KphQ5xq29/ny2ePcQADcv7h7aoRbTpmCIisLNdvCCzHCm', NULL, NULL, NULL);
 
 --
 -- Restricciones para tablas volcadas
