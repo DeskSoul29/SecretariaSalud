@@ -8,7 +8,8 @@ const app = express();
 app.set("view engine", "ejs");
 
 // Seteamos la carpeta public para archivos estáticos
-app.use(express.static("public"));
+// app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 
 // Para procesar datos enviados desde forms
 app.use(express.urlencoded({ extended: true }));

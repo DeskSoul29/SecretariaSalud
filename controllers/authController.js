@@ -7,21 +7,39 @@ const { promisify } = require("util");
 exports.register = async (req, res) => {
   try {
     const name = req.body.name;
+    const lastname = req.body.lastname;
     const user = req.body.user;
     const pass = req.body.pass;
-    //const repass = req.body.repass;
+    const repass = req.body.repass;
     // const provincia = req.body.provincia;
     // const municipio = req.body.municipio;
     // const rol = req.body.rol;
 
-    let passHash = await bcryptjs.hash(pass, 8);
-
-    // if (!name || !user || !pass || !provincia || !municipio || !rol) {
-    if (!name || !user || !pass) {
-      res.render("register", {
+    // if (
+    //   !name ||
+    //   !lastname ||
+    //   !user ||
+    //   !pass ||
+    //   !repass ||
+    //   !provincia ||
+    //   !municipio ||
+    //   !rol
+    // ) {
+    if (!name || !lastname || !user || !pass || !repass) {
+      res.render("admin/register", {
         alert: true,
         alertTitle: "Advertencia",
-        alertMessage: "Ingrese un Usuario y Contraseña",
+        alertMessage: "Ingrese todos los campos",
+        alertIcon: "info",
+        showConfirmButton: true,
+        timer: false,
+        ruta: "register",
+      });
+    } else if (pass != repass) {
+      res.render("admin/register", {
+        alert: true,
+        alertTitle: "Advertencia",
+        alertMessage: "Contraseñas Diferentes",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
@@ -32,42 +50,49 @@ exports.register = async (req, res) => {
         "SELECT * FROM users WHERE user = ?",
         [user],
         async (error, results) => {
-          if (
-            results.length == 0 ||
-            !(await bcryptjs.compare(pass, results[0].pass))
-          ) {
-            res.render("login", {
+          if (results.length == 1) {
+            res.render("admin/register", {
               alert: true,
               alertTitle: "Error",
-              alertMessage: "Usuario y/o Contraseña incorrecta",
+              alertMessage: "Usuario ya registrado",
               alertIcon: "error",
               showConfirmButton: true,
               timer: false,
               ruta: "register",
             });
+          } else {
+            let passHash = await bcryptjs.hash(pass, 8);
+
+            conexion.query(
+              "INSERT INTO users SET ?",
+              {
+                user: user,
+                name: name,
+                pass: passHash,
+                // provincia: provincia,
+                // municipio: municipio,
+                // rol: rol,
+              },
+              (error, results) => {
+                if (error) {
+                  console.log(error);
+                }
+                res.render("admin/register", {
+                  alert: true,
+                  alertTitle: "Registro exitoso",
+                  alertMessage: "¡BIENVENIDO!",
+                  alertIcon: "success",
+                  showConfirmButton: false,
+                  timer: 800,
+                  ruta: "login",
+                });
+                // res.redirect("/");
+              }
+            );
           }
         }
       );
     }
-
-    //console.log(passHash)
-    conexion.query(
-      "INSERT INTO users SET ?",
-      {
-        user: user,
-        name: name,
-        pass: passHash,
-        provincia: provincia,
-        municipio: municipio,
-        rol: rol,
-      },
-      (error, results) => {
-        if (error) {
-          console.log(error);
-        }
-        res.redirect("/");
-      }
-    );
   } catch (error) {
     console.log(error);
   }
@@ -113,7 +138,8 @@ exports.login = async (req, res) => {
               {
                 id: results[0].id,
                 user: user,
-                name: results[0].name,
+                nombres: results[0].nombre,
+                apellidos: results[0].apellido,
                 provincia: results[0].provincia,
                 municipio: results[0].municipio,
                 rol: results[0].rol,
@@ -142,7 +168,7 @@ exports.login = async (req, res) => {
               alertIcon: "success",
               showConfirmButton: false,
               timer: 800,
-              ruta: "",
+              ruta: "admin",
             });
           }
         }
@@ -182,5 +208,5 @@ exports.isAuthenticated = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/");
+  return res.redirect("/login");
 };

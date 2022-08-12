@@ -9,20 +9,20 @@ router.get("/login", (req, res) => {
 
 //Role: Admin
 router.get("/register", authController.isAuthenticated, (req, res) => {
-  res.render("admin/register");
+  res.render("admin/register", { alert: false, user: req.user });
 });
 
-router.get("/adminMain", authController.isAuthenticated, (req, res) => {
+router.get("/admin", authController.isAuthenticated, (req, res) => {
   res.render("admin/main", { user: req.user });
 });
 
 //Role: Moderador
-router.get("/modMain", authController.isAuthenticated, (req, res) => {
+router.get("moderador", authController.isAuthenticated, (req, res) => {
   res.render("moderador/main", { user: req.user });
 });
 
 //Role: Visitante
-router.get("/visitMain", authController.isAuthenticated, (req, res) => {
+router.get("visitante", authController.isAuthenticated, (req, res) => {
   res.render("visitante/main", { user: req.user });
 });
 
