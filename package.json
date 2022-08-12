@@ -1,37 +1,23 @@
 {
   "name": "secretariasalud",
-  "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon .",
-    "start": "node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DeskSoul29/SecretariaSalud.git"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DeskSoul29/SecretariaSalud/issues"
-  },
-  "homepage": "https://github.com/DeskSoul29/SecretariaSalud#readme",
   "dependencies": {
-    "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
-    "express-validator": "^6.14.2",
+    "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.5.1",
-    "nanoid": "^4.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.19"
+    "mysql": "^2.18.1"
   }
 }
