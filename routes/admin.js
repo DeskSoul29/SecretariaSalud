@@ -20,6 +20,15 @@ router.get(
   }
 );
 
+//Novedades
+router.get(
+  "/consolidaciones/NAdministrativas",
+  adminController.isAuthenticatedAdmin,
+  (req, res) => {
+    res.render("admin/consolidaciones/NAdministrativas");
+  }
+);
+
 router.post("/register", adminController.register);
 router.get("/logout", adminController.logout);
 // router.post("/register", authController.register);

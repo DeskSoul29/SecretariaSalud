@@ -7,6 +7,10 @@ router.get("/login", (req, res) => {
   res.render("login", { alert: false });
 });
 
+router.get("/404", (req, res) => {
+  res.render("tools/404");
+});
+
 //router para los métodos del controller
 router.post("/login", authController.login);
 
