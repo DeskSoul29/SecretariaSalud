@@ -22,7 +22,17 @@ dotenv.config({ path: "./env/.env" });
 app.use(cookieParser());
 
 // Llamar al router
-app.use("/", require("./routes/router"));
+app.use("/", require("./routes/login"));
+app.use("/admin", require("./routes/admin"));
+app.use("/moderador", require("./routes/moderador"));
+app.use("/visitante", require("./routes/visitante"));
+
+// catch 404 and forward to error handler
+// app.use(function (req, res, next) {
+//   var err = new Error("Not Found");
+//   err.status = 404;
+//   next(err);
+// });
 
 // Para eliminar la cache
 app.use(function (req, res, next) {

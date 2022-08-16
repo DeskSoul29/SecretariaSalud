@@ -1,102 +1,7 @@
 const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
 const conexion = require("../database/db");
+const bcryptjs = require("bcryptjs");
 const { promisify } = require("util");
-
-//procedimiento para registrarnos
-exports.register = async (req, res) => {
-  try {
-    const name = req.body.name;
-    const lastname = req.body.lastname;
-    const user = req.body.user;
-    const pass = req.body.pass;
-    const repass = req.body.repass;
-    // const provincia = req.body.provincia;
-    // const municipio = req.body.municipio;
-    // const rol = req.body.rol;
-
-    // if (
-    //   !name ||
-    //   !lastname ||
-    //   !user ||
-    //   !pass ||
-    //   !repass ||
-    //   !provincia ||
-    //   !municipio ||
-    //   !rol
-    // ) {
-    if (!name || !lastname || !user || !pass || !repass) {
-      res.render("admin/register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Ingrese todos los campos",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "register",
-      });
-    } else if (pass != repass) {
-      res.render("admin/register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Contraseñas Diferentes",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "register",
-      });
-    } else {
-      conexion.query(
-        "SELECT * FROM users WHERE user = ?",
-        [user],
-        async (error, results) => {
-          if (results.length == 1) {
-            res.render("admin/register", {
-              alert: true,
-              alertTitle: "Error",
-              alertMessage: "Usuario ya registrado",
-              alertIcon: "error",
-              showConfirmButton: true,
-              timer: false,
-              ruta: "register",
-            });
-          } else {
-            let passHash = await bcryptjs.hash(pass, 8);
-
-            conexion.query(
-              "INSERT INTO users SET ?",
-              {
-                user: user,
-                name: name,
-                pass: passHash,
-                // provincia: provincia,
-                // municipio: municipio,
-                // rol: rol,
-              },
-              (error, results) => {
-                if (error) {
-                  console.log(error);
-                }
-                res.render("admin/register", {
-                  alert: true,
-                  alertTitle: "Registro exitoso",
-                  alertMessage: "¡BIENVENIDO!",
-                  alertIcon: "success",
-                  showConfirmButton: false,
-                  timer: 800,
-                  ruta: "login",
-                });
-                // res.redirect("/");
-              }
-            );
-          }
-        }
-      );
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 exports.login = async (req, res) => {
   try {
@@ -150,9 +55,6 @@ exports.login = async (req, res) => {
               }
             );
             // Generamos el token SIN fecha de expiracion
-            //const token = jwt.sign({id: id}, process.env.JWT_SECRETO)
-            console.log("TOKEN: " + token + " para el USUARIO : " + user);
-
             const cookiesOptions = {
               expires: new Date(
                 Date.now() +
@@ -161,15 +63,13 @@ exports.login = async (req, res) => {
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            res.render("login", {
-              alert: true,
-              alertTitle: "Conexión exitosa",
-              alertMessage: "¡BIENVENIDO!",
-              alertIcon: "success",
-              showConfirmButton: false,
-              timer: 800,
-              ruta: "admin",
-            });
+            if (results[0].rol == "admin") {
+              isAdmin(res);
+            } else if (results[0].rol == "moderador") {
+              isModer(res);
+            } else {
+              isVisit(res);
+            }
           }
         }
       );
@@ -178,6 +78,42 @@ exports.login = async (req, res) => {
     console.log(error);
   }
 };
+
+function isAdmin(res) {
+  res.render("login", {
+    alert: true,
+    alertTitle: "Conexión exitosa",
+    alertMessage: "¡BIENVENIDO!",
+    alertIcon: "success",
+    showConfirmButton: false,
+    timer: 800,
+    ruta: "admin",
+  });
+}
+
+function isModer(res) {
+  res.render("login", {
+    alert: true,
+    alertTitle: "Conexión exitosa",
+    alertMessage: "¡BIENVENIDO!",
+    alertIcon: "success",
+    showConfirmButton: false,
+    timer: 800,
+    ruta: "moderador",
+  });
+}
+
+function isVisit(res) {
+  res.render("login", {
+    alert: true,
+    alertTitle: "Conexión exitosa",
+    alertMessage: "¡BIENVENIDO!",
+    alertIcon: "success",
+    showConfirmButton: false,
+    timer: 800,
+    ruta: "visitante",
+  });
+}
 
 exports.isAuthenticated = async (req, res, next) => {
   if (req.cookies.jwt) {
@@ -192,6 +128,8 @@ exports.isAuthenticated = async (req, res, next) => {
         (error, results) => {
           if (!results) {
             return next();
+          } else {
+            return res.redirect("/" + results[0].rol);
           }
           req.user = results[0];
           return next();
@@ -201,12 +139,6 @@ exports.isAuthenticated = async (req, res, next) => {
       console.log(error);
       return next();
     }
-  } else {
-    res.redirect("/login");
   }
-};
-
-exports.logout = (req, res) => {
-  res.clearCookie("jwt");
-  return res.redirect("/login");
+  return next();
 };
