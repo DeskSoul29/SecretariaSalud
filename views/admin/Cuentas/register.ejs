@@ -192,7 +192,12 @@
 	<!-- Custom scripts for all pages-->
 	<script src="/js/sb-admin-2.min.js"></script>
 
-
+	<script>
+		$(window).bind('load', function () {
+			var nav = document.getElementById('nav2');
+			nav.className += "  active";
+		});
+	</script>
 </body>
 
 </html>
