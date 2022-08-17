@@ -13,7 +13,7 @@
     <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item" id="nav1">
         <a class="nav-link" href="/admin">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Panel de Control</span></a>
@@ -26,31 +26,37 @@
     <div class="sidebar-heading">Información</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-            aria-controls="collapseTwo">
+    <li class="nav-item" id="nav2">
+        <!-- Aqui "Active"-->
+        <a id="navlink1" class="nav-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <!-- Aqui -quitar "collapsed"-->
             <i class="fas fa-fw fa-folder"></i>
             <span>Consolidaciones</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <!-- Aqui "Show"-->
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/admin/consolidaciones/NAdministrativas">N. Administrativas</a>
-                <a class="collapse-item" href="/admin/consolidaciones/ESPublica">Eventos Salud
+                <a id="show1" class="collapse-item" href="/admin/consolidaciones/NAdministrativas">N.
+                    Administrativas</a>
+                <a id="show2" class="collapse-item" href="/admin/consolidaciones/ESPublica">Eventos Salud
                     Pública</a>
-                <a class="collapse-item" href="/admin/consolidaciones/Establecimientos">Establecimientos</a>
-                <a class="collapse-item" href="/admin/consolidaciones/Vehiculos">Vehiculos</a>
-                <a class="collapse-item" href="/admin/consolidaciones/Cementerios">Cementerios</a>
-                <a class="collapse-item" href="/admin/consolidaciones/Morgues">Morgues</a>
-                <a class="collapse-item" href="/admin/consolidaciones/MSEstablecimientos">M.S.
+                <a id="show3" class="collapse-item" href="/admin/consolidaciones/Establecimientos">Establecimientos</a>
+                <!-- Aqui "active"-->
+                <a id="show4" class="collapse-item" href="/admin/consolidaciones/Vehiculos">Vehiculos</a>
+                <a id="show5" class="collapse-item" href="/admin/consolidaciones/Cementerios">Cementerios</a>
+                <a id="show6" class="collapse-item" href="/admin/consolidaciones/Morgues">Morgues</a>
+                <a id="show7" class="collapse-item" href="/admin/consolidaciones/MSEstablecimientos">M.S.
                     Establecimientos</a>
-                <a class="collapse-item" href="/admin/consolidaciones/MSProductos">M.S. Productos</a>
-                <a class="collapse-item" href="/admin/consolidaciones/Quejas">Quejas</a>
-                <a class="collapse-item" href="/admin/consolidaciones/TomaMuestras">Toma de Muestras</a>
-                <a class="collapse-item" href="/admin/consolidaciones/ViviendaSaludable">Vivienda Saludable</a>
-                <a class="collapse-item" href="/admin/consolidaciones/CarnetsBPM">Carnets BPM</a>
-                <a class="collapse-item" href="/admin/consolidaciones/IVCRotulado">I.V.C. Rotulado</a>
-                <a class="collapse-item" href="/admin/consolidaciones/IVCPublicidad">I.V.C. Publicidad</a>
-                <a class="collapse-item" href="/admin/consolidaciones/EduSanitaria">Educación
+                <a id="show8" class="collapse-item" href="/admin/consolidaciones/MSProductos">M.S. Productos</a>
+                <a id="show9" class="collapse-item" href="/admin/consolidaciones/Quejas">Quejas</a>
+                <a id="show10" class="collapse-item" href="/admin/consolidaciones/TomaMuestras">Toma de Muestras</a>
+                <a id="show11" class="collapse-item" href="/admin/consolidaciones/ViviendaSaludable">Vivienda
+                    Saludable</a>
+                <a id="show12" class="collapse-item" href="/admin/consolidaciones/CarnetsBPM">Carnets BPM</a>
+                <a id="show13" class="collapse-item" href="/admin/consolidaciones/IVCRotulado">I.V.C. Rotulado</a>
+                <a id="show14" class="collapse-item" href="/admin/consolidaciones/IVCPublicidad">I.V.C. Publicidad</a>
+                <a id="show15" class="collapse-item" href="/admin/consolidaciones/EduSanitaria">Educación
                     Sanitaria</a>
             </div>
         </div>
@@ -86,16 +92,16 @@
     <div class="sidebar-heading">Herramientas</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+    <li class="nav-item active" id="nav3">
+        <a id="navlink2" class="nav-link " data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
             aria-controls="collapsePages">
             <i class="fas fa-fw fa-solid fa-user"></i>
             <span>Cuentas</span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="/admin/Cuentas/Usuarios">Usuarios</a>
-                <a class="collapse-item" href="/admin/Cuentas/Register">Crear
+                <a id="show16" class="collapse-item active" href="/admin/Cuentas/Usuarios">Usuarios</a>
+                <a id="show17" class="collapse-item" href="/admin/Cuentas/Register">Crear
                     Nuevo Usuario</a>
                 <div class="collapse-divider"></div>
             </div>
