@@ -27,18 +27,20 @@ app.use("/admin", require("./routes/admin"));
 app.use("/moderador", require("./routes/moderador"));
 app.use("/visitante", require("./routes/visitante"));
 
-// catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   var err = new Error("Not Found");
-//   err.status = 404;
-//   next(err);
-// });
-
 // Para eliminar la cache
 app.use(function (req, res, next) {
   if (!req.user)
     res.header("Cache-Control", "private, no-cache, no-store, must-revalidate");
   next();
+});
+
+// app.use((req, res, next) => {
+//   res.status(404).render("./views/tools/404.ejs");
+// });
+
+// Error 404
+app.use((req, res, next) => {
+  res.status(404).redirect("/404");
 });
 
 const PORT = process.env.PORT || 4000;
