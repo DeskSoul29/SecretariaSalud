@@ -24,9 +24,11 @@ router.get(
 router.get(
   "/Cuentas/Usuarios",
   adminController.isAuthenticatedAdmin,
+  adminController.users,
   (req, res) => {
     res.render("admin/Cuentas/usuarios", {
       user: req.user,
+      users: req.users,
     });
   }
 );
