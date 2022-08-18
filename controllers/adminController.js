@@ -3,8 +3,10 @@ const bcryptjs = require("bcryptjs");
 const conexion = require("../database/db");
 const { promisify } = require("util");
 
-//procedimiento para registrarnos
-exports.register = async (req, res) => {
+var adminController = {};
+
+// Apartado: Usuarios - Register
+adminController.register = async (req, res) => {
   try {
     const name = req.body.name;
     const lastname = req.body.lastname;
@@ -73,7 +75,7 @@ exports.register = async (req, res) => {
                 // municipio: municipio,
                 // rol: rol,
               },
-              (error, results) => {
+              (error) => {
                 if (error) {
                   console.log(error);
                 }
@@ -98,7 +100,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.fillFields = async (req, res, next) => {
+adminController.fillFields = async (req, res, next) => {
   conexion.query(
     "SELECT provincias.nombre_provincia, municipios.nombre_municipio FROM provincias LEFT JOIN municipios ON municipios.id_provincia = provincias.id_provincia",
     function (err, result, fields) {
@@ -109,14 +111,15 @@ exports.fillFields = async (req, res, next) => {
   );
 };
 
-exports.users = async (req, res, next) => {
+//Apartado Cuentas - Usuarios
+adminController.users = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
     conexion.query(
-      "SELECT user, nombre, apellido, provincia, municipio, rol FROM users WHERE id != ?",
+      "SELECT * FROM users WHERE id != ?",
       [decodificada.id],
       function (err, result) {
         if (err) throw err;
@@ -130,7 +133,19 @@ exports.users = async (req, res, next) => {
   }
 };
 
-exports.isAuthenticatedAdmin = async (req, res, next) => {
+adminController.deleteUser = async (req, res) => {
+  conexion.query(
+    "DELETE FROM `users` WHERE `user` = ?",
+    req.params.user,
+    function (err) {
+      if (err) throw err;
+      res.redirect("/admin/Cuentas/Usuarios");
+    }
+  );
+};
+
+//Extras
+adminController.isAuthenticatedAdmin = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
@@ -159,7 +174,9 @@ exports.isAuthenticatedAdmin = async (req, res, next) => {
   }
 };
 
-exports.logout = (req, res) => {
+adminController.logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/login");
 };
+
+module.exports = adminController;

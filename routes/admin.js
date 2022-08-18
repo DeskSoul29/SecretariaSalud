@@ -29,6 +29,7 @@ router.get(
     res.render("admin/Cuentas/usuarios", {
       user: req.user,
       users: req.users,
+      alert: false,
     });
   }
 );
@@ -183,7 +184,15 @@ router.get(
     });
   }
 );
-
+router.get(
+  "/Cuentas/Usuarios/Delete/:user",
+  adminController.deleteUser,
+  (req, res) => {
+    res.render("admin/Cuentas/Usuarios", {
+      alert: false,
+    });
+  }
+);
 router.post("/Cuentas/register", adminController.register);
 router.get("/logout", adminController.logout);
 

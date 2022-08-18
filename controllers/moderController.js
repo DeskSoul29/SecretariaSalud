@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 const conexion = require("../database/db");
 const { promisify } = require("util");
 
-//procedimiento para registrarnos
+// Apartado: Cuentas
 exports.register = async (req, res) => {
   try {
     const name = req.body.name;
@@ -97,6 +97,50 @@ exports.register = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.fillFields = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    conexion.query(
+      "SELECT provincias.nombre_provincia, municipios.nombre_municipio FROM provincias LEFT JOIN municipios ON municipios.id_provincia = provincias.id_provincia WHERE provincias.nombre_provincia = ?",
+      [decodificada.provincia],
+      function (err, result) {
+        if (err) throw err;
+        req.fields = result;
+        return next();
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
+exports.users = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    conexion.query(
+      "SELECT user, nombre, apellido, provincia, municipio, rol FROM users WHERE provincia = ? AND rol = 'visitante'",
+      [decodificada.provincia],
+      function (err, result) {
+        if (err) throw err;
+        req.users = result;
+        return next();
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
+// Apartado: Consolidaciones
 
 exports.isAuthenticatedModer = async (req, res, next) => {
   if (req.cookies.jwt) {

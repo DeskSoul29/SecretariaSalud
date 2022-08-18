@@ -11,10 +11,12 @@ router.get("/", moderController.isAuthenticatedModer, (req, res) => {
 router.get(
   "/cuentas/Register",
   moderController.isAuthenticatedModer,
+  moderController.fillFields,
   (req, res) => {
     res.render("moderador/Cuentas/register", {
       alert: false,
       user: req.user,
+      fields: req.fields,
     });
   }
 );
@@ -22,9 +24,11 @@ router.get(
 router.get(
   "/cuentas/Usuarios",
   moderController.isAuthenticatedModer,
+  moderController.users,
   (req, res) => {
     res.render("moderador/Cuentas/Usuarios", {
       user: req.user,
+      users: req.users,
     });
   }
 );
