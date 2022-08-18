@@ -194,8 +194,13 @@
 
 	<script>
 		$(window).bind('load', function () {
-			var nav = document.getElementById('nav2');
+			var nav = document.getElementById('nav3');
+			$('#navlink2').removeClass('collapsed');
+			var nav3 = document.getElementById('collapsePages');
+			var nav4 = document.getElementById('show17');
 			nav.className += "  active";
+			nav3.className += "  show";
+			nav4.className += "  active";
 		});
 	</script>
 </body>

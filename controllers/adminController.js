@@ -109,6 +109,27 @@ exports.fillFields = async (req, res, next) => {
   );
 };
 
+exports.users = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    conexion.query(
+      "SELECT user, nombre, apellido, provincia, municipio, rol FROM users WHERE id != ?",
+      [decodificada.id],
+      function (err, result) {
+        if (err) throw err;
+        req.users = result;
+        return next();
+      }
+    );
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
 exports.isAuthenticatedAdmin = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
