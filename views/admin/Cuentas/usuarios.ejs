@@ -249,6 +249,13 @@
                     <option selected disabled value="">
                       Selecciona la Provincia
                     </option>
+                    <% let numberSelected="" ; %> <% fields.forEach((fields)=> {
+                    %> <% if (numberSelected !=fields.nombre_provincia){ %>
+                    <option value="<%= fields.nombre_provincia %>">
+                      <%= fields.nombre_provincia %>
+                    </option>
+                    <% numberSelected=fields.nombre_provincia %> <% } %> <% })
+                    %>
                   </select>
                 </div>
                 <div class="col-sm-6">
@@ -315,7 +322,7 @@
             >
               Cancelar
             </button>
-            <a id="btnModalDel" class="btn btn-primary">Eliminar</a>
+            <a id="btnModalDel" class="btn btn-primary">Actualizar</a>
           </div>
         </div>
       </div>
@@ -409,6 +416,36 @@
         //document.getElementById("provinciaID").value = provincia;
         //document.getElementById("muniSelect").value = municipio;
       }
+    </script>
+
+    <script type="text/JavaScript">
+      const array = []
+      <% fields.forEach((fields)=> { %>
+        array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+      <% }) %>
+
+      var selectP = document.getElementById('provinciaID');
+      const selectM = document.getElementById("muniSelect");
+
+      selectP.addEventListener('change', function () {
+        var selectedOption = this.options[selectP.selectedIndex];
+
+        //Eliminar el listado de Municipios si hay mas de 1
+        for (let i = selectM.options.length; i >= 1; i--) {
+          selectM.remove(i);
+        }
+
+        // Llenado de Municipios
+        for(var i=0; i<array.length; i++) {
+          if(array[i] == selectedOption.value){
+            const option = document.createElement('option');
+            const valor = array[i+1]
+            option.value = valor;
+            option.text = valor;
+            selectM.add(option);
+          }
+        }
+      });
     </script>
   </body>
 </html>

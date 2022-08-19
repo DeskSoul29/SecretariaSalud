@@ -25,11 +25,12 @@ router.get(
   "/Cuentas/Usuarios",
   adminController.isAuthenticatedAdmin,
   adminController.users,
+  adminController.fillFields,
   (req, res) => {
     res.render("admin/Cuentas/usuarios", {
       user: req.user,
       users: req.users,
-      alert: false,
+      fields: req.field,
     });
   }
 );

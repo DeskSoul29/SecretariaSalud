@@ -13,39 +13,38 @@ adminController.register = async (req, res) => {
     const user = req.body.user;
     const pass = req.body.pass;
     const repass = req.body.repass;
-    // const provincia = req.body.provincia;
-    // const municipio = req.body.municipio;
-    // const rol = req.body.rol;
+    const provincia = req.body.provincia;
+    const municipio = req.body.municipio;
+    const rol = req.body.rol;
 
-    // if (
-    //   !name ||
-    //   !lastname ||
-    //   !user ||
-    //   !pass ||
-    //   !repass ||
-    //   !provincia ||
-    //   !municipio ||
-    //   !rol
-    // ) {
-    if (!name || !lastname || !user || !pass || !repass) {
-      res.render("admin/register", {
+    if (
+      !name ||
+      !lastname ||
+      !user ||
+      !pass ||
+      !repass ||
+      !provincia ||
+      !municipio ||
+      !rol
+    ) {
+      res.render("admin/Cuentas/Register", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Ingrese todos los campos",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "register",
+        ruta: "",
       });
     } else if (pass != repass) {
-      res.render("admin/register", {
+      res.render("admin/Cuentas/Register", {
         alert: true,
         alertTitle: "Advertencia",
         alertMessage: "Contraseñas Diferentes",
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "register",
+        ruta: "",
       });
     } else {
       conexion.query(
@@ -53,14 +52,14 @@ adminController.register = async (req, res) => {
         [user],
         async (error, results) => {
           if (results.length == 1) {
-            res.render("admin/register", {
+            res.render("admin/Cuentas/Register", {
               alert: true,
               alertTitle: "Error",
               alertMessage: "Usuario ya registrado",
               alertIcon: "error",
               showConfirmButton: true,
               timer: false,
-              ruta: "register",
+              ruta: "",
             });
           } else {
             let passHash = await bcryptjs.hash(pass, 8);
@@ -79,7 +78,7 @@ adminController.register = async (req, res) => {
                 if (error) {
                   console.log(error);
                 }
-                res.render("admin/register", {
+                res.render("admin/Cuentas/Register", {
                   alert: true,
                   alertTitle: "Registro exitoso",
                   alertMessage: "¡BIENVENIDO!",
@@ -103,7 +102,7 @@ adminController.register = async (req, res) => {
 adminController.fillFields = async (req, res, next) => {
   conexion.query(
     "SELECT provincias.nombre_provincia, municipios.nombre_municipio FROM provincias LEFT JOIN municipios ON municipios.id_provincia = provincias.id_provincia",
-    function (err, result, fields) {
+    function (err, result) {
       if (err) throw err;
       req.field = result;
       return next();

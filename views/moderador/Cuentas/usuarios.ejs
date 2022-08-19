@@ -78,15 +78,16 @@
                         <td><%= users.rol %></td>
                         <td>
                           <a
+                            onclick='editar_modal("<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
                             type="button"
-                            data-target="#"
+                            data-target="#editModal"
                             data-toggle="modal"
-                            class="btn btn-info btn-circle btn-sm"
+                            class="btn btn-warning btn-circle btn-sm"
                           >
                             <i class="fas fa-pen-to-square"></i>
                           </a>
                           <a
-                            onclick='editar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
+                            onclick='eliminar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
                             type="button"
                             data-target="#deleteModal"
                             data-toggle="modal"
@@ -162,6 +163,208 @@
       </div>
     </div>
 
+    <!-- Edit Modal-->
+    <div
+      class="modal fade"
+      id="editModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body p-0">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="name"
+                    name="name"
+                    placeholder="Nombres"
+                    required
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    id="lastname"
+                    name="lastname"
+                    placeholder="Apellidos"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <input
+                  placeholder="Numero de Identificación"
+                  type="number"
+                  class="form-control form-control-user"
+                  id="user"
+                  name="user"
+                  disabled
+                />
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input
+                    type="password"
+                    class="form-control form-control-user"
+                    id="pass"
+                    name="pass"
+                    placeholder="Contraseña"
+                    required
+                  />
+                </div>
+                <div class="col-sm-6">
+                  <input
+                    type="password"
+                    class="form-control form-control-user"
+                    id="repass"
+                    name="repass"
+                    placeholder="Repite la Contraseña"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6">
+                  <select
+                    id="muniSelect"
+                    class="form-select form-select-sm"
+                    aria-label=".form-select-sm example"
+                    required
+                  >
+                    <option selected disabled value="">
+                      Selecciona el Municipio
+                    </option>
+                    <% fields.forEach((fields)=> { %>
+                    <option value="<%= fields.nombre_municipio %>">
+                      <%= fields.nombre_municipio %>
+                    </option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-3">
+                  <label class="form-label">Rol:</label>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexradio"
+                      id="moderador"
+                      checked
+                    />
+                    <label class="form-check-label" for="checkmoderador">
+                      Moderador
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexradio"
+                      id="visitante"
+                    />
+                    <label class="form-check-label" for="checkvisitante">
+                      Visitante
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <a id="btnModalDel" class="btn btn-primary">Actualizar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal-->
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Aprima el botón "Eliminar" a continuación si está listo para
+            eliminar a el usuario:
+            <div class="form-group">
+              <label>Numero de Identificación</label>
+              <input
+                type="number"
+                class="form-control form-control-user"
+                id="userModal"
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label>Nombre</label>
+              <input
+                type="text"
+                class="form-control form-control-user"
+                id="nombreModal"
+                disabled
+              />
+            </div>
+            <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <a id="btnModalDel" class="btn btn-primary">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -189,6 +392,21 @@
         nav3.className += "  show";
         nav4.className += "  active";
       });
+      function eliminar_modal(user, nombre) {
+        document.getElementById("userModal").value = user;
+        document.getElementById("nombreModal").value = nombre;
+        document
+          .getElementById("btnModalDel")
+          .setAttribute("href", "/admin/Cuentas/Usuarios/delete/" + user);
+      }
+
+      function editar_modal(user, nombre, apellido, provincia, municipio, rol) {
+        document.getElementById("user").value = user;
+        document.getElementById("name").value = nombre;
+        document.getElementById("lastname").value = apellido;
+        //document.getElementById("provinciaID").value = provincia;
+        //document.getElementById("muniSelect").value = municipio;
+      }
     </script>
   </body>
 </html>

@@ -98,7 +98,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.fillFields = async (req, res, next) => {
+exports.fillMunicipio = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -126,8 +126,8 @@ exports.users = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
     conexion.query(
-      "SELECT user, nombre, apellido, provincia, municipio, rol FROM users WHERE provincia = ? AND rol = 'visitante'",
-      [decodificada.provincia],
+      "SELECT * FROM users WHERE id != ? AND rol != 'admin' AND provincia = ?",
+      [decodificada.id, decodificada.provincia],
       function (err, result) {
         if (err) throw err;
         req.users = result;

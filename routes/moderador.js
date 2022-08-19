@@ -11,7 +11,7 @@ router.get("/", moderController.isAuthenticatedModer, (req, res) => {
 router.get(
   "/cuentas/Register",
   moderController.isAuthenticatedModer,
-  moderController.fillFields,
+  moderController.fillMunicipio,
   (req, res) => {
     res.render("moderador/Cuentas/register", {
       alert: false,
@@ -25,10 +25,12 @@ router.get(
   "/cuentas/Usuarios",
   moderController.isAuthenticatedModer,
   moderController.users,
+  moderController.fillMunicipio,
   (req, res) => {
     res.render("moderador/Cuentas/Usuarios", {
       user: req.user,
       users: req.users,
+      fields: req.fields,
     });
   }
 );

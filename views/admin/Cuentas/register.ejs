@@ -30,7 +30,7 @@
                     <div class="text-center">
                       <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
                     </div>
-                    <form action="/register" method="POST">
+                    <form action="/admin/Cuentas/Register" method="POST">
                       <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
                           <input
@@ -94,11 +94,12 @@
                         <div class="col-sm-6 mb-3 mb-sm-0">
                           <select
                             id="provinciaID"
-                            onchange="ShowSelected();"
+                            name="provincia"
                             class="form-select form-select-sm"
                             aria-label=".form-select-sm example"
+                            required
                           >
-                            <option selected disabled value="">
+                            <option selected disabled>
                               Selecciona la Provincia
                             </option>
                             <% let numberSelected="" ; %> <%
@@ -114,11 +115,12 @@
                         <div class="col-sm-6">
                           <select
                             id="muniSelect"
+                            name="municipio"
                             class="form-select form-select-sm"
                             aria-label=".form-select-sm example"
                             required
                           >
-                            <option selected disabled value="">
+                            <option selected disabled>
                               Selecciona el Municipio
                             </option>
                           </select>
@@ -133,7 +135,7 @@
                             <input
                               class="form-check-input"
                               type="radio"
-                              name="flexradio"
+                              name="rol"
                               id="admin"
                               checked
                             />
@@ -145,7 +147,7 @@
                             <input
                               class="form-check-input"
                               type="radio"
-                              name="flexradio"
+                              name="rol"
                               id="moderador"
                             />
                             <label
@@ -159,7 +161,7 @@
                             <input
                               class="form-check-input"
                               type="radio"
-                              name="flexradio"
+                              name="rol"
                               id="visitante"
                             />
                             <label
@@ -185,16 +187,33 @@
             </div>
           </div>
           <script type="text/JavaScript">
-            function ShowSelected(){
-                const $select = document.querySelector("#muniSelect");
-                const option = document.createElement('option');
-                <% fields.forEach((fields)=> { %>
-                    const valor = '<%= fields.nombre_municipio %>'
-                    option.value = valor + i;
-                    option.text = valor + i;
-                    $select.appendChild(option);
-                <% }) %>
-            }
+            const array = []
+            <% fields.forEach((fields)=> { %>
+              array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+            <% }) %>
+
+            var selectP = document.getElementById('provinciaID');
+            const selectM = document.getElementById("muniSelect");
+
+            selectP.addEventListener('change', function () {
+              var selectedOption = this.options[selectP.selectedIndex];
+
+              //Eliminar el listado de Municipios si hay mas de 1
+              for (let i = selectM.options.length; i >= 1; i--) {
+                selectM.remove(i);
+              }
+
+              // Llenado de Municipios
+              for(var i=0; i<array.length; i++) {
+                if(array[i] == selectedOption.value){
+                  const option = document.createElement('option');
+                  const valor = array[i+1]
+                  option.value = valor;
+                  option.text = valor;
+                  selectM.add(option);
+                }
+              }
+            });
           </script>
           <!-- /.container-fluid -->
         </div>
