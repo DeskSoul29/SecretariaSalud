@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 12-08-2022 a las 21:22:31
+-- Tiempo de generación: 22-08-2022 a las 21:28:54
 -- Versión del servidor: 8.0.27
 -- Versión de PHP: 7.4.26
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `municipios` (
   `id_provincia` int NOT NULL,
   PRIMARY KEY (`id_municipio`),
   KEY `id_provincia` (`id_provincia`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `municipios`
@@ -112,19 +112,15 @@ INSERT INTO `municipios` (`id_municipio`, `nombre_municipio`, `id_provincia`) VA
 (69, 'San Benito', 5),
 (70, 'Sucre', 5),
 (71, 'Vélez', 5),
-(72, 'Barrancabermeja', 6),
-(73, 'Betulia', 6),
+(72, 'Betulia', 6),
 (74, 'El Carmen de Chucurí', 6),
 (75, 'Puerto Wilches', 6),
 (76, 'Sabana de Torres', 6),
 (77, 'San Vicente de Chuchurí', 6),
 (78, 'Bucaramanga', 7),
 (79, 'El Playón', 7),
-(80, 'Floridablanca', 7),
-(81, 'Girón', 7),
 (82, 'Lebrija', 7),
 (83, 'Los Santos', 7),
-(84, 'Piedecuesta', 7),
 (85, 'Rionegro', 7),
 (86, 'Santa Bárbara', 7),
 (87, 'Tona ', 7),
@@ -169,20 +165,24 @@ CREATE TABLE IF NOT EXISTS `users` (
   `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `apellido` varchar(255) NOT NULL,
   `pass` varchar(255) NOT NULL,
-  `provincia` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `municipio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `rol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `provincia` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `municipio` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `rol` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `user` (`user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `user`, `nombre`, `apellido`, `pass`, `provincia`, `municipio`, `rol`) VALUES
-(1, 1004802359, 'Jhan Carlos ', 'Ramirez Navarro', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Comunera', 'Socorro', 'admin'),
-(2, 123456, 'Prueba', '', '$2a$08$x70h1//7KphQ5xq29/ny2ePcQADcv7h7aoRbTpmCIisLNdvCCzHCm', NULL, NULL, NULL);
+(1, 1004802359, 'Jhan Carlos', 'Ramirez Navarro', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Comunera', 'Socorro', 'admin'),
+(11, 123456, 'Prueba', 'Apellido', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Vélez', 'Vélez', 'moderador'),
+(13, 1234567, 'Prueba', '2', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Vélez', 'Vélez', 'visitante'),
+(14, 12345678, 'Prueba', '3', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'Vélez', 'Vélez', 'visitante'),
+(16, 123456789, 'Prueba', '4', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'García-Rovira', 'Málaga', 'moderador'),
+(17, 12345, 'Prueba', '5', '$2a$08$IdYtqOeVAsNK56AQeitNjOvC69ExhrDQWcqKKt3.88kbcu0BlTyH2', 'García-Rovira', 'Málaga', 'moderador');
 
 --
 -- Restricciones para tablas volcadas
