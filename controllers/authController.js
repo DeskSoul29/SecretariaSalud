@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
-const conexion = require("../database/db");
 const bcryptjs = require("bcryptjs");
+const conexion = require("../database/db");
 const { promisify } = require("util");
 
-exports.login = async (req, res) => {
+var authController = {};
+
+authController.login = async (req, res) => {
   try {
     const user = req.body.user;
     const pass = req.body.pass;
@@ -115,8 +117,8 @@ function isVisit(res) {
   });
 }
 
-exports.isAuthenticated = async (req, res, next) => {
-  if (req.cookies.jwt) {
+authController.isAuthenticated = async (req, res, next) => {
+  if (JSON.stringify(req.cookies) != "{}") {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -131,14 +133,14 @@ exports.isAuthenticated = async (req, res, next) => {
           } else {
             return res.redirect("/" + results[0].rol);
           }
-          req.user = results[0];
-          return next();
         }
       );
     } catch (error) {
       console.log(error);
-      return next();
     }
+  } else {
+    return next();
   }
-  return next();
 };
+
+module.exports = authController;
