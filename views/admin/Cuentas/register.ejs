@@ -28,6 +28,23 @@
                   <div class="card-body p-0">
                     <!-- Nested Row within Card Body -->
                     <div class="p-5">
+
+                      <div class="alert alert-success" id="success" style="display: none;" role="alert">
+                        ¡Registrado Correctamente!
+                      </div>
+                      <div class="alert alert-secondary" id="secondary" style="display: none;" role="alert">
+                        ¡Error en La Base de Datos!
+                      </div>
+                      <div class="alert alert-danger" id="danger" style="display: none;" role="alert">
+                        Contraseñas Diferentes
+                      </div>
+                      <div class="alert alert-warning" id="warnnig" style="display: none;" role="alert">
+                        Ingrese todos los campos
+                      </div>
+                      <div class="alert alert-info" id="info" style="display: none;" role="alert">
+                        Número de identifición ya registrada, intente con otro
+                      </div>
+
                       <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
                       </div>
@@ -61,15 +78,14 @@
                           </div>
                         </div>
 
-                        <div class="form-group row">
-                          <div class="col-sm-3 mb-3 mb-sm-0">
-                            <select id="provinciaID" name="provincia" class="form-select form-select-sm"
-                              aria-label=".form-select-sm example" required>
-                              <option selected disabled>
-                                Selecciona la Provincia
-                              </option>
+                        <div class="form-row align-items-center mb-sm-3">
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                            <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
+                              <option selected disabled>Seleccione la Provincia</option>
                               <% let numberSelected="" ; %>
-                                <% fields.forEach((fields)=> { %> <% if (numberSelected !=fields.nombre_provincia){ %>
+                                <% fields.forEach((fields)=> { %>
+                                  <% if (numberSelected !=fields.nombre_provincia){ %>
                                     <option value="<%= fields.nombre_provincia %>">
                                       <%= fields.nombre_provincia %>
                                     </option>
@@ -78,20 +94,16 @@
                                         <% }) %>
                             </select>
                           </div>
-                          <div class="col-sm-3 mb-3 mb-sm-0">
-                            <select id="muniSelect" name="municipio" class="form-select form-select-sm"
-                              aria-label=".form-select-sm example" required>
-                              <option selected disabled>
-                                Selecciona el Municipio
-                              </option>
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
+                              <option selected disabled>Seleccione el Municipio</option>
                             </select>
                           </div>
-                          <div class="col-sm-3 mb-3 mb-sm-0">
-                            <select id="muniSelect" name="municipio" class="form-select form-select-sm"
-                              aria-label=".form-select-sm example" required>
-                              <option selected disabled>
-                                Selecciona el Rol
-                              </option>
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="rol">Rol</label>
+                            <select class="custom-select mr-sm-2" id="rol" name="rol" required>
+                              <option selected disabled>Seleccione el Rol</option>
                               <option value="admin">Administrador</option>
                               <option value="moderador">Moderador</option>
                               <option value="visitante">Visitantes</option>
@@ -102,6 +114,7 @@
                         <button class="btn btn-primary btn-user btn-block" type="submit">
                           Registrar Cuenta
                         </button>
+
                       </form>
                     </div>
                   </div>
@@ -187,7 +200,7 @@
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
 
-  <script>
+  <script type="text/JavaScript">
     $(window).bind("load", function () {
       var nav = document.getElementById("nav3");
       $("#navlink2").removeClass("collapsed");
@@ -196,6 +209,9 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+      <% if (typeof val != "undefined" ) { %>
+        document.getElementById("<%= val %>").removeAttribute("style")
+      <% } %>
     });
   </script>
 </body>

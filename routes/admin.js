@@ -8,19 +8,34 @@ router.get("/", adminController.isAuthenticatedAdmin, (req, res) => {
 });
 
 // Apartado: Cuentas
+
+//Register;
 router.get(
   "/Cuentas/Register",
   adminController.isAuthenticatedAdmin,
   adminController.fillFields,
   (req, res) => {
     res.render("admin/Cuentas/register", {
-      alert: false,
       user: req.user,
       fields: req.field,
     });
   }
 );
+router.post(
+  "/Cuentas/Register",
+  adminController.register,
+  adminController.fillFields,
+  adminController.isAuthenticatedAdmin,
+  (req, res) => {
+    res.render("admin/Cuentas/Register", {
+      val: req.val,
+      fields: req.field,
+      user: req.user,
+    });
+  }
+);
 
+//Usuarios
 router.get(
   "/Cuentas/Usuarios",
   adminController.isAuthenticatedAdmin,
@@ -31,6 +46,37 @@ router.get(
       user: req.user,
       users: req.users,
       fields: req.field,
+      alert: false,
+    });
+  }
+);
+router.get(
+  "/Cuentas/Usuarios/Delete/:user",
+  adminController.deleteUser,
+  adminController.isAuthenticatedAdmin,
+  adminController.users,
+  adminController.fillFields,
+  (req, res) => {
+    res.render("admin/Cuentas/Usuarios", {
+      val: req.val,
+      user: req.user,
+      users: req.users,
+      fields: req.field,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios",
+  adminController.isAuthenticatedAdmin,
+  adminController.users,
+  adminController.fillFields,
+  adminController.editUser,
+  (req, res) => {
+    res.render("admin/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.field,
+      alert: alert,
     });
   }
 );
@@ -185,16 +231,7 @@ router.get(
     });
   }
 );
-router.get(
-  "/Cuentas/Usuarios/Delete/:user",
-  adminController.deleteUser,
-  (req, res) => {
-    res.render("admin/Cuentas/Usuarios", {
-      alert: false,
-    });
-  }
-);
-router.post("/Cuentas/register", adminController.register);
+
 router.get("/logout", adminController.logout);
 
 module.exports = router;

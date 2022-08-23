@@ -6,7 +6,7 @@ const { promisify } = require("util");
 var adminController = {};
 
 // Apartado: Usuarios - Register
-adminController.register = async (req, res) => {
+adminController.register = async (req, res, next) => {
   try {
     const name = req.body.name;
     const lastname = req.body.lastname;
@@ -16,6 +16,7 @@ adminController.register = async (req, res) => {
     const provincia = req.body.provincia;
     const municipio = req.body.municipio;
     const rol = req.body.rol;
+    var val = "";
 
     if (
       !name ||
@@ -27,40 +28,22 @@ adminController.register = async (req, res) => {
       !municipio ||
       !rol
     ) {
-      res.render("admin/Cuentas/Register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Ingrese todos los campos",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "",
-      });
+      //Ingresar todos los campos
+      req.val = "warnnig";
+      return next();
     } else if (pass != repass) {
-      res.render("admin/Cuentas/Register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Contraseñas Diferentes",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "",
-      });
+      //Contraseñas Diferentes
+      req.val = "danger";
+      return next();
     } else {
       conexion.query(
         "SELECT * FROM users WHERE user = ?",
         [user],
         async (error, results) => {
           if (results.length == 1) {
-            res.render("admin/Cuentas/Register", {
-              alert: true,
-              alertTitle: "Error",
-              alertMessage: "Usuario ya registrado",
-              alertIcon: "error",
-              showConfirmButton: true,
-              timer: false,
-              ruta: "",
-            });
+            //Usuario ya registrado
+            req.val = "info";
+            return next();
           } else {
             let passHash = await bcryptjs.hash(pass, 8);
 
@@ -68,26 +51,23 @@ adminController.register = async (req, res) => {
               "INSERT INTO users SET ?",
               {
                 user: user,
-                name: name,
+                nombre: name,
+                apellido: lastname,
                 pass: passHash,
-                // provincia: provincia,
-                // municipio: municipio,
-                // rol: rol,
+                provincia: provincia,
+                municipio: municipio,
+                rol: rol,
               },
               (error) => {
                 if (error) {
                   console.log(error);
+                  req.val = "secondary";
+                } else {
+                  //Registrado correctamente
+                  req.val = "success";
                 }
-                res.render("admin/Cuentas/Register", {
-                  alert: true,
-                  alertTitle: "Registro exitoso",
-                  alertMessage: "¡BIENVENIDO!",
-                  alertIcon: "success",
-                  showConfirmButton: false,
-                  timer: 800,
-                  ruta: "login",
-                });
-                // res.redirect("/");
+
+                return next();
               }
             );
           }
@@ -132,13 +112,90 @@ adminController.users = async (req, res, next) => {
   }
 };
 
-adminController.deleteUser = async (req, res) => {
+adminController.editUser = async (req, res, next) => {
+  const name = req.body.name;
+  const lastname = req.body.lastname;
+  const user = req.body.user;
+  const pass = req.body.pass;
+  const repass = req.body.repass;
+  const provincia = req.body.provincia;
+  const municipio = req.body.municipio;
+  const rol = req.body.rol;
+  var alert = [];
+
+  if (
+    !name ||
+    !lastname ||
+    !user ||
+    !pass ||
+    !repass ||
+    !provincia ||
+    !municipio ||
+    !rol
+  ) {
+    //Ingresar todos los campos
+    alert = [
+      {
+        alert: true,
+        alertTitle: "Conexión exitosa",
+        alertMessage: "Ingresar todos los campos",
+        alertIcon: "success",
+        showConfirmButton: false,
+        timer: 800,
+        ruta: "admin/Cuentas/Usuarios",
+      },
+    ];
+    return next();
+  } else if (pass != repass) {
+    //Contraseñas Diferentes
+    alert = [
+      {
+        alert: true,
+        alertTitle: "Conexión exitosa",
+        alertMessage: "Contraseñas Diferentes",
+        alertIcon: "success",
+        showConfirmButton: false,
+        timer: 800,
+        ruta: "admin/Cuentas/Usuarios",
+      },
+    ];
+    return next();
+  } else {
+    let passHash = await bcryptjs.hash(pass, 8);
+    conexion.query(
+      "UPDATE users SET user = ?, nombre = ?, apellido = ?, pass = ?, provincia = ?, municipio = ?, rol = ? WHERE user = ?",
+      [user, name, lastname, passHash, provincia, municipio, rol, user],
+      (error) => {
+        if (error) {
+          console.log(error);
+          // req.val = "secondary";
+        } else {
+          alert = [
+            {
+              alert: true,
+              alertTitle: "Conexión exitosa",
+              alertMessage: "Registrado correctamente",
+              alertIcon: "success",
+              showConfirmButton: false,
+              timer: 800,
+              ruta: "admin/Cuentas/Usuarios",
+            },
+          ];
+          return next();
+        }
+      }
+    );
+  }
+};
+
+adminController.deleteUser = async (req, res, next) => {
   conexion.query(
-    "DELETE FROM `users` WHERE `user` = ?",
+    "DELETE FROM users WHERE user = ?",
     req.params.user,
     function (err) {
       if (err) throw err;
-      res.redirect("/admin/Cuentas/Usuarios");
+      req.val = "success2";
+      return next();
     }
   );
 };
