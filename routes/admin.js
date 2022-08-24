@@ -18,6 +18,7 @@ router.get(
     res.render("admin/Cuentas/register", {
       user: req.user,
       fields: req.field,
+      alert: undefined,
     });
   }
 );
@@ -28,7 +29,7 @@ router.post(
   adminController.isAuthenticatedAdmin,
   (req, res) => {
     res.render("admin/Cuentas/Register", {
-      val: req.val,
+      alert: req.alert,
       fields: req.field,
       user: req.user,
     });
@@ -46,19 +47,19 @@ router.get(
       user: req.user,
       users: req.users,
       fields: req.field,
-      alert: false,
+      alert: undefined,
     });
   }
 );
-router.get(
-  "/Cuentas/Usuarios/Delete/:user",
+router.post(
+  "/Cuentas/Usuarios/Delete",
   adminController.deleteUser,
   adminController.isAuthenticatedAdmin,
   adminController.users,
   adminController.fillFields,
   (req, res) => {
     res.render("admin/Cuentas/Usuarios", {
-      val: req.val,
+      alert: req.alert,
       user: req.user,
       users: req.users,
       fields: req.field,
@@ -66,7 +67,7 @@ router.get(
   }
 );
 router.post(
-  "/Cuentas/Usuarios",
+  "/Cuentas/Usuarios/Edit",
   adminController.isAuthenticatedAdmin,
   adminController.users,
   adminController.fillFields,
@@ -76,7 +77,7 @@ router.post(
       user: req.user,
       users: req.users,
       fields: req.field,
-      alert: alert,
+      alert: req.alert,
     });
   }
 );

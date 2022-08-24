@@ -16,7 +16,7 @@ adminController.register = async (req, res, next) => {
     const provincia = req.body.provincia;
     const municipio = req.body.municipio;
     const rol = req.body.rol;
-    var val = "";
+    var alert = [];
 
     if (
       !name ||
@@ -29,11 +29,29 @@ adminController.register = async (req, res, next) => {
       !rol
     ) {
       //Ingresar todos los campos
-      req.val = "warnnig";
+      req.alert = [
+        {
+          alertTitle: "Error",
+          alertMessage: "Ingresar todos los campos",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "admin/Cuentas/Register",
+        },
+      ];
       return next();
     } else if (pass != repass) {
       //Contraseñas Diferentes
-      req.val = "danger";
+      req.alert = [
+        {
+          alertTitle: "Error",
+          alertMessage: "Contraseñas Diferentes",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "admin/Cuentas/Register",
+        },
+      ];
       return next();
     } else {
       conexion.query(
@@ -42,7 +60,16 @@ adminController.register = async (req, res, next) => {
         async (error, results) => {
           if (results.length == 1) {
             //Usuario ya registrado
-            req.val = "info";
+            req.alert = [
+              {
+                alertTitle: "Error",
+                alertMessage: "Usuario ya registrado",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: "admin/Cuentas/Register",
+              },
+            ];
             return next();
           } else {
             let passHash = await bcryptjs.hash(pass, 8);
@@ -61,12 +88,29 @@ adminController.register = async (req, res, next) => {
               (error) => {
                 if (error) {
                   console.log(error);
-                  req.val = "secondary";
+                  req.alert = [
+                    {
+                      alertTitle: "Error",
+                      alertMessage: "Error en la Base de Datos",
+                      alertIcon: "error",
+                      showConfirmButton: true,
+                      timer: false,
+                      ruta: "admin/Cuentas/Register",
+                    },
+                  ];
                 } else {
                   //Registrado correctamente
-                  req.val = "success";
+                  req.alert = [
+                    {
+                      alertTitle: "Conexión exitosa",
+                      alertMessage: "Registrado correctamente",
+                      alertIcon: "success",
+                      showConfirmButton: false,
+                      timer: 800,
+                      ruta: "admin/Cuentas/Register",
+                    },
+                  ];
                 }
-
                 return next();
               }
             );
@@ -134,28 +178,26 @@ adminController.editUser = async (req, res, next) => {
     !rol
   ) {
     //Ingresar todos los campos
-    alert = [
+    req.alert = [
       {
-        alert: true,
-        alertTitle: "Conexión exitosa",
+        alertTitle: "Error",
         alertMessage: "Ingresar todos los campos",
-        alertIcon: "success",
-        showConfirmButton: false,
-        timer: 800,
+        alertIcon: "error",
+        showConfirmButton: true,
+        timer: false,
         ruta: "admin/Cuentas/Usuarios",
       },
     ];
     return next();
   } else if (pass != repass) {
     //Contraseñas Diferentes
-    alert = [
+    req.alert = [
       {
-        alert: true,
-        alertTitle: "Conexión exitosa",
+        alertTitle: "Error",
         alertMessage: "Contraseñas Diferentes",
-        alertIcon: "success",
-        showConfirmButton: false,
-        timer: 800,
+        alertIcon: "error",
+        showConfirmButton: true,
+        timer: false,
         ruta: "admin/Cuentas/Usuarios",
       },
     ];
@@ -170,9 +212,8 @@ adminController.editUser = async (req, res, next) => {
           console.log(error);
           // req.val = "secondary";
         } else {
-          alert = [
+          req.alert = [
             {
-              alert: true,
               alertTitle: "Conexión exitosa",
               alertMessage: "Registrado correctamente",
               alertIcon: "success",
@@ -191,10 +232,31 @@ adminController.editUser = async (req, res, next) => {
 adminController.deleteUser = async (req, res, next) => {
   conexion.query(
     "DELETE FROM users WHERE user = ?",
-    req.params.user,
+    req.body.userDel,
     function (err) {
-      if (err) throw err;
-      req.val = "success2";
+      if (err) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "No se encuentra el Usuario",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Eliminado correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      }
       return next();
     }
   );

@@ -7,7 +7,7 @@
     <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" onload="greet()">
+<body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
@@ -35,24 +35,6 @@
                   </h6>
                 </div>
                 <div class="card-body">
-                  <div class="alert alert-success" id="success" style="display: none;" role="alert">
-                    ¡Editado Correctamente!
-                  </div>
-                  <div class="alert alert-success" id="success2" style="display: none;" role="alert">
-                    ¡Borrado Correctamente!
-                  </div>
-                  <div class="alert alert-secondary" id="secondary" style="display: none;" role="alert">
-                    ¡Error en La Base de Datos!
-                  </div>
-                  <div class="alert alert-danger" id="danger" style="display: none;" role="alert">
-                    Contraseñas Diferentes
-                  </div>
-                  <div class="alert alert-warning" id="warnnig" style="display: none;" role="alert">
-                    Ingrese todos los campos
-                  </div>
-                  <div class="alert alert-info" id="info" style="display: none;" role="alert">
-                    Número de identifición ya registrada, intente con otro
-                  </div>
                   <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                       <thead>
@@ -63,6 +45,7 @@
                           <th>Provincia</th>
                           <th>Municipio</th>
                           <th>Rol</th>
+                          <th>Extra</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -74,6 +57,7 @@
                           <th>Provincia</th>
                           <th>Municipio</th>
                           <th>Rol</th>
+                          <th>Extra</th>
                           <th>Acción</th>
                         </tr>
                       </tfoot>
@@ -100,7 +84,10 @@
                                 <%= users.rol %>
                               </td>
                               <td>
-                                <a onclick='editar_modal("<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
+                                <%= users.municipio_extra %>
+                              </td>
+                              <td>
+                                <a onclick='editar_modal("<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
                                   type="button" data-target="#editModal" data-toggle="modal"
                                   class="btn btn-warning btn-circle btn-sm">
                                   <i class="fas fa-pen-to-square"></i>
@@ -110,6 +97,21 @@
                                   class="btn btn-danger btn-circle btn-sm">
                                   <i class="fas fa-trash"></i>
                                 </a>
+                                <% if(users.rol=="visitante" ){ %>
+                                  <% if(users.municipio_extra==null ){ %>
+                                    <a onclick='addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
+                                      type="button" data-target="#extraModalADD" data-toggle="modal"
+                                      class="btn btn-info btn-circle btn-sm">
+                                      <i class="fas fa-plus"></i>
+                                    </a>
+                                    <% }else{ %>
+                                      <a onclick='deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
+                                        type="button" data-target="#extraModalDELETE" data-toggle="modal"
+                                        class="btn btn-info btn-circle btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                      </a>
+                                      <% } %>
+                                        <% } %>
                               </td>
                             </tr>
                             <% }); %>
@@ -162,6 +164,50 @@
     </div>
   </div>
 
+  <!-- ExtraADD Modal-->
+  <div class="modal fade" id="extraModalADD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/admin/Cuentas/Usuarios/ExtraADD" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <b>
+              Verifique los datos del Visitante y luego eliga el municipio a ayudar
+            </b>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userADDMuni" id="userADDMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreADDMuni" disabled>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio</label>
+              <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
+                <option selected disabled>Seleccione el Municipio</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Añadir Municipio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Edit Modal-->
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -173,7 +219,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form action="/admin/Cuentas/Usuarios" method="POST" autocomplete="off">
+        <form action="/admin/Cuentas/Usuarios/Edit" method="POST" autocomplete="off">
           <div class="modal-body">
             <div class="card-body p-0">
               <div class="form-group row">
@@ -258,25 +304,29 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
-          Aprima el botón "Eliminar" a continuación si está listo para
-          eliminar a el usuario:
-          <div class="mb-3">
-            <label for="userModal" class="form-label">Identificación</label>
-            <input type="number" class="form-control" id="userModal" disabled>
+        <form action="/admin/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
+          <div class="modal-body">
+            Aprima el botón "Eliminar" a continuación si está listo para
+            eliminar a el usuario:
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userDel" id="userModal" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreModal" disabled>
+            </div>
+            <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
           </div>
-          <div class="mb-3">
-            <label for="userModal" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombreModal" disabled>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Eliminar
+            </button>
           </div>
-          <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancelar
-          </button>
-          <a id="btnModalDel" class="btn btn-primary">Eliminar</a>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -309,31 +359,29 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
-      
     });
-    function greet() {
-      <% if (typeof val != "undefined") { %>
-        document.getElementById("<%= val %>").removeAttribute("style")
-      <% } %>
-    }
-    setTimeout(greet, 2000)
 
     function eliminar_modal(user, nombre) {
       document.getElementById("userModal").value = user;
       document.getElementById("nombreModal").value = nombre;
-      document
-        .getElementById("btnModalDel")
-        .setAttribute("href", "/admin/Cuentas/Usuarios/delete/" + user);
     }
 
     function editar_modal(user, nombre, apellido, provincia, municipio, rol) {
       document.getElementById("user").value = user;
       document.getElementById("name").value = nombre;
       document.getElementById("lastname").value = apellido;
-      document.getElementById("provinciaID").value = provincia;
-      document.getElementById("muniSelect").value = municipio;
-      document.getElementById("rol").value = rol;
+      $("#rol").val(rol);
     }
+
+    function addMuni(user, nombre) {
+      document.getElementById("userADDMuni").value = user;
+      document.getElementById("nombreADDMuni").value = nombre;
+    }
+
+    function deleteMuni(user, nombre, muniEx) {
+      
+    }
+
   </script>
 
   <script type="text/JavaScript">
@@ -366,16 +414,16 @@
       });
     </script>
 
-  <% if(alert.alert ) { %>
+  <% if(typeof alert !="undefined" ) { %>
     <script type="text/JavaScript">
         Swal.fire({
-          title: '<%= alert.alertTitle %>',
-          text:'<%= alert.alertMessage %>',
-          icon:'<%= alert.alertIcon %>',
-          showConfirmButton: <%= alert.showConfirmButton %>,
-          timer: <%= alert.timer %>
+          title: '<%= alert[0].alertTitle %>',
+          text:'<%= alert[0].alertMessage %>',
+          icon:'<%= alert[0].alertIcon %>',
+          showConfirmButton: <%= alert[0].showConfirmButton %>,
+          timer: <%= alert[0].timer %>
         }).then(()=>{
-          window.location = '/<%= alert.ruta %>'
+          window.location = '/<%= alert[0].ruta %>'
         })
       </script>
     <% } %>
