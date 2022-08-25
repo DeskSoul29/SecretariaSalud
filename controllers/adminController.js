@@ -16,7 +16,6 @@ adminController.register = async (req, res, next) => {
     const provincia = req.body.provincia;
     const municipio = req.body.municipio;
     const rol = req.body.rol;
-    var alert = [];
 
     if (
       !name ||
@@ -155,7 +154,6 @@ adminController.users = async (req, res, next) => {
     return next();
   }
 };
-
 adminController.editUser = async (req, res, next) => {
   const name = req.body.name;
   const lastname = req.body.lastname;
@@ -165,7 +163,6 @@ adminController.editUser = async (req, res, next) => {
   const provincia = req.body.provincia;
   const municipio = req.body.municipio;
   const rol = req.body.rol;
-  var alert = [];
 
   if (
     !name ||
@@ -210,7 +207,6 @@ adminController.editUser = async (req, res, next) => {
       (error) => {
         if (error) {
           console.log(error);
-          // req.val = "secondary";
         } else {
           req.alert = [
             {
@@ -228,7 +224,6 @@ adminController.editUser = async (req, res, next) => {
     );
   }
 };
-
 adminController.deleteUser = async (req, res, next) => {
   conexion.query(
     "DELETE FROM users WHERE user = ?",
@@ -250,6 +245,70 @@ adminController.deleteUser = async (req, res, next) => {
           {
             alertTitle: "Conexión exitosa",
             alertMessage: "Eliminado correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      }
+      return next();
+    }
+  );
+};
+adminController.extraADD = async (req, res, next) => {
+  conexion.query(
+    "UPDATE users SET municipio_extra = ? WHERE user = ?",
+    [req.body.muniADD, req.body.userADDMuni],
+    (error) => {
+      if (error) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "Error en la Base de Datos",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Municipio de Ayuda Añadido correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      }
+      return next();
+    }
+  );
+};
+adminController.extraDELETE = async (req, res, next) => {
+  conexion.query(
+    "UPDATE users SET municipio_extra = NULL WHERE user = ?",
+    req.body.userDELETEMuni,
+    function (err) {
+      if (err) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "Error en la Base de Datos",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "admin/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Municipio de Ayuda Eliminado correctamente",
             alertIcon: "success",
             showConfirmButton: false,
             timer: 800,

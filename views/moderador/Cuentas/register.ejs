@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <%- include('../../tools/head'); %>
-  </head>
 
-  <body id="page-top">
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-      <!-- Sidebar -->
-      <%- include('../../tools/sidebarModer'); %>
+<head>
+  <%- include('../../tools/head'); %>
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../tools/sidebarModer'); %>
       <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
@@ -17,142 +18,88 @@
         <div id="content">
           <!-- Topbar -->
           <%- include('../../tools/topbar'); %>
-          <!-- End of Topbar -->
+            <!-- End of Topbar -->
 
-          <!-- Begin Page Content -->
-          <div class="container-fluid">
-            <!-- Page Heading -->
-            <div class="container">
-              <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                  <!-- Nested Row within Card Body -->
-                  <div class="p-5">
-                    <div class="text-center">
-                      <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <!-- Page Heading -->
+              <div class="container">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                  <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="p-5">
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
+                      </div>
+                      <form action="/register" method="POST">
+                        <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="form-control form-control-user" id="name" name="name"
+                              placeholder="Nombres" required />
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="text" class="form-control form-control-user" id="lastname" name="lastname"
+                              placeholder="Apellidos" required />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <input placeholder="Numero de Identificación" type="number"
+                            class="form-control form-control-user" id="user" name="user" required />
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                              placeholder="Contraseña" required />
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                              placeholder="Repite la Contraseña" required />
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-sm-6">
+                            <select id="muniSelect" class="form-select form-select-sm"
+                              aria-label=".form-select-sm example" required>
+                              <option selected disabled value="">
+                                Selecciona el Municipio
+                              </option>
+                              <% fields.forEach((fields)=> { %>
+                                <option value="<%= fields.nombre_municipio %>">
+                                  <%= fields.nombre_municipio %>
+                                </option>
+                                <% }) %>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <div class="col-md-3">
+                            <label class="form-label">Rol:</label>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexradio" id="moderador" checked />
+                              <label class="form-check-label" for="checkmoderador">
+                                Moderador
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" name="flexradio" id="visitante" />
+                              <label class="form-check-label" for="checkvisitante">
+                                Visitante
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <button class="btn btn-primary btn-user btn-block" type="submit">
+                          Registrar Cuenta
+                        </button>
+                      </form>
                     </div>
-                    <form action="/register" method="POST">
-                      <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                          <input
-                            type="text"
-                            class="form-control form-control-user"
-                            id="name"
-                            name="name"
-                            placeholder="Nombres"
-                            required
-                          />
-                        </div>
-                        <div class="col-sm-6">
-                          <input
-                            type="text"
-                            class="form-control form-control-user"
-                            id="lastname"
-                            name="lastname"
-                            placeholder="Apellidos"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group">
-                        <input
-                          placeholder="Numero de Identificación"
-                          type="number"
-                          class="form-control form-control-user"
-                          id="user"
-                          name="user"
-                          required
-                        />
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                          <input
-                            type="password"
-                            class="form-control form-control-user"
-                            id="pass"
-                            name="pass"
-                            placeholder="Contraseña"
-                            required
-                          />
-                        </div>
-                        <div class="col-sm-6">
-                          <input
-                            type="password"
-                            class="form-control form-control-user"
-                            id="repass"
-                            name="repass"
-                            placeholder="Repite la Contraseña"
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-sm-6">
-                          <select
-                            id="muniSelect"
-                            class="form-select form-select-sm"
-                            aria-label=".form-select-sm example"
-                            required
-                          >
-                            <option selected disabled value="">
-                              Selecciona el Municipio
-                            </option>
-                            <% fields.forEach((fields)=> { %>
-                            <option value="<%= fields.nombre_municipio %>">
-                              <%= fields.nombre_municipio %>
-                            </option>
-                            <% }) %>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <div class="col-md-3">
-                          <label class="form-label">Rol:</label>
-                        </div>
-                        <div class="col-md-3">
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="flexradio"
-                              id="moderador"
-                              checked
-                            />
-                            <label
-                              class="form-check-label"
-                              for="checkmoderador"
-                            >
-                              Moderador
-                            </label>
-                          </div>
-                          <div class="form-check">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="flexradio"
-                              id="visitante"
-                            />
-                            <label
-                              class="form-check-label"
-                              for="checkvisitante"
-                            >
-                              Visitante
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        class="btn btn-primary btn-user btn-block"
-                        type="submit"
-                      >
-                        Registrar Cuenta
-                      </button>
-                    </form>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <script type="text/JavaScript">
+            <script type="text/JavaScript">
             function ShowSelected(){
                 const $select = document.querySelector("#muniSelect");
                 const option = document.createElement('option');
@@ -164,90 +111,74 @@
                 <% }) %>
             }
           </script>
-          <!-- /.container-fluid -->
+            <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
         <!-- Footer -->
         <%- include('../../tools/footer'); %>
-        <!-- End of Footer -->
+          <!-- End of Footer -->
       </div>
       <!-- End of Content Wrapper -->
-    </div>
-    <!-- End of Page Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-    <!-- Logout Modal-->
-    <div
-      class="modal fade"
-      id="logoutModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-            <button
-              class="close"
-              type="button"
-              data-dismiss="modal"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Seleccione "Cerrar sesión" a continuación si está listo para
-            finalizar su sesión actual.
-          </div>
-          <div class="modal-footer">
-            <button
-              class="btn btn-secondary"
-              type="button"
-              data-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <a class="btn btn-primary" href="/moderador/logout"
-              >Cerrar Sesión</a
-            >
-          </div>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/moderador/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level plugins -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="/js/demo/chart-area-demo.js"></script>
+  <script src="/js/demo/chart-pie-demo.js"></script>
 
-    <script>
-      $(window).bind("load", function () {
-        var nav = document.getElementById("nav3");
-        $("#navlink2").removeClass("collapsed");
-        var nav3 = document.getElementById("collapsePages");
-        var nav4 = document.getElementById("show17");
-        nav.className += "  active";
-        nav3.className += "  show";
-        nav4.className += "  active";
-      });
-    </script>
-  </body>
+  <script>
+    $(window).bind("load", function () {
+      var nav = document.getElementById("nav3");
+      $("#navlink2").removeClass("collapsed");
+      var nav3 = document.getElementById("collapsePages");
+      var nav4 = document.getElementById("show17");
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+  </script>
+</body>
+
 </html>

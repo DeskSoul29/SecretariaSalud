@@ -81,6 +81,36 @@ router.post(
     });
   }
 );
+router.post(
+  "/Cuentas/Usuarios/ExtraADD",
+  adminController.isAuthenticatedAdmin,
+  adminController.users,
+  adminController.fillFields,
+  adminController.extraADD,
+  (req, res) => {
+    res.render("admin/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.field,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/ExtraDELETE",
+  adminController.isAuthenticatedAdmin,
+  adminController.users,
+  adminController.fillFields,
+  adminController.extraDELETE,
+  (req, res) => {
+    res.render("admin/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.field,
+      alert: req.alert,
+    });
+  }
+);
 
 // Apartado: Consolidaciones
 router.get(
