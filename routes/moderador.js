@@ -7,22 +7,35 @@ router.get("/", moderController.isAuthenticatedModer, (req, res) => {
   res.render("moderador/main", { user: req.user });
 });
 
-// Apartado: Cuentas
+// Apartado: Cuentas - Register
 router.get(
-  "/cuentas/Register",
+  "/Cuentas/Register",
   moderController.isAuthenticatedModer,
   moderController.fillMunicipio,
   (req, res) => {
     res.render("moderador/Cuentas/register", {
-      alert: false,
+      alert: undefined,
       user: req.user,
       fields: req.fields,
     });
   }
 );
-
+router.post(
+  "/Cuentas/Register",
+  moderController.register,
+  moderController.fillMunicipio,
+  moderController.isAuthenticatedModer,
+  (req, res) => {
+    res.render("moderador/Cuentas/Register", {
+      alert: req.alert,
+      fields: req.fields,
+      user: req.user,
+    });
+  }
+);
+// Apartado: Cuentas - Usuarios
 router.get(
-  "/cuentas/Usuarios",
+  "/Cuentas/Usuarios",
   moderController.isAuthenticatedModer,
   moderController.users,
   moderController.fillMunicipio,
@@ -31,13 +44,74 @@ router.get(
       user: req.user,
       users: req.users,
       fields: req.fields,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/Delete",
+  moderController.deleteUser,
+  moderController.isAuthenticatedModer,
+  moderController.users,
+  moderController.fillMunicipio,
+  (req, res) => {
+    res.render("moderador/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.fields,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/Edit",
+  moderController.editUser,
+  moderController.isAuthenticatedModer,
+  moderController.users,
+  moderController.fillMunicipio,
+  (req, res) => {
+    res.render("moderador/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.fields,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/ExtraADD",
+  moderController.extraADD,
+  moderController.isAuthenticatedModer,
+  moderController.users,
+  moderController.fillMunicipio,
+  (req, res) => {
+    res.render("moderador/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.fields,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/ExtraDELETE",
+  moderController.ExtraDELETE,
+  moderController.isAuthenticatedModer,
+  moderController.users,
+  moderController.fillMunicipio,
+  (req, res) => {
+    res.render("moderador/Cuentas/Usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.fields,
+      alert: req.alert,
     });
   }
 );
 
 // Apartado: Consolidaciones
 router.get(
-  "/consolidaciones/NAdministrativas",
+  "/Consolidaciones/NAdministrativas",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/NAdministrativas", {
@@ -47,7 +121,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/ESPublica",
+  "/Consolidaciones/ESPublica",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/ESPublica", { user: req.user });
@@ -55,7 +129,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/Establecimientos",
+  "/Consolidaciones/Establecimientos",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/Establecimientos", {
@@ -65,7 +139,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/Vehiculos",
+  "/Consolidaciones/Vehiculos",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/Vehiculos", { user: req.user });
@@ -73,7 +147,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/Cementerios",
+  "/Consolidaciones/Cementerios",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/Cementerios", { user: req.user });
@@ -81,7 +155,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/Morgues",
+  "/Consolidaciones/Morgues",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/Morgues", { user: req.user });
@@ -89,7 +163,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/MSEstablecimientos",
+  "/Consolidaciones/MSEstablecimientos",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/MSEstablecimientos", {
@@ -99,7 +173,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/MSProductos",
+  "/Consolidaciones/MSProductos",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/MSProductos", { user: req.user });
@@ -107,7 +181,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/Quejas",
+  "/Consolidaciones/Quejas",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/Quejas", { user: req.user });
@@ -115,7 +189,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/TomaMuestras",
+  "/Consolidaciones/TomaMuestras",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/TomaMuestras", { user: req.user });
@@ -123,7 +197,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/ViviendaSaludable",
+  "/Consolidaciones/ViviendaSaludable",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/ViviendaSaludable", {
@@ -133,7 +207,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/CarnetsBPM",
+  "/Consolidaciones/CarnetsBPM",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/CarnetsBPM", { user: req.user });
@@ -141,7 +215,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/IVCRotulado",
+  "/Consolidaciones/IVCRotulado",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/IVCRotulado", { user: req.user });
@@ -149,7 +223,7 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/IVCPublicidad",
+  "/Consolidaciones/IVCPublicidad",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/IVCPublicidad", { user: req.user });
@@ -157,14 +231,13 @@ router.get(
 );
 
 router.get(
-  "/consolidaciones/EduSanitaria",
+  "/Consolidaciones/EduSanitaria",
   moderController.isAuthenticatedModer,
   (req, res) => {
     res.render("moderador/Consolidaciones/EduSanitaria", { user: req.user });
   }
 );
 
-router.post("moderador/Cuentas/register", moderController.register);
 router.get("/logout", moderController.logout);
 
 module.exports = router;

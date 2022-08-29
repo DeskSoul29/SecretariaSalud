@@ -3,63 +3,71 @@ const bcryptjs = require("bcryptjs");
 const conexion = require("../database/db");
 const { promisify } = require("util");
 
-// Apartado: Cuentas
-exports.register = async (req, res) => {
+// Apartado: Cuentas - Register
+exports.register = async (req, res, next) => {
   try {
     const name = req.body.name;
     const lastname = req.body.lastname;
     const user = req.body.user;
     const pass = req.body.pass;
     const repass = req.body.repass;
-    // const provincia = req.body.provincia;
-    // const municipio = req.body.municipio;
-    // const rol = req.body.rol;
+    const provincia = req.body.provincia;
+    const municipio = req.body.municipio;
+    const rol = req.body.rol;
 
-    // if (
-    //   !name ||
-    //   !lastname ||
-    //   !user ||
-    //   !pass ||
-    //   !repass ||
-    //   !provincia ||
-    //   !municipio ||
-    //   !rol
-    // ) {
-    if (!name || !lastname || !user || !pass || !repass) {
-      res.render("admin/register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Ingrese todos los campos",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "register",
-      });
+    if (
+      !name ||
+      !lastname ||
+      !user ||
+      !pass ||
+      !repass ||
+      !provincia ||
+      !municipio ||
+      !rol
+    ) {
+      //Ingresar todos los campos
+      req.alert = [
+        {
+          alertTitle: "Error",
+          alertMessage: "Ingresar todos los campos",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "moderador/Cuentas/Register",
+        },
+      ];
+      return next();
     } else if (pass != repass) {
-      res.render("admin/register", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Contraseñas Diferentes",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "register",
-      });
+      //Contraseñas Diferentes
+      req.alert = [
+        {
+          alertTitle: "Error",
+          alertMessage: "Contraseñas Diferentes",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "moderador/Cuentas/Register",
+        },
+      ];
+      return next();
     } else {
       conexion.query(
         "SELECT * FROM users WHERE user = ?",
         [user],
         async (error, results) => {
           if (results.length == 1) {
-            res.render("admin/register", {
-              alert: true,
-              alertTitle: "Error",
-              alertMessage: "Usuario ya registrado",
-              alertIcon: "error",
-              showConfirmButton: true,
-              timer: false,
-              ruta: "register",
-            });
+            //Usuario ya registrado
+            req.alert = [
+              {
+                alertTitle: "Error",
+                alertMessage: "Usuario ya registrado",
+                alertIcon: "error",
+                showConfirmButton: true,
+                timer: false,
+                ruta: "moderador/Cuentas/Register",
+              },
+            ];
+            return next();
           } else {
             let passHash = await bcryptjs.hash(pass, 8);
 
@@ -67,26 +75,40 @@ exports.register = async (req, res) => {
               "INSERT INTO users SET ?",
               {
                 user: user,
-                name: name,
+                nombre: name,
+                apellido: lastname,
                 pass: passHash,
-                // provincia: provincia,
-                // municipio: municipio,
-                // rol: rol,
+                provincia: provincia,
+                municipio: municipio,
+                rol: rol,
               },
-              (error, results) => {
+              (error) => {
                 if (error) {
                   console.log(error);
+                  req.alert = [
+                    {
+                      alertTitle: "Error",
+                      alertMessage: "Error en la Base de Datos",
+                      alertIcon: "error",
+                      showConfirmButton: true,
+                      timer: false,
+                      ruta: "moderador/Cuentas/Register",
+                    },
+                  ];
+                } else {
+                  //Registrado correctamente
+                  req.alert = [
+                    {
+                      alertTitle: "Conexión exitosa",
+                      alertMessage: "Registrado correctamente",
+                      alertIcon: "success",
+                      showConfirmButton: false,
+                      timer: 800,
+                      ruta: "moderador/Cuentas/Register",
+                    },
+                  ];
                 }
-                res.render("admin/register", {
-                  alert: true,
-                  alertTitle: "Registro exitoso",
-                  alertMessage: "¡BIENVENIDO!",
-                  alertIcon: "success",
-                  showConfirmButton: false,
-                  timer: 800,
-                  ruta: "login",
-                });
-                // res.redirect("/");
+                return next();
               }
             );
           }
@@ -117,6 +139,167 @@ exports.fillMunicipio = async (req, res, next) => {
     console.log(error);
     return next();
   }
+};
+
+// Apartado: Cuentas - Usuarios
+exports.deleteUser = async (req, res, next) => {
+  conexion.query(
+    "DELETE FROM users WHERE user = ?",
+    req.body.userDel,
+    function (err) {
+      if (err) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "No se encuentra el Usuario",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Eliminado correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      }
+      return next();
+    }
+  );
+};
+
+exports.editUser = async (req, res, next) => {
+  const name = req.body.name;
+  const lastname = req.body.lastname;
+  const user = req.body.user;
+  const pass = req.body.pass;
+  const repass = req.body.repass;
+  const municipio = req.body.municipio;
+  const rol = req.body.rol;
+
+  if (!name || !lastname || !user || !pass || !repass || !municipio || !rol) {
+    //Ingresar todos los campos
+    req.alert = [
+      {
+        alertTitle: "Error",
+        alertMessage: "Ingresar todos los campos",
+        alertIcon: "error",
+        showConfirmButton: true,
+        timer: false,
+        ruta: "moderador/Cuentas/Usuarios",
+      },
+    ];
+    return next();
+  } else if (pass != repass) {
+    //Contraseñas Diferentes
+    req.alert = [
+      {
+        alertTitle: "Error",
+        alertMessage: "Contraseñas Diferentes",
+        alertIcon: "error",
+        showConfirmButton: true,
+        timer: false,
+        ruta: "moderador/Cuentas/Usuarios",
+      },
+    ];
+    return next();
+  } else {
+    let passHash = await bcryptjs.hash(pass, 8);
+    conexion.query(
+      "UPDATE users SET user = ?, nombre = ?, apellido = ?, pass = ?, municipio = ?, rol = ? WHERE user = ?",
+      [user, name, lastname, passHash, municipio, rol, user],
+      (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          req.alert = [
+            {
+              alertTitle: "Conexión exitosa",
+              alertMessage: "Registrado correctamente",
+              alertIcon: "success",
+              showConfirmButton: false,
+              timer: 800,
+              ruta: "moderador/Cuentas/Usuarios",
+            },
+          ];
+          return next();
+        }
+      }
+    );
+  }
+};
+
+exports.extraADD = async (req, res, next) => {
+  conexion.query(
+    "UPDATE users SET municipio_extra = ? WHERE user = ?",
+    [req.body.muniADD, req.body.userADDMuni],
+    (error) => {
+      if (error) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "Error en la Base de Datos",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Municipio de Ayuda Añadido correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      }
+      return next();
+    }
+  );
+};
+
+exports.ExtraDELETE = async (req, res, next) => {
+  conexion.query(
+    "UPDATE users SET municipio_extra = NULL WHERE user = ?",
+    req.body.userDELETEMuni,
+    function (err) {
+      if (err) {
+        req.alert = [
+          {
+            alertTitle: "Error",
+            alertMessage: "Error en la Base de Datos",
+            alertIcon: "error",
+            showConfirmButton: true,
+            timer: false,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      } else {
+        req.alert = [
+          {
+            alertTitle: "Conexión exitosa",
+            alertMessage: "Municipio de Ayuda Eliminado correctamente",
+            alertIcon: "success",
+            showConfirmButton: false,
+            timer: 800,
+            ruta: "moderador/Cuentas/Usuarios",
+          },
+        ];
+      }
+      return next();
+    }
+  );
 };
 
 exports.users = async (req, res, next) => {

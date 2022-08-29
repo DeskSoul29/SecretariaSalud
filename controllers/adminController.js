@@ -5,7 +5,7 @@ const { promisify } = require("util");
 
 var adminController = {};
 
-// Apartado: Usuarios - Register
+// Apartado: Cuentas - Register
 adminController.register = async (req, res, next) => {
   try {
     const name = req.body.name;
