@@ -266,25 +266,26 @@
             <div class="card-body p-0">
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
-                  <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Nombres"
-                    required />
+                  <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
+                    placeholder="Nombres" required />
                 </div>
                 <div class="col-sm-6">
-                  <input type="text" class="form-control form-control-user" id="lastname" name="lastname"
+                  <input type="text" class="mayusPal form-control form-control-user" id="lastname" name="lastname"
                     placeholder="Apellidos" required />
                 </div>
               </div>
               <div class="form-group">
-                <input type="number" class="form-control form-control-user" id="user" name="user" readonly />
+                <input type="number" class="form-control form-control-user" id="user" name="user" minlength="7"
+                  maxlength="12" readonly />
               </div>
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                   <input type="password" class="form-control form-control-user" id="pass" name="pass"
-                    placeholder="Contraseña" required />
+                    placeholder="Contraseña" minlength="4" maxlength="12" required />
                 </div>
                 <div class="col-sm-6">
                   <input type="password" class="form-control form-control-user" id="repass" name="repass"
-                    placeholder="Repite la Contraseña" required />
+                    placeholder="Repite la Contraseña" minlength="4" maxlength="12" required />
                 </div>
               </div>
               <div class="form-row align-items-center mb-sm-3">
@@ -348,7 +349,7 @@
         </div>
         <form action="/admin/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
           <div class="modal-body">
-            Aprima el botón "Eliminar" a continuación si está listo para
+            Oprima el botón "Eliminar" a continuación si está listo para
             eliminar a el usuario:
             <div class="mb-3">
               <label for="userModal" class="form-label">Identificación</label>
