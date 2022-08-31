@@ -7,7 +7,9 @@ router.get("/", moderController.isAuthenticatedModer, (req, res) => {
   res.render("moderador/main", { user: req.user });
 });
 
-// Apartado: Cuentas - Register
+// Apartado: Cuentas
+
+// Register
 router.get(
   "/Cuentas/Register",
   moderController.isAuthenticatedModer,
@@ -33,7 +35,8 @@ router.post(
     });
   }
 );
-// Apartado: Cuentas - Usuarios
+
+// Usuarios
 router.get(
   "/Cuentas/Usuarios",
   moderController.isAuthenticatedModer,

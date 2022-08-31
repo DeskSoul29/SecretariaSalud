@@ -22,6 +22,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
+
               <!-- Page Heading -->
               <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Bienvenido, <%= user.nombre %>
@@ -83,7 +84,7 @@
                       <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Tasks
+                            Tareas
                           </div>
                           <div class="row no-gutters align-items-center">
                             <div class="col-auto">
@@ -114,7 +115,7 @@
                       <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                           <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests
+                            Tareas Pendientes
                           </div>
                           <div class="h5 mb-0 font-weight-bold text-gray-800">
                             18
@@ -210,6 +211,64 @@
                   </div>
                 </div>
               </div>
+
+              <div class="row">
+                <div class="col-xl-6 col-md-6 mb-4">
+                  <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        Estado de las Consolidaciones
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Nombre</th>
+                              <th scope="col">Fecha de Envio</th>
+                              <th scope="col">Estado</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <th scope="row">1</th>
+                              <td>Pedro Buenaño</td>
+                              <td>30/08/2022</td>
+                              <td><a class="btn-success btn-circle btn-sm">
+                                  <span class="icon">
+                                    <i class="fas fa-check"></i>
+                                  </span>
+                                </a></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">2</th>
+                              <td>Rafael Garabito</td>
+                              <td>30/08/2022</td>
+                              <td><a class="btn-warning btn-circle btn-sm">
+                                  <span class="icon ">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                  </span></a></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">3</th>
+                              <td>Manuela Becerra</td>
+                              <td>30/08/2022</td>
+                              <td><a class="btn-success btn-circle btn-sm">
+                                  <span class="icon">
+                                    <i class="fas fa-check"></i>
+                                  </span>
+                                </a></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
             <!-- /.container-fluid -->
         </div>
