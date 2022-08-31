@@ -347,13 +347,13 @@ adminController.isAuthenticatedAdmin = async (req, res, next) => {
       return next();
     }
   } else {
-    res.redirect("/login");
+    res.redirect("/");
   }
 };
 
 adminController.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/login");
+  return res.redirect("/");
 };
 
 module.exports = adminController;
