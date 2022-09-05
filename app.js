@@ -23,9 +23,9 @@ app.use(cookieParser());
 
 // Llamar al router
 app.use("/", require("./routes/login"));
-app.use("/admin", require("./routes/admin"));
-app.use("/moderador", require("./routes/moderador"));
-app.use("/visitante", require("./routes/visitante"));
+app.use("/coordinacion", require("./routes/coordinacion"));
+app.use("/profesional", require("./routes/profesional"));
+app.use("/tecnico", require("./routes/tecnico"));
 
 // Para eliminar la cache
 app.use(function (req, res, next) {

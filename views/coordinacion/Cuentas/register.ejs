@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <%- include('../../tools/head'); %>
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../tools/sidebarAdmin'); %>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <%- include('../../tools/topbar'); %>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <!-- Page Heading -->
+              <div class="container">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                  <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="p-5">
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
+                      </div>
+                      <form action="/coordinacion/Cuentas/Register" method="POST" autocomplete="off">
+
+                        <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
+                              placeholder="Nombres" autocomplete="off" required />
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="text" class="mayusPal form-control form-control-user" id="lastname"
+                              name="lastname" placeholder="Apellidos" autocomplete="off" required />
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <input placeholder="Numero de Identificación" type="number"
+                            class="form-control form-control-user" id="user" name="user" autocomplete="false"
+                            minlength="7" maxlength="12" required />
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-sm-6 mb-3 mb-sm-0">
+                            <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="12" required />
+                          </div>
+                          <div class="col-sm-6">
+                            <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="12"
+                              required />
+                          </div>
+                        </div>
+
+                        <div class="form-row align-items-center mb-sm-3">
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                            <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
+                              <option selected disabled>Seleccione la Provincia</option>
+                              <% let numberSelected="" ; %>
+                                <% fields.forEach((fields)=> { %>
+                                  <% if (numberSelected !=fields.nombre_provincia){ %>
+                                    <option value="<%= fields.nombre_provincia %>">
+                                      <%= fields.nombre_provincia %>
+                                    </option>
+                                    <% numberSelected=fields.nombre_provincia %>
+                                      <% } %>
+                                        <% }) %>
+                            </select>
+                          </div>
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
+                              <option selected disabled>Seleccione el Municipio</option>
+                            </select>
+                          </div>
+                          <div class="col-auto my-1">
+                            <label class="mr-sm-2" for="rol">Rol</label>
+                            <select class="custom-select mr-sm-2" id="rol" name="rol" required>
+                              <option selected disabled>Seleccione el Rol</option>
+                              <option value="coordinacion">Coordinación</option>
+                              <option value="profesional">Profesional</option>
+                              <option value="tecnico">Tecnico</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-user btn-block" type="submit">
+                          Registrar Cuenta
+                        </button>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <script type="text/JavaScript">
+            const array = []
+            <% fields.forEach((fields)=> { %>
+              array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+            <% }) %>
+
+            const selectP = document.getElementById('provinciaID');
+            const selectM = document.getElementById("muniSelect");
+
+            selectP.addEventListener('change', function () {
+              const selectedOption = this.options[selectP.selectedIndex];
+
+              //Eliminar el listado de Municipios si hay mas de 1 (El de "Seleccionar" siempre sera el 1)
+              for (let i = selectM.options.length; i >= 1; i--) {
+                selectM.remove(i);
+              }
+
+              // Llenado de Municipios
+              for(let i=0; i<array.length; i++) {
+                if(array[i] == selectedOption.value && array[i+1] != "Yariguíes"){
+                  const option = document.createElement('option');
+                  const valor = array[i+1]
+                  option.value = valor;
+                  option.text = valor;
+                  selectM.add(option);
+                }
+              }
+            });
+          </script>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <%- include('../../tools/footer'); %>
+          <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="text/JavaScript">
+    $(window).bind("load", function () {
+      var nav = document.getElementById("nav3");
+      $("#navlink2").removeClass("collapsed");
+      var nav3 = document.getElementById("collapsePages");
+      var nav4 = document.getElementById("show17");
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+    </script>
+
+  <% if(typeof alert !="undefined" ) { %>
+    <script type="text/JavaScript">
+        Swal.fire({
+          title: '<%= alert[0].alertTitle %>',
+          text:'<%= alert[0].alertMessage %>',
+          icon:'<%= alert[0].alertIcon %>',
+          showConfirmButton: <%= alert[0].showConfirmButton %>,
+          timer: <%= alert[0].timer %>
+        }).then(()=>{
+          window.location = '/<%= alert[0].ruta %>'
+        })
+      </script>
+    <% } %>
+</body>
+
+</html>
