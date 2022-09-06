@@ -356,5 +356,5 @@ exports.isAuthenticatedModer = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.clearCookie("jwt");
-  return res.redirect("/login");
+  return res.redirect("/");
 };
