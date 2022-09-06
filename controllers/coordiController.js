@@ -141,8 +141,8 @@ coordinacionController.users = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
     conexion.query(
-      "SELECT * FROM users WHERE id != ?",
-      [decodificada.id],
+      "SELECT * FROM users WHERE user != ?",
+      [decodificada.user],
       function (err, result) {
         if (err) throw err;
         req.users = result;
@@ -330,8 +330,8 @@ coordinacionController.isAuthenticatedcoordinacion = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       conexion.query(
-        "SELECT * FROM users WHERE id = ?",
-        [decodificada.id],
+        "SELECT * FROM users WHERE user = ?",
+        [decodificada.user],
         (error, results) => {
           if (!results) {
             return next();

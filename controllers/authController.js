@@ -43,7 +43,6 @@ authController.login = async (req, res) => {
 
             const token = jwt.sign(
               {
-                id: results[0].id,
                 user: user,
                 nombres: results[0].nombre,
                 apellidos: results[0].apellido,
@@ -66,11 +65,11 @@ authController.login = async (req, res) => {
             };
             res.cookie("jwt", token, cookiesOptions);
             if (results[0].rol == "coordinacion") {
-              iscoordinacion(res);
+              isCoordinacion(res);
             } else if (results[0].rol == "profesional") {
-              isModer(res);
+              isProfesional(res);
             } else {
-              isVisit(res);
+              isTecnico(res);
             }
           }
         }
@@ -81,7 +80,7 @@ authController.login = async (req, res) => {
   }
 };
 
-function iscoordinacion(res) {
+function isCoordinacion(res) {
   res.render("login", {
     alert: true,
     alertTitle: "Conexión exitosa",
@@ -93,7 +92,7 @@ function iscoordinacion(res) {
   });
 }
 
-function isModer(res) {
+function isProfesional(res) {
   res.render("login", {
     alert: true,
     alertTitle: "Conexión exitosa",
@@ -105,7 +104,7 @@ function isModer(res) {
   });
 }
 
-function isVisit(res) {
+function isTecnico(res) {
   res.render("login", {
     alert: true,
     alertTitle: "Conexión exitosa",
@@ -125,8 +124,8 @@ authController.isAuthenticated = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       conexion.query(
-        "SELECT * FROM users WHERE id = ?",
-        [decodificada.id],
+        "SELECT * FROM users WHERE user = ?",
+        [decodificada.user],
         (error, results) => {
           if (!results) {
             return next();

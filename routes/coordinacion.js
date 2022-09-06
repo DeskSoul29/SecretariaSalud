@@ -13,7 +13,7 @@ router.get(
 
 // Apartado: Cuentas
 
-//Register;
+//Register
 router.get(
   "/Cuentas/Register",
   coordinacionController.isAuthenticatedcoordinacion,

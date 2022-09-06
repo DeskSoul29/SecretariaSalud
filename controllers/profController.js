@@ -309,8 +309,8 @@ exports.users = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
     conexion.query(
-      "SELECT * FROM users WHERE id != ? AND rol != 'coordinacion' AND provincia = ?",
-      [decodificada.id, decodificada.provincia],
+      "SELECT * FROM users WHERE user != ? AND rol != 'coordinacion' AND provincia = ?",
+      [decodificada.user, decodificada.provincia],
       function (err, result) {
         if (err) throw err;
         req.users = result;
@@ -333,8 +333,8 @@ exports.isAuthenticatedModer = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       conexion.query(
-        "SELECT * FROM users WHERE id = ?",
-        [decodificada.id],
+        "SELECT * FROM users WHERE user = ?",
+        [decodificada.user],
         (error, results) => {
           if (!results) {
             return next();
