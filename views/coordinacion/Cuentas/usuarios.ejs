@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <%- include('../../tools/head'); %>
+    <!-- Custom styles for this page -->
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../tools/sidebarAdmin'); %>
+      <!-- End of Sidebar -->
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <%- include('../../tools/topbar'); %>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <!-- Page Heading -->
+              <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
+
+              <!-- DataTales Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Listado de Usuarios
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Identificación</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Provincia</th>
+                          <th>Municipio</th>
+                          <th>Rol</th>
+                          <th>Apoyo</th>
+                          <th>Acción</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                          <th>Identificación</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Provincia</th>
+                          <th>Municipio</th>
+                          <th>Rol</th>
+                          <th>Apoyo</th>
+                          <th>Acción</th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                        <% if (users){ %>
+                          <% users.forEach((users)=> { %>
+                            <tr>
+                              <td>
+                                <%= users.user %>
+                              </td>
+                              <td>
+                                <%= users.nombre %>
+                              </td>
+                              <td>
+                                <%= users.apellido %>
+                              </td>
+                              <td>
+                                <%= users.provincia %>
+                              </td>
+                              <td>
+                                <%= users.municipio %>
+                              </td>
+                              <td>
+                                <%= users.rol %>
+                              </td>
+                              <td>
+                                <%= users.municipio_extra %>
+                              </td>
+                              <td>
+                                <a onclick='editar_modal("<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
+                                  type="button" data-target="#editModal" data-toggle="modal"
+                                  class="btn btn-warning btn-circle btn-sm">
+                                  <i class="fas fa-pen-to-square"></i>
+                                </a>
+                                <a onclick='eliminar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
+                                  type="button" data-target="#deleteModal" data-toggle="modal"
+                                  class="btn btn-danger btn-circle btn-sm">
+                                  <i class="fas fa-trash"></i>
+                                </a>
+                                <% if(users.rol=="tecnico" ){ %>
+                                  <% if(users.municipio_extra==null ){ %>
+                                    <a onclick='addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>")'
+                                      type="button" data-target="#extraModalADD" data-toggle="modal"
+                                      class="btn btn-info btn-circle btn-sm">
+                                      <i class="fas fa-plus"></i>
+                                    </a>
+                                    <% }else{ %>
+                                      <a onclick='deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
+                                        type="button" data-target="#extraModalDELETE" data-toggle="modal"
+                                        class="btn btn-info btn-circle btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                      </a>
+                                      <% } %>
+                                        <% } %>
+                              </td>
+                            </tr>
+                            <% }); %>
+                              <% } %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <%- include('../../tools/footer'); %>
+          <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ExtraADD Modal-->
+  <div class="modal fade" id="extraModalADD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/ExtraADD" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <b>
+              Verifique los datos del tecnico y luego eliga el municipio a ayudar
+            </b>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userADDMuni" id="userADDMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombreADDMuni" id="nombreADDMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio</label>
+              <select id="muniADD" name="muniADD" class="custom-select mr-sm-2" required>
+                <option selected disabled>Seleccione el Municipio</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Añadir Municipio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- DeleteADD Modal-->
+  <div class="modal fade" id="extraModalDELETE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/ExtraDELETE" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <b>
+              Verifique los datos del Tecnico
+            </b>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userDELETEMuni" id="userDELETEMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombreDELETEMuni" id="nombreDELETEMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio</label>
+              <input type="text" class="form-control" name="muniDELETE" id="muniDELETE" readonly>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Eliminar Municipio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal-->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/Edit" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <div class="card-body p-0">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
+                    placeholder="Nombres" required />
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" class="mayusPal form-control form-control-user" id="lastname" name="lastname"
+                    placeholder="Apellidos" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control form-control-user" id="user" name="user" minlength="7"
+                  maxlength="12" readonly />
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                    placeholder="Contraseña" minlength="4" maxlength="12" required />
+                </div>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                    placeholder="Repite la Contraseña" minlength="4" maxlength="12" required />
+                </div>
+              </div>
+              <div class="form-row align-items-center mb-sm-3">
+                <div class="col-auto my-1">
+                  <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                  <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
+                    <option selected disabled value="">Seleccione la Provincia</option>
+                    <% let numberSelected="" ; %>
+                      <% fields.forEach((fields)=> { %>
+                        <% if (numberSelected !=fields.nombre_provincia){ %>
+                          <option value="<%= fields.nombre_provincia %>">
+                            <%= fields.nombre_provincia %>
+                          </option>
+                          <% numberSelected=fields.nombre_provincia %>
+                            <% } %>
+                              <% }) %>
+                  </select>
+                  <div class="invalid-feedback">Example invalid custom select feedback</div>
+                </div>
+                <div class="col-auto my-1">
+                  <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                  <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
+                    <option selected disabled>Seleccione el Municipio</option>
+                  </select>
+                </div>
+                <div class="col-auto my-1">
+                  <label class="mr-sm-2" for="inlineFormCustomSelect">Rol</label>
+                  <select class="custom-select mr-sm-2" id="rol" name="rol" required>
+                    <option selected disabled>Seleccione el Rol</option>
+                    <option value="coordinacion">Coordinación</option>
+                    <option value="profesional">Profesional</option>
+                    <option value="tecnico">Tecnico</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Actualizar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
+          <div class="modal-body">
+            Oprima el botón "Eliminar" a continuación si está listo para
+            eliminar a el usuario:
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userDel" id="userModal" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreModal" disabled>
+            </div>
+            <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Eliminar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+
+  <!-- Page level plugins -->
+  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/js/demo/datatables-demo.js"></script>
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="text/JavaScript">
+    $(window).bind("load", function () {
+      var nav = document.getElementById("nav3");
+      $("#navlink2").removeClass("collapsed");
+      var nav3 = document.getElementById("collapsePages");
+      var nav4 = document.getElementById("show16");
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+
+    function eliminar_modal(user, nombre) {
+      document.getElementById("userModal").value = user;
+      document.getElementById("nombreModal").value = nombre;
+    }
+
+    function editar_modal(user, nombre, apellido, provincia, municipio, rol) {
+      document.getElementById("user").value = user;
+      document.getElementById("name").value = nombre;
+      document.getElementById("lastname").value = apellido;
+      $("#rol").val(rol);
+    }
+
+    function deleteMuni(user, nombre, muniEx) {
+      document.getElementById("userDELETEMuni").value = user;
+      document.getElementById("nombreDELETEMuni").value = nombre;
+      document.getElementById("muniDELETE").value = muniEx;
+    }
+
+    const array = []
+    <% fields.forEach((fields)=> { %>
+      array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+    <% }) %>
+
+    function addMuni(user, nombre, provincia, municipio) {
+      document.getElementById("userADDMuni").value = user;
+      document.getElementById("nombreADDMuni").value = nombre;
+      const selectMEx = document.getElementById("muniADD");
+      //Eliminar el listado de Municipios si hay mas de 1
+      for (let i = selectMEx.options.length; i >= 1; i--) {
+        selectMEx.remove(i);
+      }
+      for(var i=0; i<array.length; i++) {
+        if(array[i] == provincia && array[i+1] != "Yariguíes" && municipio != array[i+1]){
+            const option = document.createElement('option');
+            const valor = array[i+1]
+            option.value = valor;
+            option.text = valor;
+            selectMEx.add(option);
+        }
+      }
+    }
+
+    // Llenado de Municipios al cambiar el Select en el boton que abre el modal "Edit"
+
+    var selectP = document.getElementById('provinciaID');
+    const selectM = document.getElementById("muniSelect");
+
+    selectP.addEventListener('change', function () {
+      var selectedOption = this.options[selectP.selectedIndex];
+
+      //Eliminar el listado de Municipios si hay mas de 1
+      for (let i = selectM.options.length; i >= 1; i--) {
+        selectM.remove(i);
+      }
+
+      // Llenado de Municipios
+      for(var i=0; i<array.length; i++) {
+        if(array[i] == selectedOption.value && array[i+1] != "Yariguíes"){
+          const option = document.createElement('option');
+          const valor = array[i+1]
+          option.value = valor;
+          option.text = valor;
+          selectM.add(option);
+        }
+      }
+    });
+    </script>
+
+  <% if(typeof alert !="undefined" ) { %>
+    <script type="text/JavaScript">
+        Swal.fire({
+          title: '<%= alert[0].alertTitle %>',
+          text:'<%= alert[0].alertMessage %>',
+          icon:'<%= alert[0].alertIcon %>',
+          showConfirmButton: <%= alert[0].showConfirmButton %>,
+          timer: <%= alert[0].timer %>
+        }).then(()=>{
+          window.location = '/<%= alert[0].ruta %>'
+        })
+      </script>
+    <% } %>
+</body>
+
+</html>

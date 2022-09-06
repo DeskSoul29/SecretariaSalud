@@ -65,9 +65,9 @@ authController.login = async (req, res) => {
               httpOnly: true,
             };
             res.cookie("jwt", token, cookiesOptions);
-            if (results[0].rol == "admin") {
-              isAdmin(res);
-            } else if (results[0].rol == "moderador") {
+            if (results[0].rol == "coordinacion") {
+              iscoordinacion(res);
+            } else if (results[0].rol == "profesional") {
               isModer(res);
             } else {
               isVisit(res);
@@ -81,7 +81,7 @@ authController.login = async (req, res) => {
   }
 };
 
-function isAdmin(res) {
+function iscoordinacion(res) {
   res.render("login", {
     alert: true,
     alertTitle: "Conexión exitosa",
@@ -89,7 +89,7 @@ function isAdmin(res) {
     alertIcon: "success",
     showConfirmButton: false,
     timer: 800,
-    ruta: "admin",
+    ruta: "coordinacion",
   });
 }
 
@@ -101,7 +101,7 @@ function isModer(res) {
     alertIcon: "success",
     showConfirmButton: false,
     timer: 800,
-    ruta: "moderador",
+    ruta: "profesional",
   });
 }
 
@@ -113,7 +113,7 @@ function isVisit(res) {
     alertIcon: "success",
     showConfirmButton: false,
     timer: 800,
-    ruta: "visitante",
+    ruta: "tecnico",
   });
 }
 
