@@ -295,18 +295,18 @@
                     <option selected disabled value="">Seleccione la Provincia</option>
                     <% let numberSelected="" ; %>
                       <% fields.forEach((fields)=> { %>
-                        <% if (numberSelected !=fields.nombre_provincia){ %>
-                          <option value="<%= fields.nombre_provincia %>">
-                            <%= fields.nombre_provincia %>
+                        <% if (numberSelected !=fields.provincia){ %>
+                          <option value="<%= fields.provincia %>">
+                            <%= fields.provincia %>
                           </option>
-                          <% numberSelected=fields.nombre_provincia %>
+                          <% numberSelected=fields.provincia %>
                             <% } %>
                               <% }) %>
                   </select>
                   <div class="invalid-feedback">Example invalid custom select feedback</div>
                 </div>
                 <div class="col-auto my-1">
-                  <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                  <label class="mr-sm-2" for="muniSelect">Municipios de Apoyo</label>
                   <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
                     <option selected disabled>Seleccione el Municipio</option>
                   </select>
@@ -424,7 +424,7 @@
 
     const array = []
     <% fields.forEach((fields)=> { %>
-      array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+      array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
     <% }) %>
 
     function addMuni(user, nombre, provincia, municipio) {
@@ -436,7 +436,7 @@
         selectMEx.remove(i);
       }
       for(var i=0; i<array.length; i++) {
-        if(array[i] == provincia && array[i+1] != "Yariguíes" && municipio != array[i+1]){
+        if(array[i] == provincia && array[i+1] != "SOTO" && municipio != array[i+1]){
             const option = document.createElement('option');
             const valor = array[i+1]
             option.value = valor;
@@ -461,7 +461,7 @@
 
       // Llenado de Municipios
       for(var i=0; i<array.length; i++) {
-        if(array[i] == selectedOption.value && array[i+1] != "Yariguíes"){
+        if(array[i] == selectedOption.value && array[i+1] != "SOTO"){
           const option = document.createElement('option');
           const valor = array[i+1]
           option.value = valor;

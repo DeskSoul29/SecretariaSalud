@@ -47,17 +47,17 @@
                         <div class="form-group">
                           <input placeholder="Numero de Identificación" type="number"
                             class="form-control form-control-user" id="user" name="user" autocomplete="false"
-                            minlength="7" maxlength="12" required />
+                            minlegth="8" maxlength="10" required />
                         </div>
 
                         <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
                             <input type="password" class="form-control form-control-user" id="pass" name="pass"
-                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="12" required />
+                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="10" required />
                           </div>
                           <div class="col-sm-6">
                             <input type="password" class="form-control form-control-user" id="repass" name="repass"
-                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="12"
+                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="10"
                               required />
                           </div>
                         </div>
@@ -69,11 +69,11 @@
                               <option selected disabled>Seleccione la Provincia</option>
                               <% let numberSelected="" ; %>
                                 <% fields.forEach((fields)=> { %>
-                                  <% if (numberSelected !=fields.nombre_provincia){ %>
-                                    <option value="<%= fields.nombre_provincia %>">
-                                      <%= fields.nombre_provincia %>
+                                  <% if (numberSelected !=fields.provincia){ %>
+                                    <option value="<%= fields.provincia %>">
+                                      <%= fields.provincia %>
                                     </option>
-                                    <% numberSelected=fields.nombre_provincia %>
+                                    <% numberSelected=fields.provincia %>
                                       <% } %>
                                         <% }) %>
                             </select>
@@ -108,7 +108,7 @@
             <script type="text/JavaScript">
             const array = []
             <% fields.forEach((fields)=> { %>
-              array.push(["<%= fields.nombre_provincia %>"], ["<%= fields.nombre_municipio %>"])
+              array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
             <% }) %>
 
             const selectP = document.getElementById('provinciaID');
@@ -124,7 +124,7 @@
 
               // Llenado de Municipios
               for(let i=0; i<array.length; i++) {
-                if(array[i] == selectedOption.value && array[i+1] != "Yariguíes"){
+                if(array[i] == selectedOption.value && array[i+1] != "SOTO"){
                   const option = document.createElement('option');
                   const valor = array[i+1]
                   option.value = valor;
@@ -206,8 +206,6 @@
           icon:'<%= alert[0].alertIcon %>',
           showConfirmButton: <%= alert[0].showConfirmButton %>,
           timer: <%= alert[0].timer %>
-        }).then(()=>{
-          window.location = '/<%= alert[0].ruta %>'
         })
       </script>
     <% } %>

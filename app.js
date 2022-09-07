@@ -1,8 +1,26 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
+const mongoose = require("mongoose");
+
+var login = require("./routes/login");
+var coordinacion = require("./routes/coordinacion");
+var profesional = require("./routes/profesional");
+var tecnico = require("./routes/tecnico");
 
 const app = express();
+
+//BD
+const usuario = "desksoul29";
+const password = "desk123";
+const dbName = "SecretariaSalud";
+
+const uri = `mongodb+srv://${usuario}:${password}@clusterup.yuxje.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
+mongoose
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("¡Conectado a la base de datos MongoDB! 👋"))
+  .catch((e) => console.log("Error de conexión: ", e));
 
 // Seteamos el motor de plantillas
 app.set("view engine", "ejs");
@@ -22,10 +40,10 @@ dotenv.config({ path: "./env/.env" });
 app.use(cookieParser());
 
 // Llamar al router
-app.use("/", require("./routes/login"));
-app.use("/coordinacion", require("./routes/coordinacion"));
-app.use("/profesional", require("./routes/profesional"));
-app.use("/tecnico", require("./routes/tecnico"));
+app.use("/", login);
+app.use("/coordinacion", coordinacion);
+// app.use("/profesional", profesional);
+// app.use("/tecnico", tecnico);
 
 // Para eliminar la cache
 app.use(function (req, res, next) {

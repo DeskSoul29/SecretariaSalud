@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
-const conexion = require("../database/db");
 const { promisify } = require("util");
+var login = require("../models/user");
+var localidades = require("../models/localidades");
 
 var coordinacionController = {};
 
@@ -35,7 +36,6 @@ coordinacionController.register = async (req, res, next) => {
           alertIcon: "error",
           showConfirmButton: true,
           timer: false,
-          ruta: "coordinacion/Cuentas/Register",
         },
       ];
       return next();
@@ -48,74 +48,61 @@ coordinacionController.register = async (req, res, next) => {
           alertIcon: "error",
           showConfirmButton: true,
           timer: false,
-          ruta: "coordinacion/Cuentas/Register",
         },
       ];
       return next();
     } else {
-      conexion.query(
-        "SELECT * FROM users WHERE user = ?",
-        [user],
-        async (error, results) => {
-          if (results.length == 1) {
-            //Usuario ya registrado
-            req.alert = [
-              {
-                alertTitle: "Error",
-                alertMessage: "Usuario ya registrado",
-                alertIcon: "error",
-                showConfirmButton: true,
-                timer: false,
-                ruta: "coordinacion/Cuentas/Register",
-              },
-            ];
-            return next();
-          } else {
-            let passHash = await bcryptjs.hash(pass, 8);
+      login.find({ user: user }).exec(async (err, results) => {
+        if (results.length != 0) {
+          //Usuario ya registrado
+          req.alert = [
+            {
+              alertTitle: "Error",
+              alertMessage: "Usuario ya registrado",
+              alertIcon: "error",
+              showConfirmButton: true,
+              timer: false,
+            },
+          ];
+          return next();
+        } else {
+          var userNew = new login({
+            user: user,
+            nombre: name,
+            apellido: lastname,
+            pass: await bcryptjs.hash(pass, 8),
+            provincia: provincia,
+            municipio: municipio,
+            rol: rol,
+          });
 
-            conexion.query(
-              "INSERT INTO users SET ?",
-              {
-                user: user,
-                nombre: name,
-                apellido: lastname,
-                pass: passHash,
-                provincia: provincia,
-                municipio: municipio,
-                rol: rol,
-              },
-              (error) => {
-                if (error) {
-                  console.log(error);
-                  req.alert = [
-                    {
-                      alertTitle: "Error",
-                      alertMessage: "Error en la Base de Datos",
-                      alertIcon: "error",
-                      showConfirmButton: true,
-                      timer: false,
-                      ruta: "coordinacion/Cuentas/Register",
-                    },
-                  ];
-                } else {
-                  //Registrado correctamente
-                  req.alert = [
-                    {
-                      alertTitle: "Conexión exitosa",
-                      alertMessage: "Registrado correctamente",
-                      alertIcon: "success",
-                      showConfirmButton: false,
-                      timer: 800,
-                      ruta: "coordinacion/Cuentas/Register",
-                    },
-                  ];
-                }
-                return next();
-              }
-            );
-          }
+          userNew.save(function (err, result) {
+            if (!result) {
+              req.alert = [
+                {
+                  alertTitle: "Error",
+                  alertMessage: "Error en la Base de Datos",
+                  alertIcon: "error",
+                  showConfirmButton: true,
+                  timer: false,
+                },
+              ];
+            } else {
+              //Registrado correctamente
+              req.alert = [
+                {
+                  alertTitle: "Conexión exitosa",
+                  alertMessage: "Registrado correctamente",
+                  alertIcon: "success",
+                  showConfirmButton: false,
+                  timer: 800,
+                },
+              ];
+            }
+            return next();
+          });
         }
-      );
+      });
     }
   } catch (error) {
     console.log(error);
@@ -123,14 +110,11 @@ coordinacionController.register = async (req, res, next) => {
 };
 
 coordinacionController.fillFields = async (req, res, next) => {
-  conexion.query(
-    "SELECT provincias.nombre_provincia, municipios.nombre_municipio FROM provincias LEFT JOIN municipios ON municipios.id_provincia = provincias.id_provincia",
-    function (err, result) {
-      if (err) throw err;
-      req.field = result;
-      return next();
-    }
-  );
+  localidades.find({}).exec(async (err, results) => {
+    if (err) throw err;
+    req.field = results;
+    return next();
+  });
 };
 
 //Apartado Cuentas - Usuarios
@@ -140,15 +124,13 @@ coordinacionController.users = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    conexion.query(
-      "SELECT * FROM users WHERE user != ?",
-      [decodificada.user],
-      function (err, result) {
+    login
+      .find({ user: { $ne: decodificada.user } })
+      .exec(async (err, results) => {
         if (err) throw err;
-        req.users = result;
+        req.users = results;
         return next();
-      }
-    );
+      });
   } catch (error) {
     console.log(error);
     return next();
@@ -200,13 +182,21 @@ coordinacionController.editUser = async (req, res, next) => {
     ];
     return next();
   } else {
-    let passHash = await bcryptjs.hash(pass, 8);
-    conexion.query(
-      "UPDATE users SET user = ?, nombre = ?, apellido = ?, pass = ?, provincia = ?, municipio = ?, rol = ? WHERE user = ?",
-      [user, name, lastname, passHash, provincia, municipio, rol, user],
-      (error) => {
-        if (error) {
-          console.log(error);
+    login.updateOne(
+      { user: user },
+      {
+        $set: {
+          user: user,
+          nombre: name,
+          apellido: lastname,
+          pass: await bcryptjs.hash(pass, 8),
+          provincia: provincia,
+          municipio: municipio,
+          rol: rol,
+        },
+      },
+      function (err, results) {
+        if (err) {
         } else {
           req.alert = [
             {
@@ -225,36 +215,32 @@ coordinacionController.editUser = async (req, res, next) => {
   }
 };
 coordinacionController.deleteUser = async (req, res, next) => {
-  conexion.query(
-    "DELETE FROM users WHERE user = ?",
-    req.body.userDel,
-    function (err) {
-      if (err) {
-        req.alert = [
-          {
-            alertTitle: "Error",
-            alertMessage: "No se encuentra el Usuario",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      } else {
-        req.alert = [
-          {
-            alertTitle: "Conexión exitosa",
-            alertMessage: "Eliminado correctamente",
-            alertIcon: "success",
-            showConfirmButton: false,
-            timer: 800,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      }
-      return next();
+  login.deleteOne({ user: req.body.userDel }).exec(async (err, results) => {
+    if (err) {
+      req.alert = [
+        {
+          alertTitle: "Error",
+          alertMessage: "No se encuentra el Usuario",
+          alertIcon: "error",
+          showConfirmButton: true,
+          timer: false,
+          ruta: "coordinacion/Cuentas/Usuarios",
+        },
+      ];
+    } else {
+      req.alert = [
+        {
+          alertTitle: "Conexión exitosa",
+          alertMessage: "Eliminado correctamente",
+          alertIcon: "success",
+          showConfirmButton: false,
+          timer: 800,
+          ruta: "coordinacion/Cuentas/Usuarios",
+        },
+      ];
     }
-  );
+    return next();
+  });
 };
 coordinacionController.extraADD = async (req, res, next) => {
   conexion.query(
@@ -322,26 +308,22 @@ coordinacionController.extraDELETE = async (req, res, next) => {
 };
 
 //Extras
-coordinacionController.isAuthenticatedcoordinacion = async (req, res, next) => {
+coordinacionController.isAuthenticatedCoordinacion = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
         process.env.JWT_SECRETO
       );
-      conexion.query(
-        "SELECT * FROM users WHERE user = ?",
-        [decodificada.user],
-        (error, results) => {
-          if (!results) {
-            return next();
-          } else if (results[0].rol != "coordinacion") {
-            return res.redirect("/" + results[0].rol);
-          }
-          req.user = results[0];
+      login.findOne({ user: decodificada.user }).exec(async (err, results) => {
+        if (!results) {
           return next();
+        } else if (results.rol != "coordinacion") {
+          return res.redirect("/" + results.rol);
         }
-      );
+        req.user = results;
+        return next();
+      });
     } catch (error) {
       console.log(error);
       return next();

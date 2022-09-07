@@ -5,7 +5,7 @@ const coordinacionController = require("../controllers/coordiController");
 
 router.get(
   "/",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/main", { user: req.user });
   }
@@ -16,7 +16,7 @@ router.get(
 //Register
 router.get(
   "/Cuentas/Register",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.fillFields,
   (req, res) => {
     res.render("coordinacion/Cuentas/register", {
@@ -30,7 +30,7 @@ router.post(
   "/Cuentas/Register",
   coordinacionController.register,
   coordinacionController.fillFields,
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Cuentas/Register", {
       alert: req.alert,
@@ -43,7 +43,7 @@ router.post(
 //Usuarios
 router.get(
   "/Cuentas/Usuarios",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.users,
   coordinacionController.fillFields,
   (req, res) => {
@@ -58,7 +58,7 @@ router.get(
 router.post(
   "/Cuentas/Usuarios/Delete",
   coordinacionController.deleteUser,
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.users,
   coordinacionController.fillFields,
   (req, res) => {
@@ -72,7 +72,7 @@ router.post(
 );
 router.post(
   "/Cuentas/Usuarios/Edit",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.users,
   coordinacionController.fillFields,
   coordinacionController.editUser,
@@ -87,7 +87,7 @@ router.post(
 );
 router.post(
   "/Cuentas/Usuarios/ExtraADD",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.users,
   coordinacionController.fillFields,
   coordinacionController.extraADD,
@@ -102,7 +102,7 @@ router.post(
 );
 router.post(
   "/Cuentas/Usuarios/ExtraDELETE",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.users,
   coordinacionController.fillFields,
   coordinacionController.extraDELETE,
@@ -119,7 +119,7 @@ router.post(
 // Apartado: Consolidaciones
 router.get(
   "/Consolidaciones/NAdministrativas",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/NAdministrativas", {
       user: req.user,
@@ -129,7 +129,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/ESPublica",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/ESPublica", {
       user: req.user,
@@ -139,7 +139,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/Establecimientos",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/Establecimientos", {
       user: req.user,
@@ -149,7 +149,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/Vehiculos",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/Vehiculos", {
       user: req.user,
@@ -159,7 +159,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/Cementerios",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/Cementerios", {
       user: req.user,
@@ -169,7 +169,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/Morgues",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/Morgues", {
       user: req.user,
@@ -179,7 +179,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/MSEstablecimientos",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/MSEstablecimientos", {
       user: req.user,
@@ -189,7 +189,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/MSProductos",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/MSProductos", {
       user: req.user,
@@ -199,7 +199,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/Quejas",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/Quejas", {
       user: req.user,
@@ -209,7 +209,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/TomaMuestras",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/TomaMuestras", {
       user: req.user,
@@ -219,7 +219,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/ViviendaSaludable",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/ViviendaSaludable", {
       user: req.user,
@@ -229,7 +229,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/CarnetsBPM",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/CarnetsBPM", {
       user: req.user,
@@ -239,7 +239,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/IVCRotulado",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/IVCRotulado", {
       user: req.user,
@@ -249,7 +249,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/IVCPublicidad",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/IVCPublicidad", {
       user: req.user,
@@ -259,7 +259,7 @@ router.get(
 
 router.get(
   "/Consolidaciones/EduSanitaria",
-  coordinacionController.isAuthenticatedcoordinacion,
+  coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Consolidaciones/EduSanitaria", {
       user: req.user,
