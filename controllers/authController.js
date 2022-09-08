@@ -18,7 +18,7 @@ authController.login = async (req, res) => {
         alertIcon: "info",
         showConfirmButton: true,
         timer: false,
-        ruta: "login",
+        ruta: "",
       });
     } else {
       login.findOne({ user: user }).exec(async (err, results) => {
@@ -30,7 +30,7 @@ authController.login = async (req, res) => {
             alertIcon: "error",
             showConfirmButton: true,
             timer: false,
-            ruta: "login",
+            ruta: "",
           });
         } else {
           // Inicio de sesión OK
