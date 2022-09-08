@@ -23,6 +23,7 @@ var UserSchema = new Schema({
     },
   },
   rol: { type: String, required: true, max: 100 },
+  crearedAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model("users", UserSchema);

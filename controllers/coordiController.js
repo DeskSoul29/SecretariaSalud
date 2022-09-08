@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 const { promisify } = require("util");
+
 var login = require("../models/user");
 var localidades = require("../models/localidades");
 

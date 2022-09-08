@@ -42,8 +42,8 @@ app.use(cookieParser());
 // Llamar al router
 app.use("/", login);
 app.use("/coordinacion", coordinacion);
-// app.use("/profesional", profesional);
-// app.use("/tecnico", tecnico);
+app.use("/profesional", profesional);
+app.use("/tecnico", tecnico);
 
 // Para eliminar la cache
 app.use(function (req, res, next) {
