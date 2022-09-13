@@ -7,6 +7,24 @@ var localidades = require("../models/localidades");
 
 var coordinacionController = {};
 
+var authCoordi = (function () {
+  var isUser = function (res, title, mess, icon, button, timer) {
+    return res.render("coordinacion/Cuentas/Register", {
+      alert: true,
+      alertTitle: title,
+      alertMessage: mess,
+      alertIcon: icon,
+      showConfirmButton: button,
+      timer: timer,
+      // ruta: "coordinacion/Cuentas/Register",
+    });
+  };
+
+  return {
+    isUser: isUser,
+  };
+})();
+
 // Apartado: Cuentas - Register
 coordinacionController.register = async (req, res, next) => {
   try {
@@ -30,42 +48,36 @@ coordinacionController.register = async (req, res, next) => {
       !rol
     ) {
       //Ingresar todos los campos
-      req.alert = [
-        {
-          alertTitle: "Error",
-          alertMessage: "Ingresar todos los campos",
-          alertIcon: "error",
-          showConfirmButton: true,
-          timer: false,
-        },
-      ];
-      return next();
+      authCoordi.isUser(
+        res,
+        "Advertencia",
+        "Ingresar todos los campos",
+        "error",
+        true,
+        false
+      );
     } else if (pass != repass) {
       //Contraseñas Diferentes
-      req.alert = [
-        {
-          alertTitle: "Error",
-          alertMessage: "Contraseñas Diferentes",
-          alertIcon: "error",
-          showConfirmButton: true,
-          timer: false,
-        },
-      ];
-      return next();
+      authCoordi.isUser(
+        res,
+        "Advertencia",
+        "Contraseñas Diferentes",
+        "error",
+        true,
+        false
+      );
     } else {
       login.find({ user: user }).exec(async (err, results) => {
         if (results.length != 0) {
           //Usuario ya registrado
-          req.alert = [
-            {
-              alertTitle: "Error",
-              alertMessage: "Usuario ya registrado",
-              alertIcon: "error",
-              showConfirmButton: true,
-              timer: false,
-            },
-          ];
-          return next();
+          authCoordi.isUser(
+            res,
+            "Advertencia",
+            "Usuario ya Registrado",
+            "error",
+            true,
+            false
+          );
         } else {
           var userNew = new login({
             user: user,
@@ -79,32 +91,30 @@ coordinacionController.register = async (req, res, next) => {
 
           userNew.save(function (err, result) {
             if (!result) {
-              req.alert = [
-                {
-                  alertTitle: "Error",
-                  alertMessage: "Error en la Base de Datos",
-                  alertIcon: "error",
-                  showConfirmButton: true,
-                  timer: false,
-                },
-              ];
+              authCoordi.isUser(
+                res,
+                "Advertencia",
+                "Error en la Base de Datos",
+                "error",
+                true,
+                false
+              );
             } else {
               //Registrado correctamente
-              req.alert = [
-                {
-                  alertTitle: "Conexión exitosa",
-                  alertMessage: "Registrado correctamente",
-                  alertIcon: "success",
-                  showConfirmButton: false,
-                  timer: 800,
-                },
-              ];
+              authCoordi.isUser(
+                res,
+                "Conexión exitosa",
+                "Registrado Correctamente",
+                "success",
+                false,
+                800
+              );
             }
-            return next();
           });
         }
       });
     }
+    return next();
   } catch (error) {
     console.log(error);
   }
@@ -158,29 +168,25 @@ coordinacionController.editUser = async (req, res, next) => {
     !rol
   ) {
     //Ingresar todos los campos
-    req.alert = [
-      {
-        alertTitle: "Error",
-        alertMessage: "Ingresar todos los campos",
-        alertIcon: "error",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "coordinacion/Cuentas/Usuarios",
-      },
-    ];
+    authCoordi.isUser(
+      res,
+      "Advertencia",
+      "Ingresar todos los campos",
+      "error",
+      true,
+      false
+    );
     return next();
   } else if (pass != repass) {
     //Contraseñas Diferentes
-    req.alert = [
-      {
-        alertTitle: "Error",
-        alertMessage: "Contraseñas Diferentes",
-        alertIcon: "error",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "coordinacion/Cuentas/Usuarios",
-      },
-    ];
+    authCoordi.isUser(
+      res,
+      "Advertencia",
+      "Contraseñas Diferentes",
+      "error",
+      true,
+      false
+    );
     return next();
   } else {
     login.updateOne(
@@ -199,16 +205,14 @@ coordinacionController.editUser = async (req, res, next) => {
       function (err, results) {
         if (err) {
         } else {
-          req.alert = [
-            {
-              alertTitle: "Conexión exitosa",
-              alertMessage: "Registrado correctamente",
-              alertIcon: "success",
-              showConfirmButton: false,
-              timer: 800,
-              ruta: "coordinacion/Cuentas/Usuarios",
-            },
-          ];
+          authCoordi.isUser(
+            res,
+            "Conexión Exitosa",
+            "Registrado Correctamente",
+            "success",
+            false,
+            800
+          );
           return next();
         }
       }
@@ -218,27 +222,24 @@ coordinacionController.editUser = async (req, res, next) => {
 coordinacionController.deleteUser = async (req, res, next) => {
   login.deleteOne({ user: req.body.userDel }).exec(async (err, results) => {
     if (err) {
-      req.alert = [
-        {
-          alertTitle: "Error",
-          alertMessage: "No se encuentra el Usuario",
-          alertIcon: "error",
-          showConfirmButton: true,
-          timer: false,
-          ruta: "coordinacion/Cuentas/Usuarios",
-        },
-      ];
+      authCoordi.isUser(
+        res,
+        "Advertencia",
+        "No se Encuentra el Usuario",
+        "error",
+        true,
+        false
+      );
     } else {
-      req.alert = [
-        {
-          alertTitle: "Conexión exitosa",
-          alertMessage: "Eliminado correctamente",
-          alertIcon: "success",
-          showConfirmButton: false,
-          timer: 800,
-          ruta: "coordinacion/Cuentas/Usuarios",
-        },
-      ];
+      res, title, mess, icon, button, timer;
+      authCoordi.isUser(
+        res,
+        "Conexión Exitosa",
+        "Eliminado Correctamente",
+        "success",
+        false,
+        800
+      );
     }
     return next();
   });

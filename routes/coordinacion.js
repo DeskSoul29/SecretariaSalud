@@ -7,7 +7,7 @@ router.get(
   "/",
   coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("coordinacion/main", { user: req.user });
+    res.render("Coordinacion/main", { user: req.user });
   }
 );
 
@@ -19,27 +19,24 @@ router.get(
   coordinacionController.isAuthenticatedCoordinacion,
   coordinacionController.fillFields,
   (req, res) => {
-    res.render("coordinacion/Cuentas/register", {
+    res.render("Coordinacion/Cuentas/register", {
       user: req.user,
       fields: req.field,
-      alert: undefined,
+      alert: false,
     });
   }
 );
 router.post(
   "/Cuentas/Register",
-  coordinacionController.register,
-  coordinacionController.fillFields,
   coordinacionController.isAuthenticatedCoordinacion,
+  coordinacionController.register,
   (req, res) => {
-    res.render("coordinacion/Cuentas/Register", {
-      alert: req.alert,
-      fields: req.field,
+    res.render("Coordinacion/Cuentas/Register", {
       user: req.user,
+      fields: false,
     });
   }
 );
-
 //Usuarios
 router.get(
   "/Cuentas/Usuarios",
@@ -47,7 +44,7 @@ router.get(
   coordinacionController.users,
   coordinacionController.fillFields,
   (req, res) => {
-    res.render("coordinacion/Cuentas/usuarios", {
+    res.render("Coordinacion/Cuentas/usuarios", {
       user: req.user,
       users: req.users,
       fields: req.field,
@@ -55,213 +52,99 @@ router.get(
     });
   }
 );
-router.post(
-  "/Cuentas/Usuarios/Delete",
-  coordinacionController.deleteUser,
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.users,
-  coordinacionController.fillFields,
-  (req, res) => {
-    res.render("coordinacion/Cuentas/Usuarios", {
-      alert: req.alert,
-      user: req.user,
-      users: req.users,
-      fields: req.field,
-    });
-  }
-);
-router.post(
-  "/Cuentas/Usuarios/Edit",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.users,
-  coordinacionController.fillFields,
-  coordinacionController.editUser,
-  (req, res) => {
-    res.render("coordinacion/Cuentas/Usuarios", {
-      user: req.user,
-      users: req.users,
-      fields: req.field,
-      alert: req.alert,
-    });
-  }
-);
-router.post(
-  "/Cuentas/Usuarios/ExtraADD",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.users,
-  coordinacionController.fillFields,
-  coordinacionController.extraADD,
-  (req, res) => {
-    res.render("coordinacion/Cuentas/Usuarios", {
-      user: req.user,
-      users: req.users,
-      fields: req.field,
-      alert: req.alert,
-    });
-  }
-);
-router.post(
-  "/Cuentas/Usuarios/ExtraDELETE",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.users,
-  coordinacionController.fillFields,
-  coordinacionController.extraDELETE,
-  (req, res) => {
-    res.render("coordinacion/Cuentas/Usuarios", {
-      user: req.user,
-      users: req.users,
-      fields: req.field,
-      alert: req.alert,
-    });
-  }
-);
+// router.post(
+//   "/Cuentas/Usuarios/Delete",
+//   coordinacionController.deleteUser,
+//   coordinacionController.isAuthenticatedCoordinacion,
+//   coordinacionController.users,
+//   coordinacionController.fillFields,
+//   (req, res) => {
+//     res.render("Coordinacion/Cuentas/Register", {
+//       user: req.user,
+//     });
+//   }
+// );
+// router.post(
+//   "/Cuentas/Usuarios/Edit",
+//   coordinacionController.isAuthenticatedCoordinacion,
+//   coordinacionController.users,
+//   coordinacionController.fillFields,
+//   coordinacionController.editUser,
+//   (req, res) => {
+//     res.render("Coordinacion/Cuentas/Usuarios", {
+//       user: req.user,
+//       users: req.users,
+//       fields: req.field,
+//       alert: req.alert,
+//     });
+//   }
+// );
+// router.post(
+//   "/Cuentas/Usuarios/ExtraADD",
+//   coordinacionController.isAuthenticatedCoordinacion,
+//   coordinacionController.users,
+//   coordinacionController.fillFields,
+//   coordinacionController.extraADD,
+//   (req, res) => {
+//     res.render("Coordinacion/Cuentas/Usuarios", {
+//       user: req.user,
+//       users: req.users,
+//       fields: req.field,
+//       alert: req.alert,
+//     });
+//   }
+// );
+// router.post(
+//   "/Cuentas/Usuarios/ExtraDELETE",
+//   coordinacionController.isAuthenticatedCoordinacion,
+//   coordinacionController.users,
+//   coordinacionController.fillFields,
+//   coordinacionController.extraDELETE,
+//   (req, res) => {
+//     res.render("Coordinacion/Cuentas/Usuarios", {
+//       user: req.user,
+//       users: req.users,
+//       fields: req.field,
+//       alert: req.alert,
+//     });
+//   }
+// );
 
 // Apartado: Consolidaciones
 router.get(
-  "/Consolidaciones/NAdministrativas",
+  "/Consolidaciones/ConsultarC",
   coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("coordinacion/Consolidaciones/NAdministrativas", {
+    res.render("Coordinacion/Consolidaciones/Consultar", {
+      user: req.user,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/ReportesC",
+  coordinacionController.isAuthenticatedCoordinacion,
+  (req, res) => {
+    res.render("Coordinacion/Consolidaciones/Reportes", {
       user: req.user,
     });
   }
 );
 
+//Apartado: Hojas de Vida
 router.get(
-  "/Consolidaciones/ESPublica",
+  "/HojaVida/ConsultarHV",
   coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("coordinacion/Consolidaciones/ESPublica", {
+    res.render("Coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
     });
   }
 );
-
 router.get(
-  "/Consolidaciones/Establecimientos",
+  "/HojaVida/InscribirHV",
   coordinacionController.isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("coordinacion/Consolidaciones/Establecimientos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/Vehiculos",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/Vehiculos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/Cementerios",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/Cementerios", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/Morgues",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/Morgues", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/MSEstablecimientos",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/MSEstablecimientos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/MSProductos",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/MSProductos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/Quejas",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/Quejas", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/TomaMuestras",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/TomaMuestras", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/ViviendaSaludable",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/ViviendaSaludable", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/CarnetsBPM",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/CarnetsBPM", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/IVCRotulado",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/IVCRotulado", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/IVCPublicidad",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/IVCPublicidad", {
-      user: req.user,
-    });
-  }
-);
-
-router.get(
-  "/Consolidaciones/EduSanitaria",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Consolidaciones/EduSanitaria", {
+    res.render("Coordinacion/HojaVida/InscribirHV", {
       user: req.user,
     });
   }

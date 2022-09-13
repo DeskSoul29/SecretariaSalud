@@ -3,6 +3,24 @@
 
 <head>
   <%- include('../../tools/head'); %>
+    <link href="/css/toast.css" rel="stylesheet">
+
+    <script>$('.button').on('click', function (event) {
+        var type = $(this).data('type');
+        var status = $(this).data('status');
+
+        $('.button').removeClass('is-active');
+        $(this).addClass('is-active');
+
+        $('.notify')
+          .removeClass()
+          .attr('data-notification-status', status)
+          .addClass(type + ' notify')
+          .addClass('do-show');
+
+        event.preventDefault();
+      })</script>
+
 </head>
 
 <body id="page-top">
@@ -22,6 +40,10 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
+              <!-- https://codepen.io/damianmuti/pen/GEZoeG -->
+              <nav>
+                <a href="#" class="button" data-type="bottom-right" data-status="error">Bottom Right</a>
+              </nav>
               <!-- Page Heading -->
               <div class="container">
                 <div class="card o-hidden border-0 shadow-lg my-5">
@@ -68,14 +90,17 @@
                             <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
                               <option selected disabled>Seleccione la Provincia</option>
                               <% let numberSelected="" ; %>
-                                <% fields.forEach((fields)=> { %>
-                                  <% if (numberSelected !=fields.provincia){ %>
-                                    <option value="<%= fields.provincia %>">
-                                      <%= fields.provincia %>
-                                    </option>
-                                    <% numberSelected=fields.provincia %>
-                                      <% } %>
-                                        <% }) %>
+                                <% if(fields){ %>
+                                  <% fields.forEach((fields)=> { %>
+                                    <% if (numberSelected !=fields.provincia){ %>
+                                      <option value="<%= fields.provincia %>">
+                                        <%= fields.provincia %>
+                                      </option>
+                                      <% numberSelected=fields.provincia %>
+                                        <% } %>
+                                          <% }) %>
+                                            <% } %>
+
                             </select>
                           </div>
                           <div class="col-auto my-1">
@@ -107,9 +132,11 @@
             </div>
             <script type="text/JavaScript">
             const array = []
+            <% if(fields){ %>
             <% fields.forEach((fields)=> { %>
               array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
             <% }) %>
+            <% } %>
 
             const selectP = document.getElementById('provinciaID');
             const selectM = document.getElementById("muniSelect");
@@ -188,26 +215,26 @@
 
   <script type="text/JavaScript">
     $(window).bind("load", function () {
-      var nav = document.getElementById("nav3");
-      $("#navlink2").removeClass("collapsed");
+      var nav = document.getElementById("nav4");
+      $("#navlink3").removeClass("collapsed");
       var nav3 = document.getElementById("collapsePages");
-      var nav4 = document.getElementById("show17");
+      var nav4 = document.getElementById("show6");
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
     });
     </script>
 
-  <% if(typeof alert !="undefined" ) { %>
+  <% if(alert) { %>
     <script type="text/JavaScript">
-        Swal.fire({
-          title: '<%= alert[0].alertTitle %>',
-          text:'<%= alert[0].alertMessage %>',
-          icon:'<%= alert[0].alertIcon %>',
-          showConfirmButton: <%= alert[0].showConfirmButton %>,
-          timer: <%= alert[0].timer %>
-        })
-      </script>
+    Swal.fire({
+      title: '<%= alertTitle %>',
+      text:'<%= alertMessage %>',
+      icon:'<%= alertIcon %>',
+      showConfirmButton: <%= showConfirmButton %>,
+      timer: <%= timer %>
+    })
+  </script>
     <% } %>
 </body>
 

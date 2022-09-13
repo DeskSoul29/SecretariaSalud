@@ -5,48 +5,78 @@ const { promisify } = require("util");
 
 var authController = {};
 
+var authLogin = (function () {
+  var isUser = function (res, title, mess, icon, button, timer, user) {
+    return res.render("login", {
+      alert: true,
+      alertTitle: title,
+      alertMessage: mess,
+      alertIcon: icon,
+      showConfirmButton: button,
+      timer: timer,
+      ruta: user,
+    });
+  };
+
+  var token = function (user, nombre, apellido, provincia, municipio, rol) {
+    return jwt.sign(
+      {
+        user: user,
+        nombres: nombre,
+        apellidos: apellido,
+        provincia: provincia,
+        municipio: municipio,
+        rol: rol,
+      },
+      process.env.JWT_SECRETO,
+      {
+        expiresIn: process.env.JWT_TIEMPO_EXPIRA,
+      }
+    );
+  };
+
+  return {
+    isUser: isUser,
+    token: token,
+  };
+})();
+
 authController.login = async (req, res) => {
   try {
     const user = req.body.user;
     const pass = req.body.pass;
 
     if (!user || !pass) {
-      res.render("login", {
-        alert: true,
-        alertTitle: "Advertencia",
-        alertMessage: "Ingrese un Usuario y Contraseña",
-        alertIcon: "info",
-        showConfirmButton: true,
-        timer: false,
-        ruta: "",
-      });
+      authLogin.isUser(
+        res,
+        "Advertencia",
+        "Ingrese un Usuario y Contraseña",
+        "info",
+        true,
+        false,
+        ""
+      );
     } else {
       login.findOne({ user: user }).exec(async (err, results) => {
         if (!results || !(await bcryptjs.compare(pass, results.pass))) {
-          res.render("login", {
-            alert: true,
-            alertTitle: "Error",
-            alertMessage: "Usuario y/o Contraseña incorrecta",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: "",
-          });
+          authLogin.isUser(
+            res,
+            "Advertencia",
+            "Usuario y/o Contraseña incorrecta",
+            "error",
+            true,
+            false,
+            ""
+          );
         } else {
           // Inicio de sesión OK
-          const token = jwt.sign(
-            {
-              user: user,
-              nombres: results.nombre,
-              apellidos: results.apellido,
-              provincia: results.provincia,
-              municipio: results.municipio,
-              rol: results.rol,
-            },
-            process.env.JWT_SECRETO,
-            {
-              expiresIn: process.env.JWT_TIEMPO_EXPIRA,
-            }
+          const token = authLogin.token(
+            user,
+            results.nombre,
+            results.apellido,
+            results.provincia,
+            results.municipio,
+            results.rol
           );
           // Generamos el token SIN fecha de expiracion
           const cookiesOptions = {
@@ -56,13 +86,15 @@ authController.login = async (req, res) => {
             httpOnly: true,
           };
           res.cookie("jwt", token, cookiesOptions);
-          if (results.rol == "coordinacion") {
-            isCoordinacion(res);
-          } else if (results.rol == "profesional") {
-            isProfesional(res);
-          } else {
-            isTecnico(res);
-          }
+          authLogin.isUser(
+            res,
+            "Conexión exitosa",
+            "¡BIENVENIDO!",
+            "success",
+            false,
+            800,
+            results.rol
+          );
         }
       });
     }
@@ -70,42 +102,6 @@ authController.login = async (req, res) => {
     console.log(error);
   }
 };
-
-function isCoordinacion(res) {
-  res.render("login", {
-    alert: true,
-    alertTitle: "Conexión exitosa",
-    alertMessage: "¡BIENVENIDO!",
-    alertIcon: "success",
-    showConfirmButton: false,
-    timer: 800,
-    ruta: "coordinacion",
-  });
-}
-
-function isProfesional(res) {
-  res.render("login", {
-    alert: true,
-    alertTitle: "Conexión exitosa",
-    alertMessage: "¡BIENVENIDO!",
-    alertIcon: "success",
-    showConfirmButton: false,
-    timer: 800,
-    ruta: "profesional",
-  });
-}
-
-function isTecnico(res) {
-  res.render("login", {
-    alert: true,
-    alertTitle: "Conexión exitosa",
-    alertMessage: "¡BIENVENIDO!",
-    alertIcon: "success",
-    showConfirmButton: false,
-    timer: 800,
-    ruta: "tecnico",
-  });
-}
 
 authController.isAuthenticated = async (req, res, next) => {
   if (JSON.stringify(req.cookies) != "{}") {
