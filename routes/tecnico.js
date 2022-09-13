@@ -9,15 +9,6 @@ router.get("/", tecnicoController.isAuthenticatedTecnic, (req, res) => {
 });
 
 // Apartado: Visitas
-router.get(
-  "/Consolidaciones/",
-  tecnicoController.isAuthenticatedTecnic,
-  (req, res) => {
-    res.render("tecnico/Visitas/mainVisit", {
-      user: req.user,
-    });
-  }
-);
 
 // Visitas - Ver
 router.get(
@@ -31,7 +22,6 @@ router.get(
 );
 
 // Visitas - Enviar
-
 router.get(
   "/Consolidaciones/Enviar",
   tecnicoController.isAuthenticatedTecnic,

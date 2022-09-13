@@ -25,16 +25,48 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/tecnico/Consolidaciones">Consolidaciones</a>
-                                    </li>
-                                    <li class="breadcrumb-item active" aria-current="page">Enviar Consolidaciones</li>
-                                </ol>
-                            </nav>
+                            <div id="municipio" class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Elija un Municipio</h5>
+                                    <select id="muniID" name="municipio" class="custom-select mr-sm-2" required>
+                                        <option selected>
+                                            <%= user.municipio %>
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <a onclick="mostrar()" class="btn btn-primary">Continuar</a>
+                                </div>
+                            </div>
 
-
-
+                            <div id="consolidacion" class="card text-center" style="display:none">
+                                <div class="card-body">
+                                    <h5 class="card-title">Elija el tipo de Consolidación a Realizar</h5>
+                                    <select id="consoID" name="consolidacion" class="custom-select mr-sm-2" required>
+                                        <option selected disabled>Seleccione la Consolidación</option>
+                                        <option>Eventos en Salud Pública</option>
+                                        <option>Establecimientos</option>
+                                        <option>Vehiculos</option>
+                                        <option>Cementerios</option>
+                                        <option>Morgues</option>
+                                        <option>Medidas Sanitarias a Establecimientos</option>
+                                        <option>Medidas Sanitarias a Productos</option>
+                                        <option>Quejas</option>
+                                        <option>Toma de Muestras</option>
+                                        <option>Educación Sanitaria</option>
+                                        <option>I.V.C. Publicidad</option>
+                                        <option>I.V.C Rotulado</option>
+                                        <option>Listado De Carnetizados</option>
+                                        <option>Vivienda Saludable</option>
+                                        <option>Antirabica Animal</option>
+                                    </select>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <a onclick="volver()" class="btn btn-warning">Cambiar de
+                                        Municipio</a>
+                                    <a href="#" class="btn btn-primary">Continuar</a>
+                                </div>
+                            </div>
 
                         </div>
                         <!-- /.container-fluid -->
@@ -73,7 +105,7 @@
                     finalizar su sesión actual.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+                    <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
                 </div>
             </div>
         </div>
@@ -90,8 +122,24 @@
     <script>
         $(window).bind('load', function () {
             var nav = document.getElementById('nav2');
+            $('#navlink1').removeClass('collapsed');
+            var nav3 = document.getElementById('collapseOne');
+            var nav4 = document.getElementById('show3');
             nav.className += "  active";
+            nav3.className += "  show";
+            nav4.className += "  active";
         });
+    </script>
+
+    <script>
+        function volver() {
+            document.getElementById("consolidacion").style = "display:none";
+            document.getElementById("municipio").removeAttribute("style");
+        }
+        function mostrar() {
+            document.getElementById("municipio").style = "display:none";
+            document.getElementById("consolidacion").removeAttribute("style");
+        }
     </script>
 
 </body>
