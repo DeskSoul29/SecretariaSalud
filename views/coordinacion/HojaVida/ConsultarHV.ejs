@@ -3,6 +3,7 @@
 
 <head>
     <%- include('../../tools/head'); %>
+        <link href="https://unpkg.com/izitoast/dist/css/iziToast.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -25,7 +26,17 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
+                            <div class="container">
 
+                                <h1>iziToast テスト</h1>
+                                <br />
+                                <button class="btn btn-primary" id="infoClick">Info</button>
+                                <button class="btn btn-success" id="successClick">Success</button>
+                                <button class="btn btn-warning" id="warningClick">Warning</button>
+                                <button class="btn btn-danger" id="errorClick">Error</button>
+                                <button class="btn btn-default" id="customClick">Custom</button>
+
+                            </div>
 
                         </div>
                         <!-- /.container-fluid -->
@@ -84,6 +95,12 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/chart-area-demo.js"></script>
     <script src="/js/demo/chart-pie-demo.js"></script>
+
+    <!-- Validations -->
+
+    <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
+    <script src="/js/Coordinador/validaciones.js"></script>
+
 
     <script>
         $(window).bind('load', function () {

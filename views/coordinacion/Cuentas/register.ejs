@@ -3,24 +3,7 @@
 
 <head>
   <%- include('../../tools/head'); %>
-    <link href="/css/toast.css" rel="stylesheet">
-
-    <script>$('.button').on('click', function (event) {
-        var type = $(this).data('type');
-        var status = $(this).data('status');
-
-        $('.button').removeClass('is-active');
-        $(this).addClass('is-active');
-
-        $('.notify')
-          .removeClass()
-          .attr('data-notification-status', status)
-          .addClass(type + ' notify')
-          .addClass('do-show');
-
-        event.preventDefault();
-      })</script>
-
+    <link href="https://unpkg.com/izitoast/dist/css/iziToast.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -40,10 +23,6 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-              <!-- https://codepen.io/damianmuti/pen/GEZoeG -->
-              <nav>
-                <a href="#" class="button" data-type="bottom-right" data-status="error">Bottom Right</a>
-              </nav>
               <!-- Page Heading -->
               <div class="container">
                 <div class="card o-hidden border-0 shadow-lg my-5">
@@ -58,36 +37,35 @@
                         <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
                             <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
-                              placeholder="Nombres" autocomplete="off" required />
+                              placeholder="Nombres" autocomplete="off" />
                           </div>
                           <div class="col-sm-6">
                             <input type="text" class="mayusPal form-control form-control-user" id="lastname"
-                              name="lastname" placeholder="Apellidos" autocomplete="off" required />
+                              name="lastname" placeholder="Apellidos" autocomplete="off" />
                           </div>
                         </div>
 
                         <div class="form-group">
                           <input placeholder="Numero de Identificación" type="number"
                             class="form-control form-control-user" id="user" name="user" autocomplete="false"
-                            minlegth="8" maxlength="10" required />
+                            minlegth="8" maxlength="10" />
                         </div>
 
                         <div class="form-group row">
                           <div class="col-sm-6 mb-3 mb-sm-0">
                             <input type="password" class="form-control form-control-user" id="pass" name="pass"
-                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="10" required />
+                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="10" />
                           </div>
                           <div class="col-sm-6">
                             <input type="password" class="form-control form-control-user" id="repass" name="repass"
-                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="10"
-                              required />
+                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="10" />
                           </div>
                         </div>
 
                         <div class="form-row align-items-center mb-sm-3">
                           <div class="col-auto my-1">
                             <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                            <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
+                            <select id="provinciaID" name="provincia" class="custom-select mr-sm-2">
                               <option selected disabled>Seleccione la Provincia</option>
                               <% let numberSelected="" ; %>
                                 <% if(fields){ %>
@@ -105,13 +83,13 @@
                           </div>
                           <div class="col-auto my-1">
                             <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
+                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
                               <option selected disabled>Seleccione el Municipio</option>
                             </select>
                           </div>
                           <div class="col-auto my-1">
                             <label class="mr-sm-2" for="rol">Rol</label>
-                            <select class="custom-select mr-sm-2" id="rol" name="rol" required>
+                            <select class="custom-select mr-sm-2" id="rol" name="rol">
                               <option selected disabled>Seleccione el Rol</option>
                               <option value="coordinacion">Coordinación</option>
                               <option value="profesional">Profesional</option>
@@ -120,7 +98,7 @@
                           </div>
                         </div>
 
-                        <button class="btn btn-primary btn-user btn-block" type="submit">
+                        <button id="btnregis" class="btn btn-primary btn-user btn-block" type="submit">
                           Registrar Cuenta
                         </button>
 
@@ -210,8 +188,9 @@
   <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
-  <!-- Alert -->
-  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Validations -->
+  <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
+  <script src="/js/Coordinador/validaciones.js"></script>
 
   <script type="text/JavaScript">
     $(window).bind("load", function () {
@@ -225,17 +204,7 @@
     });
     </script>
 
-  <% if(alert) { %>
-    <script type="text/JavaScript">
-    Swal.fire({
-      title: '<%= alertTitle %>',
-      text:'<%= alertMessage %>',
-      icon:'<%= alertIcon %>',
-      showConfirmButton: <%= showConfirmButton %>,
-      timer: <%= timer %>
-    })
-  </script>
-    <% } %>
+
 </body>
 
 </html>

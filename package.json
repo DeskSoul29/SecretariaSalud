@@ -7,8 +7,12 @@
     "dev": "nodemon app.js",
     "start": "node app.js"
   },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Jhan Ramirez",
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

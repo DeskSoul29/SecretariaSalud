@@ -8,20 +8,30 @@ var localidades = require("../models/localidades");
 var coordinacionController = {};
 
 var authCoordi = (function () {
-  var isUser = function (res, title, mess, icon, button, timer) {
-    return res.render("coordinacion/Cuentas/Register", {
-      alert: true,
-      alertTitle: title,
-      alertMessage: mess,
-      alertIcon: icon,
-      showConfirmButton: button,
-      timer: timer,
-      // ruta: "coordinacion/Cuentas/Register",
+  var toastCheck = function (title, mess) {
+    return iziToast.success({
+      timeout: 5000,
+      icon: "fa fa-check",
+      title: title,
+      message: mess,
     });
   };
 
+  var toastWarning = function (title, mess) {
+    return iziToast.warning({
+      title: title,
+      message: mess,
+    });
+  };
+
+  var toastError = function (title, mess) {
+    return iziToast.error({ title: title, message: mess });
+  };
+
   return {
-    isUser: isUser,
+    toastCheck: toastCheck,
+    toastWarning: toastWarning,
+    toastError: toastError,
   };
 })();
 
@@ -32,88 +42,38 @@ coordinacionController.register = async (req, res, next) => {
     const lastname = req.body.lastname;
     const user = req.body.user;
     const pass = req.body.pass;
-    const repass = req.body.repass;
     const provincia = req.body.provincia;
     const municipio = req.body.municipio;
     const rol = req.body.rol;
 
-    if (
-      !name ||
-      !lastname ||
-      !user ||
-      !pass ||
-      !repass ||
-      !provincia ||
-      !municipio ||
-      !rol
-    ) {
-      //Ingresar todos los campos
-      authCoordi.isUser(
-        res,
-        "Advertencia",
-        "Ingresar todos los campos",
-        "error",
-        true,
-        false
-      );
-    } else if (pass != repass) {
-      //Contraseñas Diferentes
-      authCoordi.isUser(
-        res,
-        "Advertencia",
-        "Contraseñas Diferentes",
-        "error",
-        true,
-        false
-      );
-    } else {
-      login.find({ user: user }).exec(async (err, results) => {
-        if (results.length != 0) {
-          //Usuario ya registrado
-          authCoordi.isUser(
-            res,
-            "Advertencia",
-            "Usuario ya Registrado",
-            "error",
-            true,
-            false
-          );
-        } else {
-          var userNew = new login({
-            user: user,
-            nombre: name,
-            apellido: lastname,
-            pass: await bcryptjs.hash(pass, 8),
-            provincia: provincia,
-            municipio: municipio,
-            rol: rol,
-          });
+    login.find({ user: user }).exec(async (err, results) => {
+      if (results.length != 0) {
+        //Usuario ya registrado
+        authCoordi.toastWarning("Advertencia", "Usuario ya Registrado");
+      } else {
+        var userNew = new login({
+          user: user,
+          nombre: name,
+          apellido: lastname,
+          pass: await bcryptjs.hash(pass, 8),
+          provincia: provincia,
+          municipio: municipio,
+          rol: rol,
+        });
 
-          userNew.save(function (err, result) {
-            if (!result) {
-              authCoordi.isUser(
-                res,
-                "Advertencia",
-                "Error en la Base de Datos",
-                "error",
-                true,
-                false
-              );
-            } else {
-              //Registrado correctamente
-              authCoordi.isUser(
-                res,
-                "Conexión exitosa",
-                "Registrado Correctamente",
-                "success",
-                false,
-                800
-              );
-            }
-          });
-        }
-      });
-    }
+        userNew.save(function (err, result) {
+          if (!result) {
+            authCoordi.toastError("Advertencia", "Error en la Base de Datos");
+          } else {
+            //Registrado correctamente
+            authCoordi.toastCheck(
+              "Conexión exitosa",
+              "Registrado Correctamente"
+            );
+          }
+        });
+      }
+    });
     return next();
   } catch (error) {
     console.log(error);
