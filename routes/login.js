@@ -1,9 +1,10 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
 
-const authController = require("../controllers/authController");
+import { isAuthenticated, signin } from "../controllers/authController.js";
 
-router.get("/", authController.isAuthenticated, (req, res) => {
+const router = Router();
+
+router.get("/", isAuthenticated, (req, res) => {
   res.render("login", { alert: false });
 });
 
@@ -12,6 +13,6 @@ router.get("/404", (req, res) => {
 });
 
 //router para los métodos del controller
-router.post("/", authController.login);
+router.post("/", signin);
 
-module.exports = router;
+export default router;

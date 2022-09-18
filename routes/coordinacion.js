@@ -1,63 +1,67 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
 
-const coordinacionController = require("../controllers/coordiController");
+import {
+  isAuthenticatedCoordinacion,
+  fillFields,
+  register,
+  users,
+  logout,
+} from "../controllers/coordiController.js";
 
-router.get(
-  "/",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("Coordinacion/main", { user: req.user });
-  }
-);
+const router = Router();
+
+router.get("/", isAuthenticatedCoordinacion, (req, res) => {
+  res.render("Coordinacion/main", { user: req.user });
+});
 
 // Apartado: Cuentas
 
 //Register
 router.get(
   "/Cuentas/Register",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.fillFields,
+  isAuthenticatedCoordinacion,
+  fillFields,
   (req, res) => {
     res.render("Coordinacion/Cuentas/register", {
       user: req.user,
-      fields: req.field,
-      alert: false,
+      fields: req.localidades,
+      results: false,
     });
   }
 );
 router.post(
   "/Cuentas/Register",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.register,
+  isAuthenticatedCoordinacion,
+  register,
+  fillFields,
   (req, res) => {
     res.render("Coordinacion/Cuentas/Register", {
       user: req.user,
-      fields: false,
+      fields: req.localidades,
+      results: req.register,
     });
   }
 );
 //Usuarios
 router.get(
   "/Cuentas/Usuarios",
-  coordinacionController.isAuthenticatedCoordinacion,
-  coordinacionController.users,
-  coordinacionController.fillFields,
+  isAuthenticatedCoordinacion,
+  users,
+  fillFields,
   (req, res) => {
     res.render("Coordinacion/Cuentas/usuarios", {
       user: req.user,
+      fields: req.localidades,
       users: req.users,
-      fields: req.field,
-      alert: undefined,
     });
   }
 );
 // router.post(
 //   "/Cuentas/Usuarios/Delete",
-//   coordinacionController.deleteUser,
-//   coordinacionController.isAuthenticatedCoordinacion,
-//   coordinacionController.users,
-//   coordinacionController.fillFields,
+//   deleteUser,
+//   isAuthenticatedCoordinacion,
+//   users,
+//   fillFields,
 //   (req, res) => {
 //     res.render("Coordinacion/Cuentas/Register", {
 //       user: req.user,
@@ -66,10 +70,10 @@ router.get(
 // );
 // router.post(
 //   "/Cuentas/Usuarios/Edit",
-//   coordinacionController.isAuthenticatedCoordinacion,
-//   coordinacionController.users,
-//   coordinacionController.fillFields,
-//   coordinacionController.editUser,
+//   isAuthenticatedCoordinacion,
+//   users,
+//   fillFields,
+//   editUser,
 //   (req, res) => {
 //     res.render("Coordinacion/Cuentas/Usuarios", {
 //       user: req.user,
@@ -81,10 +85,10 @@ router.get(
 // );
 // router.post(
 //   "/Cuentas/Usuarios/ExtraADD",
-//   coordinacionController.isAuthenticatedCoordinacion,
-//   coordinacionController.users,
-//   coordinacionController.fillFields,
-//   coordinacionController.extraADD,
+//   isAuthenticatedCoordinacion,
+//   users,
+//   fillFields,
+//   extraADD,
 //   (req, res) => {
 //     res.render("Coordinacion/Cuentas/Usuarios", {
 //       user: req.user,
@@ -96,10 +100,10 @@ router.get(
 // );
 // router.post(
 //   "/Cuentas/Usuarios/ExtraDELETE",
-//   coordinacionController.isAuthenticatedCoordinacion,
-//   coordinacionController.users,
-//   coordinacionController.fillFields,
-//   coordinacionController.extraDELETE,
+//   isAuthenticatedCoordinacion,
+//   users,
+//   fillFields,
+//   extraDELETE,
 //   (req, res) => {
 //     res.render("Coordinacion/Cuentas/Usuarios", {
 //       user: req.user,
@@ -113,7 +117,7 @@ router.get(
 // Apartado: Consolidaciones
 router.get(
   "/Consolidaciones/ConsultarC",
-  coordinacionController.isAuthenticatedCoordinacion,
+  isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("Coordinacion/Consolidaciones/Consultar", {
       user: req.user,
@@ -122,7 +126,7 @@ router.get(
 );
 router.get(
   "/Consolidaciones/ReportesC",
-  coordinacionController.isAuthenticatedCoordinacion,
+  isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("Coordinacion/Consolidaciones/Reportes", {
       user: req.user,
@@ -131,25 +135,17 @@ router.get(
 );
 
 //Apartado: Hojas de Vida
-router.get(
-  "/HojaVida/ConsultarHV",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("Coordinacion/HojaVida/ConsultarHV", {
-      user: req.user,
-    });
-  }
-);
-router.get(
-  "/HojaVida/InscribirHV",
-  coordinacionController.isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("Coordinacion/HojaVida/InscribirHV", {
-      user: req.user,
-    });
-  }
-);
+router.get("/HojaVida/ConsultarHV", isAuthenticatedCoordinacion, (req, res) => {
+  res.render("Coordinacion/HojaVida/ConsultarHV", {
+    user: req.user,
+  });
+});
+router.get("/HojaVida/InscribirHV", isAuthenticatedCoordinacion, (req, res) => {
+  res.render("Coordinacion/HojaVida/InscribirHV", {
+    user: req.user,
+  });
+});
 
-router.get("/logout", coordinacionController.logout);
+router.get("/logout", logout);
 
-module.exports = router;
+export default router;

@@ -2,20 +2,22 @@
   "name": "secretariasalud",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/DeskSoul29/SecretariaSalud"
   },
   "author": "Jhan Ramirez",
   "keywords": [],
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
@@ -23,6 +25,7 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.5.4",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1"
   }
 }

@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
-var Schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-var UserSchema = new Schema({
+const UserSchema = new Schema({
   user: { type: Number, required: true, unique: true },
   nombre: { type: String, required: true, max: 100 },
   apellido: { type: String, required: true, max: 100 },
@@ -26,4 +26,4 @@ var UserSchema = new Schema({
   crearedAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model("users", UserSchema);
+export default mongoose.model("users", UserSchema);

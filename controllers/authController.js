@@ -1,9 +1,7 @@
-const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
-var login = require("../models/user");
-const { promisify } = require("util");
-
-var authController = {};
+import login from "../models/user.js";
+import jwt from "jsonwebtoken";
+import bcryptjs from "bcryptjs";
+import { promisify } from "util";
 
 var authLogin = (function () {
   var isUser = function (res, title, mess, icon, button, timer, user) {
@@ -41,10 +39,9 @@ var authLogin = (function () {
   };
 })();
 
-authController.login = async (req, res) => {
+export const signin = async (req, res) => {
   try {
-    const user = req.body.user;
-    const pass = req.body.pass;
+    const { user, pass } = req.body;
 
     if (!user || !pass) {
       authLogin.isUser(
@@ -103,7 +100,7 @@ authController.login = async (req, res) => {
   }
 };
 
-authController.isAuthenticated = async (req, res, next) => {
+export const isAuthenticated = async (req, res, next) => {
   if (JSON.stringify(req.cookies) != "{}") {
     try {
       const decodificada = await promisify(jwt.verify)(
@@ -124,5 +121,3 @@ authController.isAuthenticated = async (req, res, next) => {
     return next();
   }
 };
-
-module.exports = authController;

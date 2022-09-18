@@ -1,14 +1,10 @@
-const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
-const { promisify } = require("util");
-
-var login = require("../models/user");
-var localidades = require("../models/localidades");
-
-var profesionalController = {};
+import login from "../models/user.js";
+import localidades from "../models/localidades.js";
+import jwt from "jsonwebtoken";
+import { promisify } from "util";
 
 // Apartado: Cuentas - Usuarios
-profesionalController.fillMunicipio = async (req, res, next) => {
+export const fillMunicipio = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -93,7 +89,7 @@ profesionalController.fillMunicipio = async (req, res, next) => {
 //   );
 // };
 
-profesionalController.users = async (req, res, next) => {
+export const users = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -123,7 +119,7 @@ profesionalController.users = async (req, res, next) => {
 // Apartado: Consolidaciones
 
 // Extras
-profesionalController.isAuthenticatedProf = async (req, res, next) => {
+export const isAuthenticatedProf = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
@@ -148,9 +144,7 @@ profesionalController.isAuthenticatedProf = async (req, res, next) => {
   }
 };
 
-profesionalController.logout = (req, res) => {
+export const logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/");
 };
-
-module.exports = profesionalController;

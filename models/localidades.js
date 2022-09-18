@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var LocalidadesSchema = new Schema({
@@ -6,4 +6,4 @@ var LocalidadesSchema = new Schema({
   municipio: { type: String, required: true, max: 100 },
 });
 
-module.exports = mongoose.model("provinciasxmunicipios", LocalidadesSchema);
+export default mongoose.model("provinciasxmunicipios", LocalidadesSchema);

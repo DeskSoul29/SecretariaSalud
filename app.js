@@ -1,37 +1,32 @@
-// import express from "./main.js";
-const express = require("express");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
+import express from "express";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
+import morgan from "morgan";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+import { MONGODB_URI, PORT } from "./config/config.js";
 
-var login = require("./routes/login");
-var coordinacion = require("./routes/coordinacion");
-var profesional = require("./routes/profesional");
-var tecnico = require("./routes/tecnico");
+import login from "./routes/login.js";
+import coordinacion from "./routes/coordinacion.js";
+import profesional from "./routes/profesional.js";
+import tecnico from "./routes/tecnico.js";
 
 const app = express();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-//BD
-const usuario = "desksoul29";
-const password = "desk123";
-const dbName = "SecretariaSalud";
-
-const uri = `mongodb+srv://${usuario}:${password}@clusterup.yuxje.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-
-mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log("¡Conectado a la base de datos MongoDB! 👋"))
-  .catch((e) => console.log("Error de conexión: ", e));
+// settings
+app.set("port", PORT);
+app.set("views", join(__dirname, "views"));
 
 // Seteamos el motor de plantillas
 app.set("view engine", "ejs");
 
 // Seteamos la carpeta public para archivos estáticos
-// app.use(express.static("public"));
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(join(__dirname, "/public")));
 
 // Para procesar datos enviados desde forms
-app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Seteamos las variables de entorno
@@ -54,12 +49,15 @@ app.use(function (req, res, next) {
 });
 
 // Error 404
-// app.use((req, res, next) => {
-//   res.status(404).render("/404");
-// });
 app.use((req, res, next) => {
-  res.status(404).redirect("/404");
+  return res.status(404).redirect("/404");
 });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log("🍉🍉🍉 http://localhost:" + PORT));
+// app.use((error, req, res, next) => {
+//   res.status(error.status || 500);
+//   res.render("error", {
+//     error,
+//   });
+// });
+
+export default app;

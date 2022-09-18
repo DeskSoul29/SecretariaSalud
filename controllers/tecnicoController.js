@@ -1,12 +1,8 @@
-const jwt = require("jsonwebtoken");
-const { promisify } = require("util");
+import login from "../models/user.js";
+import jwt from "jsonwebtoken";
+import { promisify } from "util";
 
-var login = require("../models/user");
-var localidades = require("../models/localidades");
-
-var tecnicoController = {};
-
-tecnicoController.isAuthenticatedTecnic = async (req, res, next) => {
+export const isAuthenticatedTecnic = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
@@ -31,9 +27,7 @@ tecnicoController.isAuthenticatedTecnic = async (req, res, next) => {
   }
 };
 
-tecnicoController.logout = (req, res) => {
+export const logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/");
 };
-
-module.exports = tecnicoController;

@@ -472,19 +472,6 @@
     });
     </script>
 
-  <% if(typeof alert !="undefined" ) { %>
-    <script type="text/JavaScript">
-        Swal.fire({
-          title: '<%= alert[0].alertTitle %>',
-          text:'<%= alert[0].alertMessage %>',
-          icon:'<%= alert[0].alertIcon %>',
-          showConfirmButton: <%= alert[0].showConfirmButton %>,
-          timer: <%= alert[0].timer %>
-        }).then(()=>{
-          window.location = '/<%= alert[0].ruta %>'
-        })
-      </script>
-    <% } %>
 </body>
 
 </html>

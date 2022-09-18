@@ -202,6 +202,11 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+    <% if(results == "found"){ %>
+      validate.toastError("Advertencia","Usuario Ya Registrado")
+    <% }else if(results != false){ %>
+      validate.toastCheck("Conexion Exitosa","Usuario Registrado")
+    <% } %>
     </script>
 
 

@@ -1,121 +1,59 @@
-const jwt = require("jsonwebtoken");
-const bcryptjs = require("bcryptjs");
-const { promisify } = require("util");
-
-var login = require("../models/user");
-var localidades = require("../models/localidades");
-
-var coordinacionController = {};
-
-var authCoordi = (function () {
-  var toastCheck = function (title, mess) {
-    return iziToast.success({
-      timeout: 5000,
-      icon: "fa fa-check",
-      title: title,
-      message: mess,
-    });
-  };
-
-  var toastWarning = function (title, mess) {
-    return iziToast.warning({
-      title: title,
-      message: mess,
-    });
-  };
-
-  var toastError = function (title, mess) {
-    return iziToast.error({ title: title, message: mess });
-  };
-
-  return {
-    toastCheck: toastCheck,
-    toastWarning: toastWarning,
-    toastError: toastError,
-  };
-})();
+import login from "../models/user.js";
+import local from "../models/localidades.js";
+import jwt from "jsonwebtoken";
+import bcryptjs from "bcryptjs";
+import { promisify } from "util";
 
 // Apartado: Cuentas - Register
-coordinacionController.register = async (req, res, next) => {
-  try {
-    const name = req.body.name;
-    const lastname = req.body.lastname;
-    const user = req.body.user;
-    const pass = req.body.pass;
-    const provincia = req.body.provincia;
-    const municipio = req.body.municipio;
-    const rol = req.body.rol;
+export const register = async (req, res, next) => {
+  const { name, lastname, user, pass, provincia, municipio, rol } = req.body;
+  const result = [];
 
-    login.find({ user: user }).exec(async (err, results) => {
-      if (results.length != 0) {
-        //Usuario ya registrado
-        authCoordi.toastWarning("Advertencia", "Usuario ya Registrado");
-      } else {
-        var userNew = new login({
-          user: user,
-          nombre: name,
-          apellido: lastname,
-          pass: await bcryptjs.hash(pass, 8),
-          provincia: provincia,
-          municipio: municipio,
-          rol: rol,
-        });
-
-        userNew.save(function (err, result) {
-          if (!result) {
-            authCoordi.toastError("Advertencia", "Error en la Base de Datos");
-          } else {
-            //Registrado correctamente
-            authCoordi.toastCheck(
-              "Conexión exitosa",
-              "Registrado Correctamente"
-            );
-          }
-        });
-      }
-    });
-    return next();
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-coordinacionController.fillFields = async (req, res, next) => {
-  localidades.find({}).exec(async (err, results) => {
-    if (err) throw err;
-    req.field = results;
+  login.find({ user: user }).exec(async (err, results) => {
+    if (results.length != 0) {
+      //Usuario ya registrado
+      req.register = "found";
+    } else {
+      var userNew = new login({
+        user: user,
+        nombre: name,
+        apellido: lastname,
+        pass: await bcryptjs.hash(pass, 8),
+        provincia: provincia,
+        municipio: municipio,
+        rol: rol,
+      });
+      await userNew.save(function (err, results) {
+        req.register = results;
+      });
+    }
     return next();
   });
 };
 
+export const fillFields = async (req, res, next) => {
+  const localidades = await local.find({}).lean();
+  req.localidades = localidades;
+  return next();
+};
+
 //Apartado Cuentas - Usuarios
-coordinacionController.users = async (req, res, next) => {
+export const users = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    login
-      .find({ user: { $ne: decodificada.user } })
-      .exec(async (err, results) => {
-        if (err) throw err;
-        req.users = results;
-        return next();
-      });
+    const users = await login.find({ user: { $ne: decodificada.user } });
+    req.users = users;
+    return next();
   } catch (error) {
     console.log(error);
     return next();
   }
 };
-coordinacionController.editUser = async (req, res, next) => {
-  const name = req.body.name;
-  const lastname = req.body.lastname;
-  const user = req.body.user;
-  const pass = req.body.pass;
-  const repass = req.body.repass;
-  const provincia = req.body.provincia;
-  const municipio = req.body.municipio;
-  const rol = req.body.rol;
+export const editUser = async (req, res, next) => {
+  const { name, lastname, pass, repass, provincia, municipio, rol } = req.body;
 
   if (
     !name ||
@@ -179,7 +117,7 @@ coordinacionController.editUser = async (req, res, next) => {
     );
   }
 };
-coordinacionController.deleteUser = async (req, res, next) => {
+export const deleteUser = async (req, res, next) => {
   login.deleteOne({ user: req.body.userDel }).exec(async (err, results) => {
     if (err) {
       authCoordi.isUser(
@@ -204,7 +142,7 @@ coordinacionController.deleteUser = async (req, res, next) => {
     return next();
   });
 };
-coordinacionController.extraADD = async (req, res, next) => {
+export const extraADD = async (req, res, next) => {
   conexion.query(
     "UPDATE users SET municipio_extra = ? WHERE user = ?",
     [req.body.muniADD, req.body.userADDMuni],
@@ -236,7 +174,7 @@ coordinacionController.extraADD = async (req, res, next) => {
     }
   );
 };
-coordinacionController.extraDELETE = async (req, res, next) => {
+export const extraDELETE = async (req, res, next) => {
   conexion.query(
     "UPDATE users SET municipio_extra = NULL WHERE user = ?",
     req.body.userDELETEMuni,
@@ -270,7 +208,7 @@ coordinacionController.extraDELETE = async (req, res, next) => {
 };
 
 //Extras
-coordinacionController.isAuthenticatedCoordinacion = async (req, res, next) => {
+export const isAuthenticatedCoordinacion = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
@@ -295,9 +233,7 @@ coordinacionController.isAuthenticatedCoordinacion = async (req, res, next) => {
   }
 };
 
-coordinacionController.logout = (req, res) => {
+export const logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/");
 };
-
-module.exports = coordinacionController;
