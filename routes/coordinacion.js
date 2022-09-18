@@ -22,7 +22,7 @@ router.get(
   isAuthenticatedCoordinacion,
   fillFields,
   (req, res) => {
-    res.render("Coordinacion/Cuentas/register", {
+    res.render("coordinacion/Cuentas/register", {
       user: req.user,
       fields: req.localidades,
       results: false,
@@ -35,7 +35,7 @@ router.post(
   register,
   fillFields,
   (req, res) => {
-    res.render("Coordinacion/Cuentas/Register", {
+    res.render("coordinacion/Cuentas/Register", {
       user: req.user,
       fields: req.localidades,
       results: req.register,
@@ -49,7 +49,7 @@ router.get(
   users,
   fillFields,
   (req, res) => {
-    res.render("Coordinacion/Cuentas/usuarios", {
+    res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,
       fields: req.localidades,
       users: req.users,
@@ -119,7 +119,7 @@ router.get(
   "/Consolidaciones/ConsultarC",
   isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("Coordinacion/Consolidaciones/Consultar", {
+    res.render("coordinacion/Consolidaciones/Consultar", {
       user: req.user,
     });
   }
@@ -128,7 +128,7 @@ router.get(
   "/Consolidaciones/ReportesC",
   isAuthenticatedCoordinacion,
   (req, res) => {
-    res.render("Coordinacion/Consolidaciones/Reportes", {
+    res.render("coordinacion/Consolidaciones/Reportes", {
       user: req.user,
     });
   }
@@ -136,12 +136,12 @@ router.get(
 
 //Apartado: Hojas de Vida
 router.get("/HojaVida/ConsultarHV", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("Coordinacion/HojaVida/ConsultarHV", {
+  res.render("coordinacion/HojaVida/ConsultarHV", {
     user: req.user,
   });
 });
 router.get("/HojaVida/InscribirHV", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("Coordinacion/HojaVida/InscribirHV", {
+  res.render("coordinacion/HojaVida/InscribirHV", {
     user: req.user,
   });
 });
