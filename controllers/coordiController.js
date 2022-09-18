@@ -120,24 +120,10 @@ export const editUser = async (req, res, next) => {
 export const deleteUser = async (req, res, next) => {
   login.deleteOne({ user: req.body.userDel }).exec(async (err, results) => {
     if (err) {
-      authCoordi.isUser(
-        res,
-        "Advertencia",
-        "No se Encuentra el Usuario",
-        "error",
-        true,
-        false
-      );
+      //No se encontro el Usuario
+      req.delete = "NotFound";
     } else {
-      res, title, mess, icon, button, timer;
-      authCoordi.isUser(
-        res,
-        "Conexión Exitosa",
-        "Eliminado Correctamente",
-        "success",
-        false,
-        800
-      );
+      req.delete = true;
     }
     return next();
   });

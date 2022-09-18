@@ -403,6 +403,16 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+    <% if(deleteU){ %>
+      iziToast.success({
+        timeout: 5000,
+        icon: "fa fa-check",
+        title: "Conexion Exitosa",
+        message: "Usuario Eliminado"
+      });
+    <% }else if(deleteU == "NotFound"){ %>
+      iziToast.error({ title: "Advertencia", message: "Usuario No Encontrado" });
+    <% } %>
 
     function eliminar_modal(user, nombre) {
       document.getElementById("userModal").value = user;

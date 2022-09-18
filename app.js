@@ -49,9 +49,9 @@ app.use(function (req, res, next) {
 });
 
 // Error 404
-app.use((req, res, next) => {
-  return res.status(404).redirect("/404");
-});
+// app.use((req, res, next) => {
+//   return res.status(404).redirect("/404");
+// });
 
 // app.use((error, req, res, next) => {
 //   res.status(error.status || 500);

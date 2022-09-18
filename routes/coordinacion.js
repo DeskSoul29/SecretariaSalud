@@ -5,6 +5,7 @@ import {
   fillFields,
   register,
   users,
+  deleteUser,
   logout,
 } from "../controllers/coordiController.js";
 
@@ -53,33 +54,37 @@ router.get(
       user: req.user,
       fields: req.localidades,
       users: req.users,
+      deleteU: false,
+      edit: false,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/Delete",
+  deleteUser,
+  isAuthenticatedCoordinacion,
+  users,
+  fillFields,
+  (req, res) => {
+    res.render("coordinacion/Cuentas/usuarios", {
+      user: req.user,
+      fields: req.localidades,
+      deleteU: req.delete,
+      users: req.users,
     });
   }
 );
 // router.post(
-//   "/Cuentas/Usuarios/Delete",
-//   deleteUser,
-//   isAuthenticatedCoordinacion,
-//   users,
-//   fillFields,
-//   (req, res) => {
-//     res.render("Coordinacion/Cuentas/Register", {
-//       user: req.user,
-//     });
-//   }
-// );
-// router.post(
-//   "/Cuentas/Usuarios/Edit",
+//   "/Cuentas/Usuarios",
 //   isAuthenticatedCoordinacion,
 //   users,
 //   fillFields,
 //   editUser,
 //   (req, res) => {
-//     res.render("Coordinacion/Cuentas/Usuarios", {
+//     res.render("coordinacion/Cuentas/usuarios", {
 //       user: req.user,
 //       users: req.users,
-//       fields: req.field,
-//       alert: req.alert,
+//       fields: req.localidades,
 //     });
 //   }
 // );

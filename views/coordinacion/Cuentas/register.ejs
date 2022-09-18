@@ -3,7 +3,7 @@
 
 <head>
   <%- include('../../tools/head'); %>
-    <link href="https://unpkg.com/izitoast/dist/css/iziToast.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -190,7 +190,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
   <!-- Validations -->
   <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-  <script src="/js/Coordinador/validaciones.js"></script>
+  <script type="module" src="/js/Coordinador/validaciones.js"></script>
+  <script type="module" src="/js/tools/toast.js"></script>
 
   <script type="text/JavaScript">
     $(window).bind("load", function () {
@@ -202,10 +203,15 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    <% if(results == "found"){ %>
-      validate.toastError("Advertencia","Usuario Ya Registrado")
-    <% }else if(results != false){ %>
-      validate.toastCheck("Conexion Exitosa","Usuario Registrado")
+    <% if (results == "found") { %>
+      iziToast.error({ title: "Advertencia", message: "Usuario Ya Registrado" });
+    <% } else if (results != false) { %>
+      iziToast.success({
+          timeout: 5000,
+          icon: "fa fa-check",
+          title: "Conexion Exitosa",
+          message: "Usuario Registrado",
+        });
     <% } %>
     </script>
 
