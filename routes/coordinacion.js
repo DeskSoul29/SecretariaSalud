@@ -11,7 +11,7 @@ import {
 const router = Router();
 
 router.get("/", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("Coordinacion/main", { user: req.user });
+  res.render("coordinacion/main", { user: req.user });
 });
 
 // Apartado: Cuentas
