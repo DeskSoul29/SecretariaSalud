@@ -16,7 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // settings
 app.set("port", PORT);
-app.set("views", join(__dirname, "views"));
+app.set("views", path.join(__dirname, "views"));
 
 // Seteamos el motor de plantillas
 app.set("view engine", "ejs");
