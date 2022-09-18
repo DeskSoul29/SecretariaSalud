@@ -35,7 +35,7 @@ router.post(
   register,
   fillFields,
   (req, res) => {
-    res.render("coordinacion/Cuentas/Register", {
+    res.render("coordinacion/Cuentas/register", {
       user: req.user,
       fields: req.localidades,
       results: req.register,
