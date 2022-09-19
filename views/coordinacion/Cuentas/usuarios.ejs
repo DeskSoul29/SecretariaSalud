@@ -267,7 +267,8 @@
                 <span aria-hidden="true">×</span>
               </button>
             </div>
-            <form action="/coordinacion/Cuentas/Usuarios/Edit" method="POST" autocomplete="off">
+            <form id="formEditU" method="POST" autocomplete="off">
+              <input type="hidden" name="_method" value="PUT" />
               <div class="modal-body">
                 <div class="card-body p-0">
                   <div class="form-group row">
@@ -354,6 +355,7 @@
               </button>
             </div>
             <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
+              <input type="hidden" name="_method" value="DELETE">
               <div class="modal-body">
                 Oprima el botón "Eliminar" a continuación si está listo para
                 eliminar a el usuario:
@@ -399,7 +401,8 @@
 
       <!-- Validations -->
       <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-      <script type="text/javascript" src="/js/Coordinador/usuarios.js"></script>
+      <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
+      <script type="text/javascript" src="/js/Coordinador/register.js"></script>
       <script type="module" src="/js/tools/toast.js"></script>
 
       <script type="text/JavaScript">
@@ -412,24 +415,6 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    <% if(deleteU){ %>
-      iziToast.success({
-        timeout: 5000,
-        icon: "fa fa-check",
-        title: "Conexion Exitosa",
-        message: "Usuario Eliminado"
-      });
-    <% }else if(editU){ %>
-      iziToast.success({
-        timeout: 5000,
-        icon: "fa fa-check",
-        title: "Conexion Exitosa",
-        message: "Usuario Editado"
-      });
-    <% }else if(deleteU == "NotFound" || editU == "NotFound"){ %>
-      iziToast.error({ title: "Advertencia", message: "Usuario No Encontrado" });
-    <% } %>
-    
     const array = []
     <% fields.forEach((fields)=> { %>
       array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])

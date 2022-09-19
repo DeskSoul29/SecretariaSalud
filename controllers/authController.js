@@ -101,7 +101,7 @@ export const signin = async (req, res) => {
 };
 
 export const isAuthenticated = async (req, res, next) => {
-  if (JSON.stringify(req.cookies) != "{}") {
+  if (req.cookies.jwt) {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,

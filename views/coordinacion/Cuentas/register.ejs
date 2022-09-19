@@ -7,193 +7,177 @@
 </head>
 
 <body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <%- include('../../tools/sidebarAdmin'); %>
-      <!-- End of Sidebar -->
+  <% if(locals.message){ %>
+    <div class="alert alert-success" role="alert">
+      <strong>Well done!</strong>
+      <%=message.success_msg%>
+    </div>
+    <% } %>
+      <!-- Page Wrapper -->
+      <div id="wrapper">
+        <!-- Sidebar -->
+        <%- include('../../tools/sidebarAdmin'); %>
+          <!-- End of Sidebar -->
 
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          <!-- Topbar -->
-          <%- include('../../tools/topbar'); %>
-            <!-- End of Topbar -->
+          <!-- Content Wrapper -->
+          <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+              <!-- Topbar -->
+              <%- include('../../tools/topbar'); %>
+                <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-              <!-- Page Heading -->
-              <div class="container">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                  <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="p-5">
-                      <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
-                      </div>
-                      <form action="/coordinacion/Cuentas/Register" method="POST" autocomplete="off">
-
-                        <div class="form-group row">
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
-                              placeholder="Nombres" autocomplete="off" />
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                  <!-- Page Heading -->
+                  <div class="container">
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                      <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="p-5">
+                          <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Crea una Cuenta</h1>
                           </div>
-                          <div class="col-sm-6">
-                            <input type="text" class="mayusPal form-control form-control-user" id="lastname"
-                              name="lastname" placeholder="Apellidos" autocomplete="off" />
-                          </div>
-                        </div>
+                          <form onsubmit="registerForm(event)" action="/coordinacion/Cuentas/Register" method="POST"
+                            autocomplete="off">
 
-                        <div class="form-group">
-                          <input placeholder="Numero de Identificación" type="number"
-                            class="form-control form-control-user" id="user" name="user" autocomplete="false"
-                            minlegth="8" maxlength="10" />
-                        </div>
+                            <div class="form-group row">
+                              <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
+                                  placeholder="Nombres" autocomplete="off" />
+                              </div>
+                              <div class="col-sm-6">
+                                <input type="text" class="mayusPal form-control form-control-user" id="lastname"
+                                  name="lastname" placeholder="Apellidos" autocomplete="off" />
+                              </div>
+                            </div>
 
-                        <div class="form-group row">
-                          <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="password" class="form-control form-control-user" id="pass" name="pass"
-                              placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="10" />
-                          </div>
-                          <div class="col-sm-6">
-                            <input type="password" class="form-control form-control-user" id="repass" name="repass"
-                              placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="10" />
-                          </div>
-                        </div>
+                            <div class="form-group">
+                              <input placeholder="Numero de Identificación" type="number"
+                                class="form-control form-control-user" id="user" name="user" autocomplete="false"
+                                minlegth="8" maxlength="10" />
+                            </div>
 
-                        <div class="form-row align-items-center mb-sm-3">
-                          <div class="col-auto my-1">
-                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                            <select id="provinciaID" name="provincia" class="custom-select mr-sm-2">
-                              <option selected disabled>Seleccione la Provincia</option>
-                              <% let numberSelected="" ; %>
-                                <% if(fields){ %>
-                                  <% fields.forEach((fields)=> { %>
-                                    <% if (numberSelected !=fields.provincia){ %>
-                                      <option value="<%= fields.provincia %>">
-                                        <%= fields.provincia %>
-                                      </option>
-                                      <% numberSelected=fields.provincia %>
-                                        <% } %>
-                                          <% }) %>
+                            <div class="form-group row">
+                              <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                                  placeholder="Contraseña" autocomplete="off" minlength="4" maxlength="10" />
+                              </div>
+                              <div class="col-sm-6">
+                                <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                                  placeholder="Repite la Contraseña" autocomplete="off" minlength="4" maxlength="10" />
+                              </div>
+                            </div>
+
+                            <div class="form-row align-items-center mb-sm-3">
+                              <div class="col-auto my-1">
+                                <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                                <select id="provinciaID" name="provincia" class="custom-select mr-sm-2">
+                                  <option selected disabled>Seleccione la Provincia</option>
+                                  <% let numberSelected="" ; %>
+                                    <% if(fields){ %>
+                                      <% fields.forEach((fields)=> { %>
+                                        <% if (numberSelected !=fields.provincia){ %>
+                                          <option value="<%= fields.provincia %>">
+                                            <%= fields.provincia %>
+                                          </option>
+                                          <% numberSelected=fields.provincia %>
                                             <% } %>
+                                              <% }) %>
+                                                <% } %>
 
-                            </select>
-                          </div>
-                          <div class="col-auto my-1">
-                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
-                              <option selected disabled>Seleccione el Municipio</option>
-                            </select>
-                          </div>
-                          <div class="col-auto my-1">
-                            <label class="mr-sm-2" for="rol">Rol</label>
-                            <select class="custom-select mr-sm-2" id="rol" name="rol">
-                              <option selected disabled>Seleccione el Rol</option>
-                              <option value="coordinacion">Coordinación</option>
-                              <option value="profesional">Profesional</option>
-                              <option value="tecnico">Tecnico</option>
-                            </select>
-                          </div>
+                                </select>
+                              </div>
+                              <div class="col-auto my-1">
+                                <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                                <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                                  <option selected disabled>Seleccione el Municipio</option>
+                                </select>
+                              </div>
+                              <div class="col-auto my-1">
+                                <label class="mr-sm-2" for="rol">Rol</label>
+                                <select class="custom-select mr-sm-2" id="rol" name="rol">
+                                  <option selected disabled>Seleccione el Rol</option>
+                                  <option value="coordinacion">Coordinación</option>
+                                  <option value="profesional">Profesional</option>
+                                  <option value="tecnico">Tecnico</option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <button id="btnregis" class="btn btn-primary btn-user btn-block" type="submit">
+                              Registrar Cuenta
+                            </button>
+
+                          </form>
                         </div>
-
-                        <button id="btnregis" class="btn btn-primary btn-user btn-block" type="submit">
-                          Registrar Cuenta
-                        </button>
-
-                      </form>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <script type="text/JavaScript">
+                <script type="text/JavaScript">
             const array = []
             <% if(fields){ %>
             <% fields.forEach((fields)=> { %>
               array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
             <% }) %>
             <% } %>
-
-            const selectP = document.getElementById('provinciaID');
-            const selectM = document.getElementById("muniSelect");
-
-            selectP.addEventListener('change', function () {
-              const selectedOption = this.options[selectP.selectedIndex];
-
-              //Eliminar el listado de Municipios si hay mas de 1 (El de "Seleccionar" siempre sera el 1)
-              for (let i = selectM.options.length; i >= 1; i--) {
-                selectM.remove(i);
-              }
-
-              // Llenado de Municipios
-              for(let i=0; i<array.length; i++) {
-                if(array[i] == selectedOption.value && array[i+1] != "SOTO"){
-                  const option = document.createElement('option');
-                  const valor = array[i+1]
-                  option.value = valor;
-                  option.text = valor;
-                  selectM.add(option);
-                }
-              }
-            });
           </script>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- End of Main Content -->
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <%- include('../../tools/footer'); %>
-          <!-- End of Footer -->
+            <!-- Footer -->
+            <%- include('../../tools/footer'); %>
+              <!-- End of Footer -->
+          </div>
+          <!-- End of Content Wrapper -->
       </div>
-      <!-- End of Content Wrapper -->
-  </div>
-  <!-- End of Page Wrapper -->
+      <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+      </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Seleccione "Cerrar sesión" a continuación si está listo para
-          finalizar su sesión actual.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancelar
-          </button>
-          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Seleccione "Cerrar sesión" a continuación si está listo para
+              finalizar su sesión actual.
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                Cancelar
+              </button>
+              <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="/js/sb-admin-2.min.js"></script>
-  <!-- Validations -->
-  <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-  <script type="module" src="/js/Coordinador/register.js"></script>
-  <script type="module" src="/js/tools/toast.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin-2.min.js"></script>
+      <!-- Validations -->
+      <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
+      <script type="text/javascript" src="/js/Coordinador/register.js"></script>
+      <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
 
-  <script type="text/JavaScript">
+      <script type="text/JavaScript">
     $(window).bind("load", function () {
       var nav = document.getElementById("nav4");
       $("#navlink3").removeClass("collapsed");

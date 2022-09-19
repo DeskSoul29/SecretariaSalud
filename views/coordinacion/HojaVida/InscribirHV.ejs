@@ -24,8 +24,154 @@
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
+                            <!-- Page Heading -->
+                            <div class="container">
+                                <div class="card o-hidden border-0 shadow-lg my-5">
+                                    <div class="card-body p-0">
+                                        <!-- Nested Row within Card Body -->
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Inscribir Establecimiento</h1>
+                                            </div>
+                                            <form onsubmit="hvForm(event)" action="/coordinacion/HojaVida/InscribirHV"
+                                                method="POST" autocomplete="off">
 
+                                                <div class="form-row align-items-center mb-sm-2">
+                                                    <div class="col my-1">
+                                                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                                                        <select id="provinciaID" name="provincia"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione la Provincia</option>
+                                                            <% let numberSelected="" ; %>
+                                                                <% if(fields){ %>
+                                                                    <% fields.forEach((fields)=> { %>
+                                                                        <% if (numberSelected !=fields.provincia){ %>
+                                                                            <option value="<%= fields.provincia %>">
+                                                                                <%= fields.provincia %>
+                                                                            </option>
+                                                                            <% numberSelected=fields.provincia %>
+                                                                                <% } %>
+                                                                                    <% }) %>
+                                                                                        <% } %>
 
+                                                        </select>
+                                                    </div>
+                                                    <div class="col my-1">
+                                                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                                                        <select id="muniSelect" name="municipio"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione el Municipio</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <label class="mr-sm-2" for="grupEsta">Grupo Del
+                                                            Establecimiento</label>
+                                                        <select id="grupEsta" name="grupEsta"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>
+                                                                Seleccione el Grupo
+                                                            </option>
+                                                            <% let numberSelected2="" ; %>
+                                                                <% if(codigos){ %>
+                                                                    <% codigos.forEach((codigos)=> { %>
+                                                                        <% if (numberSelected2 !=codigos.grupo){ %>
+                                                                            <option value="<%= codigos.grupo %>">
+                                                                                <%= codigos.grupo %>
+                                                                            </option>
+                                                                            <% numberSelected2=codigos.grupo %>
+                                                                                <% } %>
+                                                                                    <% }) %>
+                                                                                        <% } %>
+
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="codEsta">Codigo</label>
+                                                        <select id="codEsta" name="codEsta"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione el Codigo</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-8">
+                                                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                                                            Establecimiento</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="tipoEsta" name="tipoEsta" placeholder="Ninguno"
+                                                            readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="Nriesgo" name="Nriesgo" placeholder="Ninguno"
+                                                            readonly />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user" id="rSocial"
+                                                            name="rSocial" />
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user"
+                                                            id="direccion" name="direccion" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-8">
+                                                        <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user" id="rLegal"
+                                                            name="rLegal" />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="estado">Estado</label>
+                                                        <select id="estado" name="estado" class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione el Estado</option>
+                                                            <option value="EN FUNCIONAMIENTO">EN FUNCIONAMIENTO
+                                                            </option>
+                                                            <option value="CON MEDIDA SANITARIA">CON MEDIDA SANITARIA
+                                                            </option>
+                                                            <option value="CERRADO">CERRADO</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <button class="btn btn-primary btn-user btn-block" type="submit">
+                                                    Registrar Establecimiento
+                                                </button>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script type="text/JavaScript">
+                            const array = []
+                            <% if(fields){ %>
+                                <% fields.forEach((fields)=> { %>
+                                    array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
+                                <% }) %>
+                            <% } %>
+
+                            const arrayCod = []
+                            <% if(codigos){ %>
+                                <% codigos.forEach((codigos)=> { %>
+                                    arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+                                <% }) %>
+                            <% } %>
+                          </script>
 
                         </div>
                         <!-- /.container-fluid -->
@@ -82,14 +228,8 @@
 
     <!-- Validations -->
     <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="/js/Coordinador/validaciones.js"></script>
-    <!-- Validations -->
-    <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-    <script src="/js/Coordinador/validaciones.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/chart-area-demo.js"></script>
-    <script src="/js/demo/chart-pie-demo.js"></script>
+    <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
+    <script type="text/JavaScript" src="/js/Coordinador/register.js"></script>
 
     <script>
         $(window).bind('load', function () {

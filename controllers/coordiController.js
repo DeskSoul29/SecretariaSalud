@@ -1,5 +1,7 @@
 import login from "../models/user.js";
 import local from "../models/localidades.js";
+import codEsta from "../models/codigoEstablecimientos.js";
+import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
@@ -52,36 +54,33 @@ export const users = async (req, res, next) => {
   }
 };
 export const editUser = async (req, res, next) => {
-  const { user, name, lastname, pass, provincia, municipio, rol } = req.body;
+  const { name, lastname, pass, provincia, municipio, rol } = req.body;
 
-  await login.updateOne(
-    { user: user },
-    {
+  await login
+    .updateOne(req.params.id, {
       nombre: name,
       apellido: lastname,
       pass: await bcryptjs.hash(pass, 8),
       provincia: provincia,
       municipio: municipio,
       rol: rol,
-    },
-    function (err) {
-      if (err) {
-        //No se encontro el Usuario
-        req.edit = "NotFound";
-      } else {
-        req.edit = true;
-      }
-      return next();
-    }
-  );
+    })
+    .then((result) => {
+      req.flash("success_msg", "Borrado Exitoso");
+      res.locals.message = req.flash();
+      res.redirect("/coordinacion/Cuentas/Usuarios");
+    })
+    .catch((error) => console.error(error));
 };
 export const deleteUser = async (req, res, next) => {
-  await login.deleteOne({ user: req.body.userDel });
-  req.flash("success_msg", "Borrado Exitoso");
-  res.locals.message = req.flash();
-  res.redirect("/coordinacion/Cuentas/Usuarios");
-  // req.delete = true;
-  // return next();
+  await login
+    .findByIdAndDelete(req.params.id)
+    .then((result) => {
+      req.flash("success_msg", "Borrado Exitoso");
+      res.locals.message = req.flash();
+      res.redirect("/coordinacion/Cuentas/Register");
+    })
+    .catch((error) => console.error(error));
 };
 export const extraADD = async (req, res, next) => {
   conexion.query(
@@ -148,6 +147,49 @@ export const extraDELETE = async (req, res, next) => {
   );
 };
 
+// Hojas de Vidas
+export const CodigosEstablecimientos = async (req, res, next) => {
+  const codigos = await codEsta.find({}).lean();
+  req.codigos = codigos;
+  return next();
+};
+export const inscribirEstablecimiento = async (req, res, next) => {
+  const {
+    provincia,
+    municipio,
+    grupEsta,
+    codEsta,
+    tipoEsta,
+    Nriesgo,
+    rSocial,
+    direccion,
+    rLegal,
+    estado,
+  } = req.body;
+
+  var estaNew = new hojavida({
+    provincia: provincia,
+    municipio: municipio,
+    grupo: grupEsta,
+    codigo: codEsta,
+    tipo: tipoEsta,
+    nivelRiesgo: Nriesgo,
+    razonSocial: rSocial,
+    direccion: direccion,
+    repreLegal: rLegal,
+    estado: estado,
+  });
+  await estaNew.save();
+  req.flash("success_msg", "Note Added Successfully");
+  res.locals.message = req.flash();
+  res.redirect("/coordinacion/HojaVida/ConsultarHV");
+};
+
+export const hojavidaConsult = async (req, res, next) => {
+  const hv = await hojavida.find({}).lean();
+  req.hojavida = hv;
+  return next();
+};
 //Extras
 export const isAuthenticatedCoordinacion = async (req, res, next) => {
   if (req.cookies.jwt) {

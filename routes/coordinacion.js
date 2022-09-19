@@ -8,6 +8,9 @@ import {
   deleteUser,
   editUser,
   logout,
+  CodigosEstablecimientos,
+  hojavidaConsult,
+  inscribirEstablecimiento,
 } from "../controllers/coordiController.js";
 
 const router = Router();
@@ -60,23 +63,19 @@ router.get(
     });
   }
 );
-router.post(
-  "/Cuentas/Usuarios/Delete",
+router.delete(
+  "/Cuentas/Usuarios/Delete/:id",
   deleteUser,
   isAuthenticatedCoordinacion,
-  users,
-  fillFields,
   (req, res) => {
     res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,
-      fields: req.localidades,
       deleteU: req.delete,
-      users: req.users,
     });
   }
 );
-router.post(
-  "/Cuentas/Usuarios/Edit",
+router.put(
+  "/Cuentas/Usuarios/Edit/:id",
   isAuthenticatedCoordinacion,
   users,
   fillFields,
@@ -142,16 +141,40 @@ router.get(
 );
 
 //Apartado: Hojas de Vida
-router.get("/HojaVida/ConsultarHV", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("coordinacion/HojaVida/ConsultarHV", {
-    user: req.user,
-  });
-});
-router.get("/HojaVida/InscribirHV", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("coordinacion/HojaVida/InscribirHV", {
-    user: req.user,
-  });
-});
+router.get(
+  "/HojaVida/ConsultarHV",
+  isAuthenticatedCoordinacion,
+  hojavidaConsult,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/ConsultarHV", {
+      user: req.user,
+      hojavida: req.hojavida,
+    });
+  }
+);
+router.get(
+  "/HojaVida/InscribirHV",
+  isAuthenticatedCoordinacion,
+  fillFields,
+  CodigosEstablecimientos,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/InscribirHV", {
+      user: req.user,
+      fields: req.localidades,
+      codigos: req.codigos,
+    });
+  }
+);
+router.post(
+  "/HojaVida/InscribirHV",
+  isAuthenticatedCoordinacion,
+  inscribirEstablecimiento,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/InscribirHV", {
+      user: req.user,
+    });
+  }
+);
 
 router.get("/logout", logout);
 
