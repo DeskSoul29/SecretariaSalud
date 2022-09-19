@@ -7,7 +7,6 @@ import { promisify } from "util";
 // Apartado: Cuentas - Register
 export const register = async (req, res, next) => {
   const { name, lastname, user, pass, provincia, municipio, rol } = req.body;
-  const result = [];
 
   login.find({ user: user }).exec(async (err, results) => {
     if (results.length != 0) {
@@ -53,80 +52,36 @@ export const users = async (req, res, next) => {
   }
 };
 export const editUser = async (req, res, next) => {
-  const { name, lastname, pass, repass, provincia, municipio, rol } = req.body;
+  const { user, name, lastname, pass, provincia, municipio, rol } = req.body;
 
-  if (
-    !name ||
-    !lastname ||
-    !user ||
-    !pass ||
-    !repass ||
-    !provincia ||
-    !municipio ||
-    !rol
-  ) {
-    //Ingresar todos los campos
-    authCoordi.isUser(
-      res,
-      "Advertencia",
-      "Ingresar todos los campos",
-      "error",
-      true,
-      false
-    );
-    return next();
-  } else if (pass != repass) {
-    //Contraseñas Diferentes
-    authCoordi.isUser(
-      res,
-      "Advertencia",
-      "Contraseñas Diferentes",
-      "error",
-      true,
-      false
-    );
-    return next();
-  } else {
-    login.updateOne(
-      { user: user },
-      {
-        $set: {
-          user: user,
-          nombre: name,
-          apellido: lastname,
-          pass: await bcryptjs.hash(pass, 8),
-          provincia: provincia,
-          municipio: municipio,
-          rol: rol,
-        },
-      },
-      function (err, results) {
-        if (err) {
-        } else {
-          authCoordi.isUser(
-            res,
-            "Conexión Exitosa",
-            "Registrado Correctamente",
-            "success",
-            false,
-            800
-          );
-          return next();
-        }
+  await login.updateOne(
+    { user: user },
+    {
+      nombre: name,
+      apellido: lastname,
+      pass: await bcryptjs.hash(pass, 8),
+      provincia: provincia,
+      municipio: municipio,
+      rol: rol,
+    },
+    function (err) {
+      if (err) {
+        //No se encontro el Usuario
+        req.edit = "NotFound";
+      } else {
+        req.edit = true;
       }
-    );
-  }
+      return next();
+    }
+  );
 };
 export const deleteUser = async (req, res, next) => {
-  login.deleteOne({ user: req.body.userDel }).exec(async (err, results) => {
-    if (err) {
-      //No se encontro el Usuario
-      req.delete = "NotFound";
-    } else {
-      req.delete = true;
-    }
-    return next();
-  });
+  await login.deleteOne({ user: req.body.userDel });
+  req.flash("success_msg", "Borrado Exitoso");
+  res.locals.message = req.flash();
+  res.redirect("/coordinacion/Cuentas/Usuarios");
+  // req.delete = true;
+  // return next();
 };
 export const extraADD = async (req, res, next) => {
   conexion.query(

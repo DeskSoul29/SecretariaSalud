@@ -6,6 +6,7 @@ import {
   register,
   users,
   deleteUser,
+  editUser,
   logout,
 } from "../controllers/coordiController.js";
 
@@ -55,7 +56,7 @@ router.get(
       fields: req.localidades,
       users: req.users,
       deleteU: false,
-      edit: false,
+      editU: false,
     });
   }
 );
@@ -74,20 +75,21 @@ router.post(
     });
   }
 );
-// router.post(
-//   "/Cuentas/Usuarios",
-//   isAuthenticatedCoordinacion,
-//   users,
-//   fillFields,
-//   editUser,
-//   (req, res) => {
-//     res.render("coordinacion/Cuentas/usuarios", {
-//       user: req.user,
-//       users: req.users,
-//       fields: req.localidades,
-//     });
-//   }
-// );
+router.post(
+  "/Cuentas/Usuarios/Edit",
+  isAuthenticatedCoordinacion,
+  users,
+  fillFields,
+  editUser,
+  (req, res) => {
+    res.render("coordinacion/Cuentas/usuarios", {
+      user: req.user,
+      users: req.users,
+      fields: req.localidades,
+      editU: req.edit,
+    });
+  }
+);
 // router.post(
 //   "/Cuentas/Usuarios/ExtraADD",
 //   isAuthenticatedCoordinacion,
