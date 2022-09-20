@@ -30,7 +30,7 @@ router.get(
     res.render("coordinacion/Cuentas/register", {
       user: req.user,
       fields: req.localidades,
-      results: false,
+      alert: undefined,
     });
   }
 );
@@ -38,12 +38,11 @@ router.post(
   "/Cuentas/Register",
   isAuthenticatedCoordinacion,
   register,
-  fillFields,
   (req, res) => {
     res.render("coordinacion/Cuentas/register", {
       user: req.user,
-      fields: req.localidades,
-      results: req.register,
+      fields: false,
+      alert: req.alert,
     });
   }
 );
@@ -58,24 +57,25 @@ router.get(
       user: req.user,
       fields: req.localidades,
       users: req.users,
-      deleteU: false,
-      editU: false,
+      alert: undefined,
     });
   }
 );
-router.delete(
-  "/Cuentas/Usuarios/Delete/:id",
+router.post(
+  "/Cuentas/Usuarios/Delete",
   deleteUser,
   isAuthenticatedCoordinacion,
   (req, res) => {
     res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,
-      deleteU: req.delete,
+      users: false,
+      fields: false,
+      alert: req.alert,
     });
   }
 );
-router.put(
-  "/Cuentas/Usuarios/Edit/:id",
+router.post(
+  "/Cuentas/Usuarios/Edit",
   isAuthenticatedCoordinacion,
   users,
   fillFields,
@@ -83,9 +83,9 @@ router.put(
   (req, res) => {
     res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,
-      users: req.users,
-      fields: req.localidades,
-      editU: req.edit,
+      users: false,
+      fields: false,
+      alert: req.alert,
     });
   }
 );
@@ -162,6 +162,7 @@ router.get(
       user: req.user,
       fields: req.localidades,
       codigos: req.codigos,
+      alert: undefined,
     });
   }
 );
@@ -172,6 +173,9 @@ router.post(
   (req, res) => {
     res.render("coordinacion/HojaVida/InscribirHV", {
       user: req.user,
+      alert: req.alert,
+      fields: false,
+      codigos: false,
     });
   }
 );

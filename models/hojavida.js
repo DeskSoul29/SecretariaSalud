@@ -5,7 +5,7 @@ var HojaVidaSchema = new Schema({
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, required: true, max: 100 },
   grupo: { type: String, required: true, max: 100 },
-  codigo: { type: Number, required: true, max: 100, unique: true },
+  codigo: { type: Number, required: true, max: 100 },
   tipo: { type: String, required: true, max: 100 },
   nivelRiesgo: { type: String, required: true, max: 100 },
   razonSocial: { type: String, required: true, max: 100 },

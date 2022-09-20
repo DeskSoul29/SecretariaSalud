@@ -3,6 +3,7 @@ const modalsUsuarios = (function () {
     document.getElementById("userModal").value = user;
     document.getElementById("nombreModal").value = nombre;
   };
+
   var editar_modal = function (
     _id,
     user,
@@ -15,14 +16,7 @@ const modalsUsuarios = (function () {
     document.getElementById("user").value = user;
     document.getElementById("name").value = nombre;
     document.getElementById("lastname").value = apellido;
-    var nodo = document.getElementById("formEditU");
-    var a = document.createAttribute("action");
-    a.value("/coordinacion/Cuentas/Usuarios/Edit/" + _id + "?_method=PUT");
-    nodo.setAttributeNode(a);
-    alert(nodo.getAttribute("action"));
-
-    document.getElementById("rol2").value = rol;
-    $("#rol2").val(rol);
+    document.getElementById("rol").value = rol;
   };
 
   var deleteMuni = function (user, nombre, muniEx) {
@@ -31,10 +25,68 @@ const modalsUsuarios = (function () {
     document.getElementById("muniDELETE").value = muniEx;
   };
 
-  var addMuni = function (user, nombre, provincia, municipio) {
+  var addMuni = function (
+    user,
+    nombre,
+    provincia,
+    municipio,
+    municipio1,
+    municipio2,
+    municipio3
+  ) {
     document.getElementById("userADDMuni").value = user;
     document.getElementById("nombreADDMuni").value = nombre;
-    const selectMEx = document.getElementById("muniADD");
+    const muniApoyos1 = document.getElementById("municipiosApoyo1");
+    const muniApoyos2 = document.getElementById("municipiosApoyo2");
+    const muniApoyos3 = document.getElementById("municipiosApoyo3");
+
+    if (municipio1 == "") {
+      muniApoyos1.innerHTML = `<label class="mr-sm-2" for="muniSelect">Municipio 1</label>
+      <select id="muniADD1" name="muniADD1" class="custom-select mr-sm-2" required>
+        <option selected disabled>Seleccione el Municipio</option>
+      </select>`;
+    } else {
+      muniApoyos1.innerHTML =
+        `<label class="mr-sm-2" for="muniSelect">Municipio 1</label>
+    <input type="text" class="form-control" name="muniADD1" id="muniADD1" value="` +
+        municipio1 +
+        `" readonly>`;
+    }
+
+    if (municipio2 == "") {
+      muniApoyos2.innerHTML = `<label class="mr-sm-2" for="muniSelect">Municipio 2</label>
+      <select id="muniADD2" name="muniADD2" class="custom-select mr-sm-2" required>
+        <option selected disabled>Seleccione el Municipio</option>
+      </select>`;
+    } else {
+      muniApoyos2.innerHTML =
+        `<label class="mr-sm-2" for="muniSelect">Municipio 2</label>
+          <input type="text" class="form-control" name="muniADD1" id="muniADD1" value="` +
+        municipio2 +
+        `" readonly>`;
+    }
+
+    if (municipio3 == "") {
+      muniApoyos3.innerHTML = `<label class="mr-sm-2" for="muniSelect">Municipio 3</label>
+      <select id="muniADD3" name="muniADD3" class="custom-select mr-sm-2" required>
+        <option selected disabled>Seleccione el Municipio</option>
+      </select>`;
+    } else {
+      muniApoyos3.innerHTML =
+        `<label class="mr-sm-2" for="muniSelect">Municipio 3</label>
+          <input type="text" class="form-control" name="muniADD1" id="muniADD1" value="` +
+        municipio3 +
+        `" readonly>`;
+    }
+
+    const muni1 = document.getElementById("muniADD1");
+    const muni2 = document.getElementById("muniADD2");
+    const muni3 = document.getElementById("muniADD3");
+
+    if (muni1.value === "Seleccione el Municipio") {
+    }
+    const selectMEx = muni1;
+
     //Eliminar el listado de Municipios si hay mas de 1
     for (let i = selectMEx.options.length; i >= 1; i--) {
       selectMEx.remove(i);
@@ -53,6 +105,7 @@ const modalsUsuarios = (function () {
       }
     }
   };
+  function apoyoMuni() {}
 
   return {
     addMuni: addMuni,

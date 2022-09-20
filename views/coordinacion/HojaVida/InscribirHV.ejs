@@ -224,12 +224,11 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-
     <!-- Validations -->
-    <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
     <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
     <script type="text/JavaScript" src="/js/Coordinador/register.js"></script>
+    <!-- Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(window).bind('load', function () {
@@ -242,6 +241,20 @@
             nav4.className += "  active";
         });
     </script>
+
+    <% if(typeof alert !="undefined" ) { %>
+        <script type="text/JavaScript">
+              Swal.fire({
+                title: '<%= alert[0].alertTitle %>',
+                text:'<%= alert[0].alertMessage %>',
+                icon:'<%= alert[0].alertIcon %>',
+                showConfirmButton: <%= alert[0].showConfirmButton %>,
+                timer: <%= alert[0].timer %>
+              }).then(()=>{
+                window.location = '/<%= alert[0].ruta %>'
+              })
+            </script>
+        <% } %>
 
 </body>
 

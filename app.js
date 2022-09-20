@@ -2,12 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
-import session from "express-session";
-import flash from "connect-flash";
-import MongoStore from "connect-mongo";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import { MONGODB_URI, PORT } from "./config/config.js";
+import { PORT } from "./config/config.js";
 
 import login from "./routes/login.js";
 import coordinacion from "./routes/coordinacion.js";
@@ -31,22 +28,7 @@ app.use(express.static(join(__dirname, "/public")));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(
-  session({
-    secret: "secret",
-    resave: true,
-    saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: MONGODB_URI }),
-  })
-);
-app.use(flash());
-app.use((req, res, next) => {
-  res.locals.success_msg = req.flash("success_msg");
-  res.locals.error_msg = req.flash("error_msg");
-  res.locals.error = req.flash("error");
-  res.locals.user = req.user || null;
-  next();
-});
+
 // Seteamos las variables de entorno
 dotenv.config({ path: "./env/.env" });
 

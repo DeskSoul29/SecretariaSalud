@@ -8,404 +8,420 @@
 </head>
 
 <body id="page-top">
-  <% if(locals.message){ %>
-    <div class="alert alert-success" role="alert">
-      <strong>Well done!</strong>
-      <%=message.success_msg%>
-    </div>
-    <% } %>
-      <!-- Page Wrapper -->
-      <div id="wrapper">
-        <!-- Sidebar -->
-        <%- include('../../tools/sidebarAdmin'); %>
-          <!-- End of Sidebar -->
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../tools/sidebarAdmin'); %>
+      <!-- End of Sidebar -->
 
-          <!-- Content Wrapper -->
-          <div id="content-wrapper" class="d-flex flex-column">
-            <!-- Main Content -->
-            <div id="content">
-              <!-- Topbar -->
-              <%- include('../../tools/topbar'); %>
-                <!-- End of Topbar -->
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <%- include('../../tools/topbar'); %>
+            <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                  <!-- Page Heading -->
-                  <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+              <!-- Page Heading -->
+              <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
 
-                  <!-- DataTales Example -->
-                  <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Listado de Usuarios
-                      </h6>
-                    </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                          <thead>
+              <!-- DataTales  -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Listado de Usuarios
+                  </h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                          <th>Identificación</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Provincia</th>
+                          <th>Municipio</th>
+                          <th>Rol</th>
+                          <th>Apoyo</th>
+                          <th>Acción</th>
+                        </tr>
+                      </thead>
+                      <tfoot>
+                        <tr>
+                          <th>Identificación</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Provincia</th>
+                          <th>Municipio</th>
+                          <th>Rol</th>
+                          <th>Apoyo</th>
+                          <th>Acción</th>
+                        </tr>
+                      </tfoot>
+                      <tbody>
+                        <% if (users){ %>
+                          <% users.forEach((users)=> { %>
                             <tr>
-                              <th>Identificación</th>
-                              <th>Nombres</th>
-                              <th>Apellidos</th>
-                              <th>Provincia</th>
-                              <th>Municipio</th>
-                              <th>Rol</th>
-                              <th>Apoyo</th>
-                              <th>Acción</th>
-                            </tr>
-                          </thead>
-                          <tfoot>
-                            <tr>
-                              <th>Identificación</th>
-                              <th>Nombres</th>
-                              <th>Apellidos</th>
-                              <th>Provincia</th>
-                              <th>Municipio</th>
-                              <th>Rol</th>
-                              <th>Apoyo</th>
-                              <th>Acción</th>
-                            </tr>
-                          </tfoot>
-                          <tbody>
-                            <% if (users){ %>
-                              <% users.forEach((users)=> { %>
-                                <tr>
-                                  <td>
-                                    <%= users.user %>
-                                  </td>
-                                  <td>
-                                    <%= users.nombre %>
-                                  </td>
-                                  <td>
-                                    <%= users.apellido %>
-                                  </td>
-                                  <td>
-                                    <%= users.provincia %>
-                                  </td>
-                                  <td>
-                                    <%= users.municipio %>
-                                  </td>
-                                  <td>
-                                    <%= users.rol %>
-                                  </td>
-                                  <td>
-                                    <%= users.municipio_extra %>
-                                  </td>
-                                  <td>
-                                    <a onclick='modalsUsuarios.editar_modal("<%= users._id %>","<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
-                                      type="button" data-target="#editModal" data-toggle="modal"
-                                      class="btn btn-warning btn-circle btn-sm">
-                                      <i class="fas fa-pen-to-square"></i>
+                              <td>
+                                <%= users.user %>
+                              </td>
+                              <td>
+                                <%= users.nombre %>
+                              </td>
+                              <td>
+                                <%= users.apellido %>
+                              </td>
+                              <td>
+                                <%= users.provincia %>
+                              </td>
+                              <td>
+                                <%= users.municipio %>
+                              </td>
+                              <td>
+                                <%= users.rol %>
+                              </td>
+                              <td>
+                                <%= users.municipioExtra1 %>
+                                  <br>
+                                  <%= users.municipioExtra2 %>
+                                    <br>
+                                    <%= users.municipioExtra3 %>
+                              </td>
+                              <td>
+                                <a onclick='modalsUsuarios.editar_modal("<%= users._id %>","<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
+                                  type="button" data-target="#editModal" data-toggle="modal"
+                                  class="btn btn-warning btn-circle btn-sm">
+                                  <i class="fas fa-pen-to-square"></i>
+                                </a>
+                                <a onclick='modalsUsuarios.eliminar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
+                                  type="button" data-target="#deleteModal" data-toggle="modal"
+                                  class="btn btn-danger btn-circle btn-sm">
+                                  <i class="fas fa-trash"></i>
+                                </a>
+                                <% if(users.rol=="tecnico" ){ %>
+                                  <% if(users.municipio_extra==null ){ %>
+                                    <a onclick='modalsUsuarios.addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.municipioExtra1 %>", "<%= users.municipioExtra2 %>", "<%= users.municipioExtra3 %>")'
+                                      type="button" data-target="#extraModalADD" data-toggle="modal"
+                                      class="btn btn-info btn-circle btn-sm">
+                                      <i class="fas fa-plus"></i>
                                     </a>
-                                    <a onclick='modalsUsuarios.eliminar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
-                                      type="button" data-target="#deleteModal" data-toggle="modal"
-                                      class="btn btn-danger btn-circle btn-sm">
-                                      <i class="fas fa-trash"></i>
-                                    </a>
-                                    <% if(users.rol=="tecnico" ){ %>
-                                      <% if(users.municipio_extra==null ){ %>
-                                        <a onclick='modalsUsuarios.addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>")'
-                                          type="button" data-target="#extraModalADD" data-toggle="modal"
-                                          class="btn btn-info btn-circle btn-sm">
-                                          <i class="fas fa-plus"></i>
-                                        </a>
-                                        <% }else{ %>
-                                          <a onclick='modalsUsuarios.deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
-                                            type="button" data-target="#extraModalDELETE" data-toggle="modal"
-                                            class="btn btn-info btn-circle btn-sm">
-                                            <i class="fas fa-plus"></i>
-                                          </a>
-                                          <% } %>
-                                            <% } %>
-                                  </td>
-                                </tr>
-                                <% }); %>
-                                  <% } %>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                                    <% }else{ %>
+                                      <a onclick='modalsUsuarios.deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
+                                        type="button" data-target="#extraModalDELETE" data-toggle="modal"
+                                        class="btn btn-info btn-circle btn-sm">
+                                        <i class="fas fa-plus"></i>
+                                      </a>
+                                      <% } %>
+                                        <% } %>
+                              </td>
+                            </tr>
+                            <% }); %>
+                              <% } %>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-                <!-- /.container-fluid -->
+              </div>
             </div>
-            <!-- End of Main Content -->
+            <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <%- include('../../tools/footer'); %>
-              <!-- End of Footer -->
-          </div>
-          <!-- End of Content Wrapper -->
+        <!-- Footer -->
+        <%- include('../../tools/footer'); %>
+          <!-- End of Footer -->
       </div>
-      <!-- End of Page Wrapper -->
+      <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
 
-      <!-- Scroll to Top Button-->
-      <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-      </a>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 
-      <!-- Logout Modal-->
-      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Seleccione "Cerrar sesión" a continuación si está listo para
-              finalizar su sesión actual.
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                Cancelar
-              </button>
-              <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
-            </div>
-          </div>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
         </div>
       </div>
+    </div>
+  </div>
 
-      <!-- ExtraADD Modal-->
-      <div class="modal fade" id="extraModalADD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+  <!-- ExtraADD Modal-->
+  <div class="modal fade" id="extraModalADD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/ExtraADD" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <b>
+              Verifique los datos del tecnico y luego elija el municipio a apoyar
+            </b>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userADDMuni" id="userADDMuni" readonly>
             </div>
-            <form action="/coordinacion/Cuentas/Usuarios/ExtraADD" method="POST" autocomplete="off">
-              <div class="modal-body">
-                <b>
-                  Verifique los datos del tecnico y luego eliga el municipio a ayudar
-                </b>
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Identificación</label>
-                  <input type="number" class="form-control" name="userADDMuni" id="userADDMuni" readonly>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombreADDMuni" id="nombreADDMuni" readonly>
+            </div>
+            <div id="municipiosApoyo1" class="mb-3"></div>
+            <div id="municipiosApoyo2" class="mb-3"></div>
+            <div id="municipiosApoyo3" class="mb-3"></div>
+            <!-- <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio 1</label>
+              <select id="muniADD1" name="muniADD1" class="custom-select mr-sm-2" required>
+                <option selected disabled>Seleccione el Municipio</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio 2</label>
+              <select id="muniADD2" name="muniADD2" class="custom-select mr-sm-2" required>
+                <option selected disabled>Seleccione el Municipio</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio 3</label>
+              <select id="muniADD" name="muniADD3" class="custom-select mr-sm-2" required>
+                <option selected disabled>Seleccione el Municipio</option>
+              </select>
+            </div> -->
+
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Añadir Municipio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- DeleteADD Modal-->
+  <div class="modal fade" id="extraModalDELETE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/ExtraDELETE" method="POST" autocomplete="off">
+          <div class="modal-body">
+            <b>
+              Verifique los datos del Tecnico
+            </b>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userDELETEMuni" id="userDELETEMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" name="nombreDELETEMuni" id="nombreDELETEMuni" readonly>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="muniSelect">Municipio</label>
+              <input type="text" class="form-control" name="muniDELETE" id="muniDELETE" readonly>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Eliminar Municipio
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal-->
+  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form onsubmit="registerForm(event)" action="/coordinacion/Cuentas/Usuarios/Edit" method="POST"
+          autocomplete="off">
+          <input type="hidden" name="_method" value="PUT" />
+          <div class="modal-body">
+            <div class="card-body p-0">
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
+                    placeholder="Nombres" required />
                 </div>
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" name="nombreADDMuni" id="nombreADDMuni" readonly>
+                <div class="col-sm-6">
+                  <input type="text" class="mayusPal form-control form-control-user" id="lastname" name="lastname"
+                    placeholder="Apellidos" required />
                 </div>
-                <div class="mb-3">
+              </div>
+              <div class="form-group">
+                <input type="number" class="form-control form-control-user" id="user" name="user" readonly />
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                  <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                    placeholder="Contraseña" minlength="4" maxlength="12" required />
+                </div>
+                <div class="col-sm-6">
+                  <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                    placeholder="Repite la Contraseña" minlength="4" maxlength="12" required />
+                </div>
+              </div>
+              <div class="form-row align-items-center mb-sm-3">
+                <div class="col-auto my-1">
+                  <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                  <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
+                    <option selected disabled value="">Seleccione la Provincia</option>
+                    <% if(fields){ %>
+                      <% let numberSelected="" ; %>
+                        <% fields.forEach((fields)=> { %>
+                          <% if (numberSelected !=fields.provincia){ %>
+                            <option value="<%= fields.provincia %>">
+                              <%= fields.provincia %>
+                            </option>
+                            <% numberSelected=fields.provincia %>
+                              <% } %>
+                                <% }) %>
+                                  <% } %>
+                  </select>
+                </div>
+                <div class="col-auto my-1">
                   <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                  <select id="muniADD" name="muniADD" class="custom-select mr-sm-2" required>
+                  <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
                     <option selected disabled>Seleccione el Municipio</option>
                   </select>
                 </div>
+                <div class="col-auto my-1">
+                  <label class="mr-sm-2" for="inlineFormCustomSelect">Rol</label>
+                  <select class="custom-select mr-sm-2" id="rol" name="rol" required>
+                    <option selected disabled>Seleccione el Rol</option>
+                    <option value="coordinacion">Coordinación</option>
+                    <option value="profesional">Profesional</option>
+                    <option value="tecnico">Tecnico</option>
+                  </select>
+                </div>
               </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                  Cancelar
-                </button>
-                <button class="btn btn-primary " type="submit">
-                  Añadir Municipio
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- DeleteADD Modal-->
-      <div class="modal fade" id="extraModalDELETE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
             </div>
-            <form action="/coordinacion/Cuentas/Usuarios/ExtraDELETE" method="POST" autocomplete="off">
-              <div class="modal-body">
-                <b>
-                  Verifique los datos del Tecnico
-                </b>
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Identificación</label>
-                  <input type="number" class="form-control" name="userDELETEMuni" id="userDELETEMuni" readonly>
-                </div>
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" name="nombreDELETEMuni" id="nombreDELETEMuni" readonly>
-                </div>
-                <div class="mb-3">
-                  <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                  <input type="text" class="form-control" name="muniDELETE" id="muniDELETE" readonly>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                  Cancelar
-                </button>
-                <button class="btn btn-primary " type="submit">
-                  Eliminar Municipio
-                </button>
-              </div>
-            </form>
           </div>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Actualizar
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 
-      <!-- Edit Modal-->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+  <!-- Delete Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
+          <input type="hidden" name="_method" value="DELETE">
+          <div class="modal-body">
+            Oprima el botón "Eliminar" a continuación si está listo para
+            eliminar a el usuario:
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Identificación</label>
+              <input type="number" class="form-control" name="userDel" id="userModal" readonly>
             </div>
-            <form id="formEditU" method="POST" autocomplete="off">
-              <input type="hidden" name="_method" value="PUT" />
-              <div class="modal-body">
-                <div class="card-body p-0">
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="text" class="mayusPal form-control form-control-user" id="name" name="name"
-                        placeholder="Nombres" required />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="text" class="mayusPal form-control form-control-user" id="lastname" name="lastname"
-                        placeholder="Apellidos" required />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input type="number" class="form-control form-control-user" id="user" name="user" minlength="7"
-                      maxlength="12" readonly />
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                      <input type="password" class="form-control form-control-user" id="pass" name="pass"
-                        placeholder="Contraseña" minlength="4" maxlength="12" required />
-                    </div>
-                    <div class="col-sm-6">
-                      <input type="password" class="form-control form-control-user" id="repass" name="repass"
-                        placeholder="Repite la Contraseña" minlength="4" maxlength="12" required />
-                    </div>
-                  </div>
-                  <div class="form-row align-items-center mb-sm-3">
-                    <div class="col-auto my-1">
-                      <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                      <select id="provinciaID" name="provincia" class="custom-select mr-sm-2" required>
-                        <option selected disabled value="">Seleccione la Provincia</option>
-                        <% let numberSelected="" ; %>
-                          <% fields.forEach((fields)=> { %>
-                            <% if (numberSelected !=fields.provincia){ %>
-                              <option value="<%= fields.provincia %>">
-                                <%= fields.provincia %>
-                              </option>
-                              <% numberSelected=fields.provincia %>
-                                <% } %>
-                                  <% }) %>
-                      </select>
-                      <div class="invalid-feedback">Example invalid custom select feedback</div>
-                    </div>
-                    <div class="col-auto my-1">
-                      <label class="mr-sm-2" for="muniSelect">Municipios de Apoyo</label>
-                      <select id="muniSelect" name="municipio" class="custom-select mr-sm-2" required>
-                        <option selected disabled>Seleccione el Municipio</option>
-                      </select>
-                    </div>
-                    <div class="col-auto my-1">
-                      <label class="mr-sm-2" for="inlineFormCustomSelect">Rol</label>
-                      <select class="custom-select mr-sm-2" id="rol" name="rol" required>
-                        <option selected disabled>Seleccione el Rol</option>
-                        <option value="coordinacion">Coordinación</option>
-                        <option value="profesional">Profesional</option>
-                        <option value="tecnico">Tecnico</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                  Cancelar
-                </button>
-                <button class="btn btn-primary " type="submit">
-                  Actualizar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <!-- Delete Modal-->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-              </button>
+            <div class="mb-3">
+              <label for="userModal" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombreModal" disabled>
             </div>
-            <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
-              <input type="hidden" name="_method" value="DELETE">
-              <div class="modal-body">
-                Oprima el botón "Eliminar" a continuación si está listo para
-                eliminar a el usuario:
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Identificación</label>
-                  <input type="number" class="form-control" name="userDel" id="userModal" readonly>
-                </div>
-                <div class="mb-3">
-                  <label for="userModal" class="form-label">Nombre</label>
-                  <input type="text" class="form-control" id="nombreModal" disabled>
-                </div>
-                <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
-              </div>
-              <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                  Cancelar
-                </button>
-                <button class="btn btn-primary " type="submit">
-                  Eliminar
-                </button>
-              </div>
-            </form>
+            <b>*RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE*</b>
           </div>
-        </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Eliminar
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
+  </div>
 
-      <!-- Bootstrap core JavaScript-->
-      <script src="/vendor/jquery/jquery.min.js"></script>
-      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-      <!-- Core plugin JavaScript-->
-      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-      <!-- Custom scripts for all pages-->
-      <script src="/js/sb-admin-2.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
 
-      <!-- Page level plugins -->
-      <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-      <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <!-- Page level plugins -->
+  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-      <!-- Page level custom scripts -->
-      <script src="/js/demo/datatables-demo.js"></script>
+  <!-- Page level custom scripts -->
+  <script src="/js/demo/datatables-demo.js"></script>
 
-      <!-- Validations -->
-      <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
-      <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
-      <script type="text/javascript" src="/js/Coordinador/register.js"></script>
-      <script type="module" src="/js/tools/toast.js"></script>
+  <!-- Validations -->
+  <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
+  <script type="text/javascript" src="/js/Coordinador/formularios.js"></script>
 
-      <script type="text/JavaScript">
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script type="text/JavaScript">
     $(window).bind("load", function () {
       var nav = document.getElementById("nav4");
       $("#navlink3").removeClass("collapsed");
@@ -416,10 +432,26 @@
       nav4.className += "  active";
     });
     const array = []
-    <% fields.forEach((fields)=> { %>
-      array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
-    <% }) %>
+    <% if(fields){ %>
+      <% fields.forEach((fields)=> { %>
+        array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
+      <% }) %>
+    <% } %>
     </script>
+
+  <% if(typeof alert !="undefined" ) { %>
+    <script type="text/JavaScript">
+            Swal.fire({
+              title: '<%= alert[0].alertTitle %>',
+              text:'<%= alert[0].alertMessage %>',
+              icon:'<%= alert[0].alertIcon %>',
+              showConfirmButton: <%= alert[0].showConfirmButton %>,
+              timer: <%= alert[0].timer %>
+            }).then(()=>{
+              window.location = '/<%= alert[0].ruta %>'
+            })
+          </script>
+    <% } %>
 
 </body>
 

@@ -8,20 +8,9 @@ const UserSchema = new Schema({
   pass: { type: String, required: true, max: 100 },
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, required: true, max: 100 },
-  municipioExtra: {
-    municipio1: {
-      type: String,
-      max: 100,
-    },
-    municipio2: {
-      type: String,
-      max: 100,
-    },
-    municipio3: {
-      type: String,
-      max: 100,
-    },
-  },
+  municipioExtra1: { type: String, max: 100 },
+  municipioExtra2: { type: String, max: 100 },
+  municipioExtra3: { type: String, max: 100 },
   rol: { type: String, required: true, max: 100 },
   crearedAt: { type: Date, default: Date.now },
 });

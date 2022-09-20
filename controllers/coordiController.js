@@ -6,6 +6,26 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
 
+var authCoordi = (function () {
+  var isUser = function (req, title, mess, icon, button, timer, ruta) {
+    return (req.alert = [
+      {
+        alert: true,
+        alertTitle: title,
+        alertMessage: mess,
+        alertIcon: icon,
+        showConfirmButton: button,
+        timer: timer,
+        ruta: ruta,
+      },
+    ]);
+  };
+
+  return {
+    isUser: isUser,
+  };
+})();
+
 // Apartado: Cuentas - Register
 export const register = async (req, res, next) => {
   const { name, lastname, user, pass, provincia, municipio, rol } = req.body;
@@ -13,7 +33,15 @@ export const register = async (req, res, next) => {
   login.find({ user: user }).exec(async (err, results) => {
     if (results.length != 0) {
       //Usuario ya registrado
-      req.register = "found";
+      authCoordi.isUser(
+        req,
+        "Advertencia",
+        "Usuario ya Registrado",
+        "error",
+        true,
+        false,
+        "coordinacion/Cuentas/Register"
+      );
     } else {
       var userNew = new login({
         user: user,
@@ -24,8 +52,17 @@ export const register = async (req, res, next) => {
         municipio: municipio,
         rol: rol,
       });
-      await userNew.save(function (err, results) {
-        req.register = results;
+
+      await userNew.save().then((result) => {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Registrado Correctamente",
+          "success",
+          false,
+          800,
+          "coordinacion/Cuentas/Register"
+        );
       });
     }
     return next();
@@ -54,33 +91,50 @@ export const users = async (req, res, next) => {
   }
 };
 export const editUser = async (req, res, next) => {
-  const { name, lastname, pass, provincia, municipio, rol } = req.body;
+  const { user, name, lastname, pass, provincia, municipio, rol } = req.body;
 
   await login
-    .updateOne(req.params.id, {
-      nombre: name,
-      apellido: lastname,
-      pass: await bcryptjs.hash(pass, 8),
-      provincia: provincia,
-      municipio: municipio,
-      rol: rol,
-    })
+    .updateOne(
+      { user: user },
+      {
+        nombre: name,
+        apellido: lastname,
+        pass: await bcryptjs.hash(pass, 8),
+        provincia: provincia,
+        municipio: municipio,
+        rol: rol,
+      }
+    )
     .then((result) => {
-      req.flash("success_msg", "Borrado Exitoso");
-      res.locals.message = req.flash();
-      res.redirect("/coordinacion/Cuentas/Usuarios");
+      authCoordi.isUser(
+        req,
+        "Conexión exitosa",
+        "Editado Correctamente",
+        "success",
+        false,
+        800,
+        "coordinacion/Cuentas/Usuarios"
+      );
     })
     .catch((error) => console.error(error));
+  return next();
 };
 export const deleteUser = async (req, res, next) => {
   await login
-    .findByIdAndDelete(req.params.id)
+    .deleteOne({ user: req.body.userDel })
     .then((result) => {
-      req.flash("success_msg", "Borrado Exitoso");
-      res.locals.message = req.flash();
-      res.redirect("/coordinacion/Cuentas/Register");
+      authCoordi.isUser(
+        req,
+        "Conexión exitosa",
+        "Eliminado Correctamente",
+        "success",
+        false,
+        800,
+        "coordinacion/Cuentas/Usuarios"
+      );
     })
     .catch((error) => console.error(error));
+  return next();
 };
 export const extraADD = async (req, res, next) => {
   conexion.query(
@@ -179,10 +233,21 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     repreLegal: rLegal,
     estado: estado,
   });
-  await estaNew.save();
-  req.flash("success_msg", "Note Added Successfully");
-  res.locals.message = req.flash();
-  res.redirect("/coordinacion/HojaVida/ConsultarHV");
+  await estaNew
+    .save()
+    .then((result) => {
+      authCoordi.isUser(
+        req,
+        "Conexión exitosa",
+        "Establecimiento Añadido Correctamente",
+        "success",
+        false,
+        800,
+        "coordinacion/HojaVida/InscribirHV"
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
 };
 
 export const hojavidaConsult = async (req, res, next) => {
