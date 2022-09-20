@@ -44,16 +44,17 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%"
-                                                    cellspacing="0">
+                                                <table style="font-size: 13px;" class="table table-bordered"
+                                                    id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
+                                                            <th>Acción</th>
                                                             <th>Provincia</th>
                                                             <th>Municipio</th>
-                                                            <th>Grupo</th>
                                                             <th>Codigo</th>
                                                             <th>Tipo</th>
                                                             <th>Riesgo</th>
+                                                            <th>Identificiación</th>
                                                             <th>Razón Social</th>
                                                             <th>Dirección</th>
                                                             <th>Representante Legal</th>
@@ -62,12 +63,13 @@
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
+                                                            <th>Acción</th>
                                                             <th>Provincia</th>
                                                             <th>Municipio</th>
-                                                            <th>Grupo</th>
                                                             <th>Codigo</th>
                                                             <th>Tipo</th>
                                                             <th>Riesgo</th>
+                                                            <th>Identificación</th>
                                                             <th>Razón Social</th>
                                                             <th>Dirección</th>
                                                             <th>Representante Legal</th>
@@ -79,13 +81,16 @@
                                                             <% hojavida.forEach((hojavida)=> { %>
                                                                 <tr>
                                                                     <td>
+                                                                        <a href="<%= hojavida._id%>" type="button"
+                                                                            class="btn btn-warning btn-circle btn-sm">
+                                                                            <i class="fas fa-pen-to-square"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
                                                                         <%= hojavida.provincia %>
                                                                     </td>
                                                                     <td>
                                                                         <%= hojavida.municipio %>
-                                                                    </td>
-                                                                    <td>
-                                                                        <%= hojavida.grupo %>
                                                                     </td>
                                                                     <td>
                                                                         <%= hojavida.codigo %>
@@ -95,6 +100,10 @@
                                                                     </td>
                                                                     <td>
                                                                         <%= hojavida.nivelRiesgo %>
+                                                                    </td>
+                                                                    <td>
+                                                                        <%= hojavida.tipoIdentificacion %> - <%=
+                                                                                hojavida.identificacion %>
                                                                     </td>
                                                                     <td>
                                                                         <%= hojavida.razonSocial %>
@@ -168,15 +177,10 @@
             <!-- Custom scripts for all pages-->
             <script src="/js/sb-admin-2.min.js"></script>
 
-            <!-- Page level plugins -->
-            <script src="/vendor/chart.js/Chart.min.js"></script>
-
             <!-- Page level custom scripts -->
-            <script src="/js/demo/chart-area-demo.js"></script>
-            <script src="/js/demo/chart-pie-demo.js"></script>
+            <script src="/js/demo/datatables-demo.js"></script>
 
             <!-- Validations -->
-
             <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
             <script src="/js/Coordinador/validaciones.js"></script>
 

@@ -94,7 +94,7 @@ const modalsUsuarios = (function () {
     for (var i = 0; i < array.length; i++) {
       if (
         array[i] == provincia &&
-        array[i + 1] != "SOTO" &&
+        array[i + 1] != "VELEZ" &&
         municipio != array[i + 1]
       ) {
         const option = document.createElement("option");
@@ -105,8 +105,6 @@ const modalsUsuarios = (function () {
       }
     }
   };
-  function apoyoMuni() {}
-
   return {
     addMuni: addMuni,
     deleteMuni: deleteMuni,
@@ -142,14 +140,18 @@ selectP.addEventListener("change", function () {
 
 //Codigos de Establecimientos
 const grupEsta = document.getElementById("grupEsta");
+const tipoEsta = document.getElementById("tipoEsta");
 const codEsta = document.getElementById("codEsta");
+const Nriesgo = document.getElementById("Nriesgo");
 
 grupEsta.addEventListener("change", function () {
   var selectedOption = this.options[grupEsta.selectedIndex];
 
   //Eliminar el listado de Codigos si hay mas de 1
-  for (let i = codEsta.options.length; i >= 1; i--) {
-    codEsta.remove(i);
+  for (let i = tipoEsta.options.length; i >= 1; i--) {
+    tipoEsta.remove(i);
+    codEsta.value = "Ninguno";
+    Nriesgo.value = "Ninguno";
   }
 
   // Llenado de Codigos
@@ -157,22 +159,22 @@ grupEsta.addEventListener("change", function () {
     if (arrayCod[i] == selectedOption.value) {
       const option = document.createElement("option");
 
-      const valor = arrayCod[i + 1];
+      const valor = arrayCod[i + 2];
       option.value = valor;
       option.text = valor;
-      codEsta.add(option);
+      tipoEsta.add(option);
     }
   }
 });
 
-codEsta.addEventListener("change", function () {
-  var selectedOption = this.options[codEsta.selectedIndex];
+tipoEsta.addEventListener("change", function () {
+  var selectedOption = this.options[tipoEsta.selectedIndex];
 
   // Llenado de Tipo y Riesgo
   for (var i = 0; i < arrayCod.length; i++) {
     if (arrayCod[i + 1] == selectedOption.value) {
-      document.getElementById("tipoEsta").value = arrayCod[i + 2];
-      document.getElementById("Nriesgo").value = arrayCod[i + 3];
+      codEsta.value = arrayCod[i];
+      Nriesgo.value = arrayCod[i + 2];
     }
   }
 });

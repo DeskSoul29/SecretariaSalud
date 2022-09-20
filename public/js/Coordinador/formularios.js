@@ -74,11 +74,13 @@ function hvForm(e) {
     document.getElementById("direccion").value == 0 ||
     document.getElementById("rSocial").value == 0 ||
     document.getElementById("Nriesgo").value == 0 ||
-    document.getElementById("tipoEsta").value == 0 ||
-    document.getElementById("codEsta").value == "Seleccione el Codigo" ||
+    document.getElementById("codEsta").value == 0 ||
+    document.getElementById("tipoEsta").value == "Seleccione el Tipo" ||
+    document.getElementById("inputIden").value == 0 ||
     document.getElementById("provinciaID").value == "Seleccione la Provincia" ||
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
-    document.getElementById("grupEsta").value == "Seleccione el Grupo"
+    document.getElementById("grupEsta").value == "Seleccione el Grupo" ||
+    document.getElementById("tIden").value == "Seleccione"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();

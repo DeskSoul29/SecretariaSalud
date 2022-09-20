@@ -40,7 +40,7 @@ export const register = async (req, res, next) => {
         "error",
         true,
         false,
-        "coordinacion/Cuentas/Register"
+        "/coordinacion/Cuentas/Register"
       );
     } else {
       var userNew = new login({
@@ -61,7 +61,7 @@ export const register = async (req, res, next) => {
           "success",
           false,
           800,
-          "coordinacion/Cuentas/Register"
+          "/coordinacion/Cuentas/Register"
         );
       });
     }
@@ -113,7 +113,7 @@ export const editUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "coordinacion/Cuentas/Usuarios"
+        "/coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -130,7 +130,7 @@ export const deleteUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "coordinacion/Cuentas/Usuarios"
+        "/coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -215,11 +215,52 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     codEsta,
     tipoEsta,
     Nriesgo,
+    tIden,
+    inputIden,
     rSocial,
     direccion,
     rLegal,
     estado,
   } = req.body;
+
+  if (tIden == "NIT") {
+    await hojavida
+      .find({ identificacion: inputIden, tipoIdentificacion: tIden })
+      .then((result) => {
+        console.log(result);
+        authCoordi.isUser(
+          req,
+          "Advertencia",
+          "NIT ya registrado",
+          "error",
+          true,
+          false
+        );
+      });
+    return next();
+  } else if (tIden == "Cedula Ciudadania") {
+    await hojavida
+      .find({
+        identificacion: inputIden,
+        tipoIdentificacion: tIden,
+        grupo: grupEsta,
+      })
+      .count()
+      .then((result) => {
+        console.log(result);
+        if (result >= 1) {
+          authCoordi.isUser(
+            req,
+            "Advertencia",
+            "Usuario con Establecimiento En El Mismo Grupo",
+            "error",
+            true,
+            false
+          );
+          return next();
+        }
+      });
+  }
 
   var estaNew = new hojavida({
     provincia: provincia,
@@ -228,6 +269,8 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     codigo: codEsta,
     tipo: tipoEsta,
     nivelRiesgo: Nriesgo,
+    tipoIdentificacion: tIden,
+    identificacion: inputIden,
     razonSocial: rSocial,
     direccion: direccion,
     repreLegal: rLegal,
@@ -243,10 +286,21 @@ export const inscribirEstablecimiento = async (req, res, next) => {
         "success",
         false,
         800,
-        "coordinacion/HojaVida/InscribirHV"
+        "/coordinacion/HojaVida/InscribirHV"
       );
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      authCoordi.isUser(
+        req,
+        "Advertencia",
+        "Usuario ya Registrado",
+        "error",
+        true,
+        false,
+        "/coordinacion/HojaVida/InscribirHV"
+      );
+      console.error(error);
+    });
   return next();
 };
 
@@ -265,11 +319,12 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
       );
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
-          return next();
+          res.redirect("/");
         } else if (results.rol != "coordinacion") {
           return res.redirect("/" + results.rol);
+        } else {
+          req.user = results;
         }
-        req.user = results;
         return next();
       });
     } catch (error) {

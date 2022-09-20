@@ -66,7 +66,7 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <div class="col-sm-8 mb-3 mb-sm-0">
                                                         <label class="mr-sm-2" for="grupEsta">Grupo Del
                                                             Establecimiento</label>
                                                         <select id="grupEsta" name="grupEsta"
@@ -88,28 +88,49 @@
 
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <label class="mr-sm-2" for="codEsta">Codigo</label>
-                                                        <select id="codEsta" name="codEsta"
-                                                            class="custom-select mr-sm-2">
-                                                            <option selected disabled>Seleccione el Codigo</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
-                                                    <div class="col-sm-8">
-                                                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
-                                                            Establecimiento</label>
-                                                        <input type="text" class="form-control form-control-user"
-                                                            id="tipoEsta" name="tipoEsta" placeholder="Ninguno"
-                                                            readonly />
-                                                    </div>
                                                     <div class="col-sm-4">
                                                         <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
                                                         <input type="text" class="form-control form-control-user"
                                                             id="Nriesgo" name="Nriesgo" placeholder="Ninguno"
                                                             readonly />
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                                                            Establecimiento</label>
+                                                        <select id="tipoEsta" name="tipoEsta"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected value="0">Seleccione el Tipo
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="codEsta">Codigo
+                                                            Establecimiento</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="codEsta" name="codEsta" placeholder="Ninguno"
+                                                            readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="tIden">Tipo de
+                                                            Identificación</label>
+                                                        <select id="tIden" name="tIden" class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione</option>
+                                                            <option>Cedula Ciudadania</option>
+                                                            <option>NIT</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="inputIden">Identificación</label>
+                                                        <input type="number"
+                                                            class="mayusPal form-control form-control-user"
+                                                            id="inputIden" name="inputIden" />
                                                     </div>
                                                 </div>
 
@@ -157,6 +178,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <script type="text/JavaScript">
                             const array = []
                             <% if(fields){ %>
@@ -226,7 +248,8 @@
 
     <!-- Validations -->
     <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
-    <script type="text/JavaScript" src="/js/Coordinador/register.js"></script>
+    <script type="text/JavaScript" src="/js/Coordinador/formularios.js"></script>
+
     <!-- Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -251,7 +274,7 @@
                 showConfirmButton: <%= alert[0].showConfirmButton %>,
                 timer: <%= alert[0].timer %>
               }).then(()=>{
-                window.location = '/<%= alert[0].ruta %>'
+                window.location = '<%= alert[0].ruta %>'
               })
             </script>
         <% } %>
