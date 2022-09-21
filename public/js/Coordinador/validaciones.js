@@ -1,4 +1,32 @@
 const modalsUsuarios = (function () {
+  var llenadoMunicipiosEditHV = function (selectM, selectP, provincia) {
+    // Llenado de Municipios
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] == selectP.value && array[i + 1] != "SOTO") {
+        const option = document.createElement("option");
+        const valor = array[i + 1];
+        option.value = valor;
+        option.text = valor;
+        selectM.add(option);
+      }
+    }
+    selectM.value = provincia;
+  };
+
+  var llenadoCodigosEditHV = function (grupEsta, tipoEsta, tipo) {
+    //Llenado de Codigos
+    for (var i = 0; i < arrayCod.length; i++) {
+      if (arrayCod[i] == grupEsta.value) {
+        const option = document.createElement("option");
+        const valor = arrayCod[i + 2];
+        option.value = valor;
+        option.text = valor;
+        tipoEsta.add(option);
+      }
+    }
+    tipoEsta.value = tipo;
+  };
+
   var eliminar_modal = function (user, nombre) {
     document.getElementById("userModal").value = user;
     document.getElementById("nombreModal").value = nombre;
@@ -110,6 +138,8 @@ const modalsUsuarios = (function () {
     deleteMuni: deleteMuni,
     editar_modal: editar_modal,
     eliminar_modal: eliminar_modal,
+    llenadoMunicipiosEditHV: llenadoMunicipiosEditHV,
+    llenadoCodigosEditHV: llenadoCodigosEditHV,
   };
 })();
 

@@ -223,22 +223,27 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     estado,
   } = req.body;
 
+  var salida = false;
+
   if (tIden == "NIT") {
     await hojavida
       .find({ identificacion: inputIden, tipoIdentificacion: tIden })
+      .count()
       .then((result) => {
-        console.log(result);
-        authCoordi.isUser(
-          req,
-          "Advertencia",
-          "NIT ya registrado",
-          "error",
-          true,
-          false
-        );
+        if (result >= 1) {
+          authCoordi.isUser(
+            req,
+            "Advertencia",
+            "NIT ya registrado",
+            "error",
+            true,
+            false
+          );
+        }
       });
-    return next();
+    salida = true;
   } else if (tIden == "Cedula Ciudadania") {
+    console.log(inputIden, tIden, grupEsta);
     await hojavida
       .find({
         identificacion: inputIden,
@@ -247,7 +252,6 @@ export const inscribirEstablecimiento = async (req, res, next) => {
       })
       .count()
       .then((result) => {
-        console.log(result);
         if (result >= 1) {
           authCoordi.isUser(
             req,
@@ -257,57 +261,104 @@ export const inscribirEstablecimiento = async (req, res, next) => {
             true,
             false
           );
-          return next();
         }
       });
+    salida = true;
   }
 
-  var estaNew = new hojavida({
-    provincia: provincia,
-    municipio: municipio,
-    grupo: grupEsta,
-    codigo: codEsta,
-    tipo: tipoEsta,
-    nivelRiesgo: Nriesgo,
-    tipoIdentificacion: tIden,
-    identificacion: inputIden,
-    razonSocial: rSocial,
-    direccion: direccion,
-    repreLegal: rLegal,
-    estado: estado,
-  });
-  await estaNew
-    .save()
-    .then((result) => {
-      authCoordi.isUser(
-        req,
-        "Conexión exitosa",
-        "Establecimiento Añadido Correctamente",
-        "success",
-        false,
-        800,
-        "/coordinacion/HojaVida/InscribirHV"
-      );
-    })
-    .catch((error) => {
-      authCoordi.isUser(
-        req,
-        "Advertencia",
-        "Usuario ya Registrado",
-        "error",
-        true,
-        false,
-        "/coordinacion/HojaVida/InscribirHV"
-      );
-      console.error(error);
+  if (!salida) {
+    var estaNew = new hojavida({
+      provincia: provincia,
+      municipio: municipio,
+      grupo: grupEsta,
+      codigo: codEsta,
+      tipo: tipoEsta,
+      nivelRiesgo: Nriesgo,
+      tipoIdentificacion: tIden,
+      identificacion: inputIden,
+      razonSocial: rSocial,
+      direccion: direccion,
+      repreLegal: rLegal,
+      estado: estado,
     });
+    await estaNew
+      .save()
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Establecimiento Añadido Correctamente",
+          "success",
+          false,
+          800,
+          "/coordinacion/HojaVida/InscribirHV"
+        );
+      })
+      .catch((error) => {
+        authCoordi.isUser(
+          req,
+          "Advertencia",
+          "Usuario ya Registrado",
+          "error",
+          true,
+          false,
+          "/coordinacion/HojaVida/InscribirHV"
+        );
+        console.error(error);
+      });
+  }
   return next();
 };
 
-export const hojavidaConsult = async (req, res, next) => {
+export const hojavidaConsultAll = async (req, res, next) => {
   const hv = await hojavida.find({}).lean();
   req.hojavida = hv;
   return next();
+};
+export const HVConsultOne = async (req, res, next) => {
+  const CHVida = await hojavida.findById(req.params.id).lean();
+  req.consultHV = CHVida;
+  return next();
+};
+export const editHV = async (req, res, next) => {
+  const {
+    provincia,
+    municipio,
+    grupEsta,
+    codEsta,
+    tipoEsta,
+    Nriesgo,
+    tIden,
+    inputIden,
+    rSocial,
+    direccion,
+    rLegal,
+    estado,
+  } = req.body;
+
+  await hojavida.findByIdAndUpdate(req.params.id, {
+    provincia,
+    municipio,
+    grupEsta,
+    codEsta,
+    tipoEsta,
+    Nriesgo,
+    tIden,
+    inputIden,
+    rSocial,
+    direccion,
+    rLegal,
+    estado,
+  });
+  authCoordi.isUser(
+    req,
+    "Conexión exitosa",
+    "Actualizado Correctamente",
+    "success",
+    false,
+    800,
+    "/coordinacion/HojaVida/ConsultarHV"
+  );
 };
 //Extras
 export const isAuthenticatedCoordinacion = async (req, res, next) => {
@@ -322,9 +373,8 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
           res.redirect("/");
         } else if (results.rol != "coordinacion") {
           return res.redirect("/" + results.rol);
-        } else {
-          req.user = results;
         }
+        req.user = results;
         return next();
       });
     } catch (error) {

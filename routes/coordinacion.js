@@ -9,8 +9,10 @@ import {
   editUser,
   logout,
   CodigosEstablecimientos,
-  hojavidaConsult,
+  hojavidaConsultAll,
   inscribirEstablecimiento,
+  HVConsultOne,
+  editHV,
 } from "../controllers/coordiController.js";
 
 const router = Router();
@@ -144,7 +146,7 @@ router.get(
 router.get(
   "/HojaVida/ConsultarHV",
   isAuthenticatedCoordinacion,
-  hojavidaConsult,
+  hojavidaConsultAll,
   (req, res) => {
     res.render("coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
@@ -152,6 +154,22 @@ router.get(
     });
   }
 );
+router.get(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedCoordinacion,
+  HVConsultOne,
+  fillFields,
+  CodigosEstablecimientos,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/EditHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      fields: req.localidades,
+      codigos: req.codigos,
+    });
+  }
+);
+router.put("/HojaVida/ConsultarHV/Edit-HV/:id", editHV);
 router.get(
   "/HojaVida/InscribirHV",
   isAuthenticatedCoordinacion,

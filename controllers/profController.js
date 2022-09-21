@@ -128,7 +128,7 @@ export const isAuthenticatedProf = async (req, res, next) => {
       );
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
-          return next();
+          res.redirect("/");
         } else if (results.rol != "profesional") {
           return res.redirect("/" + results.rol);
         }

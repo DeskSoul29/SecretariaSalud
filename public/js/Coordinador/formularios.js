@@ -77,7 +77,6 @@ function hvForm(e) {
     document.getElementById("codEsta").value == 0 ||
     document.getElementById("tipoEsta").value == "Seleccione el Tipo" ||
     document.getElementById("inputIden").value == 0 ||
-    document.getElementById("provinciaID").value == "Seleccione la Provincia" ||
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
     document.getElementById("grupEsta").value == "Seleccione el Grupo" ||
     document.getElementById("tIden").value == "Seleccione"
