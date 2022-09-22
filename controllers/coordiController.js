@@ -90,6 +90,11 @@ export const users = async (req, res, next) => {
     return next();
   }
 };
+export const consultUser = async (req, res, next) => {
+  const Edit = await login.findById(req.params.id).lean();
+  req.editUser = Edit;
+  return next();
+};
 export const editUser = async (req, res, next) => {
   const { user, name, lastname, pass, provincia, municipio, rol } = req.body;
 
@@ -243,7 +248,6 @@ export const inscribirEstablecimiento = async (req, res, next) => {
       });
     salida = true;
   } else if (tIden == "Cedula Ciudadania") {
-    console.log(inputIden, tIden, grupEsta);
     await hojavida
       .find({
         identificacion: inputIden,
@@ -321,6 +325,7 @@ export const HVConsultOne = async (req, res, next) => {
   return next();
 };
 export const editHV = async (req, res, next) => {
+  console.log(req.body);
   const {
     provincia,
     municipio,
@@ -335,31 +340,33 @@ export const editHV = async (req, res, next) => {
     rLegal,
     estado,
   } = req.body;
-
-  await hojavida.findByIdAndUpdate(req.params.id, {
-    provincia,
-    municipio,
-    grupEsta,
-    codEsta,
-    tipoEsta,
-    Nriesgo,
-    tIden,
-    inputIden,
-    rSocial,
-    direccion,
-    rLegal,
-    estado,
-  });
-  authCoordi.isUser(
-    req,
-    "Conexión exitosa",
-    "Actualizado Correctamente",
-    "success",
-    false,
-    800,
-    "/coordinacion/HojaVida/ConsultarHV"
+  console.log("entre");
+  await hojavida.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: {
+        provincia: provincia,
+        municipio: municipio,
+        grupo: grupEsta,
+        codigo: codEsta,
+        tipo: tipoEsta,
+        nivelRiesgo: Nriesgo,
+        tipoIdentificacion: tIden,
+        identificacion: inputIden,
+        razonSocial: rSocial,
+        direccion: direccion,
+        repreLegal: rLegal,
+        estado: estado,
+      },
+    },
+    { new: true }
   );
+  // res.render("orders.ejs", {
+  //   put: true,
+  // });
+  res.redirect("/Coordinacion/HojaVida/ConsultarHV");
 };
+
 //Extras
 export const isAuthenticatedCoordinacion = async (req, res, next) => {
   if (req.cookies.jwt) {

@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import bodyParser from "body-parser";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { PORT } from "./config/config.js";
@@ -25,9 +26,11 @@ app.set("view engine", "ejs");
 app.use(express.static(join(__dirname, "/public")));
 
 // Para procesar datos enviados desde forms
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(bodyParser.json());
 
 // Seteamos las variables de entorno
 dotenv.config({ path: "./env/.env" });
@@ -49,9 +52,6 @@ app.use(function (req, res, next) {
 });
 
 // Error 404
-app.use((req, res, next) => {
-  return res.status(404).redirect("/404");
-});
 
 // app.use((error, req, res, next) => {
 //   res.status(error.status || 500);

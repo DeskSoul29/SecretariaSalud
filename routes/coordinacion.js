@@ -7,6 +7,7 @@ import {
   users,
   deleteUser,
   editUser,
+  consultUser,
   logout,
   CodigosEstablecimientos,
   hojavidaConsultAll,
@@ -57,12 +58,28 @@ router.get(
   (req, res) => {
     res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,
-      fields: req.localidades,
       users: req.users,
+      fields: req.localidades,
       alert: undefined,
     });
   }
 );
+router.get(
+  "/Cuentas/Usuarios/Edit/:id",
+  isAuthenticatedCoordinacion,
+  users,
+  fillFields,
+  consultUser,
+  (req, res) => {
+    res.render("coordinacion/Cuentas/EditUser", {
+      user: req.user,
+      fields: req.localidades,
+      alert: undefined,
+      editUser: req.editUser,
+    });
+  }
+);
+
 router.post(
   "/Cuentas/Usuarios/Delete",
   deleteUser,
@@ -169,7 +186,7 @@ router.get(
     });
   }
 );
-router.put("/HojaVida/ConsultarHV/Edit-HV/:id", editHV);
+router.put("/coordinacion/HojaVida/ConsultarHV/Edit-HV/:id", editHV);
 router.get(
   "/HojaVida/InscribirHV",
   isAuthenticatedCoordinacion,

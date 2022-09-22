@@ -92,8 +92,8 @@
                                     <%= users.municipioExtra3 %>
                               </td>
                               <td>
-                                <a onclick='modalsUsuarios.editar_modal("<%= users._id %>","<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")'
-                                  type="button" data-target="#editModal" data-toggle="modal"
+                                <!-- <a onclick='modalsUsuarios.editar_modal("<%= users._id %>","<%= users.user %>", "<%= users.nombre %>", "<%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.rol %>")' -->
+                                <a href="/coordinacion/Cuentas/Usuarios/Edit/<%= users._id %>" type="button"
                                   class="btn btn-warning btn-circle btn-sm">
                                   <i class="fas fa-pen-to-square"></i>
                                 </a>
@@ -102,21 +102,6 @@
                                   class="btn btn-danger btn-circle btn-sm">
                                   <i class="fas fa-trash"></i>
                                 </a>
-                                <% if(users.rol=="tecnico" ){ %>
-                                  <% if(users.municipio_extra==null ){ %>
-                                    <a onclick='modalsUsuarios.addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>", "<%= users.municipioExtra1 %>", "<%= users.municipioExtra2 %>", "<%= users.municipioExtra3 %>")'
-                                      type="button" data-target="#extraModalADD" data-toggle="modal"
-                                      class="btn btn-info btn-circle btn-sm">
-                                      <i class="fas fa-plus"></i>
-                                    </a>
-                                    <% }else{ %>
-                                      <a onclick='modalsUsuarios.deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
-                                        type="button" data-target="#extraModalDELETE" data-toggle="modal"
-                                        class="btn btn-info btn-circle btn-sm">
-                                        <i class="fas fa-plus"></i>
-                                      </a>
-                                      <% } %>
-                                        <% } %>
                               </td>
                             </tr>
                             <% }); %>

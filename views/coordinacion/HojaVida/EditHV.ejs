@@ -3,6 +3,8 @@
 
 <head>
     <%- include('../../tools/head'); %>
+        <script type="text/JavaScript" src="/js/envios.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -32,7 +34,8 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a
-                                                href="/coordinacion/HojaVida/ConsultarHV">Consultar</a></li>
+                                                href="/coordinacion/HojaVida/ConsultarHV">Consultar Hojas de Vida</a>
+                                        </li>
                                         <li class="breadcrumb-item active" aria-current="page">Edición</li>
                                     </ol>
                                 </nav>
@@ -49,7 +52,7 @@
                                                 <form onsubmit="hvForm(event)"
                                                     action="/coordinacion/HojaVida/ConsultarHV/Edit-HV/<%= consultHV._id %>?_method=PUT"
                                                     method="POST">
-                                                    <input type="hidden" name="_method" value="PUT" />
+                                                    <input name="_method" type="hidden" value="PUT">
 
                                                     <div class="form-row align-items-center mb-sm-2">
                                                         <div class="col my-1">
@@ -198,7 +201,8 @@
                                                         </div>
                                                     </div>
 
-                                                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                                                    <button id="update-button"
+                                                        class="btn btn-primary btn-user btn-block" type="submit">
                                                         Actualizar Establecimiento
                                                     </button>
 
