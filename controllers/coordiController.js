@@ -70,7 +70,7 @@ export const register = async (req, res, next) => {
 };
 
 export const fillFields = async (req, res, next) => {
-  const localidades = await local.find({}).lean();
+  const localidades = await local.find({}).sort({ codigo: -1 });
   req.localidades = localidades;
   return next();
 };
@@ -141,70 +141,6 @@ export const deleteUser = async (req, res, next) => {
     .catch((error) => console.error(error));
   return next();
 };
-export const extraADD = async (req, res, next) => {
-  conexion.query(
-    "UPDATE users SET municipio_extra = ? WHERE user = ?",
-    [req.body.muniADD, req.body.userADDMuni],
-    (error) => {
-      if (error) {
-        req.alert = [
-          {
-            alertTitle: "Error",
-            alertMessage: "Error en la Base de Datos",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      } else {
-        req.alert = [
-          {
-            alertTitle: "Conexión exitosa",
-            alertMessage: "Municipio de Ayuda Añadido correctamente",
-            alertIcon: "success",
-            showConfirmButton: false,
-            timer: 800,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      }
-      return next();
-    }
-  );
-};
-export const extraDELETE = async (req, res, next) => {
-  conexion.query(
-    "UPDATE users SET municipio_extra = NULL WHERE user = ?",
-    req.body.userDELETEMuni,
-    function (err) {
-      if (err) {
-        req.alert = [
-          {
-            alertTitle: "Error",
-            alertMessage: "Error en la Base de Datos",
-            alertIcon: "error",
-            showConfirmButton: true,
-            timer: false,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      } else {
-        req.alert = [
-          {
-            alertTitle: "Conexión exitosa",
-            alertMessage: "Municipio de Ayuda Eliminado correctamente",
-            alertIcon: "success",
-            showConfirmButton: false,
-            timer: 800,
-            ruta: "coordinacion/Cuentas/Usuarios",
-          },
-        ];
-      }
-      return next();
-    }
-  );
-};
 
 // Hojas de Vidas
 export const CodigosEstablecimientos = async (req, res, next) => {
@@ -244,9 +180,9 @@ export const inscribirEstablecimiento = async (req, res, next) => {
             true,
             false
           );
+          salida = true;
         }
       });
-    salida = true;
   } else if (tIden == "Cedula Ciudadania") {
     await hojavida
       .find({
@@ -265,9 +201,9 @@ export const inscribirEstablecimiento = async (req, res, next) => {
             true,
             false
           );
+          salida = true;
         }
       });
-    salida = true;
   }
 
   if (!salida) {
@@ -288,26 +224,29 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     await estaNew
       .save()
       .then((result) => {
-        authCoordi.isUser(
-          req,
-          "Conexión exitosa",
-          "Establecimiento Añadido Correctamente",
-          "success",
-          false,
-          800,
-          "/coordinacion/HojaVida/InscribirHV"
-        );
+        if (result) {
+          authCoordi.isUser(
+            req,
+            "Conexión exitosa",
+            "Establecimiento Añadido Correctamente",
+            "success",
+            false,
+            800,
+            "/coordinacion/HojaVida/InscribirHV"
+          );
+        } else {
+          authCoordi.isUser(
+            req,
+            "Advertencia",
+            "Error en la Base de Datos",
+            "error",
+            true,
+            false,
+            "/coordinacion/HojaVida/InscribirHV"
+          );
+        }
       })
       .catch((error) => {
-        authCoordi.isUser(
-          req,
-          "Advertencia",
-          "Usuario ya Registrado",
-          "error",
-          true,
-          false,
-          "/coordinacion/HojaVida/InscribirHV"
-        );
         console.error(error);
       });
   }

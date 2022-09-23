@@ -93,47 +93,17 @@ router.post(
     });
   }
 );
-router.post(
-  "/Cuentas/Usuarios/Edit",
-  isAuthenticatedCoordinacion,
-  users,
-  fillFields,
-  editUser,
-  (req, res) => {
-    res.render("coordinacion/Cuentas/usuarios", {
-      user: req.user,
-      users: false,
-      fields: false,
-      alert: req.alert,
-    });
-  }
-);
 // router.post(
-//   "/Cuentas/Usuarios/ExtraADD",
+//   "/Cuentas/Usuarios/Edit",
 //   isAuthenticatedCoordinacion,
 //   users,
 //   fillFields,
-//   extraADD,
+//   editUser,
 //   (req, res) => {
-//     res.render("Coordinacion/Cuentas/Usuarios", {
+//     res.render("coordinacion/Cuentas/usuarios", {
 //       user: req.user,
-//       users: req.users,
-//       fields: req.field,
-//       alert: req.alert,
-//     });
-//   }
-// );
-// router.post(
-//   "/Cuentas/Usuarios/ExtraDELETE",
-//   isAuthenticatedCoordinacion,
-//   users,
-//   fillFields,
-//   extraDELETE,
-//   (req, res) => {
-//     res.render("Coordinacion/Cuentas/Usuarios", {
-//       user: req.user,
-//       users: req.users,
-//       fields: req.field,
+//       users: false,
+//       fields: false,
 //       alert: req.alert,
 //     });
 //   }

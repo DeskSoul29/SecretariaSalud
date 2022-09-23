@@ -76,7 +76,7 @@
                                                             <% let numberSelected2="" ; %>
                                                                 <% if(codigos){ %>
                                                                     <% codigos.forEach((codigos)=> { %>
-                                                                        <% if (numberSelected2 !=codigos.grupo){ %>
+                                                                        <% if ( codigos.grupo=="ACUEDUCTO" ){ %>
                                                                             <option value="<%= codigos.grupo %>">
                                                                                 <%= codigos.grupo %>
                                                                             </option>
@@ -102,7 +102,7 @@
                                                             Establecimiento</label>
                                                         <select id="tipoEsta" name="tipoEsta"
                                                             class="custom-select mr-sm-2">
-                                                            <option selected value="0">Seleccione el Tipo
+                                                            <option selected>Seleccione el Tipo
                                                             </option>
                                                         </select>
                                                     </div>
@@ -248,6 +248,7 @@
     <!-- Validations -->
     <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
     <script type="text/JavaScript" src="/js/Coordinador/formularios.js"></script>
+    <script type="text/JavaScript" src="/js/Coordinador/codigoEsta.js"></script>
 
     <!-- Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

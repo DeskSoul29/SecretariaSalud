@@ -137,36 +137,33 @@
                                                         <div class="form-group row">
                                                             <div class="col-sm-4">
                                                                 <label class="mr-sm-2" for="extraMuni1">Municipio de
-                                                                    Apoyo 1
+                                                                    Apoyo 1 (Opcional)
                                                                 </label>
                                                                 <select id="extraMuni1" name="extraMuni1"
                                                                     class="custom-select mr-sm-2">
-                                                                    <option selected disabled>Seleccione el
-                                                                        Municipio
+                                                                    <option selected>Ninguno
                                                                     </option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-sm-4">
                                                                 <label class="mr-sm-2" for="extraMuni2">Municipio de
-                                                                    Apoyo 2
+                                                                    Apoyo 2 (Opcional)
                                                                 </label>
                                                                 <select id="extraMuni2" name="extraMuni2"
                                                                     class="custom-select mr-sm-2">
-                                                                    <option selected disabled>Seleccione el
-                                                                        Municipio
+                                                                    <option selected>Ninguno
                                                                     </option>
                                                                 </select>
                                                             </div>
 
                                                             <div class="col-sm-4">
                                                                 <label class="mr-sm-2" for="extraMuni3">Municipio de
-                                                                    Apoyo 3
+                                                                    Apoyo 3 (Opcional)
                                                                 </label>
                                                                 <select id="extraMuni3" name="extraMuni3"
                                                                     class="custom-select mr-sm-2">
-                                                                    <option selected disabled>Seleccione el
-                                                                        Municipio
+                                                                    <option selected>Ninguno
                                                                     </option>
                                                                 </select>
                                                             </div>
@@ -266,7 +263,29 @@
 
             provinciaID.value = "<%= editUser.provincia %>"
             rol.value = "<%= editUser.rol %>"
-            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("muniSelect"), document.getElementById("provinciaID"), "<%= editUser.municipio %>", "<%= editUser.municipioExtra1 %>", "<%= editUser.municipioExtra2 %>", "<%= editUser.municipioExtra3 %>");
+            
+            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("muniSelect"));
+            muniSelect.value = "<%= editUser.municipio %>"
+
+            if (rol.value == "tecnico") {
+            var muni1 = "<%= editUser.municipioExtra1 %>";
+            var muni2 = "<%= editUser.municipioExtra2 %>";
+            var muni3 = "<%= editUser.municipioExtra3 %>";
+
+            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni1"));
+            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni2"));
+            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni3"));
+            
+                if (muni1 != "") {
+                    extraMuni1.value = muni1;
+                }
+                if (muni2 != "") {
+                    extraMuni2.value = muni2;
+                }
+                if (muni3 != "") {
+                    extraMuni3.value = muni3;
+                }
+            }
         });
     </script>
 </body>
