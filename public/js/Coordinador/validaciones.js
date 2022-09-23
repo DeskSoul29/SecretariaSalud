@@ -1,4 +1,17 @@
 const modalsUsuarios = (function () {
+  var municipioExtra = function (selectP, muniExtra) {
+    for (var i = 0; i < array.length; i++) {
+      if (array[i] == selectP.value && array[i + 1] != "SOTO") {
+        const valor = array[i + 1];
+        var option = document.createElement("option");
+        option.value = valor;
+        option.text = valor;
+        if (municipio != valor) {
+          muniExtra.add(option);
+        }
+      }
+    }
+  };
   var llenadoMunicipiosEditUser = function (
     selectM,
     selectP,
@@ -8,17 +21,44 @@ const modalsUsuarios = (function () {
     apoyo3
   ) {
     // Llenado de Municipios
+    var extraMuni1 = document.getElementById("extraMuni1");
+    var extraMuni2 = document.getElementById("extraMuni2");
+    var extraMuni3 = document.getElementById("extraMuni3");
+
     for (var i = 0; i < array.length; i++) {
       if (array[i] == selectP.value && array[i + 1] != "SOTO") {
-        const option = document.createElement("option");
         const valor = array[i + 1];
+        var option = document.createElement("option");
+        var option1 = document.createElement("option");
+        var option2 = document.createElement("option");
+        var option3 = document.createElement("option");
+
         option.value = valor;
         option.text = valor;
+
+        option1.value = valor;
+        option1.text = valor;
+
+        option2.value = valor;
+        option2.text = valor;
+
+        option3.value = valor;
+        option3.text = valor;
+
         selectM.add(option);
-        document.getElementById("extraMuni1").add(option);
+
+        if (municipio != valor) {
+          extraMuni1.add(option1);
+          extraMuni2.add(option2);
+          extraMuni3.add(option3);
+        }
       }
     }
+
     selectM.value = municipio;
+    extraMuni1.value = apoyo1;
+    extraMuni2.value = apoyo2;
+    extraMuni3.value = apoyo3;
   };
 
   var llenadoMunicipiosEditHV = function (selectM, selectP, municipio) {
@@ -54,23 +94,8 @@ const modalsUsuarios = (function () {
     document.getElementById("nombreModal").value = nombre;
   };
 
-  var editar_modal = function (
-    _id,
-    user,
-    nombre,
-    apellido,
-    provincia,
-    municipio,
-    rol
-  ) {
-    document.getElementById("user").value = user;
-    document.getElementById("name").value = nombre;
-    document.getElementById("lastname").value = apellido;
-    document.getElementById("rol").value = rol;
-  };
-
   return {
-    editar_modal: editar_modal,
+    municipioExtra: municipioExtra,
     eliminar_modal: eliminar_modal,
     llenadoMunicipiosEditUser: llenadoMunicipiosEditUser,
     llenadoMunicipiosEditHV: llenadoMunicipiosEditHV,
@@ -82,6 +107,10 @@ const modalsUsuarios = (function () {
 const selectP = document.getElementById("provinciaID");
 const selectM = document.getElementById("muniSelect");
 
+var extraMuni1 = document.getElementById("extraMuni1");
+var extraMuni2 = document.getElementById("extraMuni2");
+var extraMuni3 = document.getElementById("extraMuni3");
+
 // Llenado de Municipios
 selectP.addEventListener("change", function () {
   var selectedOption = this.options[selectP.selectedIndex];
@@ -92,15 +121,10 @@ selectP.addEventListener("change", function () {
   }
 
   // Llenado de Municipios
-  for (var i = 0; i < array.length; i++) {
-    if (array[i] == selectedOption.value && array[i + 1] != "SOTO") {
-      const option = document.createElement("option");
-      const valor = array[i + 1];
-      option.value = valor;
-      option.text = valor;
-      selectM.add(option);
-    }
-  }
+  modalsUsuarios.municipioExtra(selectM);
+  modalsUsuarios.municipioExtra(extraMuni1);
+  modalsUsuarios.municipioExtra(extraMuni2);
+  modalsUsuarios.municipioExtra(extraMuni3);
 });
 
 //Codigos de Establecimientos
