@@ -1,5 +1,7 @@
 import login from "../models/user.js";
 import { promisify } from "util";
+import codEsta from "../models/codigoEstablecimientos.js";
+import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 
@@ -23,6 +25,7 @@ var authLogin = (function () {
   };
 })();
 
+//Autenticaciones
 export const isAuthenticated = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
@@ -44,7 +47,6 @@ export const isAuthenticated = async (req, res, next) => {
     return next();
   }
 };
-
 export const isAuthenticatedCoordinacion = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
@@ -69,7 +71,6 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
     res.redirect("/");
   }
 };
-
 export const isAuthenticatedProf = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
@@ -94,7 +95,6 @@ export const isAuthenticatedProf = async (req, res, next) => {
     res.redirect("/");
   }
 };
-
 export const isAuthenticatedTecnic = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
@@ -120,6 +120,14 @@ export const isAuthenticatedTecnic = async (req, res, next) => {
   }
 };
 
+// EditUser - AddMunicipio
+export const consultUser = async (req, res, next) => {
+  const consultUser = await login.findById(req.params.id).lean();
+  req.consultUser = consultUser;
+  return next();
+};
+
+//Cambiar Contraseña (General)
 export const searchPass = async (req, res, next) => {
   if (req.cookies.jwt) {
     try {
@@ -142,7 +150,6 @@ export const searchPass = async (req, res, next) => {
     return res.redirect("/");
   }
 };
-
 export const changePass = async (req, res, next) => {
   var { user, actPass, pass } = req.body;
 
@@ -184,6 +191,129 @@ export const changePass = async (req, res, next) => {
     }
     return next();
   });
+};
+
+//Hojas de Vida
+export const CodigosEstablecimientos = async (req, res, next) => {
+  const codigos = await codEsta.find().sort({ codigo: 1 });
+  req.codigos = codigos;
+  return next();
+};
+export const inscribirEstablecimiento = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      var decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+      const {
+        provincia,
+        municipio,
+        grupEsta,
+        codEsta,
+        tipoEsta,
+        Nriesgo,
+        tIden,
+        inputIden,
+        rSocial,
+        direccion,
+        rLegal,
+        estado,
+      } = req.body;
+
+      var salida = false;
+
+      if (tIden == "NIT") {
+        await hojavida
+          .find({ identificacion: inputIden, tipoIdentificacion: tIden })
+          .count()
+          .then((result) => {
+            if (result >= 1) {
+              authLogin.isUser(
+                req,
+                "Advertencia",
+                "NIT ya registrado",
+                "error",
+                true,
+                false
+              );
+              salida = true;
+            }
+          });
+      } else if (tIden == "Cedula Ciudadania") {
+        await hojavida
+          .find({
+            identificacion: inputIden,
+            tipoIdentificacion: tIden,
+            grupo: grupEsta,
+          })
+          .count()
+          .then((result) => {
+            if (result >= 1) {
+              authLogin.isUser(
+                req,
+                "Advertencia",
+                "Usuario con Establecimiento En El Mismo Grupo",
+                "error",
+                true,
+                false
+              );
+              salida = true;
+            }
+          });
+      }
+
+      if (!salida) {
+        var estaNew = new hojavida({
+          provincia: provincia,
+          municipio: municipio,
+          grupo: grupEsta,
+          codigo: codEsta,
+          tipo: tipoEsta,
+          nivelRiesgo: Nriesgo,
+          tipoIdentificacion: tIden,
+          identificacion: inputIden,
+          razonSocial: rSocial,
+          direccion: direccion,
+          repreLegal: rLegal,
+          estado: estado,
+        });
+        await estaNew
+          .save()
+          .then((result) => {
+            if (result) {
+              authLogin.isUser(
+                req,
+                "Conexión exitosa",
+                "Establecimiento Añadido Correctamente",
+                "success",
+                false,
+                800,
+                "/" + decodificada.rol + "/HojaVida/InscribirHV"
+              );
+            } else {
+              authLogin.isUser(
+                req,
+                "Advertencia",
+                "Error en la Base de Datos",
+                "error",
+                true,
+                false,
+                "/" + decodificada.rol + "/HojaVida/InscribirHV"
+              );
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+      return next();
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    return res.redirect("/");
+  }
 };
 
 export const logout = (req, res) => {

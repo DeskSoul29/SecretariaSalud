@@ -1,6 +1,5 @@
 import login from "../models/user.js";
 import local from "../models/localidades.js";
-import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
@@ -88,11 +87,6 @@ export const users = async (req, res, next) => {
     console.log(error);
     return next();
   }
-};
-export const consultUser = async (req, res, next) => {
-  const consultUser = await login.findById(req.params.id).lean();
-  req.consultUser = consultUser;
-  return next();
 };
 export const editUser = async (req, res, next) => {
   var {
@@ -192,115 +186,6 @@ export const changePass = async (req, res, next) => {
 };
 
 // Hojas de Vidas
-export const CodigosEstablecimientos = async (req, res, next) => {
-  const codigos = await codEsta.find().sort({ codigo: 1 });
-  req.codigos = codigos;
-  return next();
-};
-export const inscribirEstablecimiento = async (req, res, next) => {
-  const {
-    provincia,
-    municipio,
-    grupEsta,
-    codEsta,
-    tipoEsta,
-    Nriesgo,
-    tIden,
-    inputIden,
-    rSocial,
-    direccion,
-    rLegal,
-    estado,
-  } = req.body;
-
-  var salida = false;
-
-  if (tIden == "NIT") {
-    await hojavida
-      .find({ identificacion: inputIden, tipoIdentificacion: tIden })
-      .count()
-      .then((result) => {
-        if (result >= 1) {
-          authCoordi.isUser(
-            req,
-            "Advertencia",
-            "NIT ya registrado",
-            "error",
-            true,
-            false
-          );
-          salida = true;
-        }
-      });
-  } else if (tIden == "Cedula Ciudadania") {
-    await hojavida
-      .find({
-        identificacion: inputIden,
-        tipoIdentificacion: tIden,
-        grupo: grupEsta,
-      })
-      .count()
-      .then((result) => {
-        if (result >= 1) {
-          authCoordi.isUser(
-            req,
-            "Advertencia",
-            "Usuario con Establecimiento En El Mismo Grupo",
-            "error",
-            true,
-            false
-          );
-          salida = true;
-        }
-      });
-  }
-
-  if (!salida) {
-    var estaNew = new hojavida({
-      provincia: provincia,
-      municipio: municipio,
-      grupo: grupEsta,
-      codigo: codEsta,
-      tipo: tipoEsta,
-      nivelRiesgo: Nriesgo,
-      tipoIdentificacion: tIden,
-      identificacion: inputIden,
-      razonSocial: rSocial,
-      direccion: direccion,
-      repreLegal: rLegal,
-      estado: estado,
-    });
-    await estaNew
-      .save()
-      .then((result) => {
-        if (result) {
-          authCoordi.isUser(
-            req,
-            "Conexión exitosa",
-            "Establecimiento Añadido Correctamente",
-            "success",
-            false,
-            800,
-            "/coordinacion/HojaVida/InscribirHV"
-          );
-        } else {
-          authCoordi.isUser(
-            req,
-            "Advertencia",
-            "Error en la Base de Datos",
-            "error",
-            true,
-            false,
-            "/coordinacion/HojaVida/InscribirHV"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-  return next();
-};
 export const hojavidaConsultAll = async (req, res, next) => {
   const hv = await hojavida.find({}).lean();
   req.hojavida = hv;

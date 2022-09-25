@@ -6,15 +6,19 @@ import {
   users,
   deleteUser,
   editUser,
-  consultUser,
   changePass,
-  CodigosEstablecimientos,
   hojavidaConsultAll,
-  inscribirEstablecimiento,
   HVConsultOne,
   editHV,
 } from "../controllers/coordiController.js";
-import { isAuthenticatedCoordinacion, logout } from "../helpers/auth.js";
+
+import {
+  isAuthenticatedCoordinacion,
+  CodigosEstablecimientos,
+  consultUser,
+  inscribirEstablecimiento,
+  logout,
+} from "../helpers/auth.js";
 
 const router = Router();
 

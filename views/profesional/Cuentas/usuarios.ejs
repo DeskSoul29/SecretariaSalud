@@ -84,24 +84,24 @@
                                 <%= users.rol %>
                               </td>
                               <td>
-                                <%= users.municipio_extra %>
+                                <%= users.municipioExtra1 %>
+                                  <br>
+                                  <%= users.municipioExtra2 %>
+                                    <br>
+                                    <%= users.municipioExtra3 %>
                               </td>
                               <td>
                                 <% if(users.rol=="tecnico" ){ %>
-                                  <% if(users.municipio_extra==null ){ %>
-                                    <a onclick='addMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.provincia %>", "<%= users.municipio %>")'
-                                      type="button" data-target="#extraModalADD" data-toggle="modal"
-                                      class="btn btn-info btn-circle btn-sm">
-                                      <i class="fas fa-plus"></i>
+                                  <a href="/profesional/Cuentas/Usuarios/AddMuni/<%= users._id %>" type="button"
+                                    class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-building-user"></i>
+                                  </a>
+                                  <% } %>
+                                    <a onclick='modalsUsuarios.changePass_modal("<%= users._id %>", "<%= users.user %>")'
+                                      type="button" data-target="#changePassModal" data-toggle="modal"
+                                      class="btn btn-success btn-circle btn-sm">
+                                      <i class="fas fa-key"></i>
                                     </a>
-                                    <% }else{ %>
-                                      <a onclick='deleteMuni("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>", "<%= users.municipio_extra %>")'
-                                        type="button" data-target="#extraModalDELETE" data-toggle="modal"
-                                        class="btn btn-info btn-circle btn-sm">
-                                        <i class="fas fa-plus"></i>
-                                      </a>
-                                      <% } %>
-                                        <% } %>
                               </td>
                             </tr>
                             <% }); %>
@@ -154,43 +154,36 @@
     </div>
   </div>
 
-  <!-- ExtraADD Modal-->
-  <div class="modal fade" id="extraModalADD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <!-- Change Password Modal-->
+  <div class="modal fade" id="changePassModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <h5 class="modal-title">¡ATENCIÓN!</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form action="/profesional/Cuentas/Usuarios/ExtraADD" method="POST" autocomplete="off">
+        <form onsubmit="formChangePass(event)" id="formChangePass" method="POST" autocomplete="off">
           <div class="modal-body">
-            <b>
-              Verifique los datos del tecnico y luego eliga el municipio a ayudar
-            </b>
+            Oprima el botón "Actualizar" a continuación si está listo para
+            cambiar la contraseña del usuario:
             <div class="mb-3">
-              <label for="userModal" class="form-label">Identificación</label>
-              <input type="number" class="form-control" name="userADDMuni" id="userADDMuni" readonly>
+              <label class="mr-sm-2" for="userPass">Identificación</label>
+              <input type="number" class="form-control form-control-user" id="userPass" name="userPass"
+                placeholder="Identificación" readonly />
             </div>
             <div class="mb-3">
-              <label for="userModal" class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombreADDMuni" id="nombreADDMuni" readonly>
+              <label class="mr-sm-2" for="pass">Contraseña
+                Nueva</label>
+              <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                placeholder="Contraseña" minlength="4" maxlength="12" />
             </div>
             <div class="mb-3">
-              <label class="mr-sm-2" for="muniSelect">Municipio</label>
-              <select id="muniADD" name="muniADD" class="form-select form-select-sm"
-                aria-label=".form-select-sm example" required>
-                <option selected disabled value="">
-                  Selecciona el Municipio
-                </option>
-                <% fields.forEach((fields)=> { %>
-                  <option value="<%= fields.municipio %>">
-                    <%= fields.municipio %>
-                  </option>
-                  <% }) %>
-              </select>
+              <label class="mr-sm-2" for="repass">Repite la
+                Contraseña</label>
+              <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                placeholder="Repite la Contraseña" minlength="4" maxlength="12" />
             </div>
           </div>
           <div class="modal-footer">
@@ -198,49 +191,7 @@
               Cancelar
             </button>
             <button class="btn btn-primary " type="submit">
-              Añadir Municipio
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- DeleteADD Modal-->
-  <div class="modal fade" id="extraModalDELETE" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <form action="/profesional/Cuentas/Usuarios/ExtraDELETE" method="POST" autocomplete="off">
-          <div class="modal-body">
-            <b>
-              Verifique los datos del tecnico
-            </b>
-            <div class="mb-3">
-              <label for="userModal" class="form-label">Identificación</label>
-              <input type="number" class="form-control" name="userDELETEMuni" id="userDELETEMuni" readonly>
-            </div>
-            <div class="mb-3">
-              <label for="userModal" class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="nombreDELETEMuni" id="nombreDELETEMuni" readonly>
-            </div>
-            <div class="mb-3">
-              <label class="mr-sm-2" for="muniSelect">Municipio</label>
-              <input type="text" class="form-control" name="muniDELETE" id="muniDELETE" readonly>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">
-              Cancelar
-            </button>
-            <button class="btn btn-primary " type="submit">
-              Eliminar Municipio
+              Actualizar
             </button>
           </div>
         </form>
@@ -264,30 +215,22 @@
 
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
+
+  <!-- Validations -->
+  <script type="text/javascript" src="/js/Profesional/validaciones.js"></script>
+  <script type="text/javascript" src="/js/Profesional/formularios.js"></script>
+
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
     $(window).bind("load", function () {
-      var nav = document.getElementById("nav3");
-      $("#navlink2").removeClass("collapsed");
+      var nav = document.getElementById("nav4");
+      $("#navlink3").removeClass("collapsed");
       var nav3 = document.getElementById("collapsePages");
       var nav4 = document.getElementById("show16");
       nav.className += "  active";
-      nav3.className += "  show";
-      nav4.className += "  active";
     });
-
-    function deleteMuni(user, nombre, muniEx) {
-      document.getElementById("userDELETEMuni").value = user;
-      document.getElementById("nombreDELETEMuni").value = nombre;
-      document.getElementById("muniDELETE").value = muniEx;
-    }
-
-    function addMuni(user, nombre, provincia, municipio) {
-      document.getElementById("userADDMuni").value = user;
-      document.getElementById("nombreADDMuni").value = nombre;
-    }
-
   </script>
 
   <% if(typeof alert !="undefined" ) { %>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include('../../tools/head'); %>
+</head>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <%- include('../../tools/sidebarProf'); %>
+            <!-- End of Sidebar -->
+
+            <!-- Content Wrapper -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
+
+                    <!-- Topbar -->
+                    <%- include('../../tools/topbar'); %>
+                        <!-- End of Topbar -->
+
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+
+                            <!-- Page Heading -->
+                            <div class="container">
+
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/profesional/Cuentas/Usuarios">Consultar
+                                                Usuarios</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Edición</li>
+                                    </ol>
+                                </nav>
+
+                                <div class="card o-hidden border-0 shadow-lg my-5">
+                                    <div class="card-body p-0">
+                                        <!-- Nested Row within Card Body -->
+                                        <div class="p-5">
+                                            <div class="text-center">
+                                                <h1 class="h4 text-gray-900 mb-4">Añadir Municipio de Apoyo</h1>
+                                            </div>
+
+                                            <form onsubmit="addMuniForm(event)"
+                                                action="/profesional/Cuentas/Usuarios/AddMuni/<%= consultUser._id %>"
+                                                method="POST">
+                                                <!-- <input name="_method" type="hidden" value="PUT"> -->
+
+                                                <div class="form-row align-items-center mb-sm-2">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="provinciaID" name="provincia" placeholder="Provincia"
+                                                            value="<%= consultUser.provincia %>" readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="muniSelect" name="municipio" placeholder="Municipio"
+                                                            value="<%= consultUser.municipio %>" readonly>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="rol">Rol</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="rol" name="rol" value="<%= consultUser.rol %>"
+                                                            placeholder="Rol" readonly />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="user">Identificación</label>
+                                                        <input type="number" class="form-control form-control-user"
+                                                            id="user" name="user" value="<%= consultUser.user %>"
+                                                            placeholder="Identificación" readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="name">Nombre(s)</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user" id="name"
+                                                            name="name" placeholder="Nombres"
+                                                            value="<%= consultUser.nombre %>" readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="lastname">Apellido(s)</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user"
+                                                            id="lastname" name="lastname" placeholder="Apellidos"
+                                                            value="<%= consultUser.apellido %>" readonly />
+                                                    </div>
+                                                </div>
+                                                <% if(fields){ %>
+                                                    <div class="form-group row" id="inputApoyo">
+                                                        <div class="col-sm-4">
+                                                            <label class="mr-sm-2" for="extraMuni1">Municipio de
+                                                                Apoyo 1 (Opcional)
+                                                            </label>
+                                                            <select id="extraMuni1" name="extraMuni1"
+                                                                class="custom-select mr-sm-2">
+                                                                <option selected>Ninguno
+                                                                </option>
+                                                                <% fields.forEach((fields)=> { %>
+                                                                    <option value="<%= fields.municipio %>">
+                                                                        <%= fields.municipio %>
+                                                                    </option>
+                                                                    <% }); %>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <label class="mr-sm-2" for="extraMuni2">Municipio de
+                                                                Apoyo 2 (Opcional)
+                                                            </label>
+                                                            <select id="extraMuni2" name="extraMuni2"
+                                                                class="custom-select mr-sm-2">
+                                                                <option selected>Ninguno
+                                                                </option>
+                                                                <% fields.forEach((fields)=> { %>
+                                                                    <option value="<%= fields.municipio %>">
+                                                                        <%= fields.municipio %>
+                                                                    </option>
+                                                                    <% }); %>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col-sm-4">
+                                                            <label class="mr-sm-2" for="extraMuni3">Municipio de
+                                                                Apoyo 3 (Opcional)
+                                                            </label>
+                                                            <select id="extraMuni3" name="extraMuni3"
+                                                                class="custom-select mr-sm-2">
+                                                                <option selected>Ninguno
+                                                                </option>
+                                                                <% fields.forEach((fields)=> { %>
+                                                                    <option value="<%= fields.municipio %>">
+                                                                        <%= fields.municipio %>
+                                                                    </option>
+                                                                    <% }); %>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+
+
+                                                        <button id="update-button" class="btn
+                                                    btn-primary btn-user btn-block" type="submit">
+                                                            Actualizar Usuario
+                                                        </button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /.container-fluid -->
+
+                </div>
+                <!-- End of Main Content -->
+
+                <!-- Footer -->
+                <%- include('../../tools/footer'); %>
+                    <!-- End of Footer -->
+            </div>
+            <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Seleccione "Cerrar
+                    sesión" a continuación si está listo para
+                    finalizar su sesión actual.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                    <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Validations -->
+    <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
+    <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+
+    <!-- Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/JavaScript">
+        $(window).bind("load", function () {
+            var nav = document.getElementById("nav4");
+            $("#navlink3").removeClass("collapsed");
+            var nav3 = document.getElementById("collapsePages");
+            var nav4 = document.getElementById("show5");
+            nav.className += "  active";
+        });
+
+            var muni1 = "<%= consultUser.municipioExtra1 %>";
+            var muni2 = "<%= consultUser.municipioExtra2 %>";
+            var muni3 = "<%= consultUser.municipioExtra3 %>";
+
+            if (muni1 != "") {
+                extraMuni1.value = muni1;
+            }
+            if (muni2 != "") {
+                extraMuni2.value = muni2;
+            }
+            if (muni3 != "") {
+                extraMuni3.value = muni3;
+            }
+    </script>
+
+    <% if(typeof alert !="undefined" ) { %>
+        <script type="text/JavaScript">
+            Swal.fire({
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+            }).then(()=>{
+            window.location = '/<%= alert[0].ruta %>'
+            })
+        </script>
+        <% } %>
+</body>
+
+</html>

@@ -1,6 +1,20 @@
 import { Router } from "express";
-import { users, fillMunicipio } from "../controllers/profController.js";
-import { isAuthenticatedProf, logout } from "../helpers/auth.js";
+
+import {
+  users,
+  fillMunicipio,
+  hojavidaConsultAllProf,
+  changePass,
+  addMuniApoyo,
+} from "../controllers/profController.js";
+
+import {
+  isAuthenticatedProf,
+  CodigosEstablecimientos,
+  consultUser,
+  inscribirEstablecimiento,
+  logout,
+} from "../helpers/auth.js";
 
 const router = Router();
 
@@ -9,140 +23,94 @@ router.get("/", isAuthenticatedProf, (req, res) => {
 });
 
 // Apartado: Usuarios
+router.get("/Cuentas/Usuarios", isAuthenticatedProf, users, (req, res) => {
+  res.render("profesional/Cuentas/Usuarios", {
+    user: req.user,
+    users: req.users,
+    alert: undefined,
+  });
+});
 router.get(
-  "/Cuentas/Usuarios",
+  "/Cuentas/Usuarios/AddMuni/:id",
   isAuthenticatedProf,
-  users,
   fillMunicipio,
+  consultUser,
   (req, res) => {
-    res.render("profesional/Cuentas/Usuarios", {
+    res.render("profesional/Cuentas/addMuni", {
       user: req.user,
-      users: req.users,
-      fields: req.fields,
+      fields: req.localidades,
+      alert: undefined,
+      consultUser: req.consultUser,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/AddMuni/:id",
+  isAuthenticatedProf,
+  addMuniApoyo,
+  (req, res) => {
+    res.render("profesional/Cuentas/addMuni", {
+      user: req.user,
+      fields: false,
+      alert: req.alert,
+      consultUser: false,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/ChangePass/:id",
+  isAuthenticatedProf,
+  changePass,
+  (req, res) => {
+    res.render("profesional/Cuentas/usuarios", {
+      user: req.user,
+      users: false,
+      alert: req.alert,
+    });
+  }
+);
+
+//Apartado: Hojas de Vida
+router.get(
+  "/HojaVida/ConsultarHV",
+  isAuthenticatedProf,
+  hojavidaConsultAllProf,
+  (req, res) => {
+    res.render("profesional/HojaVida/ConsultarHVProf", {
+      user: req.user,
+      hojavida: req.hojavida,
+    });
+  }
+);
+router.get(
+  "/HojaVida/InscribirHV",
+  isAuthenticatedProf,
+  fillMunicipio,
+  CodigosEstablecimientos,
+  (req, res) => {
+    res.render("profesional/HojaVida/InscribirHVProf", {
+      user: req.user,
+      fields: req.localidades,
+      codigos: req.codigos,
       alert: undefined,
     });
   }
 );
-
-// router.post(
-//   "/Cuentas/Usuarios/ExtraADD",
-//   extraADD,
-//   isAuthenticatedProf,
-//   users,
-//   fillMunicipio,
-//   (req, res) => {
-//     res.render("profesional/Cuentas/Usuarios", {
-//       user: req.user,
-//       users: req.users,
-//       fields: req.fields,
-//       alert: req.alert,
-//     });
-//   }
-// );
-// router.post(
-//   "/Cuentas/Usuarios/ExtraDELETE",
-//   ExtraDELETE,
-//   isAuthenticatedProf,
-//   users,
-//   fillMunicipio,
-//   (req, res) => {
-//     res.render("profesional/Cuentas/Usuarios", {
-//       user: req.user,
-//       users: req.users,
-//       fields: req.fields,
-//       alert: req.alert,
-//     });
-//   }
-// );
+router.post(
+  "/HojaVida/InscribirHV",
+  isAuthenticatedProf,
+  inscribirEstablecimiento,
+  (req, res) => {
+    res.render("profesional/HojaVida/InscribirHVProf", {
+      user: req.user,
+      alert: req.alert,
+      fields: false,
+      codigos: false,
+    });
+  }
+);
 
 // Apartado: Consolidaciones
-router.get(
-  "/Consolidaciones/NAdministrativas",
-  isAuthenticatedProf,
-  (req, res) => {
-    res.render("profesional/Consolidaciones/NAdministrativas", {
-      user: req.user,
-    });
-  }
-);
-
-router.get("/Consolidaciones/ESPublica", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/ESPublica", { user: req.user });
-});
-
-router.get(
-  "/Consolidaciones/Establecimientos",
-  isAuthenticatedProf,
-  (req, res) => {
-    res.render("profesional/Consolidaciones/Establecimientos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get("/Consolidaciones/Vehiculos", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/Vehiculos", { user: req.user });
-});
-
-router.get("/Consolidaciones/Cementerios", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/Cementerios", { user: req.user });
-});
-
-router.get("/Consolidaciones/Morgues", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/Morgues", { user: req.user });
-});
-
-router.get(
-  "/Consolidaciones/MSEstablecimientos",
-  isAuthenticatedProf,
-  (req, res) => {
-    res.render("profesional/Consolidaciones/MSEstablecimientos", {
-      user: req.user,
-    });
-  }
-);
-
-router.get("/Consolidaciones/MSProductos", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/MSProductos", { user: req.user });
-});
-
-router.get("/Consolidaciones/Quejas", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/Quejas", { user: req.user });
-});
-
-router.get("/Consolidaciones/TomaMuestras", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/TomaMuestras", { user: req.user });
-});
-
-router.get(
-  "/Consolidaciones/ViviendaSaludable",
-  isAuthenticatedProf,
-  (req, res) => {
-    res.render("profesional/Consolidaciones/ViviendaSaludable", {
-      user: req.user,
-    });
-  }
-);
-
-router.get("/Consolidaciones/CarnetsBPM", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/CarnetsBPM", { user: req.user });
-});
-
-router.get("/Consolidaciones/IVCRotulado", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/IVCRotulado", { user: req.user });
-});
-
-router.get(
-  "/Consolidaciones/IVCPublicidad",
-  isAuthenticatedProf,
-  (req, res) => {
-    res.render("profesional/Consolidaciones/IVCPublicidad", { user: req.user });
-  }
-);
-
-router.get("/Consolidaciones/EduSanitaria", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Consolidaciones/EduSanitaria", { user: req.user });
-});
 
 router.get("/logout", logout);
 

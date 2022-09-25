@@ -65,6 +65,9 @@ var extraMuni3 = document.getElementById("extraMuni3");
 if (selectP != undefined) {
   selectP.addEventListener("change", function () {
     modalsUsuarios.llenadoMunicipios(selectP, selectM);
+    modalsUsuarios.llenadoMunicipios(selectP, extraMuni1);
+    modalsUsuarios.llenadoMunicipios(selectP, extraMuni2);
+    modalsUsuarios.llenadoMunicipios(selectP, extraMuni3);
   });
 }
 
