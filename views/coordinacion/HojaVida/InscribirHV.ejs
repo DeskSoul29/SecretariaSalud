@@ -73,10 +73,10 @@
                                                             <option selected disabled>
                                                                 Seleccione el Grupo
                                                             </option>
-                                                            <% let numberSelected2="" ; %>
+                                                            <% var numberSelected2="" ; %>
                                                                 <% if(codigos){ %>
                                                                     <% codigos.forEach((codigos)=> { %>
-                                                                        <% if ( codigos.grupo=="ACUEDUCTO" ){ %>
+                                                                        <% if (numberSelected2 !=codigos.grupo){ %>
                                                                             <option value="<%= codigos.grupo %>">
                                                                                 <%= codigos.grupo %>
                                                                             </option>
@@ -84,7 +84,6 @@
                                                                                 <% } %>
                                                                                     <% }) %>
                                                                                         <% } %>
-
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-4">

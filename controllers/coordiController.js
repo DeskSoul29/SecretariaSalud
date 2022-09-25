@@ -68,9 +68,8 @@ export const register = async (req, res, next) => {
     return next();
   });
 };
-
 export const fillFields = async (req, res, next) => {
-  const localidades = await local.find({}).sort({ codigo: -1 });
+  const localidades = await local.find();
   req.localidades = localidades;
   return next();
 };
@@ -91,24 +90,44 @@ export const users = async (req, res, next) => {
   }
 };
 export const consultUser = async (req, res, next) => {
-  const Edit = await login.findById(req.params.id).lean();
-  req.editUser = Edit;
+  const consultUser = await login.findById(req.params.id).lean();
+  req.consultUser = consultUser;
   return next();
 };
 export const editUser = async (req, res, next) => {
-  const { user, name, lastname, pass, provincia, municipio, rol } = req.body;
+  var {
+    name,
+    lastname,
+    provincia,
+    municipio,
+    rol,
+    extraMuni1,
+    extraMuni2,
+    extraMuni3,
+  } = req.body;
+
+  extraMuni1 = extraMuni1 == "Ninguno" ? "" : extraMuni1;
+  extraMuni2 = extraMuni2 == "Ninguno" ? "" : extraMuni2;
+  extraMuni3 = extraMuni3 == "Ninguno" ? "" : extraMuni3;
+
+  console.log(extraMuni3);
 
   await login
-    .updateOne(
-      { user: user },
+    .findByIdAndUpdate(
+      req.params.id,
       {
-        nombre: name,
-        apellido: lastname,
-        pass: await bcryptjs.hash(pass, 8),
-        provincia: provincia,
-        municipio: municipio,
-        rol: rol,
-      }
+        $set: {
+          nombre: name,
+          apellido: lastname,
+          provincia: provincia,
+          municipio: municipio,
+          rol: rol,
+          municipioExtra1: extraMuni1,
+          municipioExtra2: extraMuni2,
+          municipioExtra3: extraMuni3,
+        },
+      },
+      { new: true }
     )
     .then((result) => {
       authCoordi.isUser(
@@ -118,7 +137,7 @@ export const editUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -135,7 +154,7 @@ export const deleteUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -144,7 +163,7 @@ export const deleteUser = async (req, res, next) => {
 
 // Hojas de Vidas
 export const CodigosEstablecimientos = async (req, res, next) => {
-  const codigos = await codEsta.find({}).lean();
+  const codigos = await codEsta.find().sort({ codigo: 1 });
   req.codigos = codigos;
   return next();
 };
@@ -252,7 +271,6 @@ export const inscribirEstablecimiento = async (req, res, next) => {
   }
   return next();
 };
-
 export const hojavidaConsultAll = async (req, res, next) => {
   const hv = await hojavida.find({}).lean();
   req.hojavida = hv;
@@ -264,7 +282,6 @@ export const HVConsultOne = async (req, res, next) => {
   return next();
 };
 export const editHV = async (req, res, next) => {
-  console.log(req.body);
   const {
     provincia,
     municipio,
@@ -279,60 +296,53 @@ export const editHV = async (req, res, next) => {
     rLegal,
     estado,
   } = req.body;
-  console.log("entre");
-  await hojavida.findByIdAndUpdate(
-    req.params.id,
-    {
-      $set: {
-        provincia: provincia,
-        municipio: municipio,
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        identificacion: inputIden,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
+
+  await hojavida
+    .findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          provincia: provincia,
+          municipio: municipio,
+          grupo: grupEsta,
+          codigo: codEsta,
+          tipo: tipoEsta,
+          nivelRiesgo: Nriesgo,
+          tipoIdentificacion: tIden,
+          identificacion: inputIden,
+          razonSocial: rSocial,
+          direccion: direccion,
+          repreLegal: rLegal,
+          estado: estado,
+        },
       },
-    },
-    { new: true }
-  );
-  // res.render("orders.ejs", {
-  //   put: true,
-  // });
-  res.redirect("/Coordinacion/HojaVida/ConsultarHV");
-};
-
-//Extras
-export const isAuthenticatedCoordinacion = async (req, res, next) => {
-  if (req.cookies.jwt) {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      login.findOne({ user: decodificada.user }).exec(async (err, results) => {
-        if (!results) {
-          res.redirect("/");
-        } else if (results.rol != "coordinacion") {
-          return res.redirect("/" + results.rol);
-        }
-        req.user = results;
-        return next();
-      });
-    } catch (error) {
-      console.log(error);
-      return next();
-    }
-  } else {
-    res.redirect("/");
-  }
-};
-
-export const logout = (req, res) => {
-  res.clearCookie("jwt");
-  return res.redirect("/");
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Establecimiento Actualizado Correctamente",
+          "success",
+          false,
+          800,
+          "coordinacion/HojaVida/ConsultarHV"
+        );
+      } else {
+        authCoordi.isUser(
+          req,
+          "Advertencia",
+          "Error en la Base de Datos",
+          "error",
+          true,
+          false,
+          "coordinacion/HojaVida/ConsultarHV"
+        );
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return next();
 };

@@ -1,9 +1,7 @@
 import { Router } from "express";
 
-import {
-  isAuthenticatedTecnic,
-  logout,
-} from "../controllers/tecnicoController.js";
+import {} from "../controllers/tecnicoController.js";
+import { isAuthenticatedTecnic, logout } from "../helpers/auth.js";
 
 const router = Router();
 // Dashboard

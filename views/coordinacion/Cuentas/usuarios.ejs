@@ -101,6 +101,11 @@
                                   class="btn btn-danger btn-circle btn-sm">
                                   <i class="fas fa-trash"></i>
                                 </a>
+                                <a onclick='modalsUsuarios.changePass_modal("<%= users._id %>", "<%= users.user %>")'
+                                  type="button" data-target="#changePassModal" data-toggle="modal"
+                                  class="btn btn-success btn-circle btn-sm">
+                                  <i class="fas fa-key"></i>
+                                </a>
                               </td>
                             </tr>
                             <% }); %>
@@ -165,7 +170,7 @@
           </button>
         </div>
         <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
-          <input type="hidden" name="_method" value="DELETE">
+          <!-- <input type="hidden" name="_method" value="DELETE"> -->
           <div class="modal-body">
             Oprima el botón "Eliminar" a continuación si está listo para
             eliminar a el usuario:
@@ -185,6 +190,51 @@
             </button>
             <button class="btn btn-primary " type="submit">
               Eliminar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal-->
+  <div class="modal fade" id="changePassModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="/coordinacion/Cuentas/Usuarios/ChangePass" method="POST" autocomplete="off">
+          <div class="modal-body">
+            Oprima el botón "Actualizar" a continuación si está listo para
+            cambiar la contraseña a el usuario:
+            <div class="mb-3">
+              <label class="mr-sm-2" for="userPass">Identificación</label>
+              <input type="number" class="form-control form-control-user" id="userPass" name="userPass"
+                placeholder="Identificación" readonly />
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="pass">Contraseña
+                Nueva</label>
+              <input type="password" class="form-control form-control-user" id="pass" name="pass"
+                placeholder="Contraseña" minlength="4" maxlength="12" required />
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="repass">Repite la
+                Contraseña</label>
+              <input type="password" class="form-control form-control-user" id="repass" name="repass"
+                placeholder="Repite la Contraseña" minlength="4" maxlength="12" required />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Actualizar
             </button>
           </div>
         </form>

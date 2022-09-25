@@ -1,20 +1,19 @@
 import { Router } from "express";
 
 import {
-  isAuthenticatedCoordinacion,
   fillFields,
   register,
   users,
   deleteUser,
   editUser,
   consultUser,
-  logout,
   CodigosEstablecimientos,
   hojavidaConsultAll,
   inscribirEstablecimiento,
   HVConsultOne,
   editHV,
 } from "../controllers/coordiController.js";
+import { isAuthenticatedCoordinacion, logout } from "../helpers/auth.js";
 
 const router = Router();
 
@@ -75,11 +74,23 @@ router.get(
       user: req.user,
       fields: req.localidades,
       alert: undefined,
-      editUser: req.editUser,
+      consultUser: req.consultUser,
     });
   }
 );
-
+router.post(
+  "/Cuentas/Usuarios/Edit/:id",
+  isAuthenticatedCoordinacion,
+  editUser,
+  (req, res) => {
+    res.render("coordinacion/Cuentas/EditUser", {
+      user: req.user,
+      fields: false,
+      consultUser: false,
+      alert: req.alert,
+    });
+  }
+);
 router.post(
   "/Cuentas/Usuarios/Delete",
   deleteUser,
@@ -93,21 +104,6 @@ router.post(
     });
   }
 );
-// router.post(
-//   "/Cuentas/Usuarios/Edit",
-//   isAuthenticatedCoordinacion,
-//   users,
-//   fillFields,
-//   editUser,
-//   (req, res) => {
-//     res.render("coordinacion/Cuentas/usuarios", {
-//       user: req.user,
-//       users: false,
-//       fields: false,
-//       alert: req.alert,
-//     });
-//   }
-// );
 
 // Apartado: Consolidaciones
 router.get(
@@ -156,7 +152,20 @@ router.get(
     });
   }
 );
-router.put("/coordinacion/HojaVida/ConsultarHV/Edit-HV/:id", editHV);
+router.post(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedCoordinacion,
+  editHV,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/EditHV", {
+      user: req.user,
+      alert: req.alert,
+      consultHV: false,
+      fields: false,
+      codigos: false,
+    });
+  }
+);
 router.get(
   "/HojaVida/InscribirHV",
   isAuthenticatedCoordinacion,

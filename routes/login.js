@@ -1,6 +1,7 @@
 import { Router } from "express";
 
-import { isAuthenticated, signin } from "../controllers/authController.js";
+import { signin } from "../controllers/authController.js";
+import { isAuthenticated } from "../helpers/auth.js";
 
 const router = Router();
 

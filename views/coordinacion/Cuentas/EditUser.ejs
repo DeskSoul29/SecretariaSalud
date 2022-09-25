@@ -3,8 +3,6 @@
 
 <head>
     <%- include('../../tools/head'); %>
-        <script type="text/JavaScript" src="/js/envios.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -47,136 +45,114 @@
                                                 <h1 class="h4 text-gray-900 mb-4">Actualización de Usuarios</h1>
                                             </div>
 
-                                            <% if(editUser){ %>
-                                                <form onsubmit="editUserForm(event)" action="" method="POST">
-                                                    <input name="_method" type="hidden" value="PUT">
+                                            <form onsubmit="editUserForm(event)"
+                                                action="/coordinacion/Cuentas/Usuarios/Edit/<%= consultUser._id %>"
+                                                method="POST">
+                                                <!-- <input name="_method" type="hidden" value="PUT"> -->
 
-                                                    <div class="form-row align-items-center mb-sm-2">
-                                                        <div class="col my-1">
-                                                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                                                            <select id="provinciaID" name="provincia"
-                                                                class="custom-select mr-sm-2">
-                                                                <option selected disabled>Seleccione la Provincia
-                                                                </option>
-                                                                <% let numberSelected="" ; %>
-                                                                    <% if(fields){ %>
-                                                                        <% fields.forEach((fields)=> { %>
-                                                                            <% if (numberSelected !=fields.provincia){
-                                                                                %>
-                                                                                <option value="<%= fields.provincia %>">
-                                                                                    <%= fields.provincia %>
-                                                                                </option>
-                                                                                <% numberSelected=fields.provincia %>
-                                                                                    <% } %>
-                                                                                        <% }) %>
-                                                                                            <% } %>
-                                                            </select>
-                                                        </div>
-                                                        <div class="col my-1">
-                                                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                                                            <select id="muniSelect" name="municipio"
-                                                                class="custom-select mr-sm-2">
-                                                                <option selected disabled>Seleccione el Municipio
-                                                                </option>
-                                                            </select>
-                                                        </div>
+                                                <div class="form-row align-items-center mb-sm-2">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                                                        <select id="provinciaID" name="provincia"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione la Provincia
+                                                            </option>
+                                                            <% let numberSelected="" ; %>
+                                                                <% if(fields){ %>
+                                                                    <% fields.forEach((fields)=> { %>
+                                                                        <% if (numberSelected !=fields.provincia){ %>
+                                                                            <option value="<%= fields.provincia %>">
+                                                                                <%= fields.provincia %>
+                                                                            </option>
+                                                                            <% numberSelected=fields.provincia %>
+                                                                                <% } %>
+                                                                                    <% }) %>
+                                                                                        <% } %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                                                        <select id="muniSelect" name="municipio"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>Seleccione el Municipio
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="rol">Rol</label>
+                                                        <select class="custom-select mr-sm-2" id="rol" name="rol"
+                                                            required>
+                                                            <option selected disabled>Seleccione el Rol</option>
+                                                            <option value="coordinacion">Coordinación</option>
+                                                            <option value="profesional">Profesional</option>
+                                                            <option value="tecnico">Tecnico</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="user">Identificación</label>
+                                                        <input type="number" class="form-control form-control-user"
+                                                            id="user" name="user" value="<%= consultUser.user %>"
+                                                            readonly />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="name">Nombre(s)</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user" id="name"
+                                                            name="name" placeholder="Nombres"
+                                                            value="<%= consultUser.nombre %>" />
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="lastname">Apellido(s)</label>
+                                                        <input type="text"
+                                                            class="mayusPal form-control form-control-user"
+                                                            id="lastname" name="lastname" placeholder="Apellidos"
+                                                            value="<%= consultUser.apellido %>" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row" id="inputApoyo" style="display: none;">
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="extraMuni1">Municipio de
+                                                            Apoyo 1 (Opcional)
+                                                        </label>
+                                                        <select id="extraMuni1" name="extraMuni1"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected>Ninguno
+                                                            </option>
+                                                        </select>
                                                     </div>
 
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="user">Identificación</label>
-                                                            <input type="number" class="form-control form-control-user"
-                                                                id="user" name="user" value="<%= editUser.user %>" />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="name">Nombre(s)</label>
-                                                            <input type="text"
-                                                                class="mayusPal form-control form-control-user"
-                                                                id="name" name="name" placeholder="Nombres"
-                                                                value="<%= editUser.nombre %>" />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="lastname">Apellido(s)</label>
-                                                            <input type="text"
-                                                                class="mayusPal form-control form-control-user"
-                                                                id="lastname" name="lastname" placeholder="Apellidos"
-                                                                value="<%= editUser.apellido %>" />
-                                                        </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="extraMuni2">Municipio de
+                                                            Apoyo 2 (Opcional)
+                                                        </label>
+                                                        <select id="extraMuni2" name="extraMuni2"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected>Ninguno
+                                                            </option>
+                                                        </select>
                                                     </div>
 
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="pass">Contraseña
-                                                                Nueva</label>
-                                                            <input type="password"
-                                                                class="form-control form-control-user" id="pass"
-                                                                name="pass" placeholder="Contraseña" minlength="4"
-                                                                maxlength="12" required />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="repass">Repite la
-                                                                Contraseña</label>
-                                                            <input type="password"
-                                                                class="form-control form-control-user" id="repass"
-                                                                name="repass" placeholder="Repite la Contraseña"
-                                                                minlength="4" maxlength="12" required />
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="rol">Rol</label>
-                                                            <select class="custom-select mr-sm-2" id="rol" name="rol"
-                                                                required>
-                                                                <option selected disabled>Seleccione el Rol</option>
-                                                                <option value="coordinacion">Coordinación</option>
-                                                                <option value="profesional">Profesional</option>
-                                                                <option value="tecnico">Tecnico</option>
-                                                            </select>
-                                                        </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="mr-sm-2" for="extraMuni3">Municipio de
+                                                            Apoyo 3 (Opcional)
+                                                        </label>
+                                                        <select id="extraMuni3" name="extraMuni3"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected>Ninguno
+                                                            </option>
+                                                        </select>
                                                     </div>
+                                                </div>
 
-                                                    <% if(editUser.rol=="tecnico" ) { %>
-                                                        <div class="form-group row">
-                                                            <div class="col-sm-4">
-                                                                <label class="mr-sm-2" for="extraMuni1">Municipio de
-                                                                    Apoyo 1 (Opcional)
-                                                                </label>
-                                                                <select id="extraMuni1" name="extraMuni1"
-                                                                    class="custom-select mr-sm-2">
-                                                                    <option selected>Ninguno
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-sm-4">
-                                                                <label class="mr-sm-2" for="extraMuni2">Municipio de
-                                                                    Apoyo 2 (Opcional)
-                                                                </label>
-                                                                <select id="extraMuni2" name="extraMuni2"
-                                                                    class="custom-select mr-sm-2">
-                                                                    <option selected>Ninguno
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="col-sm-4">
-                                                                <label class="mr-sm-2" for="extraMuni3">Municipio de
-                                                                    Apoyo 3 (Opcional)
-                                                                </label>
-                                                                <select id="extraMuni3" name="extraMuni3"
-                                                                    class="custom-select mr-sm-2">
-                                                                    <option selected>Ninguno
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <% } %>
-
-                                                            <button id="update-button"
-                                                                class="btn btn-primary btn-user btn-block"
-                                                                type="submit">
-                                                                Actualizar Usuario
-                                                            </button>
-                                                </form>
-                                                <% } %>
+                                                <button id="update-button" class="btn
+                                                    btn-primary btn-user btn-block" type="submit">
+                                                    Actualizar Usuario
+                                                </button>
+                                            </form>
 
                                         </div>
                                     </div>
@@ -192,7 +168,6 @@
                 <!-- Footer -->
                 <%- include('../../tools/footer'); %>
                     <!-- End of Footer -->
-
             </div>
             <!-- End of Content Wrapper -->
 
@@ -261,16 +236,18 @@
             nav3.className += "  show";
             nav4.className += "  active";
 
-            provinciaID.value = "<%= editUser.provincia %>"
-            rol.value = "<%= editUser.rol %>"
+            provinciaID.value = "<%= consultUser.provincia %>"
+            rol.value = "<%= consultUser.rol %>"
             
             modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("muniSelect"));
-            muniSelect.value = "<%= editUser.municipio %>"
+            muniSelect.value = "<%= consultUser.municipio %>"
 
             if (rol.value == "tecnico") {
-            var muni1 = "<%= editUser.municipioExtra1 %>";
-            var muni2 = "<%= editUser.municipioExtra2 %>";
-            var muni3 = "<%= editUser.municipioExtra3 %>";
+            var muni1 = "<%= consultUser.municipioExtra1 %>";
+            var muni2 = "<%= consultUser.municipioExtra2 %>";
+            var muni3 = "<%= consultUser.municipioExtra3 %>";
+
+            document.getElementById("inputApoyo").removeAttribute("style");
 
             modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni1"));
             modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni2"));
@@ -288,6 +265,20 @@
             }
         });
     </script>
+
+    <% if(typeof alert !="undefined" ) { %>
+        <script type="text/JavaScript">
+            Swal.fire({
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+            }).then(()=>{
+            window.location = '/<%= alert[0].ruta %>'
+            })
+        </script>
+        <% } %>
 </body>
 
 </html>

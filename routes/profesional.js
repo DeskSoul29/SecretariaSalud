@@ -1,11 +1,6 @@
 import { Router } from "express";
-
-import {
-  isAuthenticatedProf,
-  users,
-  fillMunicipio,
-  logout,
-} from "../controllers/profController.js";
+import { users, fillMunicipio } from "../controllers/profController.js";
+import { isAuthenticatedProf, logout } from "../helpers/auth.js";
 
 const router = Router();
 

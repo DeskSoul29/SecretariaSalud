@@ -50,8 +50,13 @@ const modalsUsuarios = (function () {
     document.getElementById("nombreModal").value = nombre;
   };
 
+  var changePass_modal = function (id, user) {
+    document.getElementById("userPass").value = user;
+  };
+
   return {
     eliminar_modal: eliminar_modal,
+    changePass_modal: changePass_modal,
     llenadoMunicipiosEditUser: llenadoMunicipiosEditUser,
     llenadoMunicipiosEditHV: llenadoMunicipiosEditHV,
     llenadoCodigosEditHV: llenadoCodigosEditHV,
@@ -59,17 +64,30 @@ const modalsUsuarios = (function () {
 })();
 
 // Llenado de Municipios
-const selectP = document.getElementById("provinciaID");
-const selectM = document.getElementById("muniSelect");
+var selectP = document.getElementById("provinciaID");
+var selectM = document.getElementById("muniSelect");
+var rol = document.getElementById("rol");
 
 var extraMuni1 = document.getElementById("extraMuni1");
 var extraMuni2 = document.getElementById("extraMuni2");
 var extraMuni3 = document.getElementById("extraMuni3");
 
 // Llenado de Municipios
-selectP.addEventListener("change", function () {
-  modalsUsuarios.llenadoMunicipiosEditUser(selectP, selectM);
-  modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni1);
-  modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni2);
-  modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni3);
-});
+if (selectP != undefined) {
+  selectP.addEventListener("change", function () {
+    modalsUsuarios.llenadoMunicipiosEditUser(selectP, selectM);
+  });
+}
+
+if (rol != undefined) {
+  rol.addEventListener("change", function () {
+    if (rol.value == "tecnico") {
+      document.getElementById("inputApoyo").removeAttribute("style");
+      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni1);
+      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni2);
+      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni3);
+    } else {
+      document.getElementById("inputApoyo").style = "display:none";
+    }
+  });
+}

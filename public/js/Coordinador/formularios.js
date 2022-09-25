@@ -71,48 +71,60 @@ function editUserForm(e) {
     document.getElementById("name").value == 0 ||
     document.getElementById("lastname").value == 0 ||
     document.getElementById("user").value == 0 ||
-    document.getElementById("pass").value == 0 ||
-    document.getElementById("repass").value == 0 ||
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
     document.getElementById("rol").value == "Seleccione el Rol"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
-    // } else if (document.getElementById("rol").value == "tecnico") {
-    // if (document.getElementById("extraMuni1") != "") {
-    //   if (
-    //     document.getElementById("extraMuni1").value ==
-    //       document.getElementById("extraMuni2").value ||
-    //     document.getElementById("extraMuni1").value ==
-    //       document.getElementById("extraMuni3").value ||
-    //     document.getElementById("extraMuni2").value ==
-    //       document.getElementById("extraMuni3").value
-    //   ) {
-    //     toast.toastInfo(
-    //       "Advertencia",
-    //       "Municipios de Apoyo Deben ser Diferentes"
-    //     );
-    //     e.preventDefault();
-    //   }
-    // }
   } else if (
     document.getElementById("user").value.length < 8 ||
     document.getElementById("user").value.length >= 11
   ) {
     toast.toastInfo("Advertencia", "Escribe una Identificación Correcta");
     e.preventDefault();
-  } else if (
-    document.getElementById("pass").value !=
-    document.getElementById("repass").value
-  ) {
-    toast.toastInfo("Advertencia", "Contraseñas Diferentes");
-    e.preventDefault();
-  } else if (document.getElementById("pass").value.length < 4) {
-    toast.toastInfo(
-      "Advertencia",
-      "La Contraseña debe tener mas de 4 Caracteres"
-    );
-    e.preventDefault();
+  } else if (document.getElementById("rol").value == "tecnico") {
+    if (document.getElementById("extraMuni1").value != "Ninguno") {
+      if (
+        document.getElementById("extraMuni1").value ==
+          document.getElementById("muniSelect").value ||
+        document.getElementById("extraMuni1").value ==
+          document.getElementById("extraMuni2").value ||
+        document.getElementById("extraMuni1").value ==
+          document.getElementById("extraMuni3").value
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Municipios de Apoyo Deben ser Diferentes"
+        );
+        e.preventDefault();
+      }
+    }
+    if (document.getElementById("extraMuni2").value != "Ninguno") {
+      if (
+        document.getElementById("extraMuni2").value ==
+          document.getElementById("muniSelect").value ||
+        document.getElementById("extraMuni2").value ==
+          document.getElementById("extraMuni3").value
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Municipios de Apoyo Deben ser Diferentes"
+        );
+        e.preventDefault();
+      }
+    }
+    if (document.getElementById("extraMuni3").value != "Ninguno") {
+      if (
+        document.getElementById("extraMuni3").value ==
+        document.getElementById("muniSelect").value
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Municipios de Apoyo Deben ser Diferentes"
+        );
+        e.preventDefault();
+      }
+    }
   }
 }
 

@@ -99,25 +99,3 @@ export const signin = async (req, res) => {
     console.log(error);
   }
 };
-
-export const isAuthenticated = async (req, res, next) => {
-  if (req.cookies.jwt) {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      login.findOne({ user: decodificada.user }).exec(async (err, results) => {
-        if (!results) {
-          return next();
-        } else {
-          return res.redirect("/" + results.rol);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    return next();
-  }
-};
