@@ -35,6 +35,7 @@ export const isAuthenticated = async (req, res, next) => {
       );
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
+          res.clearCookie("jwt");
           return next();
         } else {
           return res.redirect("/" + results.rol);
@@ -44,7 +45,6 @@ export const isAuthenticated = async (req, res, next) => {
       console.log(error);
     }
   } else {
-    res.clearCookie("jwt");
     return next();
   }
 };
@@ -57,6 +57,7 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
       );
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
+          res.clearCookie("jwt");
           res.redirect("/");
         } else if (results.rol != "coordinacion") {
           return res.redirect("/" + results.rol);
@@ -69,7 +70,6 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
       return next();
     }
   } else {
-    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
@@ -83,6 +83,7 @@ export const isAuthenticatedProf = async (req, res, next) => {
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
           res.redirect("/");
+          res.clearCookie("jwt");
         } else if (results.rol != "profesional") {
           return res.redirect("/" + results.rol);
         }
@@ -94,7 +95,6 @@ export const isAuthenticatedProf = async (req, res, next) => {
       return next();
     }
   } else {
-    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
@@ -107,6 +107,7 @@ export const isAuthenticatedTecnic = async (req, res, next) => {
       );
       login.findOne({ user: decodificada.user }).exec(async (err, results) => {
         if (!results) {
+          res.clearCookie("jwt");
           res.redirect("/");
         } else if (results.rol != "tecnico") {
           return res.redirect("/" + results.rol);
@@ -119,7 +120,6 @@ export const isAuthenticatedTecnic = async (req, res, next) => {
       return next();
     }
   } else {
-    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
