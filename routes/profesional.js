@@ -24,7 +24,7 @@ router.get("/", isAuthenticatedProf, (req, res) => {
 
 // Apartado: Usuarios
 router.get("/Cuentas/Usuarios", isAuthenticatedProf, users, (req, res) => {
-  res.render("profesional/Cuentas/Usuarios", {
+  res.render("profesional/Cuentas/usuarios", {
     user: req.user,
     users: req.users,
     alert: undefined,
