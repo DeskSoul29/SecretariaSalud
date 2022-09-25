@@ -16,7 +16,17 @@ var authLogin = (function () {
     });
   };
 
-  var token = function (user, nombre, apellido, provincia, municipio, rol) {
+  var token = function (
+    user,
+    nombre,
+    apellido,
+    provincia,
+    municipio,
+    rol,
+    municipioExtra1,
+    municipioExtra2,
+    municipioExtra3
+  ) {
     return jwt.sign(
       {
         user: user,
@@ -25,6 +35,9 @@ var authLogin = (function () {
         provincia: provincia,
         municipio: municipio,
         rol: rol,
+        municipioExtra1: municipioExtra1,
+        municipioExtra2: municipioExtra2,
+        municipioExtra3: municipioExtra3,
       },
       process.env.JWT_SECRETO,
       {
@@ -59,7 +72,7 @@ export const signin = async (req, res) => {
           authLogin.isUser(
             res,
             "Advertencia",
-            "Usuario y/o Contraseña incorrecta",
+            "Usuario y/o Contraseña Incorrecta",
             "error",
             true,
             false,
@@ -73,7 +86,10 @@ export const signin = async (req, res) => {
             results.apellido,
             results.provincia,
             results.municipio,
-            results.rol
+            results.rol,
+            results.municipioExtra1,
+            results.municipioExtra2,
+            results.municipioExtra3
           );
           // Generamos el token SIN fecha de expiracion
           const cookiesOptions = {

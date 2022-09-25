@@ -14,6 +14,7 @@ var HojaVidaSchema = new Schema({
   direccion: { type: String, required: true, max: 100 },
   repreLegal: { type: String, required: true, max: 100 },
   estado: { type: String, required: true, max: 100 },
+  crearedAt: { type: Date, default: Date.now },
 });
 
 export default mongoose.model("hojavidas", HojaVidaSchema);

@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <%- include('../../../tools/head'); %>
+    <%- include('../../tools/head'); %>
 </head>
 
 <body id="page-top">
@@ -10,7 +10,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <%- include('../../../tools/sidebarTec'); %>
+        <%- include('../../tools/sidebarTec'); %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -19,7 +19,7 @@
                 <div id="content">
 
                     <!-- Topbar -->
-                    <%- include('../../../tools/topbar'); %>
+                    <%- include('../../tools/topbar'); %>
                         <!-- End of Topbar -->
 
                         <!-- Begin Page Content -->
@@ -29,9 +29,24 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Elija un Municipio</h5>
                                     <select id="muniID" name="municipio" class="custom-select mr-sm-2" required>
-                                        <option selected>
+                                        <option select value="<%= user.municipio %>">
                                             <%= user.municipio %>
                                         </option>
+                                        <% if(user.municipioExtra1 !="" ){ %>
+                                            <option value="<%= user.municipioExtra1 %>">
+                                                <%= user.municipioExtra1 %>
+                                            </option>
+                                            <% } %>
+                                                <% if(user.municipioExtra2 !="" ){ %>
+                                                    <option value="<%= user.municipioExtra2 %>">
+                                                        <%= user.municipioExtra2 %>
+                                                    </option>
+                                                    <% } %>
+                                                        <% if(user.municipioExtra3 !="" ){ %>
+                                                            <option value="<%= user.municipioExtra3 %>">
+                                                                <%= user.municipioExtra3 %>
+                                                            </option>
+                                                            <% } %>
                                     </select>
                                 </div>
                                 <div class="card-footer text-muted">
@@ -75,7 +90,7 @@
                 <!-- End of Main Content -->
 
                 <!-- Footer -->
-                <%- include('../../../tools/footer'); %>
+                <%- include('../../tools/footer'); %>
                     <!-- End of Footer -->
 
             </div>
@@ -124,7 +139,7 @@
             var nav = document.getElementById('nav2');
             $('#navlink1').removeClass('collapsed');
             var nav3 = document.getElementById('collapseOne');
-            var nav4 = document.getElementById('show3');
+            var nav4 = document.getElementById('show2');
             nav.className += "  active";
             nav3.className += "  show";
             nav4.className += "  active";
