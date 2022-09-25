@@ -44,6 +44,7 @@ export const isAuthenticated = async (req, res, next) => {
       console.log(error);
     }
   } else {
+    res.clearCookie("jwt");
     return next();
   }
 };
@@ -68,6 +69,7 @@ export const isAuthenticatedCoordinacion = async (req, res, next) => {
       return next();
     }
   } else {
+    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
@@ -92,6 +94,7 @@ export const isAuthenticatedProf = async (req, res, next) => {
       return next();
     }
   } else {
+    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
@@ -116,6 +119,7 @@ export const isAuthenticatedTecnic = async (req, res, next) => {
       return next();
     }
   } else {
+    res.clearCookie("jwt");
     res.redirect("/");
   }
 };
