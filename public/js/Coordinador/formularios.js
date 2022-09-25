@@ -152,3 +152,19 @@ function hvForm(e) {
     e.preventDefault();
   }
 }
+
+function formChangePass(e) {
+  if (
+    document.getElementById("pass").value == 0 ||
+    document.getElementById("repass").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("pass").value !=
+    document.getElementById("repass").value
+  ) {
+    toast.toastInfo("Advertencia", "Contraseñas Diferentes");
+    e.preventDefault();
+  }
+}

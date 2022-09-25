@@ -40,7 +40,7 @@ export const register = async (req, res, next) => {
         "error",
         true,
         false,
-        "/coordinacion/Cuentas/Register"
+        "coordinacion/Cuentas/Register"
       );
     } else {
       var userNew = new login({
@@ -61,7 +61,7 @@ export const register = async (req, res, next) => {
           "success",
           false,
           800,
-          "/coordinacion/Cuentas/Register"
+          "coordinacion/Cuentas/Register"
         );
       });
     }
@@ -106,11 +106,14 @@ export const editUser = async (req, res, next) => {
     extraMuni3,
   } = req.body;
 
+  if (rol != "tecnico") {
+    extraMuni1 = "";
+    extraMuni2 = "";
+    extraMuni3 = "";
+  }
   extraMuni1 = extraMuni1 == "Ninguno" ? "" : extraMuni1;
   extraMuni2 = extraMuni2 == "Ninguno" ? "" : extraMuni2;
   extraMuni3 = extraMuni3 == "Ninguno" ? "" : extraMuni3;
-
-  console.log(extraMuni3);
 
   await login
     .findByIdAndUpdate(
@@ -145,12 +148,39 @@ export const editUser = async (req, res, next) => {
 };
 export const deleteUser = async (req, res, next) => {
   await login
-    .deleteOne({ user: req.body.userDel })
+    .findByIdAndDelete(req.params.id)
     .then((result) => {
       authCoordi.isUser(
         req,
         "Conexión exitosa",
         "Eliminado Correctamente",
+        "success",
+        false,
+        800,
+        "coordinacion/Cuentas/Usuarios"
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+export const changePass = async (req, res, next) => {
+  var { pass } = req.body;
+
+  await login
+    .findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: {
+          pass: await bcryptjs.hash(pass, 8),
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authCoordi.isUser(
+        req,
+        "Conexión exitosa",
+        "Contraseña Actualizada Correctamente",
         "success",
         false,
         800,

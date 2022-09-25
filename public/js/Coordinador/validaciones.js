@@ -1,5 +1,5 @@
 const modalsUsuarios = (function () {
-  var llenadoMunicipiosEditUser = function (selectP, municipio) {
+  var llenadoMunicipios = function (selectP, municipio) {
     //Eliminar el listado de Municipios si hay mas de 1
     for (let i = municipio.options.length; i >= 1; i--) {
       municipio.remove(i);
@@ -17,20 +17,6 @@ const modalsUsuarios = (function () {
     }
   };
 
-  var llenadoMunicipiosEditHV = function (selectM, selectP, municipio) {
-    // Llenado de Municipios
-    for (var i = 0; i < array.length; i++) {
-      if (array[i] == selectP.value && array[i + 1] != "SOTO") {
-        const option = document.createElement("option");
-        const valor = array[i + 1];
-        option.value = valor;
-        option.text = valor;
-        selectM.add(option);
-      }
-    }
-    selectM.value = municipio;
-  };
-
   var llenadoCodigosEditHV = function (grupEsta, tipoEsta, tipo) {
     //Llenado de Codigos
     for (var i = 0; i < arrayCod.length; i++) {
@@ -45,20 +31,23 @@ const modalsUsuarios = (function () {
     tipoEsta.value = tipo;
   };
 
-  var eliminar_modal = function (user, nombre) {
+  var eliminar_modal = function (id, user, nombre) {
+    document.getElementById("formDeleteUser").action =
+      "/coordinacion/Cuentas/Usuarios/Delete/" + id;
     document.getElementById("userModal").value = user;
     document.getElementById("nombreModal").value = nombre;
   };
 
   var changePass_modal = function (id, user) {
+    document.getElementById("formChangePass").action =
+      "/coordinacion/Cuentas/Usuarios/ChangePass/" + id;
     document.getElementById("userPass").value = user;
   };
 
   return {
     eliminar_modal: eliminar_modal,
     changePass_modal: changePass_modal,
-    llenadoMunicipiosEditUser: llenadoMunicipiosEditUser,
-    llenadoMunicipiosEditHV: llenadoMunicipiosEditHV,
+    llenadoMunicipios: llenadoMunicipios,
     llenadoCodigosEditHV: llenadoCodigosEditHV,
   };
 })();
@@ -75,7 +64,7 @@ var extraMuni3 = document.getElementById("extraMuni3");
 // Llenado de Municipios
 if (selectP != undefined) {
   selectP.addEventListener("change", function () {
-    modalsUsuarios.llenadoMunicipiosEditUser(selectP, selectM);
+    modalsUsuarios.llenadoMunicipios(selectP, selectM);
   });
 }
 
@@ -83,9 +72,9 @@ if (rol != undefined) {
   rol.addEventListener("change", function () {
     if (rol.value == "tecnico") {
       document.getElementById("inputApoyo").removeAttribute("style");
-      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni1);
-      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni2);
-      modalsUsuarios.llenadoMunicipiosEditUser(selectP, extraMuni3);
+      modalsUsuarios.llenadoMunicipios(selectP, extraMuni1);
+      modalsUsuarios.llenadoMunicipios(selectP, extraMuni2);
+      modalsUsuarios.llenadoMunicipios(selectP, extraMuni3);
     } else {
       document.getElementById("inputApoyo").style = "display:none";
     }

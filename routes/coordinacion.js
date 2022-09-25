@@ -7,6 +7,7 @@ import {
   deleteUser,
   editUser,
   consultUser,
+  changePass,
   CodigosEstablecimientos,
   hojavidaConsultAll,
   inscribirEstablecimiento,
@@ -92,9 +93,22 @@ router.post(
   }
 );
 router.post(
-  "/Cuentas/Usuarios/Delete",
+  "/Cuentas/Usuarios/Delete/:id",
   deleteUser,
   isAuthenticatedCoordinacion,
+  (req, res) => {
+    res.render("coordinacion/Cuentas/usuarios", {
+      user: req.user,
+      users: false,
+      fields: false,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Cuentas/Usuarios/ChangePass/:id",
+  isAuthenticatedCoordinacion,
+  changePass,
   (req, res) => {
     res.render("coordinacion/Cuentas/usuarios", {
       user: req.user,

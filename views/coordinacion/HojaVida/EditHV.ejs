@@ -260,7 +260,7 @@
     <!-- Validations -->
     <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
     <script type="text/JavaScript" src="/js/Coordinador/formularios.js"></script>
-    <script type="text/JavaScript" src="/js/Coordinador/codigoEsta.js"></script>
+    <script type="text/JavaScript" src="/js/tools/codigoEsta.js"></script>
 
     <!-- Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -294,7 +294,8 @@
             nav4.className += "  active";
 
             provinciaID.value = "<%= consultHV.provincia %>"
-            modalsUsuarios.llenadoMunicipiosEditHV(document.getElementById("muniSelect"), document.getElementById("provinciaID"), "<%= consultHV.municipio %>");
+            modalsUsuarios.llenadoMunicipios(document.getElementById("provinciaID"), document.getElementById("muniSelect"));
+            muniSelect.value =  "<%= consultHV.municipio %>";
             grupEsta.value = "<%= consultHV.grupo %>"
             modalsUsuarios.llenadoCodigosEditHV(document.getElementById("grupEsta"), document.getElementById("tipoEsta"), "<%= consultHV.tipo %>");
             estado.value = "<%= consultHV.estado %>";

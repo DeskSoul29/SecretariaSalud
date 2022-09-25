@@ -96,7 +96,7 @@
                                   class="btn btn-warning btn-circle btn-sm">
                                   <i class="fas fa-pen-to-square"></i>
                                 </a>
-                                <a onclick='modalsUsuarios.eliminar_modal("<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
+                                <a onclick='modalsUsuarios.eliminar_modal("<%= users._id %>", "<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")'
                                   type="button" data-target="#deleteModal" data-toggle="modal"
                                   class="btn btn-danger btn-circle btn-sm">
                                   <i class="fas fa-trash"></i>
@@ -169,7 +169,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form action="/coordinacion/Cuentas/Usuarios/Delete" method="POST" autocomplete="off">
+        <form id="formDeleteUser" method="POST" autocomplete="off">
           <!-- <input type="hidden" name="_method" value="DELETE"> -->
           <div class="modal-body">
             Oprima el botón "Eliminar" a continuación si está listo para
@@ -207,7 +207,7 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <form action="/coordinacion/Cuentas/Usuarios/ChangePass" method="POST" autocomplete="off">
+        <form onsubmit="formChangePass(event)" id="formChangePass" method="POST" autocomplete="off">
           <div class="modal-body">
             Oprima el botón "Actualizar" a continuación si está listo para
             cambiar la contraseña a el usuario:

@@ -239,7 +239,7 @@
             provinciaID.value = "<%= consultUser.provincia %>"
             rol.value = "<%= consultUser.rol %>"
             
-            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("muniSelect"));
+            modalsUsuarios.llenadoMunicipios(document.getElementById("provinciaID"), document.getElementById("muniSelect"));
             muniSelect.value = "<%= consultUser.municipio %>"
 
             if (rol.value == "tecnico") {
@@ -249,9 +249,9 @@
 
             document.getElementById("inputApoyo").removeAttribute("style");
 
-            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni1"));
-            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni2"));
-            modalsUsuarios.llenadoMunicipiosEditUser(document.getElementById("provinciaID"), document.getElementById("extraMuni3"));
+            modalsUsuarios.llenadoMunicipios(document.getElementById("provinciaID"), document.getElementById("extraMuni1"));
+            modalsUsuarios.llenadoMunicipios(document.getElementById("provinciaID"), document.getElementById("extraMuni2"));
+            modalsUsuarios.llenadoMunicipios(document.getElementById("provinciaID"), document.getElementById("extraMuni3"));
             
                 if (muni1 != "") {
                     extraMuni1.value = muni1;
