@@ -3,6 +3,8 @@
 
 <head>
     <%- include('../../tools/head'); %>
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 </head>
 
 <body id="page-top">
@@ -25,36 +27,7 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <div id="municipio" class="card text-center">
-                                <div class="card-body">
-                                    <h5 class="card-title">Elija un Municipio</h5>
-                                    <select id="muniID" name="municipio" class="custom-select mr-sm-2" required>
-                                        <option select value="<%= user.municipio %>">
-                                            <%= user.municipio %>
-                                        </option>
-                                        <% if(user.municipioExtra1 !="" ){ %>
-                                            <option value="<%= user.municipioExtra1 %>">
-                                                <%= user.municipioExtra1 %>
-                                            </option>
-                                            <% } %>
-                                                <% if(user.municipioExtra2 !="" ){ %>
-                                                    <option value="<%= user.municipioExtra2 %>">
-                                                        <%= user.municipioExtra2 %>
-                                                    </option>
-                                                    <% } %>
-                                                        <% if(user.municipioExtra3 !="" ){ %>
-                                                            <option value="<%= user.municipioExtra3 %>">
-                                                                <%= user.municipioExtra3 %>
-                                                            </option>
-                                                            <% } %>
-                                    </select>
-                                </div>
-                                <div class="card-footer text-muted">
-                                    <a onclick="mostrar()" class="btn btn-primary">Continuar</a>
-                                </div>
-                            </div>
-
-                            <div id="consolidacion" class="card text-center" style="display:none">
+                            <div id="consolidacion" class="card text-center">
                                 <div class="card-body">
                                     <h5 class="card-title">Elija el tipo de Consolidación a Realizar</h5>
                                     <select id="consoID" name="consolidacion" class="custom-select mr-sm-2" required>
@@ -69,18 +42,20 @@
                                         <option>Quejas</option>
                                         <option>Toma de Muestras</option>
                                         <option>Educación Sanitaria</option>
-                                        <option>I.V.C. Publicidad</option>
-                                        <option>I.V.C Rotulado</option>
                                         <option>Listado De Carnetizados</option>
-                                        <option>Vivienda Saludable</option>
                                         <option>Antirabica Animal</option>
                                     </select>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <a onclick="volver()" class="btn btn-warning">Cambiar de
-                                        Municipio</a>
-                                    <a class="btn btn-primary">Continuar</a>
+                                    <a id="btnConsolidacion" class="btn btn-primary">Continuar</a>
                                 </div>
+                            </div>
+
+                            <div id="Vehiculos" style="display: none;">
+                                <%- include('../../tools/ConsolidacionesEnvio/vehiculos'); %>
+                            </div>
+                            <div id="Establecimientos" style="display: none;">
+                                <%- include('../../tools/ConsolidacionesEnvio/establecimientos'); %>
                             </div>
 
                         </div>
@@ -129,10 +104,44 @@
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/datatables-demo.js"></script>
+
+    <!-- Validations -->
+    <script type="text/JavaScript" src="/js/Tecnico/validaciones.js"></script>
+    <script type="text/JavaScript" src="/js/tools/codigoEsta.js"></script>
+    <script type="text/JavaScript" src="/js/tools/consolidaciones.js"></script>
+    <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+
+    <!-- Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/JavaScript">
+        var arrayCod = []
+        var arrayEsta = [] 
+        <% if(codigos){ %>
+            <% codigos.forEach((codigos)=> { %>
+                arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+            <% }) %>
+        <% } %>
+
+        <% if(hojavida){ %>
+            <% hojavida.forEach((hojavida)=> { %>
+                arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"])
+            <% }) %>
+        <% } %>
+      </script>
 
     <script>
         $(window).bind('load', function () {
@@ -145,19 +154,6 @@
             nav4.className += "  active";
         });
     </script>
-
-    <script>
-        function volver() {
-            document.getElementById("consolidacion").style = "display:none";
-            document.getElementById("municipio").removeAttribute("style");
-        }
-        function mostrar() {
-            document.getElementById("municipio").style = "display:none";
-            document.getElementById("consolidacion").removeAttribute("style");
-        }
-
-    </script>
-
 </body>
 
 </html>

@@ -1,0 +1,264 @@
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Establecimientos</h1>
+                </div>
+                <form onsubmit="(event)" action="" method="POST" autocomplete="off">
+
+                    <div class="form-row align-items-center mb-sm-2">
+                        <div class="col my-1">
+                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                            <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia"
+                                value="<%= user.provincia %>" readonly>
+                        </div>
+                        <div class="col my-1">
+                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                            <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                                <option selected disabled>Seleccione el Municipio
+                                </option>
+                                <option value="<%= user.municipio %>">
+                                    <%= user.municipio %>
+                                </option>
+                                <% if(user.municipioExtra1 !="" ){ %>
+                                    <option value="<%= user.municipioExtra1 %>">
+                                        <%= user.municipioExtra1 %>
+                                    </option>
+                                    <% } %>
+                                        <% if(user.municipioExtra2 !="" ){ %>
+                                            <option value="<%= user.municipioExtra2 %>">
+                                                <%= user.municipioExtra2 %>
+                                            </option>
+                                            <% } %>
+                                                <% if(user.municipioExtra3 !="" ){ %>
+                                                    <option value="<%= user.municipioExtra3 %>">
+                                                        <%= user.municipioExtra3 %>
+                                                    </option>
+                                                    <% } %>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-8 mb-3 mb-sm-0">
+                            <label class="mr-sm-2" for="grupEsta">Grupo Del
+                                Establecimiento</label>
+                            <select id="grupEsta" name="grupEsta" class="custom-select mr-sm-2">
+                                <option selected disabled>
+                                    Seleccione el Grupo
+                                </option>
+                                <% var numberSelected2="" ; %>
+                                    <% if(codigos){ %>
+                                        <% codigos.forEach((codigos)=> { %>
+                                            <% if (numberSelected2 !=codigos.grupo){ %>
+                                                <option value="<%= codigos.grupo %>">
+                                                    <%= codigos.grupo %>
+                                                </option>
+                                                <% numberSelected2=codigos.grupo %>
+                                                    <% } %>
+                                                        <% }) %>
+                                                            <% } %>
+                            </select>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="mr-sm-2" for="codEsta">Codigo</label>
+                            <input type="text" class="form-control form-control-user" id="codEsta" name="codEsta"
+                                placeholder="Ninguno" readonly />
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                            <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo"
+                                placeholder="Ninguno" readonly />
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                                Establecimiento</label>
+                            <select id="tipoEsta" name="tipoEsta" class="custom-select mr-sm-2">
+                                <option selected>Seleccione el Tipo
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                            <select id="rSocial" name="rSocial" data-live-search="true" data-show-subtext="true"
+                                class="custom-select mr-sm-2 selectpicker">
+                                <option selected disabled>
+                                    Seleccione El Establecimiento
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="tIden">Tipo de
+                                Identificación</label>
+                            <input type="text" id="tIden" name="tIden" placeholder="Ninguna"
+                                class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="inputIden">Identificación</label>
+                            <input type="number" placeholder="Ninguna" id="inputIden" name="inputIden"
+                                class="form-control form-control-user" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                            <input type="text" placeholder="Ninguna" class="form-control form-control-user" id="rLegal"
+                                name="rLegal" readonly />
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="direccion">Dirección</label>
+                            <input type="text" placeholder="Ninguna" class="form-control form-control-user"
+                                id="direccion" name="direccion" readonly />
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="estado">Estado</label>
+                            <input type="text" placeholder="Ninguna" class="form-control form-control-user" id="estado"
+                                name="estado" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="fVisit">Fecha Visita</label>
+                            <input type="date" placeholder="Ninguna" class="form-control form-control-user" id="fVisit"
+                                name="fVisit" value="now()" />
+                        </div>
+                        <div class="col-sm-3">
+                            <label class="mr-sm-2" for="score">Puntaje</label>
+                            <input type="number" placeholder="Ninguno" class="form-control form-control-user" id="score"
+                                name="score" />
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="mr-sm-2" for="concepto">Concepto</label>
+                            <select id="concepto" name="concepto" class="custom-select mr-sm-2">
+                                <option selected disabled>
+                                    Seleccione El Concepto
+                                </option>
+                                <option value="FAVORABLE">FAVORABLE</option>
+                                <option value="FAVORABLE CON REQUERIMIENTO">FAVORABLE CON REQUERIMIENTO</option>
+                                <option value="DESFAVORABLE">DESFAVORABLE</option>
+                                <option value="NO APLICA">NO APLICA</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label class="mr-sm-2" for="accion">Acción Realizada</label>
+                            <select id="accion" name="accion" class="custom-select mr-sm-2">
+                                <option selected disabled>
+                                    Seleccione La Acción
+                                </option>
+                                <option value="INSPECCIÓN">INSPECCIÓN</option>
+                                <option value="CONTROL">CONTROL</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-8">
+                            <label class="mr-sm-2" for="acta">Tipo de Acta Utilizada</label>
+                            <input type="text" placeholder="Ninguna" class="form-control form-control-user" id="acta"
+                                name="acta" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class="mr-sm-2" for="observacion">Observaciones (Opcional)</label>
+                            <textarea name="observacion" id="observacion" rows="2"
+                                class="form-control form-control-user"
+                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label class="mr-sm-2" for="actaAnul">¿Acta Anulada?</label>
+                            <select id="actaAnul" name="actaAnul" class="custom-select mr-sm-2">
+                                <option selected disabled>
+                                    Seleccione
+                                </option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley 1335?</label>
+                            <select id="actaLey" name="actaLey" class="custom-select mr-sm-2">
+                                <option selected disabled>
+                                    Seleccione
+                                </option>
+                                <option value="SI">SI</option>
+                                <option value="NO">NO</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="mr-sm-2" for="actaLeyIVC">¿Tiene IVC?</label>
+                            <select id="actaLeyIVC" name="actaLeyIVC" class="custom-select mr-sm-2">
+                                <option selected>
+                                    NO
+                                </option>
+                                <option value="ROTULADO">ROTULADO</option>
+                                <option value="PUBLICIDAD">PUBLICIDAD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="rotuladoTemplate" style="display: none;">
+                        <%- include('../../tools/ConsolidacionesEnvio/rotulado'); %>
+                    </div>
+                    <div id="publicidadTemplate" style="display: none;">
+                        <%- include('../../tools/ConsolidacionesEnvio/publicidad'); %>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label class="mr-sm-2" for="observacion">Adjuntar Archivo(s)</label>
+                            <div class="fv-row">
+                                <div class="dropzone" id="dropzone">
+                                    <!--begin::Message-->
+                                    <div class="dz-message needsclick">
+                                        <!--begin::Icon-->
+                                        <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                        <!--begin::Info-->
+                                        <div class="ms-4">
+                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">Arrastra archivos aqui o da
+                                                click para buscar</h3>
+                                            <span class="fs-7 fw-semibold " style="color: #50525c!important;">Cantidad
+                                                Maxima de Archivos:
+                                                10</span>
+                                            <br>
+                                            <span class="fs-7 fw-semibold " style="color: #50525c!important;">Peso
+                                                Maximo:
+                                                30 MB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                        Registrar Consolidación
+                    </button>
+                    <a href="/tecnico/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                        Cancelar
+                    </a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

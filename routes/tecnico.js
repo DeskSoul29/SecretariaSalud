@@ -20,11 +20,19 @@ router.get("/Consolidaciones/Ver", isAuthenticatedTecnic, (req, res) => {
     user: req.user,
   });
 });
-router.get("/Consolidaciones/Enviar", isAuthenticatedTecnic, (req, res) => {
-  res.render("tecnico/Visitas/mainEnviar", {
-    user: req.user,
-  });
-});
+router.get(
+  "/Consolidaciones/Enviar",
+  isAuthenticatedTecnic,
+  CodigosEstablecimientos,
+  hojavidaConsultAllTec,
+  (req, res) => {
+    res.render("tecnico/Visitas/mainEnviar", {
+      user: req.user,
+      codigos: req.codigos,
+      hojavida: req.hojavida,
+    });
+  }
+);
 
 //Apartado: Hojas de Vida
 router.get(
