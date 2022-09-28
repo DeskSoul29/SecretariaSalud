@@ -35,7 +35,12 @@ var toast = (function () {
 
 const modalsEstablecimientos = (function () {
   var consolidacion = function (consolidacion) {
-    if (consolidacion.value == "Vehiculos") {
+    if (consolidacion.value == "Eventos en Salud Pública") {
+      window.open(
+        "/tecnico/Consolidaciones/Enviar/EventosSaludPublica",
+        "_self"
+      );
+    } else if (consolidacion.value == "Vehiculos") {
       window.open("/tecnico/Consolidaciones/Enviar/Vehiculos", "_self");
     } else if (consolidacion.value == "Establecimientos") {
       window.open("/tecnico/Consolidaciones/Enviar/Establecimientos", "_self");
@@ -43,6 +48,29 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Enviar/Cementerios", "_self");
     } else if (consolidacion.value == "Morgues") {
       window.open("/tecnico/Consolidaciones/Enviar/Morgues", "_self");
+    } else if (consolidacion.value == "Toma de Muestras") {
+      window.open("/tecnico/Consolidaciones/Enviar/TomaMuestras", "_self");
+    } else if (consolidacion.value == "Educación Sanitaria") {
+      window.open("/tecnico/Consolidaciones/Enviar/EduSanitaria", "_self");
+    } else if (consolidacion.value == "Listado De Carnetizados") {
+      window.open(
+        "/tecnico/Consolidaciones/Enviar/ListadoCarnetizados",
+        "_self"
+      );
+    } else if (consolidacion.value == "Antirrabica Animal") {
+      window.open("/tecnico/Consolidaciones/Enviar/AntirrabicaAnimal", "_self");
+    } else if (consolidacion.value == "Medidas Sanitarias a Establecimientos") {
+      window.open(
+        "/tecnico/Consolidaciones/Enviar/MedSanitariasEstablecimientos",
+        "_self"
+      );
+    } else if (consolidacion.value == "Medidas Sanitarias a Productos") {
+      window.open(
+        "/tecnico/Consolidaciones/Enviar/MedSanitariasProductos",
+        "_self"
+      );
+    } else if (consolidacion.value == "Quejas") {
+      window.open("/tecnico/Consolidaciones/Enviar/Quejas", "_self");
     }
   };
 

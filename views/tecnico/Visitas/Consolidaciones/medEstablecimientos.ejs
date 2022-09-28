@@ -33,46 +33,61 @@
                                         <!-- Nested Row within Card Body -->
                                         <div class="p-5">
                                             <div class="text-center">
-                                                <h1 class="h4 text-gray-900 mb-4">VEHICULOS</h1>
+                                                <h1 class="h4 text-gray-900 mb-4">MEDIDAS SANITARIAS A ESTABLECIMIENTOS
+                                                </h1>
                                             </div>
-                                            <form onsubmit="vehiculosForm(event)" action="" method="POST"
+                                            <form onsubmit="medSaniEstaForm(event)" action="" method="POST"
                                                 autocomplete="off">
 
                                                 <%- include("./templateHV") %>
 
                                                     <div class="form-group row">
-                                                        <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="classVehi">Clase de
-                                                                Vehiculo</label>
-                                                            <select id="classVehi" name="classVehi"
+                                                        <div class="col-sm-5">
+                                                            <label class="mr-sm-2" for="medidaApli">Medida
+                                                                Aplicada</label>
+                                                            <select id="medidaApli" name="medidaApli"
                                                                 class="custom-select mr-sm-2">
                                                                 <option selected disabled>
                                                                     Seleccione
                                                                 </option>
-                                                                <option value="MOTO">MOTO</option>
-                                                                <option value="CAMIONETA">CAMIONETA</option>
-                                                                <option value="CAMIÓN">CAMIÓN</option>
-                                                                <option value="FURGON">FURGON</option>
-                                                                <option value="FURGON">REMOLQUE</option>
-                                                                <option value="SEMIREMOLQUE">SEMIREMOLQUE</option>
-                                                                <option value="FURGON">FURGON</option>
-                                                                <option value="OTRO">OTRO, ¿CUÁL?</option>
+                                                                <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA
+                                                                    TEMPORAL TOTAL</option>
+                                                                <option value="CLAUSURA TEMPORAL PARCIAL">CLAUSURA
+                                                                    TEMPORAL PARCIAL</option>
+                                                                <option
+                                                                    value="SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS">
+                                                                    SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS</option>
+                                                                <option
+                                                                    value="SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS">
+                                                                    SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="otroV">Otro Vehiculo</label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="otroV" name="otroV" placeholder="¿CUÁL?"
-                                                                onkeyup="mayus(this);" readonly>
+                                                            <label class="mr-sm-2" for="fApli">Fecha Aplicación</label>
+                                                            <input type="date" placeholder="Ninguna"
+                                                                class="form-control form-control-user" id="fApli"
+                                                                name="fApli" />
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <label class="mr-sm-2" for="placa">Placa</label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="placa" name="placa" onkeyup="mayus(this);" />
+
+                                                        <div class="col-sm-4">
+                                                            <label class="mr-sm-2" for="motivoApli">Motivo de
+                                                                Aplicación</label>
+                                                            <input type="text" onkeyup="mayus(this);"
+                                                                class="form-control form-control-user" id="motivoApli"
+                                                                name="motivoApli" />
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <label class="mr-sm-2" for="refriV">Refrigeración</label>
-                                                            <select id="refriV" name="refriV"
+                                                    </div>
+
+                                                    <div class="row" style="text-align: center !important;">
+                                                        <div class="col-sm-12">
+                                                            <label class="mr-sm-12">PROCESO SANCIONATORIO</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-6">
+                                                            <label class="mr-sm-2" for="solicitudApli">Solicitud</label>
+                                                            <select id="solicitudApli" name="solicitudApli"
                                                                 class="custom-select mr-sm-2">
                                                                 <option selected disabled>
                                                                     Seleccione
@@ -81,72 +96,10 @@
                                                                 <option value="NO">NO</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-sm-2">
-                                                            <label class="mr-sm-2" for="nInscrip">N° de
-                                                                Inscripción</label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="nInscrip" name="nInscrip" onkeyup="mayus(this);"
-                                                                list="defaultNInscrip" />
-                                                        </div>
-                                                    </div>
-
-                                                    <datalist id="defaultNInscrip">
-                                                        <option value="NO REPORTA"></option>
-                                                    </datalist>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="produTrans">Productos Y/O
-                                                                Mercancia Que Transporta
-                                                            </label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="produTrans" name="produTrans" onkeyup="mayus(this);"
-                                                                list="defaultProdu" />
-                                                        </div>
-                                                    </div>
-
-                                                    <datalist id="defaultProdu">
-                                                        <option value="NO PRESENTA"></option>
-                                                    </datalist>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="fVisit">Fecha Visita</label>
-                                                            <input type="date" placeholder="Ninguna"
-                                                                class="form-control form-control-user" id="fVisit"
-                                                                name="fVisit" />
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="score">Puntaje</label>
-                                                            <input type="number" placeholder="1.0" min="1" max="100"
-                                                                class="form-control form-control-user" step="0.1"
-                                                                id="score" name="score" />
-                                                        </div>
                                                         <div class="col-sm-6">
-                                                            <label class="mr-sm-2" for="concepto">Concepto</label>
-                                                            <select id="concepto" name="concepto"
-                                                                class="custom-select mr-sm-2" required>
-                                                                <option selected disabled>
-                                                                    Seleccione El Concepto
-                                                                </option>
-                                                                <option value="FAVORABLE">FAVORABLE</option>
-                                                                <option value="FAVORABLE CON REQUERIMIENTO">FAVORABLE
-                                                                    CON
-                                                                    REQUERIMIENTO</option>
-                                                                <option value="DESFAVORABLE">DESFAVORABLE</option>
-                                                                <option value="NO APLICA">NO APLICA</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Observaciones
-                                                                (Opcional)</label>
-                                                            <textarea name="observacion" id="observacion"
-                                                                maxlength="270" rows="2"
-                                                                class="form-control form-control-user"
-                                                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                                                            <label class="mr-sm-2" for="fechSancio">Fecha</label>
+                                                            <input type="date" class="form-control form-control-user"
+                                                                id="fechSancio" name="fechSancio" readonly />
                                                         </div>
                                                     </div>
 
@@ -277,14 +230,6 @@
                 arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
             <% }) %>
         <% } %>
-
-        $("#classVehi").change(function () {
-            if (document.getElementById("classVehi").value == "OTRO") {
-                $("#otroV").attr("readonly", false);
-            } else {
-                $("#otroV").attr("readonly", true);
-            }
-        });
     </script>
 
     <script>
@@ -296,6 +241,14 @@
             nav.className += "  active";
             nav3.className += "  show";
             nav4.className += "  active";
+        });
+
+        $("#solicitudApli").change(function () {
+            if (document.getElementById("solicitudApli").value == "SI") {
+                $("#fechSancio").attr("readonly", false);
+            } else {
+                $("#fechSancio").attr("readonly", true);
+            }
         });
     </script>
 </body>

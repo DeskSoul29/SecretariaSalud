@@ -10,8 +10,19 @@ grupEsta.addEventListener("change", function () {
   //Eliminar el listado de Codigos si hay mas de 1
   for (let i = tipoEsta.options.length; i >= 1; i--) {
     tipoEsta.remove(i);
-    codEsta.value = "Ninguno";
-    Nriesgo.value = "Ninguno";
+    razonSocial.remove(i);
+    razonSocial.selectedIndex = "Seleccione El Establecimiento";
+
+    codEsta.value = "";
+    Nriesgo.value = "";
+    codEsta.value = "";
+    Nriesgo.value = "";
+    tipIdentificacion.value = "";
+    identificacion.value = "";
+    direccion.value = "";
+    representante.value = "";
+    estado.value = "";
+    phone.value = "";
   }
 
   // Llenado de Codigos
@@ -30,6 +41,13 @@ grupEsta.addEventListener("change", function () {
 tipoEsta.addEventListener("change", function () {
   var selectedOption = this.options[tipoEsta.selectedIndex];
 
+  tipIdentificacion.value = "";
+  identificacion.value = "";
+  direccion.value = "";
+  representante.value = "";
+  estado.value = "";
+  phone.value = "";
+  razonSocial.selectedIndex = "Seleccione El Establecimiento";
   // Llenado de Tipo y Riesgo
   for (var i = 0; i < arrayCod.length; i++) {
     if (arrayCod[i + 1] == selectedOption.value) {

@@ -52,13 +52,13 @@ razonSocial.addEventListener("change", function () {
 });
 
 municipio.addEventListener("change", function () {
-  codEsta.value = "Ninguna";
-  Nriesgo.value = "Ninguna";
-  tipIdentificacion.value = "Ninguna";
+  codEsta.value = "";
+  Nriesgo.value = "";
+  tipIdentificacion.value = "";
   identificacion.value = "";
-  direccion.value = "Ninguna";
-  representante.value = "Ninguna";
-  estado.value = "Ninguna";
+  direccion.value = "";
+  representante.value = "";
+  estado.value = "";
   grupEsta.selectedIndex = "Seleccione el Grupo";
   tipEsta.selectedIndex = "Seleccione el Tipo";
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
@@ -87,11 +87,3 @@ if (actaLeyIVC != null) {
     }
   });
 }
-
-$("#classVehi").change(function () {
-  if (document.getElementById("classVehi").value == "OTRO") {
-    $("#otroV").attr("readonly", false);
-  } else {
-    $("#otroV").attr("readonly", true);
-  }
-});
