@@ -3,8 +3,6 @@
 
 <head>
     <%- include('../../tools/head'); %>
-        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 </head>
 
 <body id="page-top">
@@ -49,13 +47,6 @@
                                 <div class="card-footer text-muted">
                                     <a id="btnConsolidacion" class="btn btn-primary">Continuar</a>
                                 </div>
-                            </div>
-
-                            <div id="Vehiculos" style="display: none;">
-                                <%- include('../../tools/ConsolidacionesEnvio/vehiculos'); %>
-                            </div>
-                            <div id="Establecimientos" style="display: none;">
-                                <%- include('../../tools/ConsolidacionesEnvio/establecimientos'); %>
                             </div>
 
                         </div>
@@ -111,37 +102,8 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/datatables-demo.js"></script>
-
     <!-- Validations -->
     <script type="text/JavaScript" src="/js/Tecnico/validaciones.js"></script>
-    <script type="text/JavaScript" src="/js/tools/codigoEsta.js"></script>
-    <script type="text/JavaScript" src="/js/tools/consolidaciones.js"></script>
-    <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-
-    <!-- Alert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script type="text/JavaScript">
-        var arrayCod = []
-        var arrayEsta = [] 
-        <% if(codigos){ %>
-            <% codigos.forEach((codigos)=> { %>
-                arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
-            <% }) %>
-        <% } %>
-
-        <% if(hojavida){ %>
-            <% hojavida.forEach((hojavida)=> { %>
-                arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"])
-            <% }) %>
-        <% } %>
-      </script>
 
     <script>
         $(window).bind('load', function () {

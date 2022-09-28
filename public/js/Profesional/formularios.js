@@ -33,31 +33,6 @@ var toast = (function () {
   };
 })();
 
-function hvForm(e) {
-  if (
-    document.getElementById("estado").value == "Seleccione el Estado" ||
-    document.getElementById("rLegal").value == 0 ||
-    document.getElementById("direccion").value == 0 ||
-    document.getElementById("rSocial").value == 0 ||
-    document.getElementById("Nriesgo").value == 0 ||
-    document.getElementById("codEsta").value == 0 ||
-    document.getElementById("tipoEsta").value == "Seleccione el Tipo" ||
-    document.getElementById("inputIden").value == 0 ||
-    document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
-    document.getElementById("grupEsta").value == "Seleccione el Grupo" ||
-    document.getElementById("tIden").value == "Seleccione"
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  } else if (
-    document.getElementById("user").value.length < 6 ||
-    document.getElementById("user").value.length >= 11
-  ) {
-    toast.toastInfo("Advertencia", "Escribe una Identificación Correcta");
-    e.preventDefault();
-  }
-}
-
 function formChangePass(e) {
   if (
     document.getElementById("pass").value == 0 ||

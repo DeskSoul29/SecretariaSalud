@@ -136,6 +136,7 @@ function hvForm(e) {
     document.getElementById("rSocial").value == 0 ||
     document.getElementById("Nriesgo").value == 0 ||
     document.getElementById("codEsta").value == 0 ||
+    document.getElementById("phone").value == 0 ||
     document.getElementById("tipoEsta").value == "Seleccione el Tipo" ||
     document.getElementById("inputIden").value == 0 ||
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||

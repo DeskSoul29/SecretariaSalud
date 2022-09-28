@@ -8,8 +8,9 @@ var tipIdentificacion = document.getElementById("tIden");
 var direccion = document.getElementById("direccion");
 var estado = document.getElementById("estado");
 var representante = document.getElementById("rLegal");
+var phone = document.getElementById("phone");
 
-var actaLeyIVC = document.getElementById("actaLeyIVC");
+var actaLeyIVC = document.getElementById("IVC");
 
 tipEsta.addEventListener("change", function () {
   var selectedOption = this.options[tipEsta.selectedIndex];
@@ -45,6 +46,7 @@ razonSocial.addEventListener("change", function () {
       direccion.value = arrayEsta[i + 7];
       representante.value = arrayEsta[i + 8];
       estado.value = arrayEsta[i + 9];
+      phone.value = arrayEsta[i + 10];
     }
   }
 });
@@ -53,13 +55,14 @@ municipio.addEventListener("change", function () {
   codEsta.value = "Ninguna";
   Nriesgo.value = "Ninguna";
   tipIdentificacion.value = "Ninguna";
-  identificacion.value = "Ninguna";
+  identificacion.value = "";
   direccion.value = "Ninguna";
   representante.value = "Ninguna";
   estado.value = "Ninguna";
   grupEsta.selectedIndex = "Seleccione el Grupo";
   tipEsta.selectedIndex = "Seleccione el Tipo";
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
+  phone.value = "";
 
   for (let i = razonSocial.options.length; i >= 1; i--) {
     razonSocial.remove(i);
@@ -70,15 +73,25 @@ municipio.addEventListener("change", function () {
   }
 });
 
-actaLeyIVC.addEventListener("change", function () {
-  if (actaLeyIVC.value == "ROTULADO") {
-    document.getElementById("rotuladoTemplate").removeAttribute("style");
-    document.getElementById("publicidadTemplate").style = "display:none";
-  } else if (actaLeyIVC.value == "PUBLICIDAD") {
-    document.getElementById("publicidadTemplate").removeAttribute("style");
-    document.getElementById("rotuladoTemplate").style = "display:none";
+if (actaLeyIVC != null) {
+  actaLeyIVC.addEventListener("change", function () {
+    if (actaLeyIVC.value == "ROTULADO") {
+      document.getElementById("rotuladoTemplate").removeAttribute("style");
+      document.getElementById("publicidadTemplate").style = "display:none";
+    } else if (actaLeyIVC.value == "PUBLICIDAD") {
+      document.getElementById("publicidadTemplate").removeAttribute("style");
+      document.getElementById("rotuladoTemplate").style = "display:none";
+    } else {
+      document.getElementById("publicidadTemplate").style = "display:none";
+      document.getElementById("rotuladoTemplate").style = "display:none";
+    }
+  });
+}
+
+$("#classVehi").change(function () {
+  if (document.getElementById("classVehi").value == "OTRO") {
+    $("#otroV").attr("readonly", false);
   } else {
-    document.getElementById("publicidadTemplate").style = "display:none";
-    document.getElementById("rotuladoTemplate").style = "display:none";
+    $("#otroV").attr("readonly", true);
   }
 });

@@ -99,16 +99,15 @@
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <label class="mr-sm-2" for="name">Nombre(s)</label>
-                                                        <input type="text"
-                                                            class="mayusPal form-control form-control-user" id="name"
-                                                            name="name" placeholder="Nombres"
-                                                            value="<%= consultUser.nombre %>" />
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="name" onkeyup="mayus(this);" name="name"
+                                                            placeholder="Nombres" value="<%= consultUser.nombre %>" />
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <label class="mr-sm-2" for="lastname">Apellido(s)</label>
-                                                        <input type="text"
-                                                            class="mayusPal form-control form-control-user"
-                                                            id="lastname" name="lastname" placeholder="Apellidos"
+                                                        <input type="text" class="form-control form-control-user"
+                                                            onkeyup="mayus(this);" id="lastname" name="lastname"
+                                                            placeholder="Apellidos"
                                                             value="<%= consultUser.apellido %>" />
                                                     </div>
                                                 </div>

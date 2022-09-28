@@ -10,6 +10,7 @@ var HojaVidaSchema = new Schema({
   nivelRiesgo: { type: String, required: true, max: 100 },
   tipoIdentificacion: { type: String, required: true, max: 100 },
   identificacion: { type: Number, required: true },
+  telefono: { type: Number, required: true },
   razonSocial: { type: String, required: true, max: 100 },
   direccion: { type: String, required: true, max: 100 },
   repreLegal: { type: String, required: true, max: 100 },

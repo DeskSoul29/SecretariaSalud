@@ -36,9 +36,13 @@ var toast = (function () {
 const modalsEstablecimientos = (function () {
   var consolidacion = function (consolidacion) {
     if (consolidacion.value == "Vehiculos") {
-      document.getElementById("Vehiculos").removeAttribute("style");
+      window.open("/tecnico/Consolidaciones/Enviar/Vehiculos", "_self");
     } else if (consolidacion.value == "Establecimientos") {
-      document.getElementById("Establecimientos").removeAttribute("style");
+      window.open("/tecnico/Consolidaciones/Enviar/Establecimientos", "_self");
+    } else if (consolidacion.value == "Cementerios") {
+      window.open("/tecnico/Consolidaciones/Enviar/Cementerios", "_self");
+    } else if (consolidacion.value == "Morgues") {
+      window.open("/tecnico/Consolidaciones/Enviar/Morgues", "_self");
     }
   };
 
