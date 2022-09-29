@@ -3,6 +3,13 @@ const grupEsta = document.getElementById("grupEsta");
 const tipoEsta = document.getElementById("tipoEsta");
 const codEsta = document.getElementById("codEsta");
 const Nriesgo = document.getElementById("Nriesgo");
+const razonSocial = document.getElementById("rSocial");
+const tipIdentificacion = document.getElementById("tIden");
+const identificacion = document.getElementById("inputIden");
+const direccion = document.getElementById("direccion");
+const representante = document.getElementById("rLegal");
+const estado = document.getElementById("estado");
+const phone = document.getElementById("phone");
 
 grupEsta.addEventListener("change", function () {
   var selectedOption = this.options[grupEsta.selectedIndex];
