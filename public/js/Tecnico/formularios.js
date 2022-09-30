@@ -160,8 +160,7 @@ function establecimientosForm(e) {
     document.getElementById("score").value == 0 ||
     document.getElementById("concepto").value == "Seleccione El Concepto" ||
     document.getElementById("accion").value == "Seleccione La Acción" ||
-    document.getElementById("acta").value == 0 ||
-    document.getElementById("actaAnul").value == "Seleccione" ||
+    document.getElementById("acta").value == "Seleccione" ||
     document.getElementById("actaLey").value == "Seleccione"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");

@@ -59,16 +59,6 @@ const modalsEstablecimientos = (function () {
       );
     } else if (consolidacion.value == "Antirrabica Animal") {
       window.open("/tecnico/Consolidaciones/Enviar/AntirrabicaAnimal", "_self");
-    } else if (consolidacion.value == "Medidas Sanitarias a Establecimientos") {
-      window.open(
-        "/tecnico/Consolidaciones/Enviar/MedSanitariasEstablecimientos",
-        "_self"
-      );
-    } else if (consolidacion.value == "Medidas Sanitarias a Productos") {
-      window.open(
-        "/tecnico/Consolidaciones/Enviar/MedSanitariasProductos",
-        "_self"
-      );
     } else if (consolidacion.value == "Quejas") {
       window.open("/tecnico/Consolidaciones/Enviar/Quejas", "_self");
     }

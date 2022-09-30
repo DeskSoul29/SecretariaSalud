@@ -139,32 +139,6 @@ router.get(
     });
   }
 );
-router.get(
-  "/Consolidaciones/Enviar/MedSanitariasProductos",
-  isAuthenticatedTecnic,
-  CodigosEstablecimientos,
-  hojavidaConsultAllTec,
-  (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/medProductos", {
-      user: req.user,
-      codigos: req.codigos,
-      hojavida: req.hojavida,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Enviar/MedSanitariasEstablecimientos",
-  isAuthenticatedTecnic,
-  CodigosEstablecimientos,
-  hojavidaConsultAllTec,
-  (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/medEstablecimientos", {
-      user: req.user,
-      codigos: req.codigos,
-      hojavida: req.hojavida,
-    });
-  }
-);
 
 //Apartado: Hojas de Vida
 router.get(

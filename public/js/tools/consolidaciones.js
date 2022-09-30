@@ -2,21 +2,28 @@
 var municipio = document.getElementById("muniSelect");
 var tipEsta = document.getElementById("tipoEsta");
 
-var razonSocial = document.getElementById("rSocial");
-var identificacion = document.getElementById("inputIden");
-var tipIdentificacion = document.getElementById("tIden");
-var direccion = document.getElementById("direccion");
-var estado = document.getElementById("estado");
-var representante = document.getElementById("rLegal");
-var phone = document.getElementById("phone");
-
-var actaLeyIVC = document.getElementById("IVC");
+// var razonSocial = document.getElementById("rSocial");
+// var identificacion = document.getElementById("inputIden");
+// var tipIdentificacion = document.getElementById("tIden");
+// var direccion = document.getElementById("direccion");
+// var estado = document.getElementById("estado");
+// var representante = document.getElementById("rLegal");
+// var phone = document.getElementById("phone");
 
 tipEsta.addEventListener("change", function () {
   var selectedOption = this.options[tipEsta.selectedIndex];
 
+  tipIdentificacion.value = "";
+  identificacion.value = "";
+  direccion.value = "";
+  representante.value = "";
+  estado.value = "";
+  razonSocial.selectedIndex = "Seleccione El Establecimiento";
+  phone.value = "";
+
   for (let i = razonSocial.options.length; i >= 1; i--) {
     razonSocial.remove(i);
+    razonSocial.selectedIndex = "Seleccione El Establecimiento";
   }
 
   for (var i = 0; i < arrayEsta.length; i++) {
@@ -73,17 +80,43 @@ municipio.addEventListener("change", function () {
   }
 });
 
-if (actaLeyIVC != null) {
-  actaLeyIVC.addEventListener("change", function () {
-    if (actaLeyIVC.value == "ROTULADO") {
-      document.getElementById("rotuladoTemplate").removeAttribute("style");
-      document.getElementById("publicidadTemplate").style = "display:none";
-    } else if (actaLeyIVC.value == "PUBLICIDAD") {
-      document.getElementById("publicidadTemplate").removeAttribute("style");
-      document.getElementById("rotuladoTemplate").style = "display:none";
-    } else {
-      document.getElementById("publicidadTemplate").style = "display:none";
-      document.getElementById("rotuladoTemplate").style = "display:none";
-    }
-  });
+if ($("#rotuladoON").is(":checked")) {
+  document.getElementById("rotuladoTemplate").removeAttribute("style");
+} else {
+  document.getElementById("rotuladoTemplate").style = "display:none";
 }
+
+if ($("#publicidadON").is(":checked")) {
+  document.getElementById("publicidadTemplate").removeAttribute("style");
+} else {
+  document.getElementById("publicidadTemplate").style = "display:none";
+}
+
+if ($("#productosON").is(":checked")) {
+  document.getElementById("MedProductosTemplate").removeAttribute("style");
+} else {
+  document.getElementById("MedProductosTemplate").style = "display:none";
+}
+
+if ($("#estblecimientosON").is(":checked")) {
+  document
+    .getElementById("MedEstablecimientosTemplate")
+    .removeAttribute("style");
+} else {
+  document.getElementById("MedEstablecimientosTemplate").style = "display:none";
+}
+
+// if (actaLeyIVC != null) {
+//   actaLeyIVC.addEventListener("change", function () {
+//     if (actaLeyIVC.value == "ROTULADO") {
+//       document.getElementById("rotuladoTemplate").removeAttribute("style");
+//       document.getElementById("publicidadTemplate").style = "display:none";
+//     } else if (actaLeyIVC.value == "PUBLICIDAD") {
+//       document.getElementById("publicidadTemplate").removeAttribute("style");
+//       document.getElementById("rotuladoTemplate").style = "display:none";
+//     } else {
+//       document.getElementById("publicidadTemplate").style = "display:none";
+//       document.getElementById("rotuladoTemplate").style = "display:none";
+//     }
+//   });
+// }
