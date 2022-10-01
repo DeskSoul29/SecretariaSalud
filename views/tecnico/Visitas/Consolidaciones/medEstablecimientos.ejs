@@ -1,11 +1,15 @@
 <!-- Divider -->
 <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
 
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Establecimientos</h1>
+</div>
+
 <div class="form-group row">
     <div class="col-sm-6">
-        <label class="mr-sm-2" for="medidaApli">Medida
+        <label class="mr-sm-2" for="medidaApliEstable">Medida
             Aplicada</label>
-        <select id="medidaApli" name="medidaApli" class="custom-select mr-sm-2">
+        <select id="medidaApliEstable" name="medidaApliEstable" class="custom-select mr-sm-2">
             <option selected disabled>
                 Seleccione
             </option>
@@ -22,7 +26,7 @@
 
     <div class="col-sm-6">
         <label class="mr-sm-2" for="motivoApli">Motivo de
-            Aplicación</label>
+            Aplicación de la Medida</label>
         <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="motivoApli"
             name="motivoApli" />
     </div>
@@ -30,29 +34,10 @@
 
 <div class="form-group row">
     <div class="col-sm-12">
-        <label class="mr-sm-2" for="observacion">Adjuntar
-            Archivo(s)</label>
-        <div class="fv-row">
-            <div class="dropzone" id="dropzone">
-                <!--begin::Message-->
-                <div class="dz-message needsclick">
-                    <!--begin::Icon-->
-                    <i class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-                    <!--begin::Info-->
-                    <div class="ms-4">
-                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">
-                            Arrastra archivos aqui o da
-                            click para buscar</h3>
-                        <span class="fs-7 fw-semibold " style="color: #50525c!important;">Cantidad
-                            Maxima de Archivos:
-                            10</span>
-                        <br>
-                        <span class="fs-7 fw-semibold " style="color: #50525c!important;">Peso
-                            Maximo:
-                            30 MB</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <label class="mr-sm-2" for="observacionMedEsta">Observaciones de Medidas Sanitarias a Establecimientos
+            (Opcional)</label>
+        <textarea name="observacionMedEsta" id="observacionMedEsta" maxlength="270" rows="2"
+            class="form-control form-control-user"
+            placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
     </div>
 </div>

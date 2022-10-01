@@ -146,17 +146,6 @@
                                                     </div>
 
                                                     <div class="form-group row">
-                                                        <!-- <div class="col-sm-4">
-                                                            <label class="mr-sm-2" for="actaAnul">¿Acta Anulada?</label>
-                                                            <select id="actaAnul" name="actaAnul"
-                                                                class="custom-select mr-sm-2">
-                                                                <option selected disabled>
-                                                                    Seleccione
-                                                                </option>
-                                                                <option value="SI">SI</option>
-                                                                <option value="NO">NO</option>
-                                                            </select>
-                                                        </div> -->
                                                         <div class="col-sm-4">
                                                             <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley
                                                                 1335?</label>
@@ -175,38 +164,31 @@
                                                                 Adicional</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="rotuladoON" name="rotuladoON" value="ROTULADO">
+                                                                    id="rotuladoON" name="rotuladoON">
                                                                 <label class="form-check-label"
                                                                     for="rotuladoON">ROTULADO</label>
-
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="publicidadON" name="publicidadON"
-                                                                    value="PUBLICIDAD">
+                                                                    id="publicidadON" name="publicidadON">
                                                                 <label class="form-check-label"
                                                                     for="publicidadON">PUBLICIDAD</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-4">
-                                                            <label><input type="checkbox" id="cbox1"
-                                                                    value="first_checkbox"> Este es mi primer
-                                                                checkbox</label><br>
-                                                            <!-- <label class="mr-sm-2">Medidas Sanitarias</label>
+                                                            <label class="mr-sm-2">Medidas Sanitarias</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="estblecimientosON" name="estblecimientosON"
-                                                                    value="ESTABLECIMIENTOS">
+                                                                    id="establecimientosON" name="establecimientosON">
                                                                 <label class="form-check-label"
-                                                                    for="estblecimientosON">ESTABLECIMIENTOS</label>
+                                                                    for="establecimientosON">ESTABLECIMIENTOS</label>
                                                             </div>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="productosON" name="productosON"
-                                                                    value="PRODUCTOS">
+                                                                    id="productosON" name="productosON">
                                                                 <label class="form-check-label"
                                                                     for="productosON">PRODUCTOS</label>
-                                                            </div> -->
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -361,6 +343,40 @@
             nav.className += "  active";
             nav3.className += "  show";
             nav4.className += "  active";
+        });
+
+        $("#rotuladoON").change(function () {
+            if ($("#rotuladoON").is(":checked")) {
+                document.getElementById("rotuladoTemplate").removeAttribute("style");
+            } else {
+                document.getElementById("rotuladoTemplate").style = "display:none";
+            }
+        });
+
+        $("#publicidadON").change(function () {
+            if ($("#publicidadON").is(":checked")) {
+                document.getElementById("publicidadTemplate").removeAttribute("style");
+            } else {
+                document.getElementById("publicidadTemplate").style = "display:none";
+            }
+        });
+
+        $("#productosON").change(function () {
+            if ($("#productosON").is(":checked")) {
+                document.getElementById("MedProductosTemplate").removeAttribute("style");
+            } else {
+                document.getElementById("MedProductosTemplate").style = "display:none";
+            }
+        });
+
+        $("#establecimientosON").change(function () {
+            if ($("#establecimientosON").is(":checked")) {
+                document
+                    .getElementById("MedEstablecimientosTemplate")
+                    .removeAttribute("style");
+            } else {
+                document.getElementById("MedEstablecimientosTemplate").style = "display:none";
+            }
         });
     </script>
 </body>

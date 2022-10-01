@@ -38,137 +38,153 @@
                                             <form onsubmit="quejasForm(event)" action="" method="POST"
                                                 autocomplete="off">
 
-                                                <%- include("./templateHV") %>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <label class="mr-sm-2" for="tipQueja">Tipo de Queja</label>
-                                                            <select id="tipQueja" name="tipQueja"
-                                                                class="custom-select mr-sm-2">
-                                                                <option selected disabled>
-                                                                    Seleccione
-                                                                </option>
-                                                                <option value="AGUA (CONSUMO - RECREATIVAS)">AGUA
-                                                                    (CONSUMO - RECREATIVAS)
-                                                                </option>
-                                                                <option value="AGUAS RESIDUALES">AGUAS RESIDUALES
-                                                                </option>
-                                                                <option value="AIRE – RUIDO">AIRE – RUIDO</option>
-                                                                <option value="ALIMENTOS">ALIMENTOS</option>
-                                                                <option value="ZOONOSIS">ZOONOSIS</option>
-                                                                <option value="RESIDUOS SOLIDOS Y ESPECIALES">RESIDUOS
-                                                                    SOLIDOS Y ESPECIALES</option>
-                                                                <option
-                                                                    value="USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS QUIMICAS">
-                                                                    USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS
-                                                                    QUIMICAS</option>
-                                                                <option value="OTROS">OTROS</option>
-                                                            </select>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label class="mr-sm-2">¿De quien es la Queja?</label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="comuniQuejas" name="quejaComunidad" checked>
+                                                            <label class="form-check-label"
+                                                                for="comuniQuejas">COMUNIDAD</label>
                                                         </div>
-                                                        <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="fechRece">Fecha de
-                                                                Recepción</label>
-                                                            <input type="date" class="form-control form-control-user"
-                                                                id="fechRece" name="fechRece" onkeyup="mayus(this);" />
-                                                        </div>
-                                                        <div class="col-sm-3">
-                                                            <label class="mr-sm-2" for="fechVisit">Fecha de
-                                                                Visita</label>
-                                                            <input type="date" class="form-control form-control-user"
-                                                                id="fechVisit" name="fechVisit"
-                                                                onkeyup="mayus(this);" />
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="estableQueja" name="quejaComunidad">
+                                                            <label class="form-check-label"
+                                                                for="estableQueja">ESTABLECIMIENTO</label>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <label class="mr-sm-2" for="perCausa">Persona Que Causa La
-                                                                Queja</label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="perCausa" name="perCausa" onkeyup="mayus(this);" />
-                                                        </div>
-                                                        <div class="col-sm-6">
-                                                            <label class="mr-sm-2" for="perAfec">Persona
-                                                                Afectada</label>
-                                                            <input type="text" class="form-control form-control-user"
-                                                                id="perAfec" name="perAfec" onkeyup="mayus(this);" />
-                                                        </div>
+                                                <div id="headTeamplate" style="display: none;">
+                                                    <%- include("./templateHV") %>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="tipQueja">Tipo de Queja</label>
+                                                        <select id="tipQueja" name="tipQueja"
+                                                            class="custom-select mr-sm-2">
+                                                            <option selected disabled>
+                                                                Seleccione
+                                                            </option>
+                                                            <option value="AGUA (CONSUMO - RECREATIVAS)">AGUA
+                                                                (CONSUMO - RECREATIVAS)
+                                                            </option>
+                                                            <option value="AGUAS RESIDUALES">AGUAS RESIDUALES
+                                                            </option>
+                                                            <option value="AIRE – RUIDO">AIRE – RUIDO</option>
+                                                            <option value="ALIMENTOS">ALIMENTOS</option>
+                                                            <option value="ZOONOSIS">ZOONOSIS</option>
+                                                            <option value="RESIDUOS SOLIDOS Y ESPECIALES">RESIDUOS
+                                                                SOLIDOS Y ESPECIALES</option>
+                                                            <option
+                                                                value="USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS QUIMICAS">
+                                                                USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS
+                                                                QUIMICAS</option>
+                                                            <option value="OTROS">OTROS</option>
+                                                        </select>
                                                     </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-6">
-                                                            <label class="mr-sm-2" for="descQueja">Descripción De La
-                                                                Queja</label>
-                                                            <textarea name="descQueja" id="descQueja" maxlength="270"
-                                                                rows="2" onkeyup="mayus(this);"
-                                                                placeholder="Describa el motivo de la queja, adicionalmente si el tipo de queja es 'OTROS' clasifique el tema"
-                                                                class="form-control form-control-user"></textarea>
-                                                        </div>
-                                                        <div class=" col-sm-6">
-                                                            <label class="mr-sm-2"
-                                                                for="requeQueja">Requerimientos</label>
-                                                            <textarea name="requeQueja" id="requeQueja" maxlength="270"
-                                                                rows="2" onkeyup="mayus(this);"
-                                                                placeholder="Digite los requerimientos solicitados en la visita"
-                                                                class="form-control form-control-user"></textarea>
-                                                        </div>
+                                                    <div class="col-sm-3">
+                                                        <label class="mr-sm-2" for="fechRece">Fecha de
+                                                            Recepción</label>
+                                                        <input type="date" class="form-control form-control-user"
+                                                            id="fechRece" name="fechRece" onkeyup="mayus(this);" />
                                                     </div>
-
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Observaciones
-                                                                (Opcional)</label>
-                                                            <textarea name="observacion" id="observacion"
-                                                                maxlength="270" rows="2"
-                                                                class="form-control form-control-user"
-                                                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-                                                        </div>
+                                                    <div class="col-sm-3">
+                                                        <label class="mr-sm-2" for="fVisit">Fecha de
+                                                            Visita</label>
+                                                        <input type="date" class="form-control form-control-user"
+                                                            id="fVisit" name="fVisit" onkeyup="mayus(this);" />
                                                     </div>
+                                                </div>
 
-                                                    <!-- Divider -->
-                                                    <hr class="sidebar-divider"
-                                                        style="border-top: 1px solid rgb(0 0 0);">
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="perCausa">Persona Que Causa La
+                                                            Queja</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="perCausa" name="perCausa" onkeyup="mayus(this);" />
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="perAfec">Persona
+                                                            Afectada</label>
+                                                        <input type="text" class="form-control form-control-user"
+                                                            id="perAfec" name="perAfec" onkeyup="mayus(this);" />
+                                                    </div>
+                                                </div>
 
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Adjuntar
-                                                                Archivo(s)</label>
-                                                            <div class="fv-row">
-                                                                <div class="dropzone" id="dropzone">
-                                                                    <!--begin::Message-->
-                                                                    <div class="dz-message needsclick">
-                                                                        <!--begin::Icon-->
-                                                                        <i
-                                                                            class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-                                                                        <!--begin::Info-->
-                                                                        <div class="ms-4">
-                                                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">
-                                                                                Arrastra archivos aqui o da
-                                                                                click para buscar</h3>
-                                                                            <span class="fs-7 fw-semibold "
-                                                                                style="color: #50525c!important;">Cantidad
-                                                                                Maxima de Archivos:
-                                                                                10</span>
-                                                                            <br>
-                                                                            <span class="fs-7 fw-semibold "
-                                                                                style="color: #50525c!important;">Peso
-                                                                                Maximo:
-                                                                                30 MB</span>
-                                                                        </div>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6">
+                                                        <label class="mr-sm-2" for="descQueja">Descripción De La
+                                                            Queja</label>
+                                                        <textarea name="descQueja" id="descQueja" maxlength="270"
+                                                            rows="2" onkeyup="mayus(this);"
+                                                            placeholder="Describa el motivo de la queja, adicionalmente si el tipo de queja es 'OTROS' clasifique el tema"
+                                                            class="form-control form-control-user"></textarea>
+                                                    </div>
+                                                    <div class=" col-sm-6">
+                                                        <label class="mr-sm-2" for="requeQueja">Requerimientos</label>
+                                                        <textarea name="requeQueja" id="requeQueja" maxlength="270"
+                                                            rows="2" onkeyup="mayus(this);"
+                                                            placeholder="Digite los requerimientos solicitados en la visita"
+                                                            class="form-control form-control-user"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label class="mr-sm-2" for="observacion">Observaciones
+                                                            (Opcional)</label>
+                                                        <textarea name="observacion" id="observacion" maxlength="270"
+                                                            rows="2" class="form-control form-control-user"
+                                                            placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Divider -->
+                                                <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                                                <div class="form-group row">
+                                                    <div class="col-sm-12">
+                                                        <label class="mr-sm-2" for="observacion">Adjuntar
+                                                            Archivo(s)</label>
+                                                        <div class="fv-row">
+                                                            <div class="dropzone" id="dropzone">
+                                                                <!--begin::Message-->
+                                                                <div class="dz-message needsclick">
+                                                                    <!--begin::Icon-->
+                                                                    <i
+                                                                        class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
+                                                                    <!--begin::Info-->
+                                                                    <div class="ms-4">
+                                                                        <h3 class="fs-5 fw-bold text-gray-900 mb-1">
+                                                                            Arrastra archivos aqui o da
+                                                                            click para buscar</h3>
+                                                                        <span class="fs-7 fw-semibold "
+                                                                            style="color: #50525c!important;">Cantidad
+                                                                            Maxima de Archivos:
+                                                                            10</span>
+                                                                        <br>
+                                                                        <span class="fs-7 fw-semibold "
+                                                                            style="color: #50525c!important;">Peso
+                                                                            Maximo:
+                                                                            30 MB</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
 
 
-                                                    <button class="btn btn-primary btn-user btn-block" type="submit">
-                                                        Registrar Consolidación
-                                                    </button>
-                                                    <a href="/tecnico/Consolidaciones/Enviar"
-                                                        class="btn btn-secondary btn-user btn-block">
-                                                        Cancelar
-                                                    </a>
+                                                <button class="btn btn-primary btn-user btn-block" type="submit">
+                                                    Registrar Consolidación
+                                                </button>
+                                                <a href="/tecnico/Consolidaciones/Enviar"
+                                                    class="btn btn-secondary btn-user btn-block">
+                                                    Cancelar
+                                                </a>
 
                                             </form>
                                         </div>
@@ -263,6 +279,18 @@
             nav.className += "  active";
             nav3.className += "  show";
             nav4.className += "  active";
+        });
+
+        $("#estableQueja").change(function () {
+            if ($("#estableQueja").is(":checked")) {
+                document.getElementById("headTeamplate").removeAttribute("style");
+            }
+        });
+
+        $("#comuniQuejas").change(function () {
+            if ($("#comuniQuejas").is(":checked")) {
+                document.getElementById("headTeamplate").style = "display:none";
+            }
         });
     </script>
 </body>
