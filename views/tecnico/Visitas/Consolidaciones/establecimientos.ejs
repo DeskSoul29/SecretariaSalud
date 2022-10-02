@@ -49,24 +49,16 @@
                                                         </div>
                                                         <div class="col-sm-3">
                                                             <label class="mr-sm-2" for="score">Puntaje</label>
-                                                            <input type="number" placeholder="1,0" min="1" max="100"
+                                                            <input type="number" placeholder="1,0" min="0" max="100"
                                                                 class="form-control form-control-user" step="0.1"
-                                                                id="score" name="score" />
+                                                                id="score" name="score"
+                                                                onkeyup="AmbienteConcepto(this);" />
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <label class="mr-sm-2" for="concepto">Concepto</label>
-                                                            <select id="concepto" name="concepto"
-                                                                class="custom-select mr-sm-2">
-                                                                <option selected disabled>
-                                                                    Seleccione El Concepto
-                                                                </option>
-                                                                <option value="FAVORABLE">FAVORABLE</option>
-                                                                <option value="FAVORABLE CON REQUERIMIENTO">FAVORABLE
-                                                                    CON
-                                                                    REQUERIMIENTO</option>
-                                                                <option value="DESFAVORABLE">DESFAVORABLE</option>
-                                                                <option value="NO APLICA">NO APLICA</option>
-                                                            </select>
+                                                            <input type="text" class="form-control form-control-user"
+                                                                id="concepto" name="concepto" readonly
+                                                                value="NO APLICA" />
                                                         </div>
                                                     </div>
 
@@ -82,70 +74,18 @@
                                                                 <option value="CONTROL">CONTROL</option>
                                                             </select>
                                                         </div>
-                                                        <div class="col-sm-8">
-                                                            <label class="mr-sm-2" for="acta">Tipo de Acta
-                                                                Utilizada</label>
-                                                            <select id="acta" name="acta" class="custom-select mr-sm-2">
-                                                                <option selected disabled>
-                                                                    Seleccione
-                                                                </option>
-                                                                <option
-                                                                    value="ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS">
-                                                                    ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS
-                                                                </option>
-                                                                <option value="ENFOQUE DE RIESGO - EXPENDIOS DE CARNE">
-                                                                    ENFOQUE DE RIESGO - EXPENDIOS DE CARNE
-                                                                </option>
-                                                                <option
-                                                                    value="ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS">
-                                                                    ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS
-                                                                </option>
-                                                                <option value="ENFOQUE DE RIESGO - GRANDES SUPERFICIES">
-                                                                    ENFOQUE DE RIESGO - GRANDES SUPERFICIES
-                                                                </option>
-                                                                <option value="ENFOQUE DE RIESGO - ALMACENAMIENTO">
-                                                                    ENFOQUE DE RIESGO - ALMACENAMIENTO
-                                                                </option>
-                                                                <option
-                                                                    value="ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA">
-                                                                    ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA
-                                                                </option>
-                                                                <option
-                                                                    value="ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS">
-                                                                    ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS
-                                                                </option>
-                                                                <option value="ENFOQUE DE RIESGO - PLAZAS DE MERCADO">
-                                                                    ENFOQUE DE RIESGO - PLAZAS DE MERCADO
-                                                                </option>
-                                                                <option
-                                                                    value="ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS">
-                                                                    ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS
-                                                                </option>
-                                                                <option value="PGIRHS">PGIRHS</option>
-                                                                <option value="CEMENTERIOS">CEMENTERIOS</option>
-                                                                <option value="ACUEDUCTOS">ACUEDUCTOS</option>
-                                                                <option value="PISCINAS">PISCINAS</option>
-                                                                <option
-                                                                    value="PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE PLAGUICIDAS">
-                                                                    PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE
-                                                                    PLAGUICIDAS
-                                                                </option>
-                                                            </select>
+                                                        <div id="templeEstablecimientos" style="display: none;"
+                                                            class="col-sm-8">
+                                                            <%- include("./templateEstable") %>
+                                                        </div>
+                                                        <div id="templeCementerios" style="display: none;"
+                                                            class="col-sm-8">
+                                                            <%- include("./cementerios") %>
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Observaciones
-                                                                (Opcional)</label>
-                                                            <textarea name="observacion" id="observacion"
-                                                                maxlength="270" rows="2"
-                                                                class="form-control form-control-user"
-                                                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
+                                                    <div id="extraEstablecimiento" class="form-group row"
+                                                        style="display: none;">
                                                         <div class="col-sm-4">
                                                             <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley
                                                                 1335?</label>
@@ -203,6 +143,21 @@
                                                     </div>
                                                     <div id="MedProductosTemplate" style="display: none;">
                                                         <%- include('./medProductos'); %>
+                                                    </div>
+
+                                                    <!-- Divider -->
+                                                    <hr class="sidebar-divider"
+                                                        style="border-top: 1px solid rgb(0 0 0);">
+
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                            <label class="mr-sm-2" for="observacion">Observaciones
+                                                                (Opcional)</label>
+                                                            <textarea name="observacion" id="observacion"
+                                                                maxlength="270" rows="2"
+                                                                class="form-control form-control-user"
+                                                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                                                        </div>
                                                     </div>
 
                                                     <!-- Divider -->

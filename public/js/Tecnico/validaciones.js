@@ -44,10 +44,6 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Enviar/Vehiculos", "_self");
     } else if (consolidacion.value == "Establecimientos") {
       window.open("/tecnico/Consolidaciones/Enviar/Establecimientos", "_self");
-    } else if (consolidacion.value == "Cementerios") {
-      window.open("/tecnico/Consolidaciones/Enviar/Cementerios", "_self");
-    } else if (consolidacion.value == "Morgues") {
-      window.open("/tecnico/Consolidaciones/Enviar/Morgues", "_self");
     } else if (consolidacion.value == "Toma de Muestras") {
       window.open("/tecnico/Consolidaciones/Enviar/TomaMuestras", "_self");
     } else if (consolidacion.value == "Educación Sanitaria") {

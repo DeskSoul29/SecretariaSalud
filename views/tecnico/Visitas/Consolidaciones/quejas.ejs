@@ -56,8 +56,46 @@
                                                     </div>
                                                 </div>
 
-                                                <div id="headTeamplate" style="display: none;">
+                                                <div id="EstbleTemple" style="display: none;">
                                                     <%- include("./templateHV") %>
+                                                </div>
+
+                                                <div id="ComuniTemple">
+                                                    <div class="form-row align-items-center mb-sm-2">
+                                                        <div class="col my-1">
+                                                            <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                                                            <input type="text" class="form-control form-control-user"
+                                                                id="provinciaID" name="provincia"
+                                                                value="<%= user.provincia %>" readonly>
+                                                        </div>
+                                                        <div class="col my-1">
+                                                            <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                                                            <select id="muniSelect2" name="municipio"
+                                                                class="custom-select mr-sm-2">
+                                                                <option selected disabled>Seleccione el Municipio
+                                                                </option>
+                                                                <option value="<%= user.municipio %>">
+                                                                    <%= user.municipio %>
+                                                                </option>
+                                                                <% if(user.municipioExtra1 !="" ){ %>
+                                                                    <option value="<%= user.municipioExtra1 %>">
+                                                                        <%= user.municipioExtra1 %>
+                                                                    </option>
+                                                                    <% } %>
+                                                                        <% if(user.municipioExtra2 !="" ){ %>
+                                                                            <option value="<%= user.municipioExtra2 %>">
+                                                                                <%= user.municipioExtra2 %>
+                                                                            </option>
+                                                                            <% } %>
+                                                                                <% if(user.municipioExtra3 !="" ){ %>
+                                                                                    <option
+                                                                                        value="<%= user.municipioExtra3 %>">
+                                                                                        <%= user.municipioExtra3 %>
+                                                                                    </option>
+                                                                                    <% } %>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <div class="form-group row">
@@ -283,13 +321,15 @@
 
         $("#estableQueja").change(function () {
             if ($("#estableQueja").is(":checked")) {
-                document.getElementById("headTeamplate").removeAttribute("style");
+                document.getElementById("EstbleTemple").removeAttribute("style");
+                document.getElementById("ComuniTemple").style = "display:none";
             }
         });
 
         $("#comuniQuejas").change(function () {
             if ($("#comuniQuejas").is(":checked")) {
-                document.getElementById("headTeamplate").style = "display:none";
+                document.getElementById("EstbleTemple").style = "display:none";
+                document.getElementById("ComuniTemple").removeAttribute("style");
             }
         });
     </script>

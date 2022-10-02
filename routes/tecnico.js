@@ -52,37 +52,11 @@ router.get(
   }
 );
 router.get(
-  "/Consolidaciones/Enviar/Cementerios",
-  isAuthenticatedTecnic,
-  CodigosEstablecimientos,
-  hojavidaConsultAllTec,
-  (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/cementerios", {
-      user: req.user,
-      codigos: req.codigos,
-      hojavida: req.hojavida,
-    });
-  }
-);
-router.get(
   "/Consolidaciones/Enviar/EventosSaludPublica",
   isAuthenticatedTecnic,
   (req, res) => {
     res.render("tecnico/Visitas/Consolidaciones/eventSaludPublic", {
       user: req.user,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Enviar/Morgues",
-  isAuthenticatedTecnic,
-  CodigosEstablecimientos,
-  hojavidaConsultAllTec,
-  (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/morgue", {
-      user: req.user,
-      codigos: req.codigos,
-      hojavida: req.hojavida,
     });
   }
 );

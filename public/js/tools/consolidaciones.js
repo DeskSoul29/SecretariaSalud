@@ -1,15 +1,7 @@
-//Codigos de Establecimientos
 var municipio = document.getElementById("muniSelect");
 var tipEsta = document.getElementById("tipoEsta");
 
-// var razonSocial = document.getElementById("rSocial");
-// var identificacion = document.getElementById("inputIden");
-// var tipIdentificacion = document.getElementById("tIden");
-// var direccion = document.getElementById("direccion");
-// var estado = document.getElementById("estado");
-// var representante = document.getElementById("rLegal");
-// var phone = document.getElementById("phone");
-
+//Si el tipo de establecimiento es cambiado entonces me elimine los campos anteriores
 tipEsta.addEventListener("change", function () {
   var selectedOption = this.options[tipEsta.selectedIndex];
 
@@ -20,6 +12,27 @@ tipEsta.addEventListener("change", function () {
   estado.value = "";
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
   phone.value = "";
+
+  if (document.getElementById("templeCementerios")) {
+    if (tipoEsta.value == "CEMENTERIOS (CON O SIN MORGUE)") {
+      document.getElementById("templeCementerios").removeAttribute("style");
+      document.getElementById("templeEstablecimientos").style = "display:none";
+      document.getElementById("extraEstablecimiento").style = "display:none";
+    } else if (
+      tipoEsta.value == "MORGUES" ||
+      tipoEsta.value == "Seleccione el Tipo"
+    ) {
+      document.getElementById("templeCementerios").style = "display:none";
+      document.getElementById("templeEstablecimientos").style = "display:none";
+      document.getElementById("extraEstablecimiento").style = "display:none";
+    } else {
+      document.getElementById("templeCementerios").style = "display:none";
+      document
+        .getElementById("templeEstablecimientos")
+        .removeAttribute("style");
+      document.getElementById("extraEstablecimiento").removeAttribute("style");
+    }
+  }
 
   for (let i = razonSocial.options.length; i >= 1; i--) {
     razonSocial.remove(i);
@@ -70,7 +83,11 @@ municipio.addEventListener("change", function () {
   tipEsta.selectedIndex = "Seleccione el Tipo";
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
   phone.value = "";
-
+  if (document.getElementById("templeCementerios")) {
+    document.getElementById("templeCementerios").style = "display:none";
+    document.getElementById("templeEstablecimientos").style = "display:none";
+    document.getElementById("extraEstablecimiento").style = "display:none";
+  }
   for (let i = razonSocial.options.length; i >= 1; i--) {
     razonSocial.remove(i);
   }

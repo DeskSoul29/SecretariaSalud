@@ -24,6 +24,7 @@ app.set("view engine", "ejs");
 
 // Seteamos la carpeta public para archivos estáticos
 app.use(express.static(join(__dirname, "/public")));
+app.use(express.static(join(__dirname, "/upload")));
 
 // Para procesar datos enviados desde forms
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -6,7 +6,7 @@ var myDropzone = new Dropzone("#dropzone", {
   maxFilesize: 30, // MB
   addRemoveLinks: true,
   accept: function (file, done) {
-    if (file.name == "wow.jpg") {
+    if (file.name == "H1.jpg") {
       done("Naha, you don't.");
     } else {
       done();

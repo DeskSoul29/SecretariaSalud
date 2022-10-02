@@ -163,20 +163,6 @@ function tomMuestraForm(e) {
   }
 }
 
-function morgueForm(e) {
-  if (
-    document.getElementById("rSocial").value ==
-      "Seleccione El Establecimiento" ||
-    document.getElementById("accion").value == "Seleccione La Acción" ||
-    document.getElementById("fVisit").value == 0 ||
-    document.getElementById("score").value == 0 ||
-    document.getElementById("concepto").value == "Seleccione El Concepto"
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  }
-}
-
 function eduSanitaria(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
@@ -233,10 +219,7 @@ function establecimientosForm(e) {
       "Seleccione El Establecimiento" ||
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("score").value == 0 ||
-    document.getElementById("concepto").value == "Seleccione El Concepto" ||
-    document.getElementById("accion").value == "Seleccione La Acción" ||
-    document.getElementById("acta").value == "Seleccione" ||
-    document.getElementById("actaLey").value == "Seleccione"
+    document.getElementById("accion").value == "Seleccione La Acción"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -245,8 +228,40 @@ function establecimientosForm(e) {
     e.preventDefault();
   }
 
-  if (document.getElementById("publicidadON").checked) {
+  if (
+    document.getElementById("tipoEsta").value ==
+    "CEMENTERIOS (CON O SIN MORGUE)"
+  ) {
+    cementerio(e);
+  } else if (
+    document.getElementById("tipoEsta").value != "MORGUES" &&
+    document.getElementById("tipoEsta").value !=
+      "CEMENTERIOS (CON O SIN MORGUE)" &&
+    document.getElementById("tipoEsta").value != "Seleccione el Tipo"
+  ) {
+    if (
+      document.getElementById("acta").value == "Seleccione" ||
+      document.getElementById("actaLey").value == "Seleccione"
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar los datos sobre Actas");
+      e.preventDefault();
+    }
     //Publicidad
+    publicidad(e);
+
+    //Rotulado
+    rotulado(e);
+
+    //Medidas Sanitarias a Establecimientos
+    medSaniEstablecimientos(e);
+
+    //Medidas Sanitarias a Productos
+    medSaniProductos(e);
+  }
+}
+
+function publicidad(e) {
+  if (document.getElementById("publicidadON").checked) {
     if (
       document.getElementById("permisoSanitario").value == 0 ||
       document.getElementById("productoPublicidad").value == 0 ||
@@ -260,9 +275,10 @@ function establecimientosForm(e) {
       e.preventDefault();
     }
   }
+}
 
+function rotulado(e) {
   if (document.getElementById("rotuladoON").checked) {
-    //Rotulado
     if (document.getElementById("productoRotulado").value == 0) {
       toast.toastInfo(
         "Advertencia",
@@ -271,9 +287,10 @@ function establecimientosForm(e) {
       e.preventDefault();
     }
   }
+}
 
+function medSaniEstablecimientos(e) {
   if (document.getElementById("establecimientosON").checked) {
-    //Medidas Sanitarias a Establecimientos
     if (
       document.getElementById("motivoApli").value == 0 ||
       document.getElementById("medidaApliEstable").value == "Seleccione"
@@ -285,9 +302,10 @@ function establecimientosForm(e) {
       e.preventDefault();
     }
   }
+}
 
+function medSaniProductos(e) {
   if (document.getElementById("productosON").checked) {
-    //Medidas Sanitarias a Productos
     if (
       document.getElementById("medidaApliProduc").value == "Seleccione" ||
       document.getElementById("permisoProduco").value == 0 ||
@@ -308,6 +326,38 @@ function establecimientosForm(e) {
   }
 }
 
+function quejasForm(e) {
+  if (document.getElementById("comuniQuejas").checked) {
+    if (
+      document.getElementById("muniSelect2").value == "Seleccione el Municipio"
+    ) {
+      toast.toastInfo("Advertencia", "Elija el Municipio");
+      e.preventDefault();
+    }
+  } else if (document.getElementById("estableQueja").checked) {
+    if (
+      document.getElementById("rSocial").value ==
+      "Seleccione El Establecimiento"
+    ) {
+      toast.toastInfo("Advertencia", "Elija un Establecimiento");
+      e.preventDefault();
+    }
+  }
+
+  if (
+    document.getElementById("tipQueja").value == "Seleccione" ||
+    document.getElementById("fechRece").value == 0 ||
+    document.getElementById("fVisit").value == 0 ||
+    document.getElementById("perCausa").value == 0 ||
+    document.getElementById("perAfec").value == 0 ||
+    document.getElementById("descQueja").value == 0 ||
+    document.getElementById("requeQueja").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  }
+}
+
 function vehiculosForm(e) {
   if (
     document.getElementById("rSocial").value ==
@@ -318,8 +368,7 @@ function vehiculosForm(e) {
     document.getElementById("nInscrip").value == 0 ||
     document.getElementById("produTrans").value == 0 ||
     document.getElementById("fVisit").value == 0 ||
-    document.getElementById("score").value == 0 ||
-    document.getElementById("concepto").value == "Seleccione El Concepto"
+    document.getElementById("score").value == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -335,16 +384,9 @@ function vehiculosForm(e) {
   }
 }
 
-function cementerioForm(e) {
-  if (
-    document.getElementById("rSocial").value ==
-      "Seleccione El Establecimiento" ||
-    document.getElementById("fVisit").value == 0 ||
-    document.getElementById("concepto").value == "Seleccione El Concepto" ||
-    document.getElementById("accion").value == "Seleccione La Acción" ||
-    document.getElementById("NecroMorg").value == "Seleccione"
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+function cementerio(e) {
+  if (document.getElementById("NecroMorg").value == "Seleccione") {
+    toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
     e.preventDefault();
   }
 }

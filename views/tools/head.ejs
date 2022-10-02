@@ -23,4 +23,28 @@
     function mayus(e) {
         e.value = e.value.toUpperCase();
     }
+
+    function AmbienteConcepto(puntaje) {
+        if (puntaje.value >= 95) {
+            document.getElementById("concepto").value = "FAVORABLE"
+        } else if (puntaje.value >= 50 && puntaje.value < 95) {
+            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+        } else if (puntaje.value <= 49.9) {
+            document.getElementById("concepto").value = "DESFAVORABLE"
+        } else if (puntaje.value == 0) {
+            document.getElementById("concepto").value = "NO APLICA"
+        }
+    }
+
+    function ConsumoConcepto(puntaje) {
+        if (puntaje.value >= 90) {
+            document.getElementById("concepto").value = "FAVORABLE"
+        } else if (puntaje.value >= 60 && puntaje.value < 90) {
+            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+        } else if (puntaje.value <= 59.9) {
+            document.getElementById("concepto").value = "DESFAVORABLE"
+        } else if (puntaje.value == 0) {
+            document.getElementById("concepto").value = "NO APLICA"
+        }
+    }
 </script>
