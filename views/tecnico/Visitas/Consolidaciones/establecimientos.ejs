@@ -49,8 +49,9 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">Establecimientos</h1>
                                             </div>
-                                            <form action="/update" method="POST" autocomplete="off"
-                                                enctype="multipart/form-data">
+                                            <form onsubmit="establecimientosForm(event)"
+                                                action="/tecnico/Consolidaciones/Enviar/Establecimientos" method="POST"
+                                                autocomplete="off" enctype="multipart/form-data">
 
                                                 <%- include("./templateHV") %>
 
@@ -180,13 +181,13 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Adjuntar
+                                                            <label class="mr-sm-2" for="fields">Adjuntar
                                                                 Archivo(s)</label>
                                                             <div class="control-group" id="fields">
                                                                 <div class="controls">
                                                                     <div class="entry input-group upload-input-group">
                                                                         <input class="form-control" name="myFiles"
-                                                                            type="file">
+                                                                            id="myfiles" type="file">
                                                                         <button
                                                                             class="btn btn-upload btn-success btn-add"
                                                                             type="button">
@@ -293,51 +294,65 @@
         <% } %>
     </script>
 
-    <script>
-        $(window).bind('load', function () {
-            var nav = document.getElementById('nav2');
-            $('#navlink1').removeClass('collapsed');
-            var nav3 = document.getElementById('collapseOne');
-            var nav4 = document.getElementById('show2');
-            nav.className += "  active";
-            nav3.className += "  show";
-            nav4.className += "  active";
-        });
+    <% if(typeof alert !="undefined" ) { %>
+        <script type="text/JavaScript">
+          Swal.fire({
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+          }).then(()=>{
+            window.location = '<%= alert[0].ruta %>'
+          })
+        </script>
+        <% } %>
 
-        $("#rotuladoON").change(function () {
-            if ($("#rotuladoON").is(":checked")) {
-                document.getElementById("rotuladoTemplate").removeAttribute("style");
-            } else {
-                document.getElementById("rotuladoTemplate").style = "display:none";
-            }
-        });
+            <script>
+                $(window).bind('load', function () {
+                    var nav = document.getElementById('nav2');
+                    $('#navlink1').removeClass('collapsed');
+                    var nav3 = document.getElementById('collapseOne');
+                    var nav4 = document.getElementById('show2');
+                    nav.className += "  active";
+                    nav3.className += "  show";
+                    nav4.className += "  active";
+                });
 
-        $("#publicidadON").change(function () {
-            if ($("#publicidadON").is(":checked")) {
-                document.getElementById("publicidadTemplate").removeAttribute("style");
-            } else {
-                document.getElementById("publicidadTemplate").style = "display:none";
-            }
-        });
+                $("#rotuladoON").change(function () {
+                    if ($("#rotuladoON").is(":checked")) {
+                        document.getElementById("rotuladoTemplate").removeAttribute("style");
+                    } else {
+                        document.getElementById("rotuladoTemplate").style = "display:none";
+                    }
+                });
 
-        $("#productosON").change(function () {
-            if ($("#productosON").is(":checked")) {
-                document.getElementById("MedProductosTemplate").removeAttribute("style");
-            } else {
-                document.getElementById("MedProductosTemplate").style = "display:none";
-            }
-        });
+                $("#publicidadON").change(function () {
+                    if ($("#publicidadON").is(":checked")) {
+                        document.getElementById("publicidadTemplate").removeAttribute("style");
+                    } else {
+                        document.getElementById("publicidadTemplate").style = "display:none";
+                    }
+                });
 
-        $("#establecimientosON").change(function () {
-            if ($("#establecimientosON").is(":checked")) {
-                document
-                    .getElementById("MedEstablecimientosTemplate")
-                    .removeAttribute("style");
-            } else {
-                document.getElementById("MedEstablecimientosTemplate").style = "display:none";
-            }
-        });
-    </script>
+                $("#productosON").change(function () {
+                    if ($("#productosON").is(":checked")) {
+                        document.getElementById("MedProductosTemplate").removeAttribute("style");
+                    } else {
+                        document.getElementById("MedProductosTemplate").style = "display:none";
+                    }
+                });
+
+                $("#establecimientosON").change(function () {
+                    if ($("#establecimientosON").is(":checked")) {
+                        document
+                            .getElementById("MedEstablecimientosTemplate")
+                            .removeAttribute("style");
+                    } else {
+                        document.getElementById("MedEstablecimientosTemplate").style = "display:none";
+                    }
+                });
+            </script>
 </body>
 
 </html>

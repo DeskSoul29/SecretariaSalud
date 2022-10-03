@@ -1,8 +1,7 @@
-import login from "../models/user.js";
-import local from "../models/localidades.js";
-import upload from "../middleware/upload.js";
+import establecimientos from "../models/establecimientos.js";
 import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
+import upload from "../middleware/upload.js";
 import { promisify } from "util";
 
 var authTec = (function () {
@@ -54,30 +53,162 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
   }
 };
 
-export const uploadFiles = async (req, res) => {
-  try {
-    await upload(req, res);
-    console.log(req.files);
-
-    if (req.files.length <= 0) {
-      return res
-        .status(400)
-        .send({ message: "You must select at least 1 file." });
+//Apartado: Consolidaciones
+export const SendEstablecimiento = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
     }
+    async (req, res, next) => {
+      try {
+        const decodificada = await promisify(jwt.verify)(
+          req.cookies.jwt,
+          process.env.JWT_SECRETO
+        );
+        var {
+          provincia,
+          municipio,
+          grupEsta,
+          codEsta,
+          tipoEsta,
+          Nriesgo,
+          tIden,
+          phone,
+          inputIden,
+          rSocial,
+          direccion,
+          rLegal,
+          estado,
+          fVisit,
+          score,
+          concepto,
+          accion,
+          //Cementerio
+          NecroMorg,
+          //Establecimiento
+          acta,
+          actaLey,
+          //Rotulado
+          rotuladoON,
+          productoRotulado,
+          //Publicidad
+          publicidadON,
+          medPubli,
+          permisoSanitario,
+          productoPublicidad,
+          marcaPublicidad,
+          //MEDEstablecimientos
+          establecimientosON,
+          medidaApliEstable,
+          motivoApli,
+          //MEDProductos
+          productosON,
+          medidaApliProduc,
+          permisoProduco,
+          productoMed,
+          marcaProduct,
+          motivoProduct,
+          presentProduct,
+          cantProdu,
+          fabriProduc,
+          loteProduc,
+          fechProduc,
 
-    return res.status(200).send({
-      message: "Files have been uploaded.",
-    });
-  } catch (error) {
-    console.log(error);
+          observacion,
+        } = req.body;
 
-    if (error.code === "LIMIT_UNEXPECTED_FILE") {
-      return res.status(400).send({
-        message: "Too many files to upload.",
-      });
-    }
-    return res.status(500).send({
-      message: `Error when trying upload many files: ${error}`,
-    });
-  }
+        new establecimientos({
+          userResponsable: decodificada.user,
+          responsable: decodificada.nombres + decodificada.apellidos,
+          provincia: provincia,
+          municipio: municipio,
+          grupo: grupEsta,
+          codigo: codEsta,
+          tipo: tipoEsta,
+          nivelRiesgo: Nriesgo,
+          tipoIdentificacion: tIden,
+          telefono: phone,
+          identificacion: inputIden,
+          razonSocial: rSocial,
+          direccion: direccion,
+          repreLegal: rLegal,
+          estado: estado,
+          fvisit: fVisit,
+          score: score,
+          concepto: concepto,
+          accion: accion,
+          salaNM: NecroMorg,
+          acta: acta,
+          actaLey: actaLey,
+          productoRotulado: productoRotulado,
+          medioPublicitario: medPubli,
+          registroSanitario: permisoSanitario,
+          productoPublicidad: productoPublicidad,
+          marcaPublicidad: marcaPublicidad,
+          medidaMSEstablecimientos: medidaApliEstable,
+          motivoMSEstablecimientos: motivoApli,
+          medidaMSProductos: medidaApliProduc,
+          permisoMSProductos: permisoProduco,
+          productoMSProductos: productoMed,
+          marcaMSProductos: marcaProduct,
+          motivoMSProductos: motivoProduct,
+          presentacionMSProductos: presentProduct,
+          cantidadMSProductos: cantProdu,
+          fabricanteMSProductos: fabriProduc,
+          loteMSProductos: loteProduc,
+          vencimientoMSProductos: fechProduc,
+          observaciones: observacion,
+        })
+          .save()
+          .then((result) => {
+            console.log(result);
+            return authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "tecnico/Consolidaciones/Enviar"
+            );
+          });
+      } catch (error) {
+        return authTec.isUser(
+          req,
+          "Error en la Base de Datos",
+          "Error en el Envio",
+          "error",
+          false,
+          800,
+          "tecnico/Consolidaciones/Enviar"
+        );
+      }
+    };
+  });
 };
+
+// if (tipoEsta == "CEMENTERIOS (CON O SIN MORGUE)") {
+//   //Cementerio
+//   console.log("Cementerios");
+// } else if (
+//   tipoEsta != "CEMENTERIOS (CON O SIN MORGUE)" &&
+//   tipoEsta != "MORGUES"
+// ) {
+//   console.log("Establecimiento General");
+//   //Establecimiento
+//   if (rotuladoON == "on") {
+//     console.log("rotulado");
+//   }
+//   if (publicidadON == "on") {
+//     console.log("Publicidad");
+//   }
+//   if (establecimientosON == "on") {
+//     console.log("Establecimientos");
+//   }
+//   if (productosON == "on") {
+//     console.log("Products");
+//   }
+// } else {
+//   console.log("morgue");
+// }
+//

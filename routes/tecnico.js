@@ -2,8 +2,9 @@ import { Router } from "express";
 
 import {
   hojavidaConsultAllTec,
-  uploadFiles,
+  SendEstablecimiento,
 } from "../controllers/tecnicoController.js";
+
 import {
   isAuthenticatedTecnic,
   CodigosEstablecimientos,
@@ -38,6 +39,20 @@ router.get(
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/Establecimientos",
+  isAuthenticatedTecnic,
+  SendEstablecimiento,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/establecimientos", {
+      user: req.user,
+      codigos: null,
+      hojavida: null,
+      alert: req.alert,
     });
   }
 );
@@ -153,18 +168,6 @@ router.post(
     });
   }
 );
-
-router.post("/update", uploadFiles);
-
-// router.post("/update", upload.array("myFiles", 12), (req, res, next) => {
-//   const files = req.files;
-//   if (!files) {
-//     const error = new Error("Please choose files");
-//     error.httpStatusCode = 400;
-//     return next(error);
-//   }
-//   res.send(files);
-// });
 
 router.get("/logout", logout);
 

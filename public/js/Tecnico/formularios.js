@@ -219,7 +219,8 @@ function establecimientosForm(e) {
       "Seleccione El Establecimiento" ||
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("score").value == 0 ||
-    document.getElementById("accion").value == "Seleccione La Acción"
+    document.getElementById("accion").value == "Seleccione La Acción" ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -236,8 +237,7 @@ function establecimientosForm(e) {
   } else if (
     document.getElementById("tipoEsta").value != "MORGUES" &&
     document.getElementById("tipoEsta").value !=
-      "CEMENTERIOS (CON O SIN MORGUE)" &&
-    document.getElementById("tipoEsta").value != "Seleccione el Tipo"
+      "CEMENTERIOS (CON O SIN MORGUE)"
   ) {
     if (
       document.getElementById("acta").value == "Seleccione" ||
