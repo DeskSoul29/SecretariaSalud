@@ -18,6 +18,17 @@ tipEsta.addEventListener("change", function () {
       document.getElementById("templeCementerios").removeAttribute("style");
       document.getElementById("templeEstablecimientos").style = "display:none";
       document.getElementById("extraEstablecimiento").style = "display:none";
+      //Deseleccionar los formularios extras en establecimientos
+      document
+        .querySelectorAll("#extraEstablecimiento input[type=checkbox]")
+        .forEach(function (checkElement) {
+          checkElement.checked = false;
+        });
+      document.getElementById("rotuladoTemplate").style = "display:none";
+      document.getElementById("publicidadTemplate").style = "display:none";
+      document.getElementById("MedProductosTemplate").style = "display:none";
+      document.getElementById("MedEstablecimientosTemplate").style =
+        "display:none";
     } else if (
       tipoEsta.value == "MORGUES" ||
       tipoEsta.value == "Seleccione el Tipo"
@@ -25,6 +36,17 @@ tipEsta.addEventListener("change", function () {
       document.getElementById("templeCementerios").style = "display:none";
       document.getElementById("templeEstablecimientos").style = "display:none";
       document.getElementById("extraEstablecimiento").style = "display:none";
+      //Deseleccionar los formularios extras en establecimientos
+      document
+        .querySelectorAll("#extraEstablecimiento input[type=checkbox]")
+        .forEach(function (checkElement) {
+          checkElement.checked = false;
+        });
+      document.getElementById("rotuladoTemplate").style = "display:none";
+      document.getElementById("publicidadTemplate").style = "display:none";
+      document.getElementById("MedProductosTemplate").style = "display:none";
+      document.getElementById("MedEstablecimientosTemplate").style =
+        "display:none";
     } else {
       document.getElementById("templeCementerios").style = "display:none";
       document

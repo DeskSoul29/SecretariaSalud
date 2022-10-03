@@ -1,7 +1,6 @@
 import login from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
-import { promisify } from "util";
 
 var authLogin = (function () {
   var isUser = function (res, title, mess, icon, button, timer, user) {
