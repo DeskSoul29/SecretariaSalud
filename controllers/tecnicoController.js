@@ -59,7 +59,7 @@ export const SendEstablecimiento = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    async (req, res, next) => {
+    const estable = async (req, res, next) => {
       try {
         const decodificada = await promisify(jwt.verify)(
           req.cookies.jwt,
@@ -162,7 +162,7 @@ export const SendEstablecimiento = async (req, res, next) => {
           .save()
           .then((result) => {
             console.log(result);
-            return authTec.isUser(
+            authTec.isUser(
               req,
               "Conexión exitosa",
               "Consolidación Enviada",
@@ -173,7 +173,7 @@ export const SendEstablecimiento = async (req, res, next) => {
             );
           });
       } catch (error) {
-        return authTec.isUser(
+        authTec.isUser(
           req,
           "Error en la Base de Datos",
           "Error en el Envio",
@@ -186,6 +186,130 @@ export const SendEstablecimiento = async (req, res, next) => {
     };
   });
 };
+//Antirrabica Animal
+var {
+  provincia,
+  municipio,
+  caninosUrbano,
+  caninosRural,
+  felinosUrbano,
+  felinosRural,
+  totalVacunados,
+  observacion,
+} = req.body;
+//Edu Sanitaria
+var {
+  provincia,
+  municipio,
+  temaCap,
+  otrosCap,
+  fechaCap,
+  intensidadCap,
+  lugCap,
+  personalCap,
+  totalPersCap,
+  observacion,
+} = req.body;
+//Eventos Salu Publica
+var {
+  mes,
+  provincia,
+  municipio,
+  etasPresent,
+  etasAtend,
+  intoxPresent,
+  intoxAtend,
+  agrePresent,
+  agreAtend,
+  trueFalse,
+  fReunion,
+  observacion,
+} = req.body;
+//listado de carnets
+var {
+  provincia,
+  municipio,
+  expCarnet,
+  idenCarnet,
+  nameCarnet,
+  estableciCarnet,
+  direcCarnet,
+  observacion,
+} = req.body;
+//Quejas
+var {
+  provincia,
+  municipio,
+  grupEsta,
+  codEsta,
+  Nriesgo,
+  tipoEsta,
+  rSocial,
+  tIden,
+  inputIden,
+  phone,
+  rLegal,
+  direccion,
+  estado,
+  tipQueja,
+  fechRece,
+  fVisit,
+  perCausa,
+  perAfec,
+  descQueja,
+  requeQueja,
+  observacion,
+} = req.body;
+//Toma Muestras
+var {
+  provincia,
+  municipio,
+  grupEsta,
+  codEsta,
+  Nriesgo,
+  tipoEsta,
+  rSocial,
+  tIden,
+  inputIden,
+  phone,
+  rLegal,
+  direccion,
+  estado,
+  tipMues,
+  descripTip,
+  tipAnali,
+  zona,
+  objEst,
+  fVisit,
+  acompañante,
+  observacion,
+} = req.body;
+//vehiculos
+var {
+  provincia,
+  municipio,
+  grupEsta,
+  codEsta,
+  Nriesgo,
+  tipoEsta,
+  rSocial,
+  tIden,
+  inputIden,
+  phone,
+  rLegal,
+  direccion,
+  estado,
+  classVehi,
+  otroV,
+  placa,
+  refriV,
+  nInscrip,
+  produTrans,
+  fVisit,
+  score,
+  concepto,
+  observacion,
+} = req.body;
 
 // if (tipoEsta == "CEMENTERIOS (CON O SIN MORGUE)") {
 //   //Cementerio
