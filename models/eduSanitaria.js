@@ -16,7 +16,14 @@ var EduSanitariaSchema = new Schema({
   persCapacit: { type: Number, required: true },
 
   observaciones: { type: String },
+
+  file1: { type: String },
+  file2: { type: String },
+  file3: { type: String },
+  file4: { type: String },
+  file5: { type: String },
+
   crearedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("consolidaciones", EduSanitariaSchema);
+export default mongoose.model("edusanitarias", EduSanitariaSchema);

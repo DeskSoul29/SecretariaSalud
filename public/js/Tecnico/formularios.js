@@ -117,6 +117,7 @@ function eventSalud(e) {
     document.getElementById("intoxAtend").value == "" ||
     document.getElementById("agrePresent").value == "" ||
     document.getElementById("agreAtend").value == "" ||
+    document.getElementById("myfiles").files.length == 0 ||
     document.getElementById("trueFalse").value == "Seleccione"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
@@ -148,7 +149,8 @@ function tomMuestraForm(e) {
     document.getElementById("zona").value == "Seleccione" ||
     document.getElementById("objEst").value == "Seleccione" ||
     document.getElementById("fVisit").value == 0 ||
-    document.getElementById("acompañante").value == 0
+    document.getElementById("acompañante").value == 0 ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -171,7 +173,8 @@ function eduSanitaria(e) {
     document.getElementById("intensidadCap").value == "" ||
     document.getElementById("totalPersCap").value == "" ||
     document.getElementById("lugCap").value == 0 ||
-    document.getElementById("personalCap").value == "Seleccione"
+    document.getElementById("personalCap").value == "Seleccione" ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -193,7 +196,8 @@ function listCarnetsForm(e) {
     document.getElementById("idenCarnet").value == "" ||
     document.getElementById("nameCarnet").value == 0 ||
     document.getElementById("estableciCarnet").value == 0 ||
-    document.getElementById("direcCarnet").value == 0
+    document.getElementById("direcCarnet").value == 0 ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -206,7 +210,8 @@ function antirrabicalAnimalForm(e) {
     document.getElementById("caninosUrbano").value === "" ||
     document.getElementById("caninosRural").value === "" ||
     document.getElementById("felinosUrbano").value === "" ||
-    document.getElementById("felinosRural").value === ""
+    document.getElementById("felinosRural").value === "" ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -351,7 +356,8 @@ function quejasForm(e) {
     document.getElementById("perCausa").value == 0 ||
     document.getElementById("perAfec").value == 0 ||
     document.getElementById("descQueja").value == 0 ||
-    document.getElementById("requeQueja").value == 0
+    document.getElementById("requeQueja").value == 0 ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -368,7 +374,8 @@ function vehiculosForm(e) {
     document.getElementById("nInscrip").value == 0 ||
     document.getElementById("produTrans").value == 0 ||
     document.getElementById("fVisit").value == 0 ||
-    document.getElementById("score").value == 0
+    document.getElementById("score").value == 0 ||
+    document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();

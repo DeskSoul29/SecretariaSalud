@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var EstablecimientosSchema = new Schema({
   userResponsable: { type: Number, required: true },
-  responsable: { type: String, required: true, max: 100 },
+  responsable: { type: String, required: true, max: 200 },
 
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, required: true, max: 100 },
@@ -28,19 +28,23 @@ var EstablecimientosSchema = new Schema({
   actaLey: { type: String, max: 100 },
 
   //Establecimientos - Rotulado
+  rotulado: { type: String, max: 100 },
   productoRotulado: { type: String, max: 100 },
 
   //Establecimientos - Publicidad
+  publicidad: { type: String, max: 100 },
   medioPublicitario: { type: String, max: 100 },
   registroSanitario: { type: String, max: 100 },
   productoPublicidad: { type: String, max: 100 },
   marcaPublicidad: { type: String, max: 100 },
 
   //Establecimientos - Medidas Sanitarias Establecimientos
+  MSEstableciientos: { type: String, max: 100 },
   medidaMSEstablecimientos: { type: String, max: 100 },
   motivoMSEstablecimientos: { type: String, max: 100 },
 
   //Establecimientos - Medidas Sanitarias Productos
+  MSProductos: { type: String, max: 100 },
   medidaMSProductos: { type: String, max: 100 },
   permisoMSProductos: { type: String, max: 100 },
   productoMSProductos: { type: String, max: 100 },
@@ -56,7 +60,14 @@ var EstablecimientosSchema = new Schema({
   salaNM: { type: String, max: 100 },
 
   observaciones: { type: String },
+
+  file1: { type: String },
+  file2: { type: String },
+  file3: { type: String },
+  file4: { type: String },
+  file5: { type: String },
+
   crearedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("consolidaciones", EstablecimientosSchema);
+export default mongoose.model("establecimientos", EstablecimientosSchema);

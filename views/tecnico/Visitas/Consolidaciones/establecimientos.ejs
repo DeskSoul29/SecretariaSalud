@@ -50,8 +50,8 @@
                                                 <h1 class="h4 text-gray-900 mb-4">Establecimientos</h1>
                                             </div>
                                             <form onsubmit="establecimientosForm(event)"
-                                                action="/tecnico/Consolidaciones/Enviar/Establecimientos" method="POST"
-                                                autocomplete="off" enctype="multipart/form-data">
+                                                action="/tecnico/Consolidaciones/Enviar/Establecimientos/<%= user.user %>"
+                                                method="POST" autocomplete="off" enctype="multipart/form-data">
 
                                                 <%- include("./templateHV") %>
 
@@ -272,22 +272,21 @@
     <script type="text/JavaScript" src="/js/tools/consolidaciones.js"></script>
 
     <!-- Dropzone -->
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
     <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
     <!-- Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/JavaScript">
-        var arrayCod = []
-        var arrayEsta = [] 
         <% if(codigos){ %>
+            var arrayCod = []
             <% codigos.forEach((codigos)=> { %>
                 arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
             <% }) %>
         <% } %>
 
         <% if(hojavida){ %>
+            var arrayEsta = [] 
             <% hojavida.forEach((hojavida)=> { %>
                 arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
             <% }) %>

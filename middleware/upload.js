@@ -7,18 +7,22 @@ var storage = multer.diskStorage({
     cb(null, "./upload");
   },
   filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     cb(
       null,
-      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+      req.params.user + "-" + uniqueSuffix + path.extname(file.originalname)
     );
   },
 });
+var filename = storage.filename;
 
 var uploadFiles = multer({
   storage: storage,
   limits: { fileSize: 20000000 },
-}).array("myFiles", 10);
+  filename: filename,
+}).array("myFiles", 5);
 
-var uploadFilesMiddleware = promisify(uploadFiles);
+var uploadFilesMiddleware = promisify(uploadFiles),
+  filename;
 
 export default uploadFilesMiddleware;
