@@ -29,7 +29,14 @@ var QuejasSchema = new Schema({
   reqQueja: { type: String, required: true },
 
   observaciones: { type: String },
+
+  file1: { type: String },
+  file2: { type: String },
+  file3: { type: String },
+  file4: { type: String },
+  file5: { type: String },
+
   crearedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("consolidaciones", QuejasSchema);
+export default mongoose.model("quejas", QuejasSchema);

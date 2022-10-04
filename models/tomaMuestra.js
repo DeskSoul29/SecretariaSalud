@@ -28,7 +28,14 @@ var TomaMuestraSchema = new Schema({
   acompañante: { type: String, required: true, max: 100 },
 
   observaciones: { type: String },
+
+  file1: { type: String },
+  file2: { type: String },
+  file3: { type: String },
+  file4: { type: String },
+  file5: { type: String },
+
   crearedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("consolidaciones", TomaMuestraSchema);
+export default mongoose.model("tomamuestras", TomaMuestraSchema);

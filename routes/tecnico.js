@@ -3,6 +3,13 @@ import { Router } from "express";
 import {
   hojavidaConsultAllTec,
   SendEstablecimiento,
+  SendEventSaludPubli,
+  SendQuejas,
+  SendAntirrabica,
+  SendCarnetizados,
+  SendEduSanitaria,
+  SendVehiculos,
+  SendTomaMuestra,
 } from "../controllers/tecnicoController.js";
 
 import {
@@ -13,6 +20,7 @@ import {
 } from "../helpers/auth.js";
 
 const router = Router();
+
 // Dashboard
 router.get("/", isAuthenticatedTecnic, (req, res) => {
   res.render("tecnico/main", { user: req.user });
@@ -44,7 +52,7 @@ router.get(
   }
 );
 router.post(
-  "/Consolidaciones/Enviar/Establecimientos",
+  "/Consolidaciones/Enviar/Establecimientos/:user",
   isAuthenticatedTecnic,
   SendEstablecimiento,
   (req, res) => {
@@ -66,6 +74,20 @@ router.get(
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/Vehiculos/:user",
+  isAuthenticatedTecnic,
+  SendVehiculos,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/vehiculos", {
+      user: req.user,
+      codigos: null,
+      hojavida: null,
+      alert: req.alert,
     });
   }
 );
@@ -75,6 +97,18 @@ router.get(
   (req, res) => {
     res.render("tecnico/Visitas/Consolidaciones/eventSaludPublic", {
       user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/EventosSaludPublica/:user",
+  isAuthenticatedTecnic,
+  SendEventSaludPubli,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/eventSaludPublic", {
+      user: req.user,
+      alert: req.alert,
     });
   }
 );
@@ -88,6 +122,20 @@ router.get(
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/TomaMuestras/:user",
+  isAuthenticatedTecnic,
+  SendTomaMuestra,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/tomamuestras", {
+      user: req.user,
+      codigos: null,
+      hojavida: null,
+      alert: req.alert,
     });
   }
 );
@@ -97,6 +145,18 @@ router.get(
   (req, res) => {
     res.render("tecnico/Visitas/Consolidaciones/eduSanitaria", {
       user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/EduSanitaria/:user",
+  isAuthenticatedTecnic,
+  SendEduSanitaria,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/eduSanitaria", {
+      user: req.user,
+      alert: req.alert,
     });
   }
 );
@@ -106,6 +166,18 @@ router.get(
   (req, res) => {
     res.render("tecnico/Visitas/Consolidaciones/listCarnets", {
       user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/ListadoCarnetizados/:user",
+  isAuthenticatedTecnic,
+  SendCarnetizados,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/listCarnets", {
+      user: req.user,
+      alert: req.alert,
     });
   }
 );
@@ -115,6 +187,18 @@ router.get(
   (req, res) => {
     res.render("tecnico/Visitas/Consolidaciones/antirrabica", {
       user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/AntirrabicaAnimal/:user",
+  isAuthenticatedTecnic,
+  SendAntirrabica,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/antirrabica", {
+      user: req.user,
+      alert: req.alert,
     });
   }
 );
@@ -128,6 +212,20 @@ router.get(
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/Quejas/:user",
+  isAuthenticatedTecnic,
+  SendQuejas,
+  (req, res) => {
+    res.render("tecnico/Visitas/Consolidaciones/quejas", {
+      user: req.user,
+      codigos: null,
+      hojavida: null,
+      alert: req.alert,
     });
   }
 );

@@ -3,8 +3,21 @@
 
 <head>
     <%- include('../../../tools/head'); %>
-        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+        <style>
+            .btn-upload {
+                padding: 10px 20px;
+                margin-left: 10px;
+            }
+
+            .upload-input-group {
+                margin-bottom: 10px;
+            }
+
+            .input-group>.custom-select:not(:last-child),
+            .input-group>.form-control:not(:last-child) {
+                height: 45px;
+            }
+        </style>
 </head>
 
 <body id="page-top">
@@ -35,8 +48,9 @@
                                             <div class="text-center">
                                                 <h1 class="h4 text-gray-900 mb-4">TOMA DE MUESTRAS</h1>
                                             </div>
-                                            <form onsubmit="tomMuestraForm(event)" action="" method="POST"
-                                                autocomplete="off">
+                                            <form onsubmit="tomMuestraForm(event)"
+                                                action="/tecnico/Consolidaciones/Enviar/TomaMuestras/<%= user.user %>"
+                                                method="POST" autocomplete="off">
 
                                                 <%- include("./templateHV") %>
 
@@ -154,30 +168,18 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="observacion">Adjuntar
+                                                            <label class="mr-sm-2" for="fields">Adjuntar
                                                                 Archivo(s)</label>
-                                                            <div class="fv-row">
-                                                                <div class="dropzone" id="dropzone">
-                                                                    <!--begin::Message-->
-                                                                    <div class="dz-message needsclick">
-                                                                        <!--begin::Icon-->
-                                                                        <i
-                                                                            class="bi bi-file-earmark-arrow-up text-primary fs-3x"></i>
-                                                                        <!--begin::Info-->
-                                                                        <div class="ms-4">
-                                                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">
-                                                                                Arrastra archivos aqui o da
-                                                                                click para buscar</h3>
-                                                                            <span class="fs-7 fw-semibold "
-                                                                                style="color: #50525c!important;">Cantidad
-                                                                                Maxima de Archivos:
-                                                                                10</span>
-                                                                            <br>
-                                                                            <span class="fs-7 fw-semibold "
-                                                                                style="color: #50525c!important;">Peso
-                                                                                Maximo:
-                                                                                30 MB</span>
-                                                                        </div>
+                                                            <div class="control-group" id="fields">
+                                                                <div class="controls">
+                                                                    <div class="entry input-group upload-input-group">
+                                                                        <input class="form-control" name="myFiles"
+                                                                            id="myfiles" type="file">
+                                                                        <button
+                                                                            class="btn btn-upload btn-success btn-add"
+                                                                            type="button">
+                                                                            <i class="fa fa-plus"></i>
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -261,16 +263,30 @@
     <!-- Alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script type="text/JavaScript">
-        var arrayCod = []
-        var arrayEsta = [] 
+    <% if(typeof alert !="undefined" ) { %>
+        <script type="text/JavaScript">
+          Swal.fire({
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+          }).then(()=>{
+            window.location = '<%= alert[0].ruta %>'
+          })
+        </script>
+        <% } %>
+
+            <script type="text/JavaScript">
         <% if(codigos){ %>
+            var arrayCod = []
             <% codigos.forEach((codigos)=> { %>
                 arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
             <% }) %>
         <% } %>
 
         <% if(hojavida){ %>
+            var arrayEsta = []
             <% hojavida.forEach((hojavida)=> { %>
                 arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
             <% }) %>
@@ -285,17 +301,17 @@
         });
     </script>
 
-    <script>
-        $(window).bind('load', function () {
-            var nav = document.getElementById('nav2');
-            $('#navlink1').removeClass('collapsed');
-            var nav3 = document.getElementById('collapseOne');
-            var nav4 = document.getElementById('show2');
-            nav.className += "  active";
-            nav3.className += "  show";
-            nav4.className += "  active";
-        });
-    </script>
+            <script>
+                $(window).bind('load', function () {
+                    var nav = document.getElementById('nav2');
+                    $('#navlink1').removeClass('collapsed');
+                    var nav3 = document.getElementById('collapseOne');
+                    var nav4 = document.getElementById('show2');
+                    nav.className += "  active";
+                    nav3.className += "  show";
+                    nav4.className += "  active";
+                });
+            </script>
 </body>
 
 </html>

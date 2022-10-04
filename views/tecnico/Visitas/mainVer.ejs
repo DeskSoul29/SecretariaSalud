@@ -3,6 +3,17 @@
 
 <head>
     <%- include('../../tools/head'); %>
+        <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+        <!-- Custom styles for this page -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.css" />
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -34,103 +45,600 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0"
+                                            style="font-size: 13px">
                                             <thead>
                                                 <tr>
-                                                    <th>Identificación</th>
-                                                    <th>nn</th>
-                                                    <th>Municipio</th>
-                                                    <th>Fecha de Envio</th>
-                                                    <th>Evidencias</th>
+                                                    <th data-field="state" data-checkbox="true"></th>
+                                                    <th data-field="prenom" data-filter-control="input"
+                                                        data-sortable="true">Prénom</th>
+                                                    <th data-field="date" data-filter-control="select"
+                                                        data-sortable="true">
+                                                        Date</th>
+                                                    <th data-field="examen" data-filter-control="select"
+                                                        data-sortable="true">Examen</th>
+                                                    <th data-field="note" data-sortable="true">Note</th>
                                                 </tr>
                                             </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Identificación</th>
-                                                    <th>nn</th>
-                                                    <th>Municipio</th>
-                                                    <th>Fecha de Envio</th>
-                                                    <th>Evidencias</th>
-                                                </tr>
-                                            </tfoot>
                                             <tbody>
-
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="10" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="11" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="0" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>12/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="1" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="2" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>4/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="3" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>05/09/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>10/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="4" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="5" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>19/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="6" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>01/09/2015</td>
+                                                    <td>Français</td>
+                                                    <td>11/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="7" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Eric</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>8/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="8" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valentin</td>
+                                                    <td>07/09/2015</td>
+                                                    <td>Mathématiques</td>
+                                                    <td>14/20</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="bs-checkbox "><input data-index="9" name="btSelectItem"
+                                                            type="checkbox"></td>
+                                                    <td>Valérie</td>
+                                                    <td>01/10/2015</td>
+                                                    <td>Philosophie</td>
+                                                    <td>12/20</td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            <!-- /.container-fluid -->
+
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- End of Main Content -->
+
+                        <!-- Footer -->
+                        <%- include('../../tools/footer'); %>
+                            <!-- End of Footer -->
 
                 </div>
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <%- include('../../tools/footer'); %>
-                    <!-- End of Footer -->
+                <!-- End of Content Wrapper -->
 
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Seleccione "Cerrar
-                    sesión" a continuación si está listo para
-                    finalizar su sesión actual.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Seleccione "Cerrar
+                            sesión" a continuación si está listo para
+                            finalizar su sesión actual.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="/js/sb-admin-2.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+            <!-- Alert -->
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Page level plugins -->
-    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <script>
+                var $table = $('#table');
+                $(function () {
+                    $('#toolbar').find('select').change(function () {
+                        $table.bootstrapTable('refreshOptions', {
+                            exportDataType: $(this).val()
+                        });
+                    });
+                })
+                var trBoldBlue = $("table");
+                $(trBoldBlue).on("click", "tr", function () {
+                    $(this).toggleClass("bold-blue");
+                });
+            </script>
 
-    <!-- Page level custom scripts -->
-    <script src="/js/demo/datatables-demo.js"></script>
-
-    <script>
-        $(window).bind('load', function () {
-            var nav = document.getElementById('nav2');
-            $('#navlink1').removeClass('collapsed');
-            var nav3 = document.getElementById('collapseOne');
-            var nav4 = document.getElementById('show1');
-            nav.className += "  active";
-            nav3.className += "  show";
-            nav4.className += "  active";
-        });
-    </script>
+            <script>
+                $(window).bind('load', function () {
+                    var nav = document.getElementById('nav2');
+                    $('#navlink1').removeClass('collapsed');
+                    var nav3 = document.getElementById('collapseOne');
+                    var nav4 = document.getElementById('show1');
+                    nav.className += "  active";
+                    nav3.className += "  show";
+                    nav4.className += "  active";
+                });
+            </script>
 
 </body>
 

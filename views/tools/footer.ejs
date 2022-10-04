@@ -6,4 +6,20 @@
         </div>
     </div>
 </footer>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTable').DataTable({
+
+            dom: 'Bfrtip',
+            responsive: true,
+            pageLength: 25,
+
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+
+        });
+    });
+</script>
 <!-- End of Footer -->
