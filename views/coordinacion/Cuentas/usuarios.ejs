@@ -274,8 +274,8 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    const array = []
     <% if(fields){ %>
+      const array = []
       <% fields.forEach((fields)=> { %>
         array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
       <% }) %>

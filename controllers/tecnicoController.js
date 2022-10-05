@@ -806,6 +806,152 @@ export const SendEstablecimiento = async (req, res, next) => {
     authTec.Establecimientos(req, res, next);
   });
 };
+export const SeeEstablecimiento = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Estables = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultEstable = Estables;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeMorgues = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Morgues = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        tipo: "MORGUES",
+      })
+      .lean();
+    req.morgues = Morgues;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeCementerios = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Cementerios = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
+      })
+      .lean();
+    req.consultCementerios = Cementerios;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeEstaRotulado = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Rotulado = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        rotulado: "on",
+      })
+      .lean();
+    req.consultRotulado = Rotulado;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeEstaPublicidad = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Publicidad = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        publicidad: "on",
+      })
+      .lean();
+    req.consultPublicidad = Publicidad;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeMedEstable = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const MedEstable = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        MSEstableciientos: "on",
+      })
+      .lean();
+    req.consultMedEstable = MedEstable;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeMedProduct = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const MedProduct = await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+        MSProductos: "on",
+      })
+      .lean();
+    req.consultMedProduct = MedProduct;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const SendEventSaludPubli = async (req, res, next) => {
   await upload(req, res, function (err) {
     if (err) {
@@ -813,6 +959,26 @@ export const SendEventSaludPubli = async (req, res, next) => {
     }
     authTec.EventSalPubli(req, res, next);
   });
+};
+export const SeeEventSaludPubli = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const EventSalud = await eventsalud
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultES = EventSalud;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };
 export const SendQuejas = async (req, res, next) => {
   await upload(req, res, function (err) {
@@ -822,6 +988,26 @@ export const SendQuejas = async (req, res, next) => {
     authTec.Quejas(req, res, next);
   });
 };
+export const SeeQuejas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Queja = await quejas
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultQueja = Queja;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const SendAntirrabica = async (req, res, next) => {
   await upload(req, res, function (err) {
     if (err) {
@@ -829,6 +1015,26 @@ export const SendAntirrabica = async (req, res, next) => {
     }
     authTec.AntiRabica(req, res, next);
   });
+};
+export const SeeAntirrabica = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const AntiRa = await antirrabica
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultAntirrabi = AntiRa;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };
 export const SendCarnetizados = async (req, res, next) => {
   await upload(req, res, function (err) {
@@ -838,6 +1044,26 @@ export const SendCarnetizados = async (req, res, next) => {
     authTec.Carnetizados(req, res, next);
   });
 };
+export const SeeCarnetizados = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Carnets = await listCarnets
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultCarnetiz = Carnets;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const SendEduSanitaria = async (req, res, next) => {
   await upload(req, res, function (err) {
     if (err) {
@@ -846,6 +1072,26 @@ export const SendEduSanitaria = async (req, res, next) => {
     authTec.EduSanitaria(req, res, next);
   });
 };
+export const SeeEduSanitaria = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const EduSani = await eduSanitaria
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultEdusani = EduSani;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const SendVehiculos = async (req, res, next) => {
   await upload(req, res, function (err) {
     if (err) {
@@ -853,6 +1099,26 @@ export const SendVehiculos = async (req, res, next) => {
     }
     authTec.Vehiculs(req, res, next);
   });
+};
+export const SeeVehiculos = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Vehicu = await vehiculos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultVehiculos = Vehicu;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };
 export const SendTomaMuestra = async (req, res, next) => {
   await upload(req, res, function (err) {
@@ -863,4 +1129,24 @@ export const SendTomaMuestra = async (req, res, next) => {
       console.log(er);
     });
   });
+};
+export const SeeTomaMuestra = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const TomaM = await tomamuestras
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.consultTomaM = TomaM;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };

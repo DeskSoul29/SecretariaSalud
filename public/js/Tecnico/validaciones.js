@@ -60,8 +60,41 @@ const modalsEstablecimientos = (function () {
     }
   };
 
+  var consolidacionVer = function (consolidacion) {
+    if (consolidacion.value == "Eventos en Salud Pública") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Establecimientos") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Morgues") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Cementerios") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "I.V.C. Publicidad") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "I.V.C. Rotulado") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Medidas Sanitarias a Establecimientos") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Medidas Sanitarias a Productos") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Vehiculos") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Quejas") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Toma de Muestras") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Educación Sanitaria") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Listado De Carnetizados") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    } else if (consolidacion.value == "Antirrabica Animal") {
+      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+    }
+  };
+
   return {
     consolidacion: consolidacion,
+    consolidacionVer: consolidacionVer,
   };
 })();
 
@@ -73,5 +106,16 @@ $("#btnConsolidacion").click(function () {
   } else {
     document.getElementById("consolidacion").style = "display:none";
     modalsEstablecimientos.consolidacion(document.getElementById("consoID"));
+  }
+});
+
+$("#btnConsolidacionVer").click(function () {
+  if (
+    document.getElementById("consoID").value == "Seleccione la Consolidación"
+  ) {
+    toast.toastInfo("Advertencia", "Seleccione un Formato");
+  } else {
+    document.getElementById("consolidacionVer").style = "display:none";
+    modalsEstablecimientos.consolidacionVer(document.getElementById("consoID"));
   }
 });

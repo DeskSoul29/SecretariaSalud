@@ -4,6 +4,7 @@ import {
   hojavidaConsultAllTec,
   SendEstablecimiento,
   SendEventSaludPubli,
+  SeeEventSaludPubli,
   SendQuejas,
   SendAntirrabica,
   SendCarnetizados,
@@ -43,7 +44,7 @@ router.get(
   CodigosEstablecimientos,
   hojavidaConsultAllTec,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/establecimientos", {
+    res.render("tecnico/Visitas/Enviar/establecimientos", {
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
@@ -56,7 +57,7 @@ router.post(
   isAuthenticatedTecnic,
   SendEstablecimiento,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/establecimientos", {
+    res.render("tecnico/Visitas/Enviar/establecimientos", {
       user: req.user,
       codigos: null,
       hojavida: null,
@@ -70,7 +71,7 @@ router.get(
   CodigosEstablecimientos,
   hojavidaConsultAllTec,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/vehiculos", {
+    res.render("tecnico/Visitas/Enviar/vehiculos", {
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
@@ -83,7 +84,7 @@ router.post(
   isAuthenticatedTecnic,
   SendVehiculos,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/vehiculos", {
+    res.render("tecnico/Visitas/Enviar/vehiculos", {
       user: req.user,
       codigos: null,
       hojavida: null,
@@ -95,7 +96,7 @@ router.get(
   "/Consolidaciones/Enviar/EventosSaludPublica",
   isAuthenticatedTecnic,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/eventSaludPublic", {
+    res.render("tecnico/Visitas/Enviar/eventSaludPublic", {
       user: req.user,
       alert: undefined,
     });
@@ -106,9 +107,20 @@ router.post(
   isAuthenticatedTecnic,
   SendEventSaludPubli,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/eventSaludPublic", {
+    res.render("tecnico/Visitas/Enviar/eventSaludPublic", {
       user: req.user,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EventosSaludPublica",
+  isAuthenticatedTecnic,
+  SeeEventSaludPubli,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/EventSalPubli", {
+      user: req.user,
+      consultES: req.consultES,
     });
   }
 );
@@ -118,7 +130,7 @@ router.get(
   CodigosEstablecimientos,
   hojavidaConsultAllTec,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/tomamuestras", {
+    res.render("tecnico/Visitas/Enviar/tomamuestras", {
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
@@ -131,7 +143,7 @@ router.post(
   isAuthenticatedTecnic,
   SendTomaMuestra,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/tomamuestras", {
+    res.render("tecnico/Visitas/Enviar/tomamuestras", {
       user: req.user,
       codigos: null,
       hojavida: null,
@@ -143,7 +155,7 @@ router.get(
   "/Consolidaciones/Enviar/EduSanitaria",
   isAuthenticatedTecnic,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/eduSanitaria", {
+    res.render("tecnico/Visitas/Enviar/eduSanitaria", {
       user: req.user,
       alert: undefined,
     });
@@ -154,7 +166,7 @@ router.post(
   isAuthenticatedTecnic,
   SendEduSanitaria,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/eduSanitaria", {
+    res.render("tecnico/Visitas/Enviar/eduSanitaria", {
       user: req.user,
       alert: req.alert,
     });
@@ -164,7 +176,7 @@ router.get(
   "/Consolidaciones/Enviar/ListadoCarnetizados",
   isAuthenticatedTecnic,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/listCarnets", {
+    res.render("tecnico/Visitas/Enviar/listCarnets", {
       user: req.user,
       alert: undefined,
     });
@@ -175,7 +187,7 @@ router.post(
   isAuthenticatedTecnic,
   SendCarnetizados,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/listCarnets", {
+    res.render("tecnico/Visitas/Enviar/listCarnets", {
       user: req.user,
       alert: req.alert,
     });
@@ -185,7 +197,7 @@ router.get(
   "/Consolidaciones/Enviar/AntirrabicaAnimal",
   isAuthenticatedTecnic,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/antirrabica", {
+    res.render("tecnico/Visitas/Enviar/antirrabica", {
       user: req.user,
       alert: undefined,
     });
@@ -196,7 +208,7 @@ router.post(
   isAuthenticatedTecnic,
   SendAntirrabica,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/antirrabica", {
+    res.render("tecnico/Visitas/Enviar/antirrabica", {
       user: req.user,
       alert: req.alert,
     });
@@ -208,7 +220,7 @@ router.get(
   CodigosEstablecimientos,
   hojavidaConsultAllTec,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/quejas", {
+    res.render("tecnico/Visitas/Enviar/quejas", {
       user: req.user,
       codigos: req.codigos,
       hojavida: req.hojavida,
@@ -221,7 +233,7 @@ router.post(
   isAuthenticatedTecnic,
   SendQuejas,
   (req, res) => {
-    res.render("tecnico/Visitas/Consolidaciones/quejas", {
+    res.render("tecnico/Visitas/Enviar/quejas", {
       user: req.user,
       codigos: null,
       hojavida: null,
