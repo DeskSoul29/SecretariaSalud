@@ -19,11 +19,11 @@ var EvenSaludPubliSchema = new Schema({
   atendAgre: { type: Number, required: true },
 
   covePart: { type: String, required: true, max: 100 },
-  coveFech: { type: Date, required: true },
+  coveFech: { type: Date },
 
   observaciones: { type: String },
 
-  file1: { type: String },
+  file1: { type: String, required: true },
   file2: { type: String },
   file3: { type: String },
   file4: { type: String },

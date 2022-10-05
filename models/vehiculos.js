@@ -31,7 +31,7 @@ var VehiculosSchema = new Schema({
 
   observaciones: { type: String },
 
-  file1: { type: String },
+  file1: { type: String, required: true },
   file2: { type: String },
   file3: { type: String },
   file4: { type: String },

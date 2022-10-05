@@ -50,7 +50,7 @@
                                             </div>
                                             <form onsubmit="tomMuestraForm(event)"
                                                 action="/tecnico/Consolidaciones/Enviar/TomaMuestras/<%= user.user %>"
-                                                method="POST" autocomplete="off">
+                                                method="POST" autocomplete="off" enctype="multipart/form-data">
 
                                                 <%- include("./templateHV") %>
 
@@ -123,11 +123,13 @@
                                                                     Seleccione
                                                                 </option>
                                                                 <option value="VIGILANCIA">VIGILANCIA</option>
-                                                                <option value="POR REQUERIMIENTO DE ALGUN ENTE
-                                                                DE CONTROL">POR REQUERIMIENTO DE ALGUN ENTE
+                                                                <option
+                                                                    value="POR REQUERIMIENTO DE ALGUN ENTE DE CONTROL">
+                                                                    POR REQUERIMIENTO DE ALGUN ENTE
                                                                     DE CONTROL</option>
-                                                                <option value="POR QUEJA, ACCION POPULAR, DERECHO DE
-                                                                PETICIÓN">POR QUEJA, ACCION POPULAR, DERECHO DE
+                                                                <option
+                                                                    value="POR QUEJA, ACCION POPULAR, DERECHO DE PETICIÓN">
+                                                                    POR QUEJA, ACCION POPULAR, DERECHO DE
                                                                     PETICIÓN</option>
                                                                 <option value="MAPA DE RIESGO">MAPA DE RIESGO</option>
                                                             </select>
@@ -142,11 +144,11 @@
 
                                                     <div class="form-group row">
                                                         <div class="col-sm-12">
-                                                            <label class="mr-sm-2" for="acompañante">Nombre Y Cargo
+                                                            <label class="mr-sm-2" for="acompananteEmp">Nombre Y Cargo
                                                                 Del Acompañante Por Parte De La Empresa Y/O
                                                                 Institución</label>
                                                             <input type="text" class="form-control form-control-user"
-                                                                id="acompañante" name="acompañante"
+                                                                id="acompananteEmp" name="acompananteEmp"
                                                                 onkeyup="mayus(this);" />
                                                         </div>
                                                     </div>

@@ -49,8 +49,9 @@
                                                 <h1 class="h4 text-gray-900 mb-4">EVENTOS EN SALUD PUBLICA</h1>
                                             </div>
 
-                                            <form onsubmit="eventSalud(event)" action="" method="POST"
-                                                autocomplete="off">
+                                            <form onsubmit="eventSalud(event)"
+                                                action="/tecnico/Consolidaciones/Enviar/EventosSaludPublica/<%= user.user %>"
+                                                method="POST" autocomplete="off" enctype="multipart/form-data">
                                                 <div class="form-row align-items-center mb-sm-2">
                                                     <div class="col my-1">
                                                         <label class="mr-sm-2" for="mes">Mes</label>
@@ -202,7 +203,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
 
                                                 <button class="btn btn-primary btn-user btn-block" type="submit">
                                                     Registrar Consolidación

@@ -149,7 +149,7 @@ function tomMuestraForm(e) {
     document.getElementById("zona").value == "Seleccione" ||
     document.getElementById("objEst").value == "Seleccione" ||
     document.getElementById("fVisit").value == 0 ||
-    document.getElementById("acompañante").value == 0 ||
+    document.getElementById("acompananteEmp").value == 0 ||
     document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");

@@ -25,11 +25,11 @@ var TomaMuestraSchema = new Schema({
   tipAnalisis: { type: String, required: true, max: 100 },
   zona: { type: String, required: true, max: 100 },
   objAnalisis: { type: String, required: true, max: 100 },
-  acompañante: { type: String, required: true, max: 100 },
+  acompanante: { type: String, required: true, max: 100 },
 
   observaciones: { type: String },
 
-  file1: { type: String },
+  file1: { type: String, required: true },
   file2: { type: String },
   file3: { type: String },
   file4: { type: String },

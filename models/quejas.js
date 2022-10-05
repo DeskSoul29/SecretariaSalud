@@ -6,7 +6,8 @@ var QuejasSchema = new Schema({
   responsable: { type: String, required: true, max: 100 },
 
   provincia: { type: String, required: true, max: 100 },
-  municipio: { type: String, required: true, max: 100 },
+  municipioEstable: { type: String, max: 100 },
+  municipioComuni: { type: String, max: 100 },
 
   grupo: { type: String, max: 100 },
   codigo: { type: Number },
@@ -30,7 +31,7 @@ var QuejasSchema = new Schema({
 
   observaciones: { type: String },
 
-  file1: { type: String },
+  file1: { type: String, required: true },
   file2: { type: String },
   file3: { type: String },
   file4: { type: String },

@@ -9,14 +9,14 @@ var ListCarnetsSchema = new Schema({
   municipio: { type: String, required: true, max: 100 },
 
   expCarnet: { type: Date, required: true },
-  identificacion: { type: Number, required: true },
+  idenCarnet: { type: Number, required: true },
   nombreCarnet: { type: String, required: true },
   establecimientoCarnet: { type: String, required: true },
   direccionCarnet: { type: String, required: true },
 
   observaciones: { type: String },
 
-  file1: { type: String },
+  file1: { type: String, required: true },
   file2: { type: String },
   file3: { type: String },
   file4: { type: String },

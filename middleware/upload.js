@@ -14,15 +14,12 @@ var storage = multer.diskStorage({
     );
   },
 });
-var filename = storage.filename;
 
 var uploadFiles = multer({
   storage: storage,
   limits: { fileSize: 20000000 },
-  filename: filename,
 }).array("myFiles", 5);
 
-var uploadFilesMiddleware = promisify(uploadFiles),
-  filename;
+var uploadFilesMiddleware = promisify(uploadFiles);
 
 export default uploadFilesMiddleware;

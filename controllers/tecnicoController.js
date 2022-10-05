@@ -27,7 +27,7 @@ var authTec = (function () {
     ]);
   };
 
-  const EventSalPubli = async (req, res, next) => {
+  var EventSalPubli = async (req, res, next) => {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -76,6 +76,7 @@ var authTec = (function () {
       })
         .save()
         .then((result) => {
+          console.log(result);
           if (result) {
             authTec.isUser(
               req,
@@ -104,7 +105,7 @@ var authTec = (function () {
     }
   };
 
-  const estableSend = async (req, res, next) => {
+  var Establecimientos = async (req, res, next) => {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -247,7 +248,7 @@ var authTec = (function () {
     }
   };
 
-  const quejas = async (req, res, next) => {
+  var Quejas = async (req, res, next) => {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -256,6 +257,7 @@ var authTec = (function () {
       var {
         provincia,
         municipio,
+        municipioComuni,
         grupEsta,
         codEsta,
         Nriesgo,
@@ -286,21 +288,435 @@ var authTec = (function () {
         userResponsable: decodificada.user,
         responsable: decodificada.nombres + " " + decodificada.apellidos,
         provincia: provincia,
+        municipioEstable: municipio,
+        municipioComuni: municipioComuni,
+        grupo: grupEsta,
+        codigo: codEsta,
+        tipo: tipoEsta,
+        nivelRiesgo: Nriesgo,
+        tipoIdentificacion: tIden,
+        identificacion: inputIden,
+        telefono: phone,
+        razonSocial: rSocial,
+        direccion: direccion,
+        repreLegal: rLegal,
+        estado: estado,
+        tipoQueja: tipQueja,
+        frecep: fechRece,
+        fvisit: fVisit,
+        perCausaQueja: perCausa,
+        perAfectQueja: perAfec,
+        descQueja: descQueja,
+        reqQueja: requeQueja,
+        observaciones: observacion,
+        file1: req.files[0].filename,
+        file2: file2,
+        file3: file3,
+        file4: file4,
+        file5: file5,
+      })
+        .save()
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  var AntiRabica = async (req, res, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+      var {
+        provincia,
+        municipio,
+        caninosUrbano,
+        caninosRural,
+        felinosUrbano,
+        felinosRural,
+        totalVacunados,
+        observacion,
+      } = req.body;
+
+      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
+      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
+      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
+      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
+
+      new antirrabica({
+        userResponsable: decodificada.user,
+        responsable: decodificada.nombres + " " + decodificada.apellidos,
+        provincia: provincia,
+        municipio: municipio,
+        canUrb: caninosUrbano,
+        canRur: caninosRural,
+        felUrb: felinosUrbano,
+        felRur: felinosRural,
+        totalVac: totalVacunados,
+        observaciones: observacion,
+        file1: req.files[0].filename,
+        file2: file2,
+        file3: file3,
+        file4: file4,
+        file5: file5,
+      })
+        .save()
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  var Carnetizados = async (req, res, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+      var {
+        provincia,
+        municipio,
+        expCarnet,
+        idenCarnet,
+        nameCarnet,
+        estableciCarnet,
+        direcCarnet,
+        observacion,
+      } = req.body;
+
+      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
+      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
+      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
+      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
+
+      new listCarnets({
+        userResponsable: decodificada.user,
+        responsable: decodificada.nombres + " " + decodificada.apellidos,
+        provincia: provincia,
+        municipio: municipio,
+        expCarnet: expCarnet,
+        idenCarnet: idenCarnet,
+        nombreCarnet: nameCarnet,
+        establecimientoCarnet: estableciCarnet,
+        direccionCarnet: direcCarnet,
+        observaciones: observacion,
+        file1: req.files[0].filename,
+        file2: file2,
+        file3: file3,
+        file4: file4,
+        file5: file5,
+      })
+        .save()
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  var EduSanitaria = async (req, res, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+      var {
+        provincia,
+        municipio,
+        temaCap,
+        otrosCap,
+        fechaCap,
+        intensidadCap,
+        lugCap,
+        personalCap,
+        totalPersCap,
+        observacion,
+      } = req.body;
+
+      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
+      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
+      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
+      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
+
+      new eduSanitaria({
+        userResponsable: decodificada.user,
+        responsable: decodificada.nombres + " " + decodificada.apellidos,
+        provincia: provincia,
+        municipio: municipio,
+        tema: temaCap,
+        otroTema: otrosCap,
+        fechaCap: fechaCap,
+        intensidad: intensidadCap,
+        lugarCapa: lugCap,
+        personalDiri: personalCap,
+        totalPersCap: totalPersCap,
+        observaciones: observacion,
+        file1: req.files[0].filename,
+        file2: file2,
+        file3: file3,
+        file4: file4,
+        file5: file5,
+      })
+        .save()
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  var TomaMuestras = async (req, res, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+
+      var {
+        provincia,
+        municipio,
+        grupEsta,
+        codEsta,
+        Nriesgo,
+        tipoEsta,
+        rSocial,
+        tIden,
+        inputIden,
+        phone,
+        rLegal,
+        direccion,
+        estado,
+        tipMues,
+        descripTip,
+        tipAnali,
+        zona,
+        objEst,
+        fVisit,
+        acompananteEmp,
+        observacion,
+      } = req.body;
+
+      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
+      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
+      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
+      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
+
+      new tomamuestras({
+        userResponsable: decodificada.user,
+        responsable: decodificada.nombres + " " + decodificada.apellidos,
+        provincia: provincia,
         municipio: municipio,
         grupo: grupEsta,
         codigo: codEsta,
         tipo: tipoEsta,
         nivelRiesgo: Nriesgo,
         tipoIdentificacion: tIden,
-        telefono: phone,
         identificacion: inputIden,
+        telefono: phone,
+        razonSocial: rSocial,
+        direccion: direccion,
+        repreLegal: rLegal,
+        estado: estado,
+        fvisit: fVisit,
+        tipMuestra: tipMues,
+        descMuestra: descripTip,
+        tipAnalisis: tipAnali,
+        zona: zona,
+        objAnalisis: objEst,
+        acompanante: acompananteEmp,
+
+        observaciones: observacion,
+        file1: req.files[0].filename,
+        file2: file2,
+        file3: file3,
+        file4: file4,
+        file5: file5,
+      })
+        .save()
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/tecnico/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      return error;
+    }
+  };
+
+  var Vehiculs = async (req, res, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+
+      var {
+        provincia,
+        municipio,
+        grupEsta,
+        codEsta,
+        Nriesgo,
+        tipoEsta,
+        rSocial,
+        tIden,
+        inputIden,
+        phone,
+        rLegal,
+        direccion,
+        estado,
+        fVisit,
+        score,
+        concepto,
+        classVehi,
+        otroV,
+        placa,
+        refriV,
+        nInscrip,
+        produTrans,
+        observacion,
+      } = req.body;
+
+      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
+      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
+      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
+      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
+
+      new vehiculos({
+        userResponsable: decodificada.user,
+        responsable: decodificada.nombres + " " + decodificada.apellidos,
+        provincia: provincia,
+        municipio: municipio,
+        grupo: grupEsta,
+        codigo: codEsta,
+        tipo: tipoEsta,
+        nivelRiesgo: Nriesgo,
+        tipoIdentificacion: tIden,
+        identificacion: inputIden,
+        telefono: phone,
         razonSocial: rSocial,
         direccion: direccion,
         repreLegal: rLegal,
         estado: estado,
         fvisit: fVisit,
         score: score,
-        accion: accion,
+        concepto: concepto,
+
+        claseVehiculo: classVehi,
+        otraClase: otroV,
+        placa: placa,
+        refrigeracion: refriV,
+        nInscripcion: nInscrip,
+        productosVehiculo: produTrans,
 
         observaciones: observacion,
         file1: req.files[0].filename,
@@ -341,9 +757,14 @@ var authTec = (function () {
 
   return {
     isUser: isUser,
-    estableSend: estableSend,
+    Establecimientos: Establecimientos,
     EventSalPubli: EventSalPubli,
-    quejas: quejas,
+    Quejas: Quejas,
+    AntiRabica: AntiRabica,
+    Carnetizados: Carnetizados,
+    EduSanitaria: EduSanitaria,
+    TomaMuestras: TomaMuestras,
+    Vehiculs: Vehiculs,
   };
 })();
 
@@ -382,7 +803,7 @@ export const SendEstablecimiento = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.estableSend(req, res, next);
+    authTec.Establecimientos(req, res, next);
   });
 };
 export const SendEventSaludPubli = async (req, res, next) => {
@@ -406,7 +827,7 @@ export const SendAntirrabica = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.AntiRabica(req, res, next);
   });
 };
 export const SendCarnetizados = async (req, res, next) => {
@@ -414,7 +835,7 @@ export const SendCarnetizados = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.Carnetizados(req, res, next);
   });
 };
 export const SendEduSanitaria = async (req, res, next) => {
@@ -422,7 +843,7 @@ export const SendEduSanitaria = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.EduSanitaria(req, res, next);
   });
 };
 export const SendVehiculos = async (req, res, next) => {
@@ -430,7 +851,7 @@ export const SendVehiculos = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.Vehiculs(req, res, next);
   });
 };
 export const SendTomaMuestra = async (req, res, next) => {
@@ -438,159 +859,8 @@ export const SendTomaMuestra = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.TomaMuestras(req, res, next, function (err) {
+      console.log(er);
+    });
   });
 };
-
-/*
-//Antirrabica Animal
-var {
-  provincia,
-  municipio,
-  caninosUrbano,
-  caninosRural,
-  felinosUrbano,
-  felinosRural,
-  totalVacunados,
-  observacion,
-} = req.body;
-//Edu Sanitaria
-var {
-  provincia,
-  municipio,
-  temaCap,
-  otrosCap,
-  fechaCap,
-  intensidadCap,
-  lugCap,
-  personalCap,
-  totalPersCap,
-  observacion,
-} = req.body;
-//Eventos Salu Publica
-var {
-  mes,
-  provincia,
-  municipio,
-  etasPresent,
-  etasAtend,
-  intoxPresent,
-  intoxAtend,
-  agrePresent,
-  agreAtend,
-  trueFalse,
-  fReunion,
-  observacion,
-} = req.body;
-//listado de carnets
-var {
-  provincia,
-  municipio,
-  expCarnet,
-  idenCarnet,
-  nameCarnet,
-  estableciCarnet,
-  direcCarnet,
-  observacion,
-} = req.body;
-//Quejas
-var {
-  provincia,
-  municipio,
-  grupEsta,
-  codEsta,
-  Nriesgo,
-  tipoEsta,
-  rSocial,
-  tIden,
-  inputIden,
-  phone,
-  rLegal,
-  direccion,
-  estado,
-  tipQueja,
-  fechRece,
-  fVisit,
-  perCausa,
-  perAfec,
-  descQueja,
-  requeQueja,
-  observacion,
-} = req.body;
-//Toma Muestras
-var {
-  provincia,
-  municipio,
-  grupEsta,
-  codEsta,
-  Nriesgo,
-  tipoEsta,
-  rSocial,
-  tIden,
-  inputIden,
-  phone,
-  rLegal,
-  direccion,
-  estado,
-  tipMues,
-  descripTip,
-  tipAnali,
-  zona,
-  objEst,
-  fVisit,
-  acompañante,
-  observacion,
-} = req.body;
-//vehiculos
-var {
-  provincia,
-  municipio,
-  grupEsta,
-  codEsta,
-  Nriesgo,
-  tipoEsta,
-  rSocial,
-  tIden,
-  inputIden,
-  phone,
-  rLegal,
-  direccion,
-  estado,
-  classVehi,
-  otroV,
-  placa,
-  refriV,
-  nInscrip,
-  produTrans,
-  fVisit,
-  score,
-  concepto,
-  observacion,
-} = req.body;
-
-*/
-// if (tipoEsta == "CEMENTERIOS (CON O SIN MORGUE)") {
-//   //Cementerio
-//   console.log("Cementerios");
-// } else if (
-//   tipoEsta != "CEMENTERIOS (CON O SIN MORGUE)" &&
-//   tipoEsta != "MORGUES"
-// ) {
-//   console.log("Establecimiento General");
-//   //Establecimiento
-//   if (rotuladoON == "on") {
-//     console.log("rotulado");
-//   }
-//   if (publicidadON == "on") {
-//     console.log("Publicidad");
-//   }
-//   if (establecimientosON == "on") {
-//     console.log("Establecimientos");
-//   }
-//   if (productosON == "on") {
-//     console.log("Products");
-//   }
-// } else {
-//   console.log("morgue");
-// }
-//
