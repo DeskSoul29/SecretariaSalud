@@ -64,31 +64,34 @@ const modalsEstablecimientos = (function () {
     if (consolidacion.value == "Eventos en Salud Pública") {
       window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
     } else if (consolidacion.value == "Establecimientos") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/Establecimientos", "_self");
     } else if (consolidacion.value == "Morgues") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/Morgues", "_self");
     } else if (consolidacion.value == "Cementerios") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/Cementerios", "_self");
     } else if (consolidacion.value == "I.V.C. Publicidad") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/IVCPublicidad", "_self");
     } else if (consolidacion.value == "I.V.C. Rotulado") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/IVCRotulado", "_self");
     } else if (consolidacion.value == "Medidas Sanitarias a Establecimientos") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open(
+        "/tecnico/Consolidaciones/Ver/MedSaniEstablecimientos",
+        "_self"
+      );
     } else if (consolidacion.value == "Medidas Sanitarias a Productos") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/MedSaniProductos", "_self");
     } else if (consolidacion.value == "Vehiculos") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/Vehiculos", "_self");
     } else if (consolidacion.value == "Quejas") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/Quejas", "_self");
     } else if (consolidacion.value == "Toma de Muestras") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/TomaMuestras", "_self");
     } else if (consolidacion.value == "Educación Sanitaria") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/EduSanitaria", "_self");
     } else if (consolidacion.value == "Listado De Carnetizados") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/ListadoCarnetizados", "_self");
     } else if (consolidacion.value == "Antirrabica Animal") {
-      window.open("/tecnico/Consolidaciones/Ver/EventosSaludPublica", "_self");
+      window.open("/tecnico/Consolidaciones/Ver/AntirrabicaAnimal", "_self");
     }
   };
 

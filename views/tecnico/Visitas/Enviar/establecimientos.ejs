@@ -66,8 +66,7 @@
                                                             <label class="mr-sm-2" for="score">Puntaje</label>
                                                             <input type="number" placeholder="1.0" min="0" max="100"
                                                                 class="form-control form-control-user" step="0.1"
-                                                                id="score" name="score"
-                                                                onkeyup="AmbienteConcepto(this);" />
+                                                                id="score" name="score" />
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <label class="mr-sm-2" for="concepto">Concepto</label>
@@ -317,6 +316,17 @@
                     nav3.className += "  show";
                     nav4.className += "  active";
                 });
+
+                $("#tipoEsta").change(function () {
+                    if (document.getElementById("grupEsta").value == "ACUEDUCTO") {
+                        document.getElementById("score").setAttribute("onkeyup", "AcueductoConcepto(this);");
+                    } else if (document.getElementById("codEsta").value >= 1 && document.getElementById("codEsta").value < 11) {
+                        document.getElementById("score").setAttribute("onkeyup", "AlimentosConcepto(this);");
+                    } else if (document.getElementById("codEsta").value >= 12) {
+                        document.getElementById("score").setAttribute("onkeyup", "EstablecimientosConcepto(this);");
+                    }
+                });
+                //onkeyup="AmbienteConcepto(this);"
 
                 $("#rotuladoON").change(function () {
                     if ($("#rotuladoON").is(":checked")) {

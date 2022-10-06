@@ -817,6 +817,7 @@ export const SeeEstablecimiento = async (req, res, next) => {
         userResponsable: {
           $eq: decodificada.user,
         },
+        tipo: { $nin: ["MORGUES", "CEMENTERIOS (CON O SIN MORGUE)"] },
       })
       .lean();
     req.consultEstable = Estables;

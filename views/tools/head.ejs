@@ -22,28 +22,35 @@
     function mayus(e) {
         e.value = e.value.toUpperCase();
     }
-
-    function AmbienteConcepto(puntaje) {
-        if (puntaje.value >= 95) {
-            document.getElementById("concepto").value = "FAVORABLE"
-        } else if (puntaje.value >= 50 && puntaje.value < 95) {
-            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
-        } else if (puntaje.value <= 49.9) {
-            document.getElementById("concepto").value = "DESFAVORABLE"
-        } else if (puntaje.value == 0) {
-            document.getElementById("concepto").value = "NO APLICA"
-        }
-    }
-
-    function ConsumoConcepto(puntaje) {
+    //Codigos del 1 al 10
+    function AlimentosConcepto(puntaje) {
         if (puntaje.value >= 90) {
             document.getElementById("concepto").value = "FAVORABLE"
         } else if (puntaje.value >= 60 && puntaje.value < 90) {
             document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
         } else if (puntaje.value <= 59.9) {
             document.getElementById("concepto").value = "DESFAVORABLE"
-        } else if (puntaje.value == 0) {
-            document.getElementById("concepto").value = "NO APLICA"
         }
     }
+    //Codigo 11
+    function AcueductoConcepto(puntaje) {
+        if (puntaje.value >= 0 && puntaje.value < 10.1) {
+            document.getElementById("concepto").value = "FAVORABLE"
+        } else if (puntaje.value >= 10.1 && puntaje.value < 41) {
+            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+        } else if (puntaje.value >= 40.1 && puntaje.value < 101) {
+            document.getElementById("concepto").value = "DESFAVORABLE"
+        }
+    }
+    //Los demas Codigos
+    function EstablecimientosConcepto(puntaje) {
+        if (puntaje.value >= 95) {
+            document.getElementById("concepto").value = "FAVORABLE"
+        } else if (puntaje.value >= 50 && puntaje.value < 95) {
+            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+        } else if (puntaje.value <= 49.9) {
+            document.getElementById("concepto").value = "DESFAVORABLE"
+        }
+    }
+
 </script>

@@ -31,6 +31,9 @@ if (grupEsta != null) {
     var selectedOption = this.options[grupEsta.selectedIndex];
 
     if (document.getElementById("templeCementerios") != null) {
+      document.getElementById("score").value = "";
+      document.getElementById("concepto").value = "NO APLICA";
+
       document.getElementById("templeCementerios").style = "display:none";
       document.getElementById("templeEstablecimientos").style = "display:none";
       document.getElementById("extraEstablecimiento").style = "display:none";

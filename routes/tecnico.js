@@ -3,14 +3,27 @@ import { Router } from "express";
 import {
   hojavidaConsultAllTec,
   SendEstablecimiento,
+  SeeEstablecimiento,
+  SeeMorgues,
+  SeeCementerios,
+  SeeEstaRotulado,
+  SeeEstaPublicidad,
+  SeeMedEstable,
+  SeeMedProduct,
   SendEventSaludPubli,
   SeeEventSaludPubli,
   SendQuejas,
+  SeeQuejas,
   SendAntirrabica,
+  SeeAntirrabica,
   SendCarnetizados,
+  SeeCarnetizados,
   SendEduSanitaria,
+  SeeEduSanitaria,
   SendVehiculos,
+  SeeVehiculos,
   SendTomaMuestra,
+  SeeTomaMuestra,
 } from "../controllers/tecnicoController.js";
 
 import {
@@ -66,6 +79,83 @@ router.post(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/Establecimientos",
+  isAuthenticatedTecnic,
+  SeeEstablecimiento,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/establecimientos", {
+      user: req.user,
+      Estable: req.consultEstable,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Morgues",
+  isAuthenticatedTecnic,
+  SeeMorgues,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/morgues", {
+      user: req.user,
+      morgues: req.morgues,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Cementerios",
+  isAuthenticatedTecnic,
+  SeeCementerios,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/cementerios", {
+      user: req.user,
+      cementerio: req.consultCementerios,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/IVCRotulado",
+  isAuthenticatedTecnic,
+  SeeEstaRotulado,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/rotulado", {
+      user: req.user,
+      rotulado: req.consultRotulado,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/IVCPublicidad",
+  isAuthenticatedTecnic,
+  SeeEstaPublicidad,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/publicidad", {
+      user: req.user,
+      publicidad: req.consultPublicidad,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/MedSaniEstablecimientos",
+  isAuthenticatedTecnic,
+  SeeMedEstable,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/medestablecimiento", {
+      user: req.user,
+      medEstable: req.consultMedEstable,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/MedSaniProductos",
+  isAuthenticatedTecnic,
+  SeeMedProduct,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/medproducto", {
+      user: req.user,
+      medProduc: req.consultMedProduct,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Enviar/Vehiculos",
   isAuthenticatedTecnic,
   CodigosEstablecimientos,
@@ -89,6 +179,17 @@ router.post(
       codigos: null,
       hojavida: null,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Vehiculos",
+  isAuthenticatedTecnic,
+  SeeVehiculos,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/vehiculos", {
+      user: req.user,
+      Vehiculo: req.consultVehiculos,
     });
   }
 );
@@ -152,6 +253,17 @@ router.post(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/TomaMuestras",
+  isAuthenticatedTecnic,
+  SeeTomaMuestra,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      TomaM: req.consultTomaM,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Enviar/EduSanitaria",
   isAuthenticatedTecnic,
   (req, res) => {
@@ -169,6 +281,17 @@ router.post(
     res.render("tecnico/Visitas/Enviar/eduSanitaria", {
       user: req.user,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EduSanitaria",
+  isAuthenticatedTecnic,
+  SeeEduSanitaria,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/eduSanitaria", {
+      user: req.user,
+      EduSani: req.consultEdusani,
     });
   }
 );
@@ -194,6 +317,17 @@ router.post(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/ListadoCarnetizados",
+  isAuthenticatedTecnic,
+  SeeCarnetizados,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/listCarnets", {
+      user: req.user,
+      Carnetiz: req.consultCarnetiz,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Enviar/AntirrabicaAnimal",
   isAuthenticatedTecnic,
   (req, res) => {
@@ -211,6 +345,17 @@ router.post(
     res.render("tecnico/Visitas/Enviar/antirrabica", {
       user: req.user,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/AntirrabicaAnimal",
+  isAuthenticatedTecnic,
+  SeeAntirrabica,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/antirrabica", {
+      user: req.user,
+      Antirrabi: req.consultAntirrabi,
     });
   }
 );
@@ -238,6 +383,17 @@ router.post(
       codigos: null,
       hojavida: null,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Quejas",
+  isAuthenticatedTecnic,
+  SeeQuejas,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/quejas", {
+      user: req.user,
+      Queja: req.consultQueja,
     });
   }
 );
