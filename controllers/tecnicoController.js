@@ -76,7 +76,6 @@ var authTec = (function () {
       })
         .save()
         .then((result) => {
-          console.log(result);
           if (result) {
             authTec.isUser(
               req,
@@ -147,6 +146,7 @@ var authTec = (function () {
         establecimientosON,
         medidaApliEstable,
         motivoApli,
+        observacionMedEsta,
         //MEDProductos
         productosON,
         medidaApliProduc,
@@ -159,6 +159,7 @@ var authTec = (function () {
         fabriProduc,
         loteProduc,
         fechProduc,
+        observacionMedProd,
         observacion,
       } = req.body;
 
@@ -197,7 +198,7 @@ var authTec = (function () {
         registroSanitario: permisoSanitario,
         productoPublicidad: productoPublicidad,
         marcaPublicidad: marcaPublicidad,
-        MSEstableciientos: establecimientosON,
+        MSEstablecimientos: establecimientosON,
         medidaMSEstablecimientos: medidaApliEstable,
         motivoMSEstablecimientos: motivoApli,
         MSProductos: productosON,
@@ -206,11 +207,13 @@ var authTec = (function () {
         productoMSProductos: productoMed,
         marcaMSProductos: marcaProduct,
         motivoMSProductos: motivoProduct,
+        observacionMedEsta: observacionMedEsta,
         presentacionMSProductos: presentProduct,
         cantidadMSProductos: cantProdu,
         fabricanteMSProductos: fabriProduc,
         loteMSProductos: loteProduc,
         vencimientoMSProductos: fechProduc,
+        observacionMedProd: observacionMedProd,
         observaciones: observacion,
         file1: req.files[0].filename,
         file2: file2,
@@ -354,6 +357,8 @@ var authTec = (function () {
       var {
         provincia,
         municipio,
+        Pcanina,
+        Pfelina,
         caninosUrbano,
         caninosRural,
         felinosUrbano,
@@ -372,6 +377,8 @@ var authTec = (function () {
         responsable: decodificada.nombres + " " + decodificada.apellidos,
         provincia: provincia,
         municipio: municipio,
+        Pcanina: Pcanina,
+        Pfelina: Pfelina,
         canUrb: caninosUrbano,
         canRur: caninosRural,
         felUrb: felinosUrbano,
@@ -922,7 +929,7 @@ export const SeeMedEstable = async (req, res, next) => {
         userResponsable: {
           $eq: decodificada.user,
         },
-        MSEstableciientos: "on",
+        MSEstablecimientos: "on",
       })
       .lean();
     req.consultMedEstable = MedEstable;

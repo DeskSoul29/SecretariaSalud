@@ -207,6 +207,8 @@ function listCarnetsForm(e) {
 function antirrabicalAnimalForm(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
+    document.getElementById("Pcanina").value === "" ||
+    document.getElementById("Pfelina").value === "" ||
     document.getElementById("caninosUrbano").value === "" ||
     document.getElementById("caninosRural").value === "" ||
     document.getElementById("felinosUrbano").value === "" ||

@@ -8,6 +8,9 @@ var AntirrabicaSchema = new Schema({
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, required: true, max: 100 },
 
+  Pcanina: { type: Number, required: true },
+  Pfelina: { type: Number, required: true },
+
   canUrb: { type: Number, required: true },
   canRur: { type: Number, required: true },
 

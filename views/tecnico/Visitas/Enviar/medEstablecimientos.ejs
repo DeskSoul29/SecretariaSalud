@@ -1,43 +1,58 @@
 <!-- Divider -->
-<hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+<hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
 <div class="text-center">
-    <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Establecimientos</h1>
+  <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Establecimientos</h1>
 </div>
 
 <div class="form-group row">
-    <div class="col-sm-6">
-        <label class="mr-sm-2" for="medidaApliEstable">Medida
-            Aplicada</label>
-        <select id="medidaApliEstable" name="medidaApliEstable" class="custom-select mr-sm-2">
-            <option selected disabled>
-                Seleccione
-            </option>
-            <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA
-                TEMPORAL TOTAL</option>
-            <option value="CLAUSURA TEMPORAL PARCIAL">CLAUSURA
-                TEMPORAL PARCIAL</option>
-            <option value="SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS">
-                SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS</option>
-            <option value="SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS">
-                SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS</option>
-        </select>
-    </div>
+  <div class="col-sm-6">
+    <label class="mr-sm-2" for="medidaApliEstable">Medida Aplicada</label>
+    <select
+      id="medidaApliEstable"
+      name="medidaApliEstable"
+      class="custom-select mr-sm-2"
+    >
+      <option selected disabled>Seleccione</option>
+      <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA TEMPORAL TOTAL</option>
+      <option value="CLAUSURA TEMPORAL PARCIAL">
+        CLAUSURA TEMPORAL PARCIAL
+      </option>
+      <option value="SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS">
+        SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS
+      </option>
+      <option value="SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS">
+        SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS
+      </option>
+    </select>
+  </div>
 
-    <div class="col-sm-6">
-        <label class="mr-sm-2" for="motivoApli">Motivo de
-            Aplicación de la Medida</label>
-        <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="motivoApli"
-            name="motivoApli" />
-    </div>
+  <div class="col-sm-6">
+    <label class="mr-sm-2" for="motivoApli"
+      >Motivo de Aplicación de la Medida</label
+    >
+    <input
+      type="text"
+      onkeyup="mayus(this);"
+      class="form-control form-control-user"
+      id="motivoApli"
+      name="motivoApli"
+    />
+  </div>
 </div>
 
-<!-- <div class="form-group row">
-    <div class="col-sm-12">
-        <label class="mr-sm-2" for="observacionMedEsta">Observaciones de Medidas Sanitarias a Establecimientos
-            (Opcional)</label>
-        <textarea name="observacionMedEsta" id="observacionMedEsta" maxlength="270" rows="2"
-            class="form-control form-control-user"
-            placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-    </div>
-</div> -->
+<div class="form-group row">
+  <div class="col-sm-12">
+    <label class="mr-sm-2" for="observacionMedEsta"
+      >Observaciones de Medidas Sanitarias a Establecimientos (Opcional)</label
+    >
+    <textarea
+      name="observacionMedEsta"
+      id="observacionMedEsta"
+      maxlength="270"
+      rows="2"
+      class="form-control form-control-user"
+      placeholder="Escribe las Observaciones Que Creas Necesarias"
+    ></textarea>
+  </div>
+</div>

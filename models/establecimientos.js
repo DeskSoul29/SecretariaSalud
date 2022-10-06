@@ -39,9 +39,10 @@ var EstablecimientosSchema = new Schema({
   marcaPublicidad: { type: String, max: 100 },
 
   //Establecimientos - Medidas Sanitarias Establecimientos
-  MSEstableciientos: { type: String, max: 100 },
+  MSEstablecimientos: { type: String, max: 100 },
   medidaMSEstablecimientos: { type: String, max: 100 },
   motivoMSEstablecimientos: { type: String, max: 100 },
+  observacionMedEsta: { type: String },
 
   //Establecimientos - Medidas Sanitarias Productos
   MSProductos: { type: String, max: 100 },
@@ -55,6 +56,7 @@ var EstablecimientosSchema = new Schema({
   fabricanteMSProductos: { type: String, max: 100 },
   loteMSProductos: { type: String, max: 100 },
   vencimientoMSProductos: { type: Date },
+  observacionMedProd: { type: String },
 
   //Cementerios
   salaNM: { type: String, max: 100 },

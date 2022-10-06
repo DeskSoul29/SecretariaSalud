@@ -14,6 +14,8 @@ tipEsta.addEventListener("change", function () {
   phone.value = "";
 
   if (document.getElementById("templeCementerios")) {
+    document.getElementById("score").value = "";
+    document.getElementById("concepto").value = "NO APLICA";
     if (tipoEsta.value == "CEMENTERIOS (CON O SIN MORGUE)") {
       document.getElementById("templeCementerios").removeAttribute("style");
       document.getElementById("templeEstablecimientos").style = "display:none";
@@ -106,6 +108,8 @@ municipio.addEventListener("change", function () {
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
   phone.value = "";
   if (document.getElementById("templeCementerios")) {
+    document.getElementById("score").value = "";
+    document.getElementById("concepto").value = "NO APLICA";
     document.getElementById("templeCementerios").style = "display:none";
     document.getElementById("templeEstablecimientos").style = "display:none";
     document.getElementById("extraEstablecimiento").style = "display:none";

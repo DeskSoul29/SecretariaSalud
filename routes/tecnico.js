@@ -1,4 +1,5 @@
 import { Router } from "express";
+import moment from "moment";
 
 import {
   hojavidaConsultAllTec,
@@ -86,6 +87,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/establecimientos", {
       user: req.user,
       Estable: req.consultEstable,
+      moment: moment,
     });
   }
 );
@@ -97,6 +99,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/morgues", {
       user: req.user,
       morgues: req.morgues,
+      moment: moment,
     });
   }
 );
@@ -108,6 +111,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/cementerios", {
       user: req.user,
       cementerio: req.consultCementerios,
+      moment: moment,
     });
   }
 );
@@ -119,6 +123,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/rotulado", {
       user: req.user,
       rotulado: req.consultRotulado,
+      moment: moment,
     });
   }
 );
@@ -130,6 +135,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/publicidad", {
       user: req.user,
       publicidad: req.consultPublicidad,
+      moment: moment,
     });
   }
 );
@@ -141,6 +147,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/medestablecimiento", {
       user: req.user,
       medEstable: req.consultMedEstable,
+      moment: moment,
     });
   }
 );
@@ -152,6 +159,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/medproducto", {
       user: req.user,
       medProduc: req.consultMedProduct,
+      moment: moment,
     });
   }
 );
@@ -190,6 +198,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/vehiculos", {
       user: req.user,
       Vehiculo: req.consultVehiculos,
+      moment: moment,
     });
   }
 );
@@ -222,6 +231,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/EventSalPubli", {
       user: req.user,
       consultES: req.consultES,
+      moment: moment,
     });
   }
 );
@@ -260,6 +270,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/tomamuestras", {
       user: req.user,
       TomaM: req.consultTomaM,
+      moment: moment,
     });
   }
 );
@@ -292,6 +303,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/eduSanitaria", {
       user: req.user,
       EduSani: req.consultEdusani,
+      moment: moment,
     });
   }
 );
@@ -324,6 +336,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/listCarnets", {
       user: req.user,
       Carnetiz: req.consultCarnetiz,
+      moment: moment,
     });
   }
 );
@@ -356,6 +369,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/antirrabica", {
       user: req.user,
       Antirrabi: req.consultAntirrabi,
+      moment: moment,
     });
   }
 );
@@ -394,6 +408,7 @@ router.get(
     res.render("tecnico/Visitas/Ver/quejas", {
       user: req.user,
       Queja: req.consultQueja,
+      moment: moment,
     });
   }
 );
