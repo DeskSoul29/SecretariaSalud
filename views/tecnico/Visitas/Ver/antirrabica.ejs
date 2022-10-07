@@ -59,6 +59,7 @@
                                                     <th rowspan="3">Población Felina</th>
                                                     <th colspan="5">Animales Vacunados</th>
                                                     <th rowspan="3">Observaciones</th>
+                                                    <th rowspan="3">Archivos</th>
                                                 </tr>
                                                 <tr>
                                                     <th colspan="2">Caninos</th>
@@ -118,6 +119,9 @@
                                                             </td>
                                                             <td>
                                                                 <%= Antirrabi.observaciones %>
+                                                            </td>
+                                                            <td>
+                                                                <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
                                                             </td>
                                                         </tr>
                                                         <% }); %>
@@ -202,7 +206,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

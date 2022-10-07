@@ -18,7 +18,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <%- include('../../../tools/sidebarTec'); %>
+        <%- include('../../../tools/sidebarProf'); %>
             <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
@@ -37,90 +37,84 @@
                             <div class="card shadow mb-4">
                                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/tecnico/Consolidaciones/Ver">Elegir
-                                                Otra
+                                        <li class="breadcrumb-item"><a href="/profesional/Consolidaciones/Ver">Elegir Otra
                                                 Consolidación</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Toma de
-                                            Muestras
+                                        <li class="breadcrumb-item active" aria-current="page">Listado de Carnetizados
                                         </li>
                                     </ol>
                                 </nav>
                                 <!-- <button id="button-a">Create Excel</button> -->
+
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0"
-                                            style="font-size: 13px;
-                                                text-align: center !important;">
+                                            style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
                                                     <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
+                                                    <th>Tecnico Responsable</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
-                                                    <th>Tipo de Muestra</th>
-                                                    <th>Descripción de la Muestra</th>
-                                                    <th>Establecimiento</th>
-                                                    <th>Tipo de Analisis</th>
-                                                    <th>Rural / Urbano</th>
-                                                    <th>Objeto del Analisis</th>
-                                                    <th>Fecha_Visita</th>
-                                                    <th>Nombre Y Cargo del Acompañante</th>
+                                                    <th>Nombre Completo</th>
+                                                    <th>Nº de Identificación</th>
+                                                    <th>Nombre del Establecimiento Que Labora</th>
+                                                    <th>Dirección del Establecimiento</th>
+                                                    <th>Fecha de Expedición del Carnet</th>
                                                     <th>Observaciones</th>
                                                     <th>Archivos</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <% if (TomaM){ %>
-                                                    <% TomaM.forEach((TomaM)=>{ %>
+                                                <% if (Carnetiz){ %>
+                                                    <% Carnetiz.forEach((Carnetiz)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(TomaM.estado == "Pendiente"){ %>
-                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(TomaM.estado == "Rechazado"){ %>
-                                                                    <a href="<%= TomaM._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(TomaM.estado == "Aceptado"){ %>
-                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
-                                                                <% } %>
+                                                                <% if(Carnetiz.estado=="Pendiente" ){ %>
+                                                                    <span
+                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                    <% }else if(Carnetiz.estado=="Rechazado" ){ %>
+                                                                        <a href="<%= Carnetiz._id %>"><span
+                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                        <% }else if(Carnetiz.estado=="Aceptado" ){ %>
+                                                                            <span
+                                                                                class="badge badge-success text-uppercase">Aceptado</span>
+                                                                            <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(TomaM.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
+                                                                <%= moment(Carnetiz.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.provincia %>
+                                                                <%= Carnetiz.userResponsable %>
+                                                                <%= Carnetiz.responsable %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.municipio %>
+                                                                <%= Carnetiz.provincia %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.tipMuestra %>
+                                                                <%= Carnetiz.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.descMuestra %>
+                                                                <%= Carnetiz.nombreCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.razonSocial %>
+                                                                <%= Carnetiz.idenCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.tipAnalisis %>
+                                                                <%= Carnetiz.establecimientoCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.zona %>
+                                                                <%= Carnetiz.direccionCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.objAnalisis %>
+                                                                <%= moment(Carnetiz.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(TomaM.fvisit," YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                                                                <%= Carnetiz.observaciones %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.acompanante %>
-                                                            </td>
-                                                            <td>
-                                                                <%= TomaM.observaciones %>
-                                                            </td>
-                                                            <td>
-                                                                <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                                                <a type="button"><span
+                                                                        class="badge badge-primary text-uppercase">Descargar</span></a>
                                                             </td>
                                                         </tr>
                                                         <% }); %>
@@ -131,25 +125,28 @@
                                 </div>
                             </div>
                             <!-- /.container-fluid -->
+
                         </div>
                         <!-- End of Main Content -->
+
                         <!-- Footer -->
                         <%- include('../../../tools/footer'); %>
                             <!-- End of Footer -->
+
                 </div>
                 <!-- End of Content Wrapper -->
+
             </div>
             <!-- End of Page Wrapper -->
+
             <!-- Scroll to Top Button-->
-            <a class="scroll-to-top
-                                                                                            rounded" href="#page-top">
-                <i class="fas
-                                                                                                fa-angle-up"></i>
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
             </a>
+
             <!-- Logout Modal-->
-            <div class="modal
-                                                                                            fade" id="logoutModal"
-                tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -158,53 +155,47 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Seleccione
-                            "Cerrar
-                            sesión"
-                            a
-                            continuación
-                            si
-                            está
-                            listo
-                            para
-                            finalizar
-                            su
-                            sesión
-                            actual.</div>
+                        <div class="modal-body">Seleccione "Cerrar
+                            sesión" a continuación si está listo para
+                            finalizar su sesión actual.</div>
                         <div class="modal-footer">
-                            <button
-                                class="btn
-                                                                                                            btn-secondary"
-                                type="button" data-dismiss="modal">Cancelar</button>
-                            <a class="btn
-                                                                                                            btn-primary"
-                                href="/tecnico/logout">Cerrar
-                                Sesión</a>
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Bootstrap core JavaScript-->
             <script src="/vendor/jquery/jquery.min.js"></script>
             <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
             <!-- Core plugin JavaScript-->
             <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
             <!-- Custom scripts for all pages-->
             <script src="/js/sb-admin-2.min.js"></script>
+
             <!-- Page level plugins -->
             <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
             <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
             <!-- Page level custom scripts -->
             <script src="/js/demo/datatables-demo.js"></script>
+
+            <!-- Download Files -->
+            <script type="module" src="/js/tools/downloadFiles.js"></script>
+
             <!-- Excel -->
             <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
             <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
             <script>
                 $(window).bind('load', function () {
                     var nav = document.getElementById('nav2');
                     $('#navlink1').removeClass('collapsed');
-                    var nav3 = document.getElementById('collapseOne');
+                    var nav3 = document.getElementById('collapseTwo');
                     var nav4 = document.getElementById('show1');
                     nav.className += "  active";
                     nav3.className += "  show";
@@ -216,7 +207,7 @@
                     buttons: [{
                         extend: 'excelHtml5',
                         autoFilter: true,
-                        sheetName: 'TOMA DE MUESTRAS',
+                        sheetName: 'LISTADO DE CARNETIZADOS',
                     }]
                 });
             </script>

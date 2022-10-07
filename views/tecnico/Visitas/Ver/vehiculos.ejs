@@ -67,6 +67,7 @@
                                                     <th>Puntaje</th>
                                                     <th>Concepto</th>
                                                     <th>Observaciones</th>
+                                                    <th>Archivos</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,13 +75,16 @@
                                                     <% Vehiculo.forEach((Vehiculo)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Vehiculo.estado == "Pendiente"){ %>
-                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(Vehiculo.estado == "Rechazado"){ %>
-                                                                    <a href="<%= Vehiculo._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(Vehiculo.estado == "Aceptado"){ %>
-                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
-                                                                <% } %>
+                                                                <% if(Vehiculo.estado=="Pendiente" ){ %>
+                                                                    <span
+                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                    <% }else if(Vehiculo.estado=="Rechazado" ){ %>
+                                                                        <a href="<%= Vehiculo._id %>"><span
+                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                        <% }else if(Vehiculo.estado=="Aceptado" ){ %>
+                                                                            <span
+                                                                                class="badge badge-success text-uppercase">Aceptado</span>
+                                                                            <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(Vehiculo.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
@@ -120,7 +124,8 @@
                                                                 <%= Vehiculo.refrigeracion %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(Vehiculo.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                                                <%= moment(Vehiculo.fvisit,"YYYY/MM/DD").add(1, 'days'
+                                                                    ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= Vehiculo.score %>
@@ -130,6 +135,10 @@
                                                             </td>
                                                             <td>
                                                                 <%= Vehiculo.observaciones %>
+                                                            </td>
+                                                            <td>
+                                                                <a onclick=""><span
+                                                                        class="badge badge-primary text-uppercase">Descargar</span></a>
                                                             </td>
                                                         </tr>
                                                         <% }); %>

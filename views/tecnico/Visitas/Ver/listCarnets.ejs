@@ -61,6 +61,7 @@
                                                     <th>Dirección del Establecimiento</th>
                                                     <th>Fecha de Expedición del Carnet</th>
                                                     <th>Observaciones</th>
+                                                    <th>Archivos</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -103,6 +104,9 @@
                                                             </td>
                                                             <td>
                                                                 <%= Carnetiz.observaciones %>
+                                                            </td>
+                                                            <td>
+                                                                <a type="button"><span class="badge badge-primary text-uppercase">Descargar</span></a>  
                                                             </td>
                                                         </tr>
                                                         <% }); %>
@@ -170,6 +174,9 @@
 
             <!-- Page level custom scripts -->
             <script src="/js/demo/datatables-demo.js"></script>
+
+            <!-- Download Files -->
+            <script type="module" src="/js/tools/downloadFiles.js"></script>
 
             <!-- Excel -->
             <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
