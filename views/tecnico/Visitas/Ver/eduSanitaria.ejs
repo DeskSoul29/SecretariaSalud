@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -68,6 +69,15 @@
                                                 <% if (EduSani){ %>
                                                     <% EduSani.forEach((EduSani)=> { %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(EduSani.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(EduSani.estado == "Rechazado"){ %>
+                                                                    <a href="<%= EduSani._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(EduSani.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(EduSani.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
@@ -185,7 +195,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

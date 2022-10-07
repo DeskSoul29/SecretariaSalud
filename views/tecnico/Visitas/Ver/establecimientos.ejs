@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -72,7 +73,16 @@
                                                     <% Estable.forEach((Estable)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <%= moment(Estable.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY,h:mm a'); %>
+                                                                <% if(Estable.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Estable.estado == "Rechazado"){ %>
+                                                                    <a href="<%= Estable._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(Estable.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= moment(Estable.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
                                                                 <%= Estable.provincia %>
@@ -197,7 +207,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

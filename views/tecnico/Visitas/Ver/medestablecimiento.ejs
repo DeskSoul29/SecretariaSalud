@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -71,7 +72,16 @@
                                                     <% medEstable.forEach((medEstable)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <%= moment(medEstable.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY,h:mm a'); %>
+                                                                <% if(medEstable.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(medEstable.estado == "Rechazado"){ %>
+                                                                    <a href="<%= medEstable._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(medEstable.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <%= moment(medEstable.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
                                                                 <%= medEstable.provincia %>
@@ -192,7 +202,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

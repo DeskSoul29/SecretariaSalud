@@ -2,6 +2,7 @@ import { Router } from "express";
 import moment from "moment";
 
 import {
+  ConsolidaEnviadas,
   hojavidaConsultAllTec,
   SendEstablecimiento,
   SeeEstablecimiento,
@@ -37,8 +38,8 @@ import {
 const router = Router();
 
 // Dashboard
-router.get("/", isAuthenticatedTecnic, (req, res) => {
-  res.render("tecnico/main", { user: req.user });
+router.get("/", isAuthenticatedTecnic, ConsolidaEnviadas, (req, res) => {
+  res.render("tecnico/main", { user: req.user, consEnv: req.consEnv });
 });
 
 // Apartado: Consolidaciones

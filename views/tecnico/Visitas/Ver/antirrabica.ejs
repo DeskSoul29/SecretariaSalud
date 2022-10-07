@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th rowspan="3">Estado</th>
                                                     <th rowspan="3">Fecha_Enviado</th>
                                                     <th rowspan="3">Provincia</th>
                                                     <th rowspan="3">Municipio</th>
@@ -76,6 +77,15 @@
                                                 <% if (Antirrabi){ %>
                                                     <% Antirrabi.forEach((Antirrabi)=> { %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(Antirrabi.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Antirrabi.estado == "Rechazado"){ %>
+                                                                    <a href="<%= Antirrabi._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(Antirrabi.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(Antirrabi.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>

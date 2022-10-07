@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -58,7 +59,7 @@
                                                     <th>Nº de Identificación</th>
                                                     <th>Nombre del Establecimiento Que Labora</th>
                                                     <th>Dirección del Establecimiento</th>
-                                                    <th>Fecha de Expediciónd del Carnet</th>
+                                                    <th>Fecha de Expedición del Carnet</th>
                                                     <th>Observaciones</th>
                                                 </tr>
                                             </thead>
@@ -66,6 +67,15 @@
                                                 <% if (Carnetiz){ %>
                                                     <% Carnetiz.forEach((Carnetiz)=> { %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(Carnetiz.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Carnetiz.estado == "Rechazado"){ %>
+                                                                    <a href="<%= Carnetiz._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(Carnetiz.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(Carnetiz.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
@@ -177,7 +187,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

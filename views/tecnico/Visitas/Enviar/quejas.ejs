@@ -336,6 +336,7 @@
 
                 $("#estableQueja").change(function () {
                     if ($("#estableQueja").is(":checked")) {
+                        document.getElementById("muniSelect").selectedIndex = "Seleccione el Municipio";
                         document.getElementById("EstbleTemple").removeAttribute("style");
                         document.getElementById("ComuniTemple").style = "display:none";
                     }
@@ -343,6 +344,7 @@
 
                 $("#comuniQuejas").change(function () {
                     if ($("#comuniQuejas").is(":checked")) {
+                        document.getElementById("muniSelect2").selectedIndex = "Seleccione el Municipio";
                         document.getElementById("EstbleTemple").style = "display:none";
                         document.getElementById("ComuniTemple").removeAttribute("style");
                     }

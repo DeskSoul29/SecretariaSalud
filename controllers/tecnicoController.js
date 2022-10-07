@@ -8,8 +8,10 @@ import tomamuestras from "../models/tomaMuestra.js";
 import vehiculos from "../models/vehiculos.js";
 
 import hojavida from "../models/hojavida.js";
+
 import jwt from "jsonwebtoken";
 import upload from "../middleware/upload.js";
+import fs from "fs";
 import { promisify } from "util";
 
 var authTec = (function () {
@@ -774,6 +776,105 @@ var authTec = (function () {
     Vehiculs: Vehiculs,
   };
 })();
+
+//Apartado: Inicio
+export const ConsolidaEnviadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    var enviadas = 0;
+    await establecimientos
+      .find({
+        userResponsable: {
+          $eq: decodificada.user,
+        },
+      })
+      .count()
+      .then((data) => {
+        enviadas += data;
+        eventsalud
+          .find({
+            userResponsable: {
+              $eq: decodificada.user,
+            },
+          })
+          .count()
+          .then((data) => {
+            enviadas += data;
+            antirrabica
+              .find({
+                userResponsable: {
+                  $eq: decodificada.user,
+                },
+              })
+              .count()
+              .then((data) => {
+                enviadas += data;
+                eduSanitaria
+                  .find({
+                    userResponsable: {
+                      $eq: decodificada.user,
+                    },
+                  })
+                  .count()
+                  .then((data) => {
+                    enviadas += data;
+                    listCarnets
+                      .find({
+                        userResponsable: {
+                          $eq: decodificada.user,
+                        },
+                      })
+                      .count()
+                      .then((data) => {
+                        enviadas += data;
+                        quejas
+                          .find({
+                            userResponsable: {
+                              $eq: decodificada.user,
+                            },
+                          })
+                          .count()
+                          .then((data) => {
+                            enviadas += data;
+                            tomamuestras
+                              .find({
+                                userResponsable: {
+                                  $eq: decodificada.user,
+                                },
+                              })
+                              .count()
+                              .then((data) => {
+                                enviadas += data;
+                                vehiculos
+                                  .find({
+                                    userResponsable: {
+                                      $eq: decodificada.user,
+                                    },
+                                  })
+                                  .count()
+                                  .then((data) => {
+                                    enviadas += data;
+                                    req.consEnv = enviadas;
+                                    return next();
+                                  });
+                              });
+                          });
+                      });
+                  });
+              });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 
 //Apartado: Hojas de Vida
 export const hojavidaConsultAllTec = async (req, res, next) => {

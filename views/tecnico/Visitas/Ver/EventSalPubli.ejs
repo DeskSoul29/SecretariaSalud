@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th rowspan="2">Estado</th>
                                                     <th rowspan="2">Fecha_Enviado</th>
                                                     <th rowspan="2">Mes</th>
                                                     <th rowspan="2">Provincia</th>
@@ -79,6 +80,15 @@
                                                 <% if (consultES){ %>
                                                     <% consultES.forEach((consultES)=> { %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(consultES.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(consultES.estado == "Rechazado"){ %>
+                                                                    <a href="<%= consultES._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(consultES.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(consultES.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
@@ -202,7 +212,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

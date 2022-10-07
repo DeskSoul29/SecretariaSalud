@@ -53,6 +53,7 @@
                                                 text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -71,9 +72,17 @@
                                             </thead>
                                             <tbody>
                                                 <% if (TomaM){ %>
-                                                    <% TomaM.forEach((TomaM)=>
-                                                        { %>
+                                                    <% TomaM.forEach((TomaM)=>{ %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(TomaM.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(TomaM.estado == "Rechazado"){ %>
+                                                                    <a href="<%= TomaM._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(TomaM.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(TomaM.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
@@ -200,7 +209,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

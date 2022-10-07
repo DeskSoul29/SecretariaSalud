@@ -22,6 +22,7 @@ var ListCarnetsSchema = new Schema({
   file4: { type: String },
   file5: { type: String },
 
+  estado: { type: String, default: "Pendiente" },
   crearedAt: { type: Date, default: Date.now },
 });
 

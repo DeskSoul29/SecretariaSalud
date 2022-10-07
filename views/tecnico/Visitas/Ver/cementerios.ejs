@@ -51,6 +51,7 @@
                                             style="font-size: 13px;  text-align: center !important;">
                                             <thead>
                                                 <tr>
+                                                    <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
@@ -69,6 +70,15 @@
                                                 <% if (cementerio){ %>
                                                     <% cementerio.forEach((cementerio)=> { %>
                                                         <tr>
+                                                            <td>
+                                                                <% if(cementerio.estado == "Pendiente"){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(cementerio.estado == "Rechazado"){ %>
+                                                                    <a href="<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(cementerio.estado == "Aceptado"){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
+                                                            </td>
                                                             <td>
                                                                 <%= moment(cementerio.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
@@ -189,7 +199,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[0, 'desc']],
+                    order: [[1, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',
@@ -202,3 +212,9 @@
 </body>
 
 </html>
+<!-- <span class="badge badge-primary text-uppercase">Primary</span></a></td> 
+<span class="badge badge-info text-uppercase">Info</span>
+<span class="badge badge-success text-uppercase">Success</span>
+<span class="badge badge-warning text-uppercase">Warning</span>
+<span class="badge badge-danger text-uppercase">Danger</span>
+<span class="badge badge-secondary text-uppercase">Secondary</span> -->
