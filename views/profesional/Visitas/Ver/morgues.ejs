@@ -72,23 +72,24 @@
                                                     <% morgues.forEach((morgues)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(morgues.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(morgues.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= morgues._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(morgues.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(morgues.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(morgues.status=="Rechazado" ){ %>
+                                                                    <a href="<%= morgues._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(morgues.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(morgues.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(morgues.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= morgues.userResponsable %>
-                                                                <%= morgues.responsable %>
+                                                                <%= morgues.responsable.userResponsable %>
+                                                                <%= morgues.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= morgues.provincia %>

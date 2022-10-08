@@ -71,11 +71,13 @@
                                                     <% morgues.forEach((morgues)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(morgues.estado == "Pendiente"){ %>
+                                                                <% if(morgues.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(morgues.estado == "Rechazado"){ %>
+                                                                <% }else if(morgues.status == "Rechazado"){ %>
                                                                     <a href="<%= morgues._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(morgues.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(morgues.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -98,8 +100,7 @@
                                                                 <%= morgues.repreLegal %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(morgues.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                                                                <%= moment(morgues.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= morgues.score %>

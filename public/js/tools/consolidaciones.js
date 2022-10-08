@@ -18,8 +18,8 @@ tipEsta.addEventListener("change", function () {
     document.getElementById("concepto").value = "NO APLICA";
     if (tipoEsta.value == "CEMENTERIOS (CON O SIN MORGUE)") {
       document.getElementById("templeCementerios").removeAttribute("style");
-      document.getElementById("templeEstablecimientos").style = "display:none";
-      document.getElementById("extraEstablecimiento").style = "display:none";
+      document.getElementById("extraEstablecimientoIVC").style = "display:none";
+      document.getElementById("extraEstablecimientoMD").style = "display:none";
       //Deseleccionar los formularios extras en establecimientos
       document
         .querySelectorAll("#extraEstablecimiento input[type=checkbox]")
@@ -36,8 +36,8 @@ tipEsta.addEventListener("change", function () {
       tipoEsta.value == "Seleccione el Tipo"
     ) {
       document.getElementById("templeCementerios").style = "display:none";
-      document.getElementById("templeEstablecimientos").style = "display:none";
-      document.getElementById("extraEstablecimiento").style = "display:none";
+      document.getElementById("extraEstablecimientoIVC").style = "display:none";
+      document.getElementById("extraEstablecimientoMD").style = "display:none";
       //Deseleccionar los formularios extras en establecimientos
       document
         .querySelectorAll("#extraEstablecimiento input[type=checkbox]")
@@ -52,9 +52,11 @@ tipEsta.addEventListener("change", function () {
     } else {
       document.getElementById("templeCementerios").style = "display:none";
       document
-        .getElementById("templeEstablecimientos")
+        .getElementById("extraEstablecimientoIVC")
         .removeAttribute("style");
-      document.getElementById("extraEstablecimiento").removeAttribute("style");
+      document
+        .getElementById("extraEstablecimientoMD")
+        .removeAttribute("style");
     }
   }
 
@@ -111,8 +113,8 @@ municipio.addEventListener("change", function () {
     document.getElementById("score").value = "";
     document.getElementById("concepto").value = "NO APLICA";
     document.getElementById("templeCementerios").style = "display:none";
-    document.getElementById("templeEstablecimientos").style = "display:none";
-    document.getElementById("extraEstablecimiento").style = "display:none";
+    document.getElementById("extraEstablecimientoIVC").style = "display:none";
+    document.getElementById("extraEstablecimientoMD").style = "display:none";
   }
   for (let i = razonSocial.options.length; i >= 1; i--) {
     razonSocial.remove(i);

@@ -72,11 +72,13 @@
                                                     <% Queja.forEach((Queja)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Queja.estado == "Pendiente"){ %>
+                                                                <% if(Queja.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(Queja.estado == "Rechazado"){ %>
+                                                                <% }else if(Queja.status == "Rechazado"){ %>
                                                                     <a href="<%= Queja._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(Queja.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(Queja.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -87,25 +89,25 @@
                                                                 <%= Queja.provincia %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.municipioComuni %><%= Queja.municipioEstable %>
+                                                                <%= Queja.ForQuejas.municipioComuni %><%= Queja.ForQuejas.municipioEstable %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.tipoQueja %>
+                                                                <%= Queja.ForQuejas.tipoQueja %>
                                                             </td>
                                                             <td>
                                                                 <%= Queja.razonSocial %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.descQueja %>
+                                                                <%= Queja.ForQuejas.descQueja %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.perCausaQueja %>
+                                                                <%= Queja.ForQuejas.perCausaQueja %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.perAfectQueja %>
+                                                                <%= Queja.ForQuejas.perAfectQueja %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(Queja.frecep,"YYYY/MM/DD").add(1, 'days'
+                                                                <%= moment(Queja.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days'
                                                                     ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
@@ -113,7 +115,7 @@
                                                                     ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= Queja.reqQueja %>
+                                                                <%= Queja.ForQuejas.reqQueja %>
                                                             </td>
                                                             <td>
                                                                 <%= Queja.observaciones %>

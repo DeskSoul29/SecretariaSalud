@@ -72,23 +72,22 @@
                                                     <% EduSani.forEach((EduSani)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(EduSani.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(EduSani.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= EduSani._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(EduSani.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(EduSani.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(EduSani.status=="Rechazado" ){ %>
+                                                                    <a href="<%= EduSani._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(EduSani.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(EduSani.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(EduSani.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.userResponsable %>
-                                                                <%= EduSani.responsable %>
+                                                                <%= EduSani.responsable.userResponsable %>
+                                                                <%= EduSani.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= EduSani.provincia %>
@@ -97,32 +96,33 @@
                                                                 <%= EduSani.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.tema %>
+                                                                <%= EduSani.ForEduSanitaria.tema %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.otroTema %>
+                                                                <%= EduSani.ForEduSanitaria.otroTema %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.lugarCapa %>
+                                                                <%= EduSani.ForEduSanitaria.lugarCapa %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.personalDiri %>
+                                                                <%= EduSani.ForEduSanitaria.personalDiri %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(EduSani.fechaCap,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                                                <%= moment(EduSani.ForEduSanitaria.fechaCap,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.intensidad %>
+                                                                <%= EduSani.ForEduSanitaria.intensidad %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.totalPersCap %>
+                                                                <%= EduSani.ForEduSanitaria.totalPersCap %>
                                                             </td>
                                                             <td>
                                                                 <%= EduSani.observaciones %>
                                                             </td>
                                                             <td>
-                                                                <a onclick=""><span
-                                                                        class="badge badge-primary text-uppercase">Descargar</span></a>
+                                                                <a onclick="">
+                                                                    <span class="badge badge-primary text-uppercase">Descargar</span>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                         <% }); %>

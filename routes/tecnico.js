@@ -3,6 +3,7 @@ import moment from "moment";
 
 import {
   ConsolidaEnviadas,
+  ConsolidaRechazadas,
   hojavidaConsultAllTec,
   SendEstablecimiento,
   SeeEstablecimiento,
@@ -38,9 +39,19 @@ import {
 const router = Router();
 
 // Dashboard
-router.get("/", isAuthenticatedTecnic, ConsolidaEnviadas, (req, res) => {
-  res.render("tecnico/main", { user: req.user, consEnv: req.consEnv });
-});
+router.get(
+  "/",
+  isAuthenticatedTecnic,
+  ConsolidaEnviadas,
+  ConsolidaRechazadas,
+  (req, res) => {
+    res.render("tecnico/main", {
+      user: req.user,
+      consEnv: req.consEnv,
+      consRech: req.consRech,
+    });
+  }
+);
 
 // Apartado: Consolidaciones
 router.get("/Consolidaciones/Ver", isAuthenticatedTecnic, (req, res) => {

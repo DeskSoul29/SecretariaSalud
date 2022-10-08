@@ -1,15 +1,7 @@
 import login from "../models/user.js";
 import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
-
-import establecimientos from "../models/establecimientos.js";
-import eventsalud from "../models/EvenSaludPubli.js";
-import antirrabica from "../models/antirrabica.js";
-import eduSanitaria from "../models/eduSanitaria.js";
-import listCarnets from "../models/lisCarnets.js";
-import quejas from "../models/quejas.js";
-import tomamuestras from "../models/tomaMuestra.js";
-import vehiculos from "../models/vehiculos.js";
+import consolidaciones from "../models/consolidaciones.js";
 
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
@@ -170,12 +162,12 @@ export const SeeProvEstablecimiento = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await establecimientos
+    const Estables = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        tipo: { $nin: ["MORGUES", "CEMENTERIOS (CON O SIN MORGUE)"] },
+        "consolidacion.establecimiento": { $eq: "on" },
       })
       .lean();
     req.consultEstable = Estables;
@@ -191,11 +183,12 @@ export const SeeProvMorgues = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Morgues = await establecimientos
+    const Morgues = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.establecimiento": { $eq: "on" },
         tipo: "MORGUES",
       })
       .lean();
@@ -212,11 +205,12 @@ export const SeeProvCementerios = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Cementerios = await establecimientos
+    const Cementerios = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.establecimiento": { $eq: "on" },
         tipo: "CEMENTERIOS (CON O SIN MORGUE)",
       })
       .lean();
@@ -233,12 +227,13 @@ export const SeeProvEstaRotulado = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Rotulado = await establecimientos
+    const Rotulado = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        rotulado: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.rotulado": { $eq: "on" },
       })
       .lean();
     req.consultRotulado = Rotulado;
@@ -254,12 +249,13 @@ export const SeeProvEstaPublicidad = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Publicidad = await establecimientos
+    const Publicidad = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        publicidad: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.publicidad": { $eq: "on" },
       })
       .lean();
     req.consultPublicidad = Publicidad;
@@ -275,12 +271,13 @@ export const SeeProvMedEstable = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const MedEstable = await establecimientos
+    const MedEstable = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        MSEstablecimientos: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.MSEstablecimientos": { $eq: "on" },
       })
       .lean();
     req.consultMedEstable = MedEstable;
@@ -296,12 +293,13 @@ export const SeeProvMedProduct = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const MedProduct = await establecimientos
+    const MedProduct = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        MSProductos: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.MSProductos": { $eq: "on" },
       })
       .lean();
     req.consultMedProduct = MedProduct;
@@ -317,11 +315,12 @@ export const SeeProvEventSaludPubli = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const EventSalud = await eventsalud
+    const EventSalud = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.EvenSaludPubli": { $eq: "on" },
       })
       .lean();
     req.consultES = EventSalud;
@@ -337,11 +336,12 @@ export const SeeProvQuejas = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Queja = await quejas
+    const Queja = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.quejas": { $eq: "on" },
       })
       .lean();
     req.consultQueja = Queja;
@@ -357,11 +357,12 @@ export const SeeProvAntirrabica = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const AntiRa = await antirrabica
+    const AntiRa = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.antirrabica": { $eq: "on" },
       })
       .lean();
     req.consultAntirrabi = AntiRa;
@@ -377,11 +378,12 @@ export const SeeProvCarnetizados = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Carnets = await listCarnets
+    const Carnets = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.lisCarnets": { $eq: "on" },
       })
       .lean();
     req.consultCarnetiz = Carnets;
@@ -397,11 +399,12 @@ export const SeeProvEduSanitaria = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const EduSani = await eduSanitaria
+    const EduSani = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.eduSanitaria": { $eq: "on" },
       })
       .lean();
     req.consultEdusani = EduSani;
@@ -417,11 +420,12 @@ export const SeeProvVehiculos = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Vehicu = await vehiculos
+    const Vehicu = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.vehiculos": { $eq: "on" },
       })
       .lean();
     req.consultVehiculos = Vehicu;
@@ -437,11 +441,12 @@ export const SeeProvTomaMuestra = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const TomaM = await tomamuestras
+    const TomaM = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.tomaMuestra": { $eq: "on" },
       })
       .lean();
     req.consultTomaM = TomaM;

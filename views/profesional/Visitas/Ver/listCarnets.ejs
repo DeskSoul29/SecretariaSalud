@@ -70,23 +70,24 @@
                                                     <% Carnetiz.forEach((Carnetiz)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Carnetiz.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(Carnetiz.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= Carnetiz._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(Carnetiz.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(Carnetiz.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Carnetiz.status=="Rechazado" ){ %>
+                                                                    <a href="<%= Carnetiz._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(Carnetiz.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(Carnetiz.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(Carnetiz.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= Carnetiz.userResponsable %>
-                                                                <%= Carnetiz.responsable %>
+                                                                <%= Carnetiz.responsable.userResponsable %>
+                                                                <%= Carnetiz.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= Carnetiz.provincia %>
@@ -95,19 +96,19 @@
                                                                 <%= Carnetiz.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= Carnetiz.nombreCarnet %>
+                                                                <%= Carnetiz.ForCarnets.nombreCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= Carnetiz.idenCarnet %>
+                                                                <%= Carnetiz.ForCarnets.idenCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= Carnetiz.establecimientoCarnet %>
+                                                                <%= Carnetiz.ForCarnets.establecimientoCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= Carnetiz.direccionCarnet %>
+                                                                <%= Carnetiz.ForCarnets.direccionCarnet %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(Carnetiz.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                                                <%= moment(Carnetiz.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= Carnetiz.observaciones %>

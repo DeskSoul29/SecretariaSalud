@@ -79,11 +79,13 @@
                                                     <% Antirrabi.forEach((Antirrabi)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Antirrabi.estado == "Pendiente"){ %>
+                                                                <% if(Antirrabi.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(Antirrabi.estado == "Rechazado"){ %>
+                                                                <% }else if(Antirrabi.status == "Rechazado"){ %>
                                                                     <a href="<%= Antirrabi._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(Antirrabi.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(Antirrabi.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -97,25 +99,25 @@
                                                                 <%= Antirrabi.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.Pcanina %>
+                                                                <%= Antirrabi.ForAntirrabica.Pcanina %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.Pfelina %>
+                                                                <%= Antirrabi.ForAntirrabica.Pfelina %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.canUrb %>
+                                                                <%= Antirrabi.ForAntirrabica.canUrb %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.canRur %>
+                                                                <%= Antirrabi.ForAntirrabica.canRur %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.felUrb %>
+                                                                <%= Antirrabi.ForAntirrabica.felUrb %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.felRur %>
+                                                                <%= Antirrabi.ForAntirrabica.felRur %>
                                                             </td>
                                                             <td>
-                                                                <%= Antirrabi.totalVac %>
+                                                                <%= Antirrabi.ForAntirrabica.totalVac %>
                                                             </td>
                                                             <td>
                                                                 <%= Antirrabi.observaciones %>

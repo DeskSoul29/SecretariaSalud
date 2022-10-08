@@ -73,11 +73,13 @@
                                                     <% medEstable.forEach((medEstable)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(medEstable.estado == "Pendiente"){ %>
+                                                                <% if(medEstable.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(medEstable.estado == "Rechazado"){ %>
+                                                                <% }else if(medEstable.status == "Rechazado"){ %>
                                                                     <a href="<%= medEstable._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(medEstable.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(medEstable.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -109,16 +111,16 @@
                                                                 <%= medEstable.repreLegal %>
                                                             </td>
                                                             <td>
-                                                                <%= medEstable.medidaMSEstablecimientos %>
+                                                                <%= medEstable.ForMSEstablecimientos.medidaMSEstablecimientos %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(medEstable.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= medEstable.motivoMSEstablecimientos %>
+                                                                <%= medEstable.ForMSEstablecimientos.motivoMSEstablecimientos %>
                                                             </td>
                                                             <td>
-                                                                <%= medEstable.observacionMedEsta %>
+                                                                <%= medEstable.ForMSEstablecimientos.observacionMedEsta %>
                                                             </td>
                                                             <td>
                                                                 <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>

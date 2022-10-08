@@ -53,7 +53,6 @@
                                                 <tr>
                                                     <th>Estado</th>
                                                     <th>Fecha_Enviado</th>
-                                                    <th>Tecnico Responsable</th>
                                                     <th>Provincia</th>
                                                     <th>Municipio</th>
                                                     <th>Dirección</th>
@@ -73,11 +72,13 @@
                                                     <% cementerio.forEach((cementerio)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(cementerio.estado == "Pendiente"){ %>
+                                                                <% if(cementerio.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(cementerio.estado == "Rechazado"){ %>
+                                                                <% }else if(cementerio.status == "Rechazado"){ %>
                                                                     <a href="<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(cementerio.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(cementerio.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>

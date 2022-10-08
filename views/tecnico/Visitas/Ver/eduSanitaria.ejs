@@ -71,11 +71,13 @@
                                                     <% EduSani.forEach((EduSani)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(EduSani.estado == "Pendiente"){ %>
+                                                                <% if(EduSani.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(EduSani.estado == "Rechazado"){ %>
+                                                                <% }else if(EduSani.status == "Rechazado"){ %>
                                                                     <a href="<%= EduSani._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(EduSani.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(EduSani.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -89,26 +91,26 @@
                                                                 <%= EduSani.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.tema %>
+                                                                <%= EduSani.ForEduSanitaria.tema %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.otroTema %>
+                                                                <%= EduSani.ForEduSanitaria.otroTema %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.lugarCapa %>
+                                                                <%= EduSani.ForEduSanitaria.lugarCapa %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.personalDiri %>
+                                                                <%= EduSani.ForEduSanitaria.personalDiri %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(EduSani.fechaCap,"YYYY/MM/DD").add(1, 'days'
+                                                                <%= moment(EduSani.ForEduSanitaria.fechaCap,"YYYY/MM/DD").add(1, 'days'
                                                                     ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.intensidad %>
+                                                                <%= EduSani.ForEduSanitaria.intensidad %>
                                                             </td>
                                                             <td>
-                                                                <%= EduSani.totalPersCap %>
+                                                                <%= EduSani.ForEduSanitaria.totalPersCap %>
                                                             </td>
                                                             <td>
                                                                 <%= EduSani.observaciones %>

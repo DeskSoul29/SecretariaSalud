@@ -73,11 +73,13 @@
                                                     <% publicidad.forEach((publicidad)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(publicidad.estado == "Pendiente"){ %>
+                                                                <% if(publicidad.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(publicidad.estado == "Rechazado"){ %>
+                                                                <% }else if(publicidad.status == "Rechazado"){ %>
                                                                     <a href="<%= publicidad._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(publicidad.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(publicidad.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -110,16 +112,16 @@
                                                                     ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= publicidad.medioPublicitario %>
+                                                                <%= publicidad.ForPublicidad.medioPublicitario %>
                                                             </td>
                                                             <td>
-                                                                <%= publicidad.productoPublicidad %>
+                                                                <%= publicidad.ForPublicidad.productoPublicidad %>
                                                             </td>
                                                             <td>
-                                                                <%= publicidad.marcaPublicidad %>
+                                                                <%= publicidad.ForPublicidad.marcaPublicidad %>
                                                             </td>
                                                             <td>
-                                                                <%= publicidad.registroSanitario %>
+                                                                <%= publicidad.ForPublicidad.registroSanitario %>
                                                             </td>
                                                             <td>
                                                                 <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>

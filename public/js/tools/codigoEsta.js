@@ -35,8 +35,8 @@ if (grupEsta != null) {
       document.getElementById("concepto").value = "NO APLICA";
 
       document.getElementById("templeCementerios").style = "display:none";
-      document.getElementById("templeEstablecimientos").style = "display:none";
-      document.getElementById("extraEstablecimiento").style = "display:none";
+      document.getElementById("extraEstablecimientoIVC").style = "display:none";
+      document.getElementById("extraEstablecimientoMD").style = "display:none";
 
       //Deseleccionar los formularios extras en establecimientos
       document

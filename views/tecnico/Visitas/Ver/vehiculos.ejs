@@ -75,16 +75,15 @@
                                                     <% Vehiculo.forEach((Vehiculo)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Vehiculo.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(Vehiculo.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= Vehiculo._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(Vehiculo.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(Vehiculo.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Vehiculo.status=="Rechazado" ){ %>
+                                                                    <a href="<%= Vehiculo._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(Vehiculo.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(Vehiculo.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
@@ -102,8 +101,8 @@
                                                                 <%= Vehiculo.tipo %>
                                                             </td>
                                                             <td>
-                                                                <%= Vehiculo.claseVehiculo %>
-                                                                    <%= Vehiculo.otraClase %>
+                                                                <%= Vehiculo.ForVehiculos.claseVehiculo %>
+                                                                    <%= Vehiculo.ForVehiculos.otraClase %>
                                                             </td>
                                                             <td>
                                                                 <%= Vehiculo.identificacion %>
@@ -112,20 +111,19 @@
                                                                 <%= Vehiculo.repreLegal %>
                                                             </td>
                                                             <td>
-                                                                <%= Vehiculo.placa %>
+                                                                <%= Vehiculo.ForVehiculos.placa %>
                                                             </td>
                                                             <td>
-                                                                <%= Vehiculo.nInscripcion %>
+                                                                <%= Vehiculo.ForVehiculos.nInscripcion %>
                                                             </td>
                                                             <td>
-                                                                <%= Vehiculo.productosVehiculo %>
+                                                                <%= Vehiculo.ForVehiculos.productosVehiculo %>
                                                             </td>
                                                             <td>
-                                                                <%= Vehiculo.refrigeracion %>
+                                                                <%= Vehiculo.ForVehiculos.refrigeracion %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(Vehiculo.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                                                                <%= moment(Vehiculo.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= Vehiculo.score %>

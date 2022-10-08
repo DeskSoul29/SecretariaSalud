@@ -71,23 +71,24 @@
                                                     <% rotulado.forEach((rotulado)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(rotulado.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(rotulado.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= rotulado._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(rotulado.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(rotulado.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(rotulado.status=="Rechazado" ){ %>
+                                                                    <a href="<%= rotulado._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(rotulado.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(rotulado.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(rotulado.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= rotulado.userResponsable %>
-                                                                <%= rotulado.responsable %>
+                                                                <%= rotulado.responsableuserResponsable %>
+                                                                <%= rotulado.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= rotulado.provincia %>
@@ -114,7 +115,7 @@
                                                                 <%= moment(rotulado.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= rotulado.productoRotulado %>
+                                                                <%= rotulado.ForRotulado.productoRotulado %>
                                                             </td>
                                                             <td>
                                                                 <a onclick=""><span

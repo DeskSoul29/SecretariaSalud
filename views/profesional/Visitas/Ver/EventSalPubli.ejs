@@ -83,26 +83,27 @@
                                                     <% consultES.forEach((consultES)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(consultES.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(consultES.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= consultES._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(consultES.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(consultES.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(consultES.status=="Rechazado" ){ %>
+                                                                    <a href="<%= consultES._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(consultES.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(consultES.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(consultES.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.userResponsable %>
-                                                                <%= consultES.responsable %>
+                                                                <%= consultES.responsable.userResponsable %>
+                                                                <%= consultES.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.mes %>
+                                                                <%= consultES.ForEvenSPublica.mes %>
                                                             </td>
                                                             <td>
                                                                 <%= consultES.provincia %>
@@ -111,28 +112,28 @@
                                                                 <%= consultES.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.presentEtas %>
+                                                                <%= consultES.ForEvenSPublica.presentEtas %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.atendEtas %>
+                                                                <%= consultES.ForEvenSPublica.atendEtas %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.presentIntox %>
+                                                                <%= consultES.ForEvenSPublica.presentIntox %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.atendIntox %>
+                                                                <%= consultES.ForEvenSPublica.atendIntox %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.presentAgre %>
+                                                                <%= consultES.ForEvenSPublica.presentAgre %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.atendAgre %>
+                                                                <%= consultES.ForEvenSPublica.atendAgre %>
                                                             </td>
                                                             <td>
-                                                                <%= consultES.covePart %>
+                                                                <%= consultES.ForEvenSPublica.covePart %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(consultES.coveFech,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                                                <%= moment(consultES.ForEvenSPublica.coveFech,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= consultES.observaciones %>

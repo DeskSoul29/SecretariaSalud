@@ -70,11 +70,13 @@
                                                     <% rotulado.forEach((rotulado)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(rotulado.estado == "Pendiente"){ %>
+                                                                <% if(rotulado.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(rotulado.estado == "Rechazado"){ %>
+                                                                <% }else if(rotulado.status == "Rechazado"){ %>
                                                                     <a href="<%= rotulado._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(rotulado.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(rotulado.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -107,7 +109,7 @@
                                                                     ).format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= rotulado.productoRotulado %>
+                                                                <%= rotulado.ForRotulado.productoRotulado %>
                                                             </td>
                                                             <td>
                                                                 <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>

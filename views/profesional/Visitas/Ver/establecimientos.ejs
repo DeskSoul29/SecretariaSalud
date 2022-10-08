@@ -66,6 +66,8 @@
                                                     <th>Concepto</th>
                                                     <th>Acción</th>
                                                     <th>Tipo de Acta Utilizada</th>
+                                                    <th>Acta Anulada</th>
+                                                    <th>Acta_Ley 1335</th>
                                                     <th>Observaciones</th>
                                                     <th>Archivos</th>
                                                 </tr>
@@ -75,23 +77,24 @@
                                                     <% Estable.forEach((Estable)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(Estable.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(Estable.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= Estable._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(Estable.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(Estable.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(Estable.status=="Rechazado" ){ %>
+                                                                    <a href="<%= Estable._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(Estable.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(Estable.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(Estable.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= Estable.userResponsable %>
-                                                                <%= Estable.responsable %>
+                                                                <%= Estable.responsable.userResponsable %>
+                                                                <%= Estable.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= Estable.provincia %>
@@ -128,6 +131,12 @@
                                                             </td>
                                                             <td>
                                                                 <%= Estable.acta %>
+                                                            </td>
+                                                            <td>
+                                                                <%= Estable.actaAnul %>
+                                                            </td>
+                                                            <td>
+                                                                <%= Estable.actaLey %>
                                                             </td>
                                                             <td>
                                                                 <%= Estable.observaciones %>

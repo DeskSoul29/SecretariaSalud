@@ -73,23 +73,22 @@
                                                     <% cementerio.forEach((cementerio)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(cementerio.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(cementerio.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= cementerio._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(cementerio.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(cementerio.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(cementerio.status=="Rechazado" ){ %>
+                                                                    <a href="<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(cementerio.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(cementerio.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= cementerio.userResponsable %>
-                                                                <%= cementerio.responsable %>
+                                                                <%= cementerio.responsable.userResponsable %>
+                                                                <%= cementerio.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= cementerio.provincia %>
@@ -125,9 +124,9 @@
                                                                 <%= cementerio.observaciones %>
                                                             </td>
                                                             <td>
-                                                                <a
-                                                                    onclick="alert('<%= cementerio.file1 %>', '<%= cementerio.file2 %>', '<%= cementerio.file3 %>', '<%= cementerio.file4 %>', '<%= cementerio.file5 %>')"><span
-                                                                        class="badge badge-primary text-uppercase">Descargar</span></a>
+                                                                <a onclick="alert('<%= cementerio.file1 %>', '<%= cementerio.file2 %>', '<%= cementerio.file3 %>', '<%= cementerio.file4 %>', '<%= cementerio.file5 %>')">
+                                                                    <span class="badge badge-primary text-uppercase">Descargar</span>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                         <% }); %>

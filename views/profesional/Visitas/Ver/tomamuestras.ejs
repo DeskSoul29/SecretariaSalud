@@ -75,23 +75,24 @@
                                                     <% TomaM.forEach((TomaM)=>{ %>
                                                         <tr>
                                                             <td>
-                                                                <% if(TomaM.estado=="Pendiente" ){ %>
-                                                                    <span
-                                                                        class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                    <% }else if(TomaM.estado=="Rechazado" ){ %>
-                                                                        <a href="<%= TomaM._id %>"><span
-                                                                                class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                        <% }else if(TomaM.estado=="Aceptado" ){ %>
-                                                                            <span
-                                                                                class="badge badge-success text-uppercase">Aceptado</span>
-                                                                            <% } %>
+                                                                <% if(TomaM.status=="Pendiente" ){ %>
+                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                <% }else if(TomaM.status=="Rechazado" ){ %>
+                                                                    <a href="<%= TomaM._id %>">
+                                                                        <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                                                    </a>
+                                                                <% }else if(TomaM.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(TomaM.status=="Aceptado" ){ %>
+                                                                    <span class="badge badge-success text-uppercase">Aceptado</span>
+                                                                <% } %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(TomaM.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.userResponsable %>
-                                                                <%= TomaM.responsable %>
+                                                                <%= TomaM.responsable.userResponsable %>
+                                                                <%= TomaM.responsable.nombreResponsable %>
                                                             </td>
                                                             <td>
                                                                 <%= TomaM.provincia %>
@@ -100,28 +101,28 @@
                                                                 <%= TomaM.municipio %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.tipMuestra %>
+                                                                <%= TomaM.ForTomaMuestras.tipMuestra %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.descMuestra %>
+                                                                <%= TomaM.ForTomaMuestras.descMuestra %>
                                                             </td>
                                                             <td>
                                                                 <%= TomaM.razonSocial %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.tipAnalisis %>
+                                                                <%= TomaM.ForTomaMuestras.tipAnalisis %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.zona %>
+                                                                <%= TomaM.ForTomaMuestras.zona %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.objAnalisis %>
+                                                                <%= TomaM.ForTomaMuestras.objAnalisis %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(TomaM.fvisit," YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= TomaM.acompanante %>
+                                                                <%= TomaM,ForTomaMuestras.acompanante %>
                                                             </td>
                                                             <td>
                                                                 <%= TomaM.observaciones %>

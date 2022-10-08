@@ -227,6 +227,8 @@ function establecimientosForm(e) {
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("score").value == 0 ||
     document.getElementById("accion").value == "Seleccione La Acción" ||
+    document.getElementById("actaLey").value == "Seleccione" ||
+    document.getElementById("acta").value == "Seleccione" ||
     document.getElementById("myfiles").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
@@ -246,13 +248,6 @@ function establecimientosForm(e) {
     document.getElementById("tipoEsta").value !=
       "CEMENTERIOS (CON O SIN MORGUE)"
   ) {
-    if (
-      document.getElementById("acta").value == "Seleccione" ||
-      document.getElementById("actaLey").value == "Seleccione"
-    ) {
-      toast.toastInfo("Advertencia", "Ingresar los datos sobre Actas");
-      e.preventDefault();
-    }
     //Publicidad
     publicidad(e);
 

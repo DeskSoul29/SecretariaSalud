@@ -81,11 +81,13 @@
                                                     <% medProduc.forEach((medProduc)=> { %>
                                                         <tr>
                                                             <td>
-                                                                <% if(medProduc.estado == "Pendiente"){ %>
+                                                                <% if(medProduc.status == "Pendiente"){ %>
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
-                                                                <% }else if(medProduc.estado == "Rechazado"){ %>
+                                                                <% }else if(medProduc.status == "Rechazado"){ %>
                                                                     <a href="<%= medProduc._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(medProduc.estado == "Aceptado"){ %>
+                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                    <span class="badge badge-info text-uppercase">Enviado</span>
+                                                                <% }else if(medProduc.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
@@ -114,40 +116,40 @@
                                                                 <%= medProduc.telefono %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.medidaMSProductos %>
+                                                                <%= medProduc.ForMSProductos.medidaMSProductos %>
                                                             </td>
                                                             <td>
                                                                 <%= moment(medProduc.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.productoMSProductos %>
+                                                                <%= medProduc.ForMSProductos.productoMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.marcaMSProductos %>
+                                                                <%= medProduc.ForMSProductos.marcaMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.permisoMSProductos %>
+                                                                <%= medProduc.ForMSProductos.permisoMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.presentacionMSProductos %>
+                                                                <%= medProduc.ForMSProductos.presentacionMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.cantidadMSProductos %>
+                                                                <%= medProduc.ForMSProductos.cantidadMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.fabricanteMSProductos %>
+                                                                <%= medProduc.ForMSProductos.fabricanteMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.loteMSProductos %>
+                                                                <%= medProduc.ForMSProductos.loteMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(medProduc.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                                                <%= moment(medProduc.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.motivoMSProductos %>
+                                                                <%= medProduc.ForMSProductos.motivoMSProductos %>
                                                             </td>
                                                             <td>
-                                                                <%= medProduc.observacionMedProd %>
+                                                                <%= medProduc.ForMSProductos.observacionMedProd %>
                                                             </td>
                                                             <td>
                                                                 <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>

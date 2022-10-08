@@ -1,11 +1,4 @@
-import establecimientos from "../models/establecimientos.js";
-import eventsalud from "../models/EvenSaludPubli.js";
-import antirrabica from "../models/antirrabica.js";
-import eduSanitaria from "../models/eduSanitaria.js";
-import listCarnets from "../models/lisCarnets.js";
-import quejas from "../models/quejas.js";
-import tomamuestras from "../models/tomaMuestra.js";
-import vehiculos from "../models/vehiculos.js";
+import consolidaciones from "../models/consolidaciones.js";
 
 import hojavida from "../models/hojavida.js";
 
@@ -55,26 +48,36 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new eventsalud({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
-        mes: mes,
-        presentEtas: etasPresent,
-        atendEtas: etasAtend,
-        presentIntox: intoxPresent,
-        atendIntox: intoxAtend,
-        presentAgre: agrePresent,
-        atendAgre: agreAtend,
-        covePart: trueFalse,
-        coveFech: fReunion,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          EvenSaludPubli: "on",
+        },
+        ForEvenSPublica: {
+          mes: mes,
+          presentEtas: etasPresent,
+          atendEtas: etasAtend,
+          presentIntox: intoxPresent,
+          atendIntox: intoxAtend,
+          presentAgre: agrePresent,
+          atendAgre: agreAtend,
+          covePart: trueFalse,
+          coveFech: fReunion,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -170,11 +173,21 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new establecimientos({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          establecimiento: "on",
+          rotulado: rotuladoON,
+          publicidad: publicidadON,
+          MSProductos: productosON,
+          MSEstablecimientos: establecimientosON,
+        },
         grupo: grupEsta,
         codigo: codEsta,
         tipo: tipoEsta,
@@ -193,35 +206,42 @@ var authTec = (function () {
         salaNM: NecroMorg,
         acta: acta,
         actaLey: actaLey,
-        rotulado: rotuladoON,
-        productoRotulado: productoRotulado,
-        publicidad: publicidadON,
-        medioPublicitario: medPubli,
-        registroSanitario: permisoSanitario,
-        productoPublicidad: productoPublicidad,
-        marcaPublicidad: marcaPublicidad,
-        MSEstablecimientos: establecimientosON,
-        medidaMSEstablecimientos: medidaApliEstable,
-        motivoMSEstablecimientos: motivoApli,
-        MSProductos: productosON,
-        medidaMSProductos: medidaApliProduc,
-        permisoMSProductos: permisoProduco,
-        productoMSProductos: productoMed,
-        marcaMSProductos: marcaProduct,
-        motivoMSProductos: motivoProduct,
-        observacionMedEsta: observacionMedEsta,
-        presentacionMSProductos: presentProduct,
-        cantidadMSProductos: cantProdu,
-        fabricanteMSProductos: fabriProduc,
-        loteMSProductos: loteProduc,
-        vencimientoMSProductos: fechProduc,
-        observacionMedProd: observacionMedProd,
+        ForRotulado: {
+          productoRotulado: productoRotulado,
+        },
+        ForPublicidad: {
+          medioPublicitario: medPubli,
+          registroSanitario: permisoSanitario,
+          productoPublicidad: productoPublicidad,
+          marcaPublicidad: marcaPublicidad,
+        },
+        ForMSEstablecimientos: {
+          medidaMSEstablecimientos: medidaApliEstable,
+          motivoMSEstablecimientos: motivoApli,
+          observacionMedEsta: observacionMedEsta,
+        },
+        ForMSProductos: {
+          medidaMSProductos: medidaApliProduc,
+          permisoMSProductos: permisoProduco,
+          productoMSProductos: productoMed,
+          marcaMSProductos: marcaProduct,
+          motivoMSProductos: motivoProduct,
+          presentacionMSProductos: presentProduct,
+          cantidadMSProductos: cantProdu,
+          fabricanteMSProductos: fabriProduc,
+          loteMSProductos: loteProduc,
+          vencimientoMSProductos: fechProduc,
+          observacionMedProd: observacionMedProd,
+        },
+
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -289,12 +309,16 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new quejas({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
-        municipioEstable: municipio,
-        municipioComuni: municipioComuni,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          quejas: "on",
+        },
         grupo: grupEsta,
         codigo: codEsta,
         tipo: tipoEsta,
@@ -306,19 +330,25 @@ var authTec = (function () {
         direccion: direccion,
         repreLegal: rLegal,
         estado: estado,
-        tipoQueja: tipQueja,
-        frecep: fechRece,
         fvisit: fVisit,
-        perCausaQueja: perCausa,
-        perAfectQueja: perAfec,
-        descQueja: descQueja,
-        reqQueja: requeQueja,
+        ForQuejas: {
+          municipioEstable: municipio,
+          municipioComuni: municipioComuni,
+          tipoQueja: tipQueja,
+          frecep: fechRece,
+          perCausaQueja: perCausa,
+          perAfectQueja: perAfec,
+          descQueja: descQueja,
+          reqQueja: requeQueja,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -374,24 +404,34 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new antirrabica({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
-        Pcanina: Pcanina,
-        Pfelina: Pfelina,
-        canUrb: caninosUrbano,
-        canRur: caninosRural,
-        felUrb: felinosUrbano,
-        felRur: felinosRural,
-        totalVac: totalVacunados,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          antirrabica: "on",
+        },
+        ForAntirrabica: {
+          Pcanina: Pcanina,
+          Pfelina: Pfelina,
+          canUrb: caninosUrbano,
+          canRur: caninosRural,
+          felUrb: felinosUrbano,
+          felRur: felinosRural,
+          totalVac: totalVacunados,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -445,22 +485,32 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new listCarnets({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
-        expCarnet: expCarnet,
-        idenCarnet: idenCarnet,
-        nombreCarnet: nameCarnet,
-        establecimientoCarnet: estableciCarnet,
-        direccionCarnet: direcCarnet,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          lisCarnets: "on",
+        },
+        ForCarnets: {
+          expCarnet: expCarnet,
+          idenCarnet: idenCarnet,
+          nombreCarnet: nameCarnet,
+          establecimientoCarnet: estableciCarnet,
+          direccionCarnet: direcCarnet,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -516,24 +566,34 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new eduSanitaria({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
-        tema: temaCap,
-        otroTema: otrosCap,
-        fechaCap: fechaCap,
-        intensidad: intensidadCap,
-        lugarCapa: lugCap,
-        personalDiri: personalCap,
-        totalPersCap: totalPersCap,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          eduSanitaria: "on",
+        },
+        ForEduSanitaria: {
+          tema: temaCap,
+          otroTema: otrosCap,
+          fechaCap: fechaCap,
+          intensidad: intensidadCap,
+          lugarCapa: lugCap,
+          personalDiri: personalCap,
+          totalPersCap: totalPersCap,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -601,11 +661,17 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new tomamuestras({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          tomaMuestra: "on",
+        },
         grupo: grupEsta,
         codigo: codEsta,
         tipo: tipoEsta,
@@ -618,19 +684,22 @@ var authTec = (function () {
         repreLegal: rLegal,
         estado: estado,
         fvisit: fVisit,
-        tipMuestra: tipMues,
-        descMuestra: descripTip,
-        tipAnalisis: tipAnali,
-        zona: zona,
-        objAnalisis: objEst,
-        acompanante: acompananteEmp,
-
+        ForTomaMuestras: {
+          tipMuestra: tipMues,
+          descMuestra: descripTip,
+          tipAnalisis: tipAnali,
+          zona: zona,
+          objAnalisis: objEst,
+          acompanante: acompananteEmp,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -700,11 +769,17 @@ var authTec = (function () {
       var file4 = req.files[3] === undefined ? false : req.files[3].filename;
       var file5 = req.files[4] === undefined ? false : req.files[4].filename;
 
-      new vehiculos({
-        userResponsable: decodificada.user,
-        responsable: decodificada.nombres + " " + decodificada.apellidos,
+      new consolidaciones({
         provincia: provincia,
         municipio: municipio,
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          vehiculos: "on",
+        },
         grupo: grupEsta,
         codigo: codEsta,
         tipo: tipoEsta,
@@ -719,20 +794,22 @@ var authTec = (function () {
         fvisit: fVisit,
         score: score,
         concepto: concepto,
-
-        claseVehiculo: classVehi,
-        otraClase: otroV,
-        placa: placa,
-        refrigeracion: refriV,
-        nInscripcion: nInscrip,
-        productosVehiculo: produTrans,
-
+        ForVehiculos: {
+          claseVehiculo: classVehi,
+          otraClase: otroV,
+          placa: placa,
+          refrigeracion: refriV,
+          nInscripcion: nInscrip,
+          productosVehiculo: produTrans,
+        },
+        evidencias: {
+          file1: req.files[0].filename,
+          file2: file2,
+          file3: file3,
+          file4: file4,
+          file5: file5,
+        },
         observaciones: observacion,
-        file1: req.files[0].filename,
-        file2: file2,
-        file3: file3,
-        file4: file4,
-        file5: file5,
       })
         .save()
         .then((result) => {
@@ -784,88 +861,42 @@ export const ConsolidaEnviadas = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    var enviadas = 0;
-    await establecimientos
+    await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
       })
       .count()
       .then((data) => {
-        enviadas += data;
-        eventsalud
-          .find({
-            userResponsable: {
-              $eq: decodificada.user,
-            },
-          })
-          .count()
-          .then((data) => {
-            enviadas += data;
-            antirrabica
-              .find({
-                userResponsable: {
-                  $eq: decodificada.user,
-                },
-              })
-              .count()
-              .then((data) => {
-                enviadas += data;
-                eduSanitaria
-                  .find({
-                    userResponsable: {
-                      $eq: decodificada.user,
-                    },
-                  })
-                  .count()
-                  .then((data) => {
-                    enviadas += data;
-                    listCarnets
-                      .find({
-                        userResponsable: {
-                          $eq: decodificada.user,
-                        },
-                      })
-                      .count()
-                      .then((data) => {
-                        enviadas += data;
-                        quejas
-                          .find({
-                            userResponsable: {
-                              $eq: decodificada.user,
-                            },
-                          })
-                          .count()
-                          .then((data) => {
-                            enviadas += data;
-                            tomamuestras
-                              .find({
-                                userResponsable: {
-                                  $eq: decodificada.user,
-                                },
-                              })
-                              .count()
-                              .then((data) => {
-                                enviadas += data;
-                                vehiculos
-                                  .find({
-                                    userResponsable: {
-                                      $eq: decodificada.user,
-                                    },
-                                  })
-                                  .count()
-                                  .then((data) => {
-                                    enviadas += data;
-                                    req.consEnv = enviadas;
-                                    return next();
-                                  });
-                              });
-                          });
-                      });
-                  });
-              });
-          });
+        req.consEnv = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const ConsolidaRechazadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: { $eq: "Rechazado" },
+      })
+      .count()
+      .then((data) => {
+        req.consRech = data;
+        return next();
       })
       .catch((error) => {
         console.log(error);
@@ -920,12 +951,12 @@ export const SeeEstablecimiento = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await establecimientos
+    const Estables = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        tipo: { $nin: ["MORGUES", "CEMENTERIOS (CON O SIN MORGUE)"] },
+        "consolidacion.establecimiento": { $eq: "on" },
       })
       .lean();
     req.consultEstable = Estables;
@@ -941,11 +972,12 @@ export const SeeMorgues = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Morgues = await establecimientos
+    const Morgues = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.establecimiento": { $eq: "on" },
         tipo: "MORGUES",
       })
       .lean();
@@ -962,11 +994,12 @@ export const SeeCementerios = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Cementerios = await establecimientos
+    const Cementerios = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.establecimiento": { $eq: "on" },
         tipo: "CEMENTERIOS (CON O SIN MORGUE)",
       })
       .lean();
@@ -983,12 +1016,13 @@ export const SeeEstaRotulado = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Rotulado = await establecimientos
+    const Rotulado = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        rotulado: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.rotulado": { $eq: "on" },
       })
       .lean();
     req.consultRotulado = Rotulado;
@@ -1004,12 +1038,13 @@ export const SeeEstaPublicidad = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Publicidad = await establecimientos
+    const Publicidad = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        publicidad: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.publicidad": { $eq: "on" },
       })
       .lean();
     req.consultPublicidad = Publicidad;
@@ -1025,12 +1060,13 @@ export const SeeMedEstable = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const MedEstable = await establecimientos
+    const MedEstable = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        MSEstablecimientos: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.MSEstablecimientos": { $eq: "on" },
       })
       .lean();
     req.consultMedEstable = MedEstable;
@@ -1046,12 +1082,13 @@ export const SeeMedProduct = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const MedProduct = await establecimientos
+    const MedProduct = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        MSProductos: "on",
+        "consolidacion.establecimiento": { $eq: "on" },
+        "consolidacion.MSProductos": { $eq: "on" },
       })
       .lean();
     req.consultMedProduct = MedProduct;
@@ -1075,11 +1112,12 @@ export const SeeEventSaludPubli = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const EventSalud = await eventsalud
+    const EventSalud = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.EvenSaludPubli": { $eq: "on" },
       })
       .lean();
     req.consultES = EventSalud;
@@ -1103,11 +1141,12 @@ export const SeeQuejas = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Queja = await quejas
+    const Queja = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.quejas": { $eq: "on" },
       })
       .lean();
     req.consultQueja = Queja;
@@ -1131,11 +1170,12 @@ export const SeeAntirrabica = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const AntiRa = await antirrabica
+    const AntiRa = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.antirrabica": { $eq: "on" },
       })
       .lean();
     req.consultAntirrabi = AntiRa;
@@ -1159,11 +1199,12 @@ export const SeeCarnetizados = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Carnets = await listCarnets
+    const Carnets = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.lisCarnets": { $eq: "on" },
       })
       .lean();
     req.consultCarnetiz = Carnets;
@@ -1187,11 +1228,12 @@ export const SeeEduSanitaria = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const EduSani = await eduSanitaria
+    const EduSani = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.eduSanitaria": { $eq: "on" },
       })
       .lean();
     req.consultEdusani = EduSani;
@@ -1215,11 +1257,12 @@ export const SeeVehiculos = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Vehicu = await vehiculos
+    const Vehicu = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.vehiculos": { $eq: "on" },
       })
       .lean();
     req.consultVehiculos = Vehicu;
@@ -1245,11 +1288,12 @@ export const SeeTomaMuestra = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const TomaM = await tomamuestras
+    const TomaM = await consolidaciones
       .find({
-        userResponsable: {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
+        "consolidacion.tomaMuestra": { $eq: "on" },
       })
       .lean();
     req.consultTomaM = TomaM;
