@@ -37,8 +37,7 @@
                             <div class="card shadow mb-4">
                                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/profesional/Consolidaciones/Ver">Elegir Otra
-                                                Consolidación</a></li>
+                                        <li class="breadcrumb-item"><a href="/profesional/Consolidaciones/Ver">Consolidaciones</a></li>
                                         <li class="breadcrumb-item active" aria-current="page">Cementerios
                                         </li>
                                     </ol>
@@ -74,9 +73,9 @@
                                                         <tr>
                                                             <td>
                                                                 <% if(cementerio.status=="Pendiente" ){ %>
-                                                                    <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                                                    <a href="/profesional/Consolidaciones/Validar/Cementerios/<%= cementerio._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                                                                 <% }else if(cementerio.status=="Rechazado" ){ %>
-                                                                    <a href="<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                                                    <span class="badge badge-danger text-uppercase">Rechazado</span>
                                                                 <% }else if(cementerio.status == "Enviado"){ %>
                                                                     <span class="badge badge-info text-uppercase">Enviado</span>
                                                                 <% }else if(cementerio.status=="Aceptado" ){ %>

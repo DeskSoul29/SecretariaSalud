@@ -80,3 +80,16 @@ $("#btnConsolidacionVer").click(function () {
     modalsEstablecimientos.consolidacionVer(document.getElementById("consoID"));
   }
 });
+
+if (criterioProf != null) {
+  document
+    .getElementById("criterioProf")
+    .addEventListener("change", function () {
+      if (document.getElementById("criterioProf").value == "Rechazado") {
+        document.getElementById("divMotivo").removeAttribute("style");
+        document.getElementById("motivo").value = "";
+      } else {
+        document.getElementById("divMotivo").style = "display:none";
+      }
+    });
+}

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <%- include('../tools/head'); %>
+    <link
+      href="/vendor/datatables/dataTables.bootstrap4.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <%- include('../tools/head'); %>
-    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
-</head>
-
-<body id="page-top">
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-    <!-- Sidebar -->
-    <%- include('../tools/sidebarTec'); %>
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <%- include('../tools/sidebarTec'); %>
       <!-- End of Sidebar -->
 
       <!-- Content Wrapper -->
@@ -19,165 +21,203 @@
         <div id="content">
           <!-- Topbar -->
           <%- include('../tools/topbar'); %>
-            <!-- End of Topbar -->
+          <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-              <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">
-                  Bienvenido, <%= user.nombre %>
-                    <%= user.apellido %>
-                </h1>
-              </div>
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <div
+              class="d-sm-flex align-items-center justify-content-between mb-4"
+            >
+              <h1 class="h3 mb-0 text-gray-800">
+                Bienvenido, <%= user.nombre %> <%= user.apellido %>
+              </h1>
+            </div>
 
-              <!-- Content Row -->
-              <div class="row">
-                <!-- Consolidaciones Enviadas -->
-                <div class="col-xl-6 col-md-6 mb-4">
-                  <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Consolidaciones Enviadas
-                          </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <%= consEnv %>
-                          </div>
+            <!-- Content Row -->
+            <div class="row">
+              <!-- Consolidaciones Enviadas -->
+              <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                        >
+                          Consolidaciones Enviadas
                         </div>
-                        <div class="col-auto">
-                          <i class="fas fa-list-check fa-2x text-gray-300"></i>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <%= consEnv %>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Consolidaciones Pendientes -->
-                <div class="col-xl-6 col-md-6 mb-4">
-                  <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                      <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Consolidaciones Rechazadas
-                          </div>
-                          <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <%= consRech %>
-                          </div>
-                        </div>
-                        <div class="col-auto">
-                          <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                        </div>
+                      <div class="col-auto">
+                        <i class="fas fa-file-circle-check fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col">
-                  <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                      <h6 class="m-0 font-weight-bold text-primary">
-                        Listado de Consolidaciones Rechazadas
-                      </h6>
-                    </div>
-                    <div class="card-body">
-                      <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"
-                          style="font-size: 13px; text-align: center !important">
-                          <thead>
-                            <tr>
-                              <th scope="col">Acción</th>
-                              <th scope="col">Nombre Consolidación</th>
-                              <th scope="col">Observación</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th><a><span class="badge badge-danger text-uppercase">Rechazado</span></a></th>
-                              <td>Carnets BPM</td>
-                              <td>SE AÑADIERON MAL LOS CAMPOS DE PRODUCTO</td>
-                            </tr>
-                            <tr>
-                              <th><a><span class="badge badge-danger text-uppercase">Rechazado</span></a></th>
-                              <td>IVC Publicidad</td>
-                              <td>SE AÑADIERON MAL LOS CAMPOS DE NOMBRE Y FECHA</td>
-                            </tr>
-                          </tbody>
-                        </table>
+              <!-- Consolidaciones Rechazadas -->
+              <div class="col-xl-6 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div
+                          class="text-xs font-weight-bold text-danger text-uppercase mb-1"
+                        >
+                          Consolidaciones Rechazadas
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                          <%= consRech %>
+                        </div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-file-circle-xmark fa-2x"></i>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- /.container-fluid -->
+
+            <div class="row">
+              <div class="col">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      Listado de Consolidaciones Rechazadas
+                    </h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-bordered"
+                        id="dataTable"
+                        width="100%"
+                        cellspacing="0"
+                        style="font-size: 13px; text-align: center !important"
+                      >
+                        <thead>
+                          <tr>
+                            <th scope="col">Acción</th>
+                            <th scope="col">Nombre Consolidación</th>
+                            <th scope="col">Observación</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>
+                              <a
+                                ><span class="badge badge-danger text-uppercase"
+                                  >Rechazado</span
+                                ></a
+                              >
+                            </th>
+                            <td>Carnets BPM</td>
+                            <td>SE AÑADIERON MAL LOS CAMPOS DE PRODUCTO</td>
+                          </tr>
+                          <tr>
+                            <th>
+                              <a
+                                ><span class="badge badge-danger text-uppercase"
+                                  >Rechazado</span
+                                ></a
+                              >
+                            </th>
+                            <td>IVC Publicidad</td>
+                            <td>
+                              SE AÑADIERON MAL LOS CAMPOS DE NOMBRE Y FECHA
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
         </div>
         <!-- End of Main Content -->
 
         <!-- Footer -->
         <%- include('../tools/footer'); %>
-          <!-- End of Footer -->
+        <!-- End of Footer -->
       </div>
       <!-- End of Content Wrapper -->
-  </div>
-  <!-- End of Page Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Seleccione "Cerrar sesión" a continuación si está listo para
-          finalizar su sesión actual.
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancelar
-          </button>
-          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Seleccione "Cerrar sesión" a continuación si está listo para
+            finalizar su sesión actual.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="/vendor/jquery/jquery.min.js"></script>
-  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="/js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/datatables-demo.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/datatables-demo.js"></script>
 
-  <script>
-    $(window).bind("load", function () {
-      var nav = document.getElementById("nav1");
-      nav.className += "  active";
-    });
-  </script>
-</body>
-
+    <script>
+      $(window).bind("load", function () {
+        var nav = document.getElementById("nav1");
+        nav.className += "  active";
+      });
+    </script>
+  </body>
 </html>

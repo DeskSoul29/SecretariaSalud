@@ -172,7 +172,7 @@ var EstablecimientosSchema = new Schema({
   },
 
   observaciones: { type: String },
-  crearedAt: { type: Date, default: Date.now },
+  crearedAt: { type: Date, default: Date.now() },
 });
 
 export default mongoose.model("consolidaciones", EstablecimientosSchema);

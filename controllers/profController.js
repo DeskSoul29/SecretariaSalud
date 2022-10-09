@@ -2,6 +2,7 @@ import login from "../models/user.js";
 import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
+import reportes from "../models/reportes.js";
 
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
@@ -22,8 +23,39 @@ var authProf = (function () {
     ]);
   };
 
+  var UpdateConsoli = async (req, next, criterioProf, ruta) => {
+    consolidaciones
+      .findByIdAndUpdate(
+        req.params._id,
+        {
+          $set: {
+            status: criterioProf,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        authProf.isUser(
+          req,
+          "Conexión exitosa",
+          "Consolidación Enviada",
+          "success",
+          false,
+          800,
+          "profesional/Consolidaciones/Validar/AntirrabicaAnimal/" + ruta
+        );
+      });
+    return next();
+  };
+
+  var SearchNextAntirrabica = async (req, next, provincia) => {
+    return next();
+  };
+
   return {
     isUser: isUser,
+    UpdateConsoli: UpdateConsoli,
+    SearchNextAntirrabica: SearchNextAntirrabica,
   };
 })();
 
@@ -36,7 +68,7 @@ export const fillMunicipio = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       const localidades = await local.find({
-        provincia: decodificada.provincia,
+        Provincia: decodificada.Provincia,
       });
       req.localidades = localidades;
       return next();
@@ -56,8 +88,8 @@ export const users = async (req, res, next) => {
     login
       .find({
         user: { $ne: decodificada.user },
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         rol: {
           $ne: "coordinacion",
@@ -143,7 +175,7 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       const hv = await hojavida
-        .find({ provincia: decodificada.provincia })
+        .find({ Provincia: decodificada.Provincia })
         .lean();
       req.hojavida = hv;
       return next();
@@ -156,7 +188,7 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 };
 
 // Apartado: Consolidaciones
-export const SeeProvEstablecimiento = async (req, res, next) => {
+export const SeeProfEstablecimiento = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -164,8 +196,8 @@ export const SeeProvEstablecimiento = async (req, res, next) => {
     );
     const Estables = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
       })
@@ -177,7 +209,99 @@ export const SeeProvEstablecimiento = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvMorgues = async (req, res, next) => {
+export const SendReportEstablecimiento = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Establecimientos"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Establecimientos"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/Establecimientos/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfMorgues = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -185,8 +309,8 @@ export const SeeProvMorgues = async (req, res, next) => {
     );
     const Morgues = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "MORGUES",
@@ -199,7 +323,100 @@ export const SeeProvMorgues = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvCementerios = async (req, res, next) => {
+export const SendReportMorgues = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Morgues"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      tipo: "MORGUES",
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Morgues"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/Morgues/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfCementerios = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -207,8 +424,8 @@ export const SeeProvCementerios = async (req, res, next) => {
     );
     const Cementerios = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "CEMENTERIOS (CON O SIN MORGUE)",
@@ -221,7 +438,100 @@ export const SeeProvCementerios = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvEstaRotulado = async (req, res, next) => {
+export const SendReportCementerios = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Cementerios"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      tipo: "CEMENTERIOS (CON O SIN MORGUE)",
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/Cementerios/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Cementerios"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+  return next();
+};
+
+export const SeeProfEstaRotulado = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -229,8 +539,8 @@ export const SeeProvEstaRotulado = async (req, res, next) => {
     );
     const Rotulado = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.rotulado": { $eq: "on" },
@@ -243,7 +553,100 @@ export const SeeProvEstaRotulado = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvEstaPublicidad = async (req, res, next) => {
+export const SendReportEstaRotulado = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/IVCRotulado"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.rotulado": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/IVCRotulado"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/IVCRotulado/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfEstaPublicidad = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -251,8 +654,8 @@ export const SeeProvEstaPublicidad = async (req, res, next) => {
     );
     const Publicidad = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.publicidad": { $eq: "on" },
@@ -265,7 +668,100 @@ export const SeeProvEstaPublicidad = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvMedEstable = async (req, res, next) => {
+export const SendReportEstaPublicidad = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/IVCPublicidad"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.publicidad": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/IVCPublicidad"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/IVCPublicidad/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfMedEstable = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -273,8 +769,8 @@ export const SeeProvMedEstable = async (req, res, next) => {
     );
     const MedEstable = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSEstablecimientos": { $eq: "on" },
@@ -287,7 +783,100 @@ export const SeeProvMedEstable = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvMedProduct = async (req, res, next) => {
+export const SendReportMedEstable = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/MedSaniEstablecimientos"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.MSEstablecimientos": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/MedSaniEstablecimientos"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/MedSaniEstablecimientos/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfMedProduct = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -295,8 +884,8 @@ export const SeeProvMedProduct = async (req, res, next) => {
     );
     const MedProduct = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSProductos": { $eq: "on" },
@@ -309,7 +898,100 @@ export const SeeProvMedProduct = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvEventSaludPubli = async (req, res, next) => {
+export const SendReportMedProduct = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/MedSaniProductos"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.MSProductos": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/MedSaniProductos"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/MedSaniProductos/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfEventSaludPubli = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -317,8 +999,8 @@ export const SeeProvEventSaludPubli = async (req, res, next) => {
     );
     const EventSalud = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.EvenSaludPubli": { $eq: "on" },
       })
@@ -330,7 +1012,99 @@ export const SeeProvEventSaludPubli = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvQuejas = async (req, res, next) => {
+export const SendReportEventSaludPubli = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/EventosSaludPublica"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.EvenSaludPubli": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/EventosSaludPublica"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/EventosSaludPublica/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfQuejas = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -338,8 +1112,8 @@ export const SeeProvQuejas = async (req, res, next) => {
     );
     const Queja = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.quejas": { $eq: "on" },
       })
@@ -351,7 +1125,99 @@ export const SeeProvQuejas = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvAntirrabica = async (req, res, next) => {
+export const SendReportQuejas = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Quejas"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.quejas": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Quejas"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/Quejas/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfAntirrabica = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -359,8 +1225,8 @@ export const SeeProvAntirrabica = async (req, res, next) => {
     );
     const AntiRa = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.antirrabica": { $eq: "on" },
       })
@@ -372,7 +1238,99 @@ export const SeeProvAntirrabica = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvCarnetizados = async (req, res, next) => {
+export const SendReportAntirrabica = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/AntirrabicaAnimal"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.antirrabica": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/AntirrabicaAnimal"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/AntirrabicaAnimal/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfCarnetizados = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -380,8 +1338,8 @@ export const SeeProvCarnetizados = async (req, res, next) => {
     );
     const Carnets = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.lisCarnets": { $eq: "on" },
       })
@@ -393,7 +1351,99 @@ export const SeeProvCarnetizados = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvEduSanitaria = async (req, res, next) => {
+export const SendReportCarnetzados = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/ListadoCarnetizados"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.lisCarnets": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/ListadoCarnetizados"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/ListadoCarnetizados/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfEduSanitaria = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -401,8 +1451,8 @@ export const SeeProvEduSanitaria = async (req, res, next) => {
     );
     const EduSani = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.eduSanitaria": { $eq: "on" },
       })
@@ -414,7 +1464,99 @@ export const SeeProvEduSanitaria = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvVehiculos = async (req, res, next) => {
+export const SendReportEduSanitaria = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/EduSanitaria"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.eduSanitaria": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/EduSanitaria"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/EduSanitaria/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfVehiculos = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -422,8 +1564,8 @@ export const SeeProvVehiculos = async (req, res, next) => {
     );
     const Vehicu = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.vehiculos": { $eq: "on" },
       })
@@ -435,7 +1577,99 @@ export const SeeProvVehiculos = async (req, res, next) => {
     return next();
   }
 };
-export const SeeProvTomaMuestra = async (req, res, next) => {
+export const SendReportVehiculos = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Vehiculos"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.vehiculos": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/Vehiculos"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/Vehiculos/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const SeeProfTomaMuestra = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -443,8 +1677,8 @@ export const SeeProvTomaMuestra = async (req, res, next) => {
     );
     const TomaM = await consolidaciones
       .find({
-        provincia: {
-          $eq: decodificada.provincia,
+        Provincia: {
+          $eq: decodificada.Provincia,
         },
         "consolidacion.tomaMuestra": { $eq: "on" },
       })
@@ -455,4 +1689,100 @@ export const SeeProvTomaMuestra = async (req, res, next) => {
     console.log(error);
     return next();
   }
+};
+export const SendReportTomaMuestra = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { userTec, nameTec, criterioProf, motivo } = req.body;
+
+  var report = new reportes({
+    consolidacion: {
+      userTec: userTec,
+      nomTec: nameTec,
+      consID: req.params._id,
+    },
+    profesional: {
+      userProf: decodificada.user,
+      nomProf: decodificada.nombres + " " + decodificada.apellidos,
+    },
+    respuestaProf: {
+      criterioProf: criterioProf,
+      motivoProf: motivo,
+    },
+  });
+
+  await report.save().catch((error) => {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "Ya se encuentra un reporte en la Base de Datos",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/TomaMuestras"
+    );
+    return next();
+  });
+
+  const nextCons = await consolidaciones
+    .find({
+      Provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.tomaMuestra": { $eq: "on" },
+      status: {
+        $eq: "Pendiente",
+      },
+      _id: {
+        $ne: req.params._id,
+      },
+    })
+    .sort({ crearedAt: 1 })
+    .limit(1);
+
+  if (nextCons.length === 0) {
+    authProf.isUser(
+      req,
+      "Reportes Terminados",
+      "Ha Terminado El Listado",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver/TomaMuestras"
+    );
+    return next();
+  } else {
+    var ruta = nextCons[0]._id;
+  }
+
+  await consolidaciones
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          status: criterioProf,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      authProf.isUser(
+        req,
+        "Conexión exitosa",
+        "Consolidación Enviada",
+        "success",
+        false,
+        800,
+        "/profesional/Consolidaciones/Validar/TomaMuestras/" + ruta
+      );
+    })
+    .catch((error) => console.error(error));
+  return next();
+};
+
+export const ValProfConsolidaciones = async (req, res, next) => {
+  req.consolidacion = await consolidaciones.findById(req.params._id).lean();
+  return next();
 };
