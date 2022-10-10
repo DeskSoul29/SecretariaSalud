@@ -2,11 +2,14 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var ReporteSchema = new Schema({
+  tipo: String,
+
   consolidacion: {
     userTec: { type: Number, required: true },
     nomTec: { type: String, required: true },
     consID: { type: Schema.ObjectId, required: true, unique: true },
   },
+
   profesional: {
     userProf: { type: Number, required: true },
     nomProf: { type: String, required: true },

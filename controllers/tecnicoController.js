@@ -1,4 +1,5 @@
 import consolidaciones from "../models/consolidaciones.js";
+import reportes from "../models/reportes.js";
 
 import hojavida from "../models/hojavida.js";
 
@@ -855,7 +856,7 @@ var authTec = (function () {
 })();
 
 //Apartado: Inicio
-export const ConsolidaEnviadas = async (req, res, next) => {
+export const ConsolidaEstados = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
@@ -865,37 +866,63 @@ export const ConsolidaEnviadas = async (req, res, next) => {
       .find({
         "responsable.userResponsable": {
           $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Pendiente",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.consPend = data;
+      });
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Enviado",
         },
       })
       .count()
       .then((data) => {
         req.consEnv = data;
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
       });
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const ConsolidaRechazadas = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
     await consolidaciones
       .find({
         "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        status: { $eq: "Rechazado" },
+        status: {
+          $eq: "Aceptado",
+        },
       })
       .count()
       .then((data) => {
-        req.consRech = data;
+        req.consAcep = data;
+      });
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const LisConsolidaRechazadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .find({
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuestaProf.criterioProf": { $eq: "Rechazado" },
+      })
+      .sort({ createdAt: 1 })
+      .then((data) => {
+        req.ListconsRech = data;
         return next();
       })
       .catch((error) => {

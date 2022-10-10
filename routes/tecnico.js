@@ -2,8 +2,8 @@ import { Router } from "express";
 import moment from "moment";
 
 import {
-  ConsolidaEnviadas,
-  ConsolidaRechazadas,
+  ConsolidaEstados,
+  LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   SendEstablecimiento,
   SeeEstablecimiento,
@@ -42,13 +42,16 @@ const router = Router();
 router.get(
   "/",
   isAuthenticatedTecnic,
-  ConsolidaEnviadas,
-  ConsolidaRechazadas,
+  ConsolidaEstados,
+  LisConsolidaRechazadas,
   (req, res) => {
     res.render("tecnico/main", {
       user: req.user,
+      consPend: req.consPend,
       consEnv: req.consEnv,
-      consRech: req.consRech,
+      consAcep: req.consAcep,
+      ListconsRech: req.ListconsRech,
+      moment: moment,
     });
   }
 );

@@ -7,6 +7,8 @@ import {
   hojavidaConsultAllProf,
   changePass,
   addMuniApoyo,
+  ConsolidaEstadosProf,
+  LisConsolidaRechazadas,
   SeeProfEstablecimiento,
   SendReportEstablecimiento,
   SeeProfMorgues,
@@ -48,9 +50,21 @@ import {
 
 const router = Router();
 
-router.get("/", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/main", { user: req.user });
-});
+router.get(
+  "/",
+  isAuthenticatedProf,
+  ConsolidaEstadosProf,
+  LisConsolidaRechazadas,
+  (req, res) => {
+    res.render("profesional/main", {
+      user: req.user,
+      consPend: req.consPend,
+      consEnv: req.consEnv,
+      consAcep: req.consAcep,
+      ListRechazo: req.ListRechazo,
+    });
+  }
+);
 
 // Apartado: Usuarios
 router.get("/Cuentas/Usuarios", isAuthenticatedProf, users, (req, res) => {
