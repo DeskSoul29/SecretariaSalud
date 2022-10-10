@@ -7,6 +7,8 @@ var ReporteSchema = new Schema({
   consolidacion: {
     userTec: { type: Number, required: true },
     nomTec: { type: String, required: true },
+    provincia: { type: String, required: true },
+    municipio: { type: String, required: true },
     consID: { type: Schema.ObjectId, required: true, unique: true },
   },
 

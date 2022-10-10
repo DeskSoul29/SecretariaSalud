@@ -100,13 +100,18 @@ function addMuniForm(e) {
 
 function validConsolidacion(e) {
   if (document.getElementById("criterioProf").value == "Seleccione") {
-    toast.toastInfo("Advertencia", "Seleccione una respuesta");
+    toast.toastInfo("Advertencia", "Seleccione un Criterio");
     e.preventDefault();
   } else if (
     document.getElementById("criterioProf").value == "Rechazado" &&
     document.getElementById("motivo").value == ""
   ) {
     toast.toastInfo("Advertencia", "Escribe el motivo");
+    e.preventDefault();
+  }
+
+  if (document.getElementById("actaAnul").value == "Seleccione") {
+    toast.toastInfo("Advertencia", "Seleccione si el Acta fue anulada");
     e.preventDefault();
   }
 }

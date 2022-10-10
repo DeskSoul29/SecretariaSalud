@@ -1,2 +1,0 @@
-,Prénom,Date,Examen,Note
-"No matching records found",,,,

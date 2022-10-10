@@ -76,14 +76,14 @@
                                                                     <span class="badge badge-warning text-uppercase">Pendiente</span>
                                                                 <% }else if(publicidad.status == "Rechazado"){ %>
                                                                     <a href="<%= publicidad._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                                                                <% }else if(cementerio.status == "Enviado"){ %>
+                                                                <% }else if(publicidad.status == "Enviado"){ %>
                                                                     <span class="badge badge-info text-uppercase">Enviado</span>
                                                                 <% }else if(publicidad.status == "Aceptado"){ %>
                                                                     <span class="badge badge-success text-uppercase">Aceptado</span>
                                                                 <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(publicidad.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
+                                                                <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= publicidad.provincia %>
@@ -208,7 +208,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[1, 'desc']],
+                    order: [[1, 'asc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

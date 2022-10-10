@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
+// var fecha = new Date();
+// db.publication.save({ date: fecha, offset: fecha.getTimezoneOffset() });
+
 var EstablecimientosSchema = new Schema({
   status: { type: String, default: "Pendiente" },
 
@@ -172,7 +175,7 @@ var EstablecimientosSchema = new Schema({
   },
 
   observaciones: { type: String },
-  crearedAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date, default: Date.now() },
 });
 
 export default mongoose.model("consolidaciones", EstablecimientosSchema);

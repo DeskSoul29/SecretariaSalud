@@ -32,7 +32,7 @@ var authProf = (function () {
     rutaVer,
     rutaValidar
   ) => {
-    var { userTec, nameTec, criterioProf, motivo } = req.body;
+    var { userTec, nameTec, municipio, criterioProf, motivo } = req.body;
 
     var report = new reportes({
       tipo: tipCon,
@@ -40,6 +40,8 @@ var authProf = (function () {
       consolidacion: {
         userTec: userTec,
         nomTec: nameTec,
+        provincia: decodificada.provincia,
+        municipio: municipio,
         consID: req.params._id,
       },
       profesional: {
@@ -65,6 +67,9 @@ var authProf = (function () {
             { new: true }
           )
           .then((result) => {
+            if (tipCon == "Establecimiento") {
+              authProf.UpdateActa(req);
+            }
             if (nextCons.length === 0) {
               authProf.isUser(
                 req,
@@ -90,6 +95,7 @@ var authProf = (function () {
           });
       })
       .catch((error) => {
+        console.log(error);
         authProf.isUser(
           req,
           "Reporte Cancelado",
@@ -101,6 +107,18 @@ var authProf = (function () {
         );
         return next();
       });
+  };
+
+  var UpdateActa = async (req) => {
+    return await consolidaciones.findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          actaAnul: req.body.actaAnul,
+        },
+      },
+      { new: true }
+    );
   };
 
   var SearchNextEstablecimiento = async (req, provincia) => {
@@ -117,7 +135,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -136,7 +154,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -155,7 +173,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -174,7 +192,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -193,7 +211,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -212,7 +230,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -231,7 +249,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -249,7 +267,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -267,7 +285,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -285,7 +303,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -303,7 +321,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -321,7 +339,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -339,7 +357,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -357,13 +375,14 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ crearedAt: 1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
   return {
     isUser: isUser,
     UpdateConsoli: UpdateConsoli,
+    UpdateActa: UpdateActa,
     SearchNextEstablecimiento: SearchNextEstablecimiento,
     SearchNextMorgue: SearchNextMorgue,
     SearchNextCementerio: SearchNextCementerio,
@@ -388,6 +407,7 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
+
     await consolidaciones
       .find({
         provincia: {
@@ -399,6 +419,7 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       .then((data) => {
         req.consPend = data;
       });
+
     await consolidaciones
       .find({
         provincia: {
@@ -411,6 +432,20 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       .count()
       .then((data) => {
         req.consEnv = data;
+      });
+
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Rechazado",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.consRech = data;
       });
 
     await consolidaciones
@@ -589,6 +624,27 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 };
 
 // Apartado: Consolidaciones
+export const SeeProfConsolidaciones = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Estables = await consolidaciones
+      .find({
+        Provincia: {
+          $eq: decodificada.Provincia,
+        },
+      })
+      .lean();
+    req.allConso = Estables;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
 export const SeeProfEstablecimiento = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -929,7 +985,7 @@ export const SendReportEventSaludPubli = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "EvenSaludPubli",
+    "Eventos Salud Publica",
     nextCons,
     "/profesional/Consolidaciones/Ver/EventosSaludPublica",
     "/profesional/Consolidaciones/Validar/EventosSaludPublica/"
@@ -969,7 +1025,7 @@ export const SendReportQuejas = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "quejas",
+    "Quejas",
     nextCons,
     "/profesional/Consolidaciones/Ver/Quejas",
     "/profesional/Consolidaciones/Validar/Quejas/"
@@ -1055,7 +1111,7 @@ export const SendReportCarnetzados = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "lisCarnets",
+    "Carnetizados",
     nextCons,
     "/profesional/Consolidaciones/Ver/ListadoCarnetizados",
     "/profesional/Consolidaciones/Validar/ListadoCarnetizados/"
@@ -1098,7 +1154,7 @@ export const SendReportEduSanitaria = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "eduSanitaria",
+    "Edu. Sanitaria",
     nextCons,
     "/profesional/Consolidaciones/Ver/EduSanitaria",
     "/profesional/Consolidaciones/Validar/EduSanitaria/"
@@ -1141,7 +1197,7 @@ export const SendReportVehiculos = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "vehiculos",
+    "Vehiculos",
     nextCons,
     "/profesional/Consolidaciones/Ver/Vehiculos",
     "/profesional/Consolidaciones/Validar/Vehiculos/"
@@ -1184,7 +1240,7 @@ export const SendReportTomaMuestra = async (req, res, next) => {
     req,
     next,
     decodificada,
-    "tomaMuestra",
+    "Toma de Muestra",
     nextCons,
     "/profesional/Consolidaciones/Ver/TomaMuestras",
     "/profesional/Consolidaciones/Validar/TomaMuestras/"

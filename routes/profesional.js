@@ -7,6 +7,7 @@ import {
   hojavidaConsultAllProf,
   changePass,
   addMuniApoyo,
+  SeeProfConsolidaciones,
   ConsolidaEstadosProf,
   LisConsolidaRechazadas,
   SeeProfEstablecimiento,
@@ -61,6 +62,7 @@ router.get(
       consPend: req.consPend,
       consEnv: req.consEnv,
       consAcep: req.consAcep,
+      consRech: req.consRech,
       ListRechazo: req.ListRechazo,
     });
   }
@@ -155,11 +157,18 @@ router.post(
 );
 
 // Apartado: Consolidaciones
-router.get("/Consolidaciones/Ver", isAuthenticatedProf, (req, res) => {
-  res.render("profesional/Visitas/mainVer", {
-    user: req.user,
-  });
-});
+router.get(
+  "/Consolidaciones/Ver",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/mainVer", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
 router.get(
   "/Consolidaciones/Ver/Establecimientos",
   isAuthenticatedProf,
@@ -180,6 +189,7 @@ router.get(
     res.render("profesional/Visitas/Ver/Validar/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -193,6 +203,7 @@ router.post(
     res.render("profesional/Visitas/Ver/Validar/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -217,6 +228,7 @@ router.get(
     res.render("profesional/Visitas/Ver/Validar/morgues", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -230,6 +242,7 @@ router.post(
     res.render("profesional/Visitas/Ver/Validar/morgues", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -253,6 +266,7 @@ router.get(
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/cementerios", {
       user: req.user,
+      moment: moment,
       consolidacion: req.consolidacion,
       alert: undefined,
     });
@@ -266,6 +280,7 @@ router.post(
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/cementerios", {
       user: req.user,
+      moment: moment,
       consolidacion: req.consolidacion,
       alert: req.alert,
     });
@@ -288,9 +303,10 @@ router.get(
   isAuthenticatedProf,
   ValProfConsolidaciones,
   (req, res) => {
-    res.render("profesional/Visitas/Validar/Validar/rotulado", {
+    res.render("profesional/Visitas/Ver/Validar/rotulado", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -304,6 +320,7 @@ router.post(
     res.render("profesional/Visitas/Ver/Validar/rotulado", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -328,6 +345,7 @@ router.get(
     res.render("profesional/Visitas/Ver/Validar/publicidad", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -341,6 +359,7 @@ router.post(
     res.render("profesional/Visitas/Ver/Validar/publicidad", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -362,9 +381,10 @@ router.get(
   isAuthenticatedProf,
   ValProfConsolidaciones,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medestablecimiento", {
+    res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -375,9 +395,10 @@ router.post(
   ValProfConsolidaciones,
   SendReportMedEstable,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medestablecimiento", {
+    res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -399,9 +420,10 @@ router.get(
   isAuthenticatedProf,
   ValProfConsolidaciones,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medproducto", {
+    res.render("profesional/Visitas/Ver/Validar/medProductos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -412,9 +434,10 @@ router.post(
   ValProfConsolidaciones,
   SendReportMedProduct,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medproducto", {
+    res.render("profesional/Visitas/Ver/Validar/medProductos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -432,13 +455,14 @@ router.get(
   }
 );
 router.get(
-  "/Consolidaciones/Ver/Vehiculos/:_id",
+  "/Consolidaciones/Validar/Vehiculos/:_id",
   isAuthenticatedProf,
   ValProfConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -452,6 +476,7 @@ router.post(
     res.render("profesional/Visitas/Ver/Validar/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }
@@ -473,9 +498,10 @@ router.get(
   isAuthenticatedProf,
   ValProfConsolidaciones,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/EventSalPubli", {
+    res.render("profesional/Visitas/Ver/Validar/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
+      moment: moment,
       alert: undefined,
     });
   }
@@ -486,10 +512,11 @@ router.post(
   ValProfConsolidaciones,
   SendReportEventSaludPubli,
   (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/EventSalPubli", {
+    res.render("profesional/Visitas/Ver/Validar/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );
@@ -514,6 +541,7 @@ router.get(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: undefined,
+      moment: moment,
     });
   }
 );
@@ -527,6 +555,7 @@ router.post(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );
@@ -551,6 +580,7 @@ router.get(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: undefined,
+      moment: moment,
     });
   }
 );
@@ -564,6 +594,7 @@ router.post(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );
@@ -588,6 +619,7 @@ router.get(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: undefined,
+      moment: moment,
     });
   }
 );
@@ -601,6 +633,7 @@ router.post(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );
@@ -625,6 +658,7 @@ router.get(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: undefined,
+      moment: moment,
     });
   }
 );
@@ -638,6 +672,7 @@ router.post(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );
@@ -662,6 +697,7 @@ router.get(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: undefined,
+      moment: moment,
     });
   }
 );
@@ -675,6 +711,7 @@ router.post(
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
+      moment: moment,
     });
   }
 );

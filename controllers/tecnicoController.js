@@ -23,94 +23,18 @@ var authTec = (function () {
     ]);
   };
 
-  var EventSalPubli = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      var {
-        mes,
-        provincia,
-        municipio,
-        etasPresent,
-        etasAtend,
-        intoxPresent,
-        intoxAtend,
-        agrePresent,
-        agreAtend,
-        trueFalse,
-        fReunion,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          EvenSaludPubli: "on",
-        },
-        ForEvenSPublica: {
-          mes: mes,
-          presentEtas: etasPresent,
-          atendEtas: etasAtend,
-          presentIntox: intoxPresent,
-          atendIntox: intoxAtend,
-          presentAgre: agrePresent,
-          atendAgre: agreAtend,
-          covePart: trueFalse,
-          coveFech: fReunion,
-        },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var Establecimientos = async (req, res, next) => {
+  var SendConsolidacion = async (
+    req,
+    next,
+    establecimientoON,
+    antirrabicaON,
+    eduSanitariaON,
+    EvenSaludPubliON,
+    lisCarnetsON,
+    vehiculosON,
+    tomaMuestraON,
+    quejasON
+  ) => {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -166,7 +90,61 @@ var authTec = (function () {
         loteProduc,
         fechProduc,
         observacionMedProd,
+        //Antirrabica
+        Pcanina,
+        Pfelina,
+        caninosUrbano,
+        caninosRural,
+        felinosUrbano,
+        felinosRural,
+        totalVacunados,
+        //EduSanitaria
+        temaCap,
+        otrosCap,
+        fechaCap,
+        intensidadCap,
+        lugCap,
+        personalCap,
+        totalPersCap,
+        //EvenSalPublica
+        mes,
+        etasPresent,
+        etasAtend,
+        intoxPresent,
+        intoxAtend,
+        agrePresent,
+        agreAtend,
+        trueFalse,
+        fReunion,
+        //Carnetizados
+        expCarnet,
+        idenCarnet,
+        nameCarnet,
+        estableciCarnet,
+        direcCarnet,
+        //Quejas
+        municipioComuni,
+        tipQueja,
+        fechRece,
+        perCausa,
+        perAfec,
+        descQueja,
+        requeQueja,
+        //Toma de Muestras
+        tipMues,
+        descripTip,
+        tipAnali,
+        zona,
+        objEst,
+        acompananteEmp,
         observacion,
+        //Vehiculos
+        classVehi,
+        otroV,
+        placa,
+        refriV,
+        nInscrip,
+        produTrans,
       } = req.body;
 
       var file2 = req.files[1] === undefined ? false : req.files[1].filename;
@@ -183,11 +161,18 @@ var authTec = (function () {
             decodificada.nombres + " " + decodificada.apellidos,
         },
         consolidacion: {
-          establecimiento: "on",
+          establecimiento: establecimientoON,
           rotulado: rotuladoON,
           publicidad: publicidadON,
           MSProductos: productosON,
           MSEstablecimientos: establecimientosON,
+          antirrabica: antirrabicaON,
+          eduSanitaria: eduSanitariaON,
+          EvenSaludPubli: EvenSaludPubliON,
+          lisCarnets: lisCarnetsON,
+          vehiculos: vehiculosON,
+          tomaMuestra: tomaMuestraON,
+          quejas: quejasON,
         },
         grupo: grupEsta,
         codigo: codEsta,
@@ -204,9 +189,13 @@ var authTec = (function () {
         score: score,
         concepto: concepto,
         accion: accion,
-        salaNM: NecroMorg,
+
         acta: acta,
         actaLey: actaLey,
+        actaAnul: "",
+
+        salaNM: NecroMorg,
+
         ForRotulado: {
           productoRotulado: productoRotulado,
         },
@@ -234,188 +223,6 @@ var authTec = (function () {
           vencimientoMSProductos: fechProduc,
           observacionMedProd: observacionMedProd,
         },
-
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var Quejas = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      var {
-        provincia,
-        municipio,
-        municipioComuni,
-        grupEsta,
-        codEsta,
-        Nriesgo,
-        tipoEsta,
-        rSocial,
-        tIden,
-        inputIden,
-        phone,
-        rLegal,
-        direccion,
-        estado,
-        tipQueja,
-        fechRece,
-        fVisit,
-        perCausa,
-        perAfec,
-        descQueja,
-        requeQueja,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          quejas: "on",
-        },
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        identificacion: inputIden,
-        telefono: phone,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
-        fvisit: fVisit,
-        ForQuejas: {
-          municipioEstable: municipio,
-          municipioComuni: municipioComuni,
-          tipoQueja: tipQueja,
-          frecep: fechRece,
-          perCausaQueja: perCausa,
-          perAfectQueja: perAfec,
-          descQueja: descQueja,
-          reqQueja: requeQueja,
-        },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var AntiRabica = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      var {
-        provincia,
-        municipio,
-        Pcanina,
-        Pfelina,
-        caninosUrbano,
-        caninosRural,
-        felinosUrbano,
-        felinosRural,
-        totalVacunados,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          antirrabica: "on",
-        },
         ForAntirrabica: {
           Pcanina: Pcanina,
           Pfelina: Pfelina,
@@ -424,159 +231,6 @@ var authTec = (function () {
           felUrb: felinosUrbano,
           felRur: felinosRural,
           totalVac: totalVacunados,
-        },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var Carnetizados = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      var {
-        provincia,
-        municipio,
-        expCarnet,
-        idenCarnet,
-        nameCarnet,
-        estableciCarnet,
-        direcCarnet,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          lisCarnets: "on",
-        },
-        ForCarnets: {
-          expCarnet: expCarnet,
-          idenCarnet: idenCarnet,
-          nombreCarnet: nameCarnet,
-          establecimientoCarnet: estableciCarnet,
-          direccionCarnet: direcCarnet,
-        },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var EduSanitaria = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-      var {
-        provincia,
-        municipio,
-        temaCap,
-        otrosCap,
-        fechaCap,
-        intensidadCap,
-        lugCap,
-        personalCap,
-        totalPersCap,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          eduSanitaria: "on",
         },
         ForEduSanitaria: {
           tema: temaCap,
@@ -587,104 +241,34 @@ var authTec = (function () {
           personalDiri: personalCap,
           totalPersCap: totalPersCap,
         },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
+        ForEvenSPublica: {
+          mes: mes,
+          presentEtas: etasPresent,
+          atendEtas: etasAtend,
+          presentIntox: intoxPresent,
+          atendIntox: intoxAtend,
+          presentAgre: agrePresent,
+          atendAgre: agreAtend,
+          covePart: trueFalse,
+          coveFech: fReunion,
         },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var TomaMuestras = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-
-      var {
-        provincia,
-        municipio,
-        grupEsta,
-        codEsta,
-        Nriesgo,
-        tipoEsta,
-        rSocial,
-        tIden,
-        inputIden,
-        phone,
-        rLegal,
-        direccion,
-        estado,
-        tipMues,
-        descripTip,
-        tipAnali,
-        zona,
-        objEst,
-        fVisit,
-        acompananteEmp,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
+        ForCarnets: {
+          expCarnet: expCarnet,
+          idenCarnet: idenCarnet,
+          nombreCarnet: nameCarnet,
+          establecimientoCarnet: estableciCarnet,
+          direccionCarnet: direcCarnet,
         },
-        consolidacion: {
-          tomaMuestra: "on",
+        ForQuejas: {
+          municipioEstable: municipio,
+          municipioComuni: municipioComuni,
+          tipoQueja: tipQueja,
+          frecep: fechRece,
+          perCausaQueja: perCausa,
+          perAfectQueja: perAfec,
+          descQueja: descQueja,
+          reqQueja: requeQueja,
         },
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        identificacion: inputIden,
-        telefono: phone,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
-        fvisit: fVisit,
         ForTomaMuestras: {
           tipMuestra: tipMues,
           descMuestra: descripTip,
@@ -693,108 +277,6 @@ var authTec = (function () {
           objAnalisis: objEst,
           acompanante: acompananteEmp,
         },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
-        },
-        observaciones: observacion,
-      })
-        .save()
-        .then((result) => {
-          if (result) {
-            authTec.isUser(
-              req,
-              "Conexión exitosa",
-              "Consolidación Enviada",
-              "success",
-              false,
-              800,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          } else {
-            authTec.isUser(
-              req,
-              "Error en la Base de Datos",
-              "Envio Cancelado",
-              "error",
-              false,
-              false,
-              "/tecnico/Consolidaciones/Enviar"
-            );
-          }
-          return next();
-        });
-    } catch (error) {
-      return error;
-    }
-  };
-
-  var Vehiculs = async (req, res, next) => {
-    try {
-      const decodificada = await promisify(jwt.verify)(
-        req.cookies.jwt,
-        process.env.JWT_SECRETO
-      );
-
-      var {
-        provincia,
-        municipio,
-        grupEsta,
-        codEsta,
-        Nriesgo,
-        tipoEsta,
-        rSocial,
-        tIden,
-        inputIden,
-        phone,
-        rLegal,
-        direccion,
-        estado,
-        fVisit,
-        score,
-        concepto,
-        classVehi,
-        otroV,
-        placa,
-        refriV,
-        nInscrip,
-        produTrans,
-        observacion,
-      } = req.body;
-
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
-      new consolidaciones({
-        provincia: provincia,
-        municipio: municipio,
-        responsable: {
-          userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
-        },
-        consolidacion: {
-          vehiculos: "on",
-        },
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        identificacion: inputIden,
-        telefono: phone,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
-        fvisit: fVisit,
-        score: score,
-        concepto: concepto,
         ForVehiculos: {
           claseVehiculo: classVehi,
           otraClase: otroV,
@@ -844,14 +326,7 @@ var authTec = (function () {
 
   return {
     isUser: isUser,
-    Establecimientos: Establecimientos,
-    EventSalPubli: EventSalPubli,
-    Quejas: Quejas,
-    AntiRabica: AntiRabica,
-    Carnetizados: Carnetizados,
-    EduSanitaria: EduSanitaria,
-    TomaMuestras: TomaMuestras,
-    Vehiculs: Vehiculs,
+    SendConsolidacion: SendConsolidacion,
   };
 })();
 
@@ -969,7 +444,7 @@ export const SendEstablecimiento = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.Establecimientos(req, res, next);
+    authTec.SendConsolidacion(req, next, "on", "", "", "", "", "", "", "");
   });
 };
 export const SeeEstablecimiento = async (req, res, next) => {
@@ -1130,7 +605,7 @@ export const SendEventSaludPubli = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EventSalPubli(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "", "", "on", "", "", "", "");
   });
 };
 export const SeeEventSaludPubli = async (req, res, next) => {
@@ -1159,7 +634,7 @@ export const SendQuejas = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.Quejas(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "", "on");
   });
 };
 export const SeeQuejas = async (req, res, next) => {
@@ -1188,7 +663,7 @@ export const SendAntirrabica = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.AntiRabica(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "on", "", "", "", "", "", "");
   });
 };
 export const SeeAntirrabica = async (req, res, next) => {
@@ -1217,7 +692,7 @@ export const SendCarnetizados = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.Carnetizados(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "", "", "", "on", "", "", "");
   });
 };
 export const SeeCarnetizados = async (req, res, next) => {
@@ -1246,7 +721,7 @@ export const SendEduSanitaria = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.EduSanitaria(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "", "on", "", "", "", "", "");
   });
 };
 export const SeeEduSanitaria = async (req, res, next) => {
@@ -1275,7 +750,7 @@ export const SendVehiculos = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.Vehiculs(req, res, next);
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "on", "", "");
   });
 };
 export const SeeVehiculos = async (req, res, next) => {
@@ -1304,9 +779,7 @@ export const SendTomaMuestra = async (req, res, next) => {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.TomaMuestras(req, res, next, function (err) {
-      console.log(er);
-    });
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "on", "");
   });
 };
 export const SeeTomaMuestra = async (req, res, next) => {

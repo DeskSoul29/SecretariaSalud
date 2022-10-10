@@ -1,232 +1,113 @@
-<!DOCTYPE html>
 <html lang="es">
 
 <head>
-  <%- include('../../../tools/head'); %>
-    <style>
-      .btn-upload {
-        padding: 10px 20px;
-        margin-left: 10px;
-      }
+  <%- include('../../../../tools/head'); %>
+  <style>
+    .btn-upload {
+      padding: 10px 20px;
+      margin-left: 10px;
+    }
 
-      .upload-input-group {
-        margin-bottom: 10px;
-      }
+    .upload-input-group {
+      margin-bottom: 10px;
+    }
 
-      .input-group>.custom-select:not(:last-child),
-      .input-group>.form-control:not(:last-child) {
-        height: 45px;
-      }
-    </style>
+    .input-group>.custom-select:not(:last-child),
+    .input-group>.form-control:not(:last-child) {
+      height: 45px;
+    }
+  </style>
 </head>
 
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
-      <!-- End of Sidebar -->
+    <%- include('../../../../tools/sidebarProf'); %>
+    <!-- End of Sidebar -->
 
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column">
-        <!-- Main Content -->
-        <div id="content">
-          <!-- Topbar -->
-          <%- include('../../../tools/topbar'); %>
-            <!-- End of Topbar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include('../../../../tools/topbar'); %>
+        <!-- End of Topbar -->
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-              <div class="container">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                  <div class="card-body p-0">
-                    <!-- Nested Row within Card Body -->
-                    <div class="p-5">
-                      <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Establecimientos</h1>
-                      </div>
-                      <form onsubmit="establecimientosForm(event)"
-                        action="/tecnico/Consolidaciones/Enviar/Establecimientos/<%= user.user %>" method="POST"
-                        autocomplete="off" enctype="multipart/form-data">
-                        <%- include("./templateHV") %>
-
-                          <div class="form-group row">
-                            <div class="col-sm-3">
-                              <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
-                              <input type="date" placeholder="Ninguna" class="form-control form-control-user"
-                                id="fVisit" name="fVisit" />
-                            </div>
-                            <div class="col-sm-3">
-                              <label class="mr-sm-2" for="score">Puntaje</label>
-                              <input type="number" placeholder="1.0" min="0" max="100"
-                                class="form-control form-control-user" step="0.1" id="score" name="score" />
-                            </div>
-                            <div class="col-sm-6">
-                              <label class="mr-sm-2" for="concepto">Concepto</label>
-                              <input type="text" class="form-control form-control-user" id="concepto" name="concepto"
-                                readonly value="NO APLICA" />
-                            </div>
-                          </div>
-
-                          <div class="form-group row">
-                            <div class="col-sm-4">
-                              <label class="mr-sm-2" for="accion">Acción Realizada</label>
-                              <select id="accion" name="accion" class="custom-select mr-sm-2">
-                                <option selected disabled>
-                                  Seleccione La Acción
-                                </option>
-                                <option value="INSPECCIÓN">INSPECCIÓN</option>
-                                <option value="CONTROL">CONTROL</option>
-                              </select>
-                            </div>
-                            <div class="col-sm-8">
-                              <label class="mr-sm-2" for="acta">Tipo de Acta
-                                Utilizada</label>
-                              <select id="acta" name="acta" class="custom-select mr-sm-2">
-                                <option selected disabled>
-                                  Seleccione
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS">
-                                  ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - EXPENDIOS DE CARNE">
-                                  ENFOQUE DE RIESGO - EXPENDIOS DE CARNE
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS">
-                                  ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - GRANDES SUPERFICIES">
-                                  ENFOQUE DE RIESGO - GRANDES SUPERFICIES
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - ALMACENAMIENTO">
-                                  ENFOQUE DE RIESGO - ALMACENAMIENTO
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA">
-                                  ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS">
-                                  ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - PLAZAS DE MERCADO">
-                                  ENFOQUE DE RIESGO - PLAZAS DE MERCADO
-                                </option>
-                                <option value="ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS">
-                                  ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS
-                                </option>
-                                <option value="PGIRHS">PGIRHS</option>
-                                <option value="CEMENTERIOS">CEMENTERIOS</option>
-                                <option value="ACUEDUCTOS">ACUEDUCTOS</option>
-                                <option value="PISCINAS">PISCINAS</option>
-                                <option value="PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE PLAGUICIDAS">
-                                  PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE
-                                  PLAGUICIDAS
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-
-                          <div class="form-group row" id="extraEstablecimiento">
-                            <div class="col-sm-4">
-                              <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley 1335?</label>
-                              <select id="actaLey" name="actaLey" class="custom-select mr-sm-2">
-                                <option selected disabled>Seleccione</option>
-                                <option value="SI">SI</option>
-                                <option value="NO">NO</option>
-                              </select>
-                            </div>
-
-                            <div id="templeCementerios" style="display: none" class="col-sm-8">
-                              <%- include("./cementerios") %>
-                            </div>
-
-                            <div class="col-sm-4" id="extraEstablecimientoIVC" style="display: none">
-                              <label class="mr-sm-2">Acciones IVC Adicional</label>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="rotuladoON" name="rotuladoON" />
-                                <label class="form-check-label" for="rotuladoON">ROTULADO</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="publicidadON" name="publicidadON" />
-                                <label class="form-check-label" for="publicidadON">PUBLICIDAD</label>
-                              </div>
-                            </div>
-                            <div class="col-sm-4" id="extraEstablecimientoMD" style="display: none">
-                              <label class="mr-sm-2">Medidas Sanitarias</label>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="establecimientosON"
-                                  name="establecimientosON" />
-                                <label class="form-check-label" for="establecimientosON">ESTABLECIMIENTOS</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="productosON" name="productosON" />
-                                <label class="form-check-label" for="productosON">PRODUCTOS</label>
-                              </div>
-                            </div>
-
-                          </div>
-
-                          <div class="form-group row">
-                            <div class="col-sm-12">
-                              <label class="mr-sm-2" for="observacion">Observaciones (Opcional)</label>
-                              <textarea name="observacion" id="observacion" maxlength="270" rows="2"
-                                class="form-control form-control-user"
-                                placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-                            </div>
-                          </div>
-
-                          <div id="rotuladoTemplate" style="display: none">
-                            <%- include('./rotulado'); %>
-                          </div>
-                          <div id="publicidadTemplate" style="display: none">
-                            <%- include('./publicidad'); %>
-                          </div>
-                          <div id="MedEstablecimientosTemplate" style="display: none">
-                            <%- include('./medEstablecimientos'); %>
-                          </div>
-                          <div id="MedProductosTemplate" style="display: none">
-                            <%- include('./medProductos'); %>
-                          </div>
-
-                          <!-- Divider -->
-                          <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
-
-                          <div class="form-group row">
-                            <div class="col-sm-12">
-                              <label class="mr-sm-2" for="fields">Adjuntar Archivo(s)</label>
-                              <div class="control-group" id="fields">
-                                <div class="controls">
-                                  <div class="entry input-group upload-input-group">
-                                    <input class="form-control" name="myFiles" id="myfiles" type="file" />
-                                    <button class="btn btn-upload btn-success btn-add" type="button">
-                                      <i class="fa fa-plus"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <button class="btn btn-primary btn-user btn-block" type="submit">
-                            Registrar Consolidación
-                          </button>
-                          <a href="/tecnico/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
-                            Cancelar
-                          </a>
-                      </form>
-                    </div>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg">
+              <div class="card-body p-0">
+                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver/Establecimientos">Establecimientos</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Validar
+                    </li>
+                  </ol>
+                </nav>
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">ESTABLECIMIENTOS</h1>
                   </div>
+
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2">Identificación Responsable</label>
+                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2">Nombre Responsable</label>
+                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
+                      </div>
+                    </div>
+
+                    <%- include('../../../../tools/Templates/establecimientosTem'); %>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
+                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="Enviado">Aceptable</option>
+                          <option value="Rechazado">Rechazar</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo" style="display: none">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Enviar Reporte
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
-            <!-- /.container-fluid -->
+          </div>
         </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <%- include('../../../tools/footer'); %>
-          <!-- End of Footer -->
+        <!-- /.container-fluid -->
       </div>
-      <!-- End of Content Wrapper -->
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../../../tools/footer'); %>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
   </div>
   <!-- End of Page Wrapper -->
 
@@ -236,8 +117,7 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -271,35 +151,16 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
-  <script type="text/JavaScript" src="/js/tools/codigoEsta.js"></script>
-  <script type="text/JavaScript" src="/js/tools/consolidaciones.js"></script>
-
-  <!-- Dropzone -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
+  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script type="text/JavaScript">
-      <% if(codigos){ %>
-          var arrayCod = []
-          <% codigos.forEach((codigos)=> { %>
-              arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
-          <% }) %>
-      <% } %>
-
-      <% if(hojavida){ %>
-          var arrayEsta = []
-          <% hojavida.forEach((hojavida)=> { %>
-              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
-          <% }) %>
-      <% } %>
-    </script>
-
   <% if(typeof alert !="undefined" ) { %>
-    <script type="text/JavaScript">
-      Swal.fire({
+  <script type="text/JavaScript">
+    Swal.fire({
         title: '<%= alert[0].alertTitle %>',
         text:'<%= alert[0].alertMessage %>',
         icon:'<%= alert[0].alertIcon %>',
@@ -309,78 +170,43 @@
         window.location = '<%= alert[0].ruta %>'
       })
     </script>
-    <% } %>
+  <% } %>
 
-      <script>
-        $(window).bind("load", function () {
-          var nav = document.getElementById("nav2");
-          $("#navlink1").removeClass("collapsed");
-          var nav3 = document.getElementById("collapseOne");
-          var nav4 = document.getElementById("show2");
-          nav.className += "  active";
-          nav3.className += "  show";
-          nav4.className += "  active";
-        });
+  <script>
+    $(window).bind("load", function() {
+      var nav = document.getElementById("nav2");
+      $("#navlink1").removeClass("collapsed");
+      var nav3 = document.getElementById("collapseTwo");
+      var nav4 = document.getElementById("show1");
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+  </script>
 
-        $("#tipoEsta").change(function () {
-          if (document.getElementById("grupEsta").value == "ACUEDUCTO") {
-            document
-              .getElementById("score")
-              .setAttribute("onkeyup", "AcueductoConcepto(this);");
-          } else if (
-            document.getElementById("codEsta").value >= 1 &&
-            document.getElementById("codEsta").value < 11
-          ) {
-            document
-              .getElementById("score")
-              .setAttribute("onkeyup", "AlimentosConcepto(this);");
-          } else if (document.getElementById("codEsta").value >= 12) {
-            document
-              .getElementById("score")
-              .setAttribute("onkeyup", "EstablecimientosConcepto(this);");
-          }
-        });
+  <script type="text/JavaScript">
+    var rotulado = "<%= consolidacion.consolidacion.rotulado %>";
+    var publicidad = "<%= consolidacion.consolidacion.publicidad %>";
+    var MSEstable = "<%= consolidacion.consolidacion.MSEstablecimientos %>";
+    var MSProduct = "<%= consolidacion.consolidacion.MSProductos %>";
+    var Cementerio = "<%= consolidacion.salaNM %>";
 
-        $("#rotuladoON").change(function () {
-          if ($("#rotuladoON").is(":checked")) {
-            document.getElementById("rotuladoTemplate").removeAttribute("style");
-          } else {
-            document.getElementById("rotuladoTemplate").style = "display:none";
-          }
-        });
-
-        $("#publicidadON").change(function () {
-          if ($("#publicidadON").is(":checked")) {
-            document
-              .getElementById("publicidadTemplate")
-              .removeAttribute("style");
-          } else {
-            document.getElementById("publicidadTemplate").style = "display:none";
-          }
-        });
-
-        $("#productosON").change(function () {
-          if ($("#productosON").is(":checked")) {
-            document
-              .getElementById("MedProductosTemplate")
-              .removeAttribute("style");
-          } else {
-            document.getElementById("MedProductosTemplate").style =
-              "display:none";
-          }
-        });
-
-        $("#establecimientosON").change(function () {
-          if ($("#establecimientosON").is(":checked")) {
-            document
-              .getElementById("MedEstablecimientosTemplate")
-              .removeAttribute("style");
-          } else {
-            document.getElementById("MedEstablecimientosTemplate").style =
-              "display:none";
-          }
-        });
-      </script>
+    if (rotulado === "on") {
+      document.getElementById("productoTemple").removeAttribute("style");
+    }
+    if (publicidad === "on") {
+      document.getElementById("publicidadTemple").removeAttribute("style");
+    }
+    if (MSEstable === "on") {
+      document.getElementById("MSEstablecimientoTemple").removeAttribute("style");
+    }
+    if (MSProduct === "on") {
+      document.getElementById("MSProductoTemple").removeAttribute("style");
+    }
+    if (Cementerio === "on") {
+      document.getElementById("templeCementerios").removeAttribute("style");
+    }
+  </script>
 </body>
 
 </html>

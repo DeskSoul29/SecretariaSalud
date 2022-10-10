@@ -134,6 +134,7 @@
                         <tr>
                           <th scope="col">Acción</th>
                           <th scope="col">Fecha Reporte</th>
+                          <th scope="col">Municipio</th>
                           <th scope="col">Nombre Consolidación</th>
                           <th scope="col">Observación</th>
                         </tr>
@@ -148,7 +149,10 @@
                             <% } %>
                           </td>
                           <td>
-                            <%= moment(ListconsRech.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
+                            <%= moment(ListconsRech.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                          </td>
+                          <td>
+                            <%= ListconsRech.consolidacion.municipio %>
                           </td>
                           <td>
                             <%= ListconsRech.tipo %>

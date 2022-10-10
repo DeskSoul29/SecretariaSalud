@@ -81,7 +81,7 @@
                                                                 <% } %>
                                                             </td>
                                                             <td>
-                                                                <%= moment(cementerio.crearedAt,"YYYY/MM/DD").format('DD-MM-YYYY, h:mm a'); %>
+                                                                <%= moment(cementerio.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
                                                             </td>
                                                             <td>
                                                                 <%= cementerio.provincia %>
@@ -203,7 +203,7 @@
                     nav4.className += "  active";
                 });
                 $('#dataTable').DataTable({
-                    order: [[1, 'desc']],
+                    order: [[1, 'asc']],
                     dom: 'Bfrtip',
                     buttons: [{
                         extend: 'excelHtml5',

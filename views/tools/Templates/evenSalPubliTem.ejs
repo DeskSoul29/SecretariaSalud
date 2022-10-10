@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="mes">Mes</label>
+    <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.mes %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="provinciaID">Provincia</label>
+    <input type="text" class="form-control form-control-user" value="<%= consolidacion.provincia %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="muniSelect">Municipio</label>
+    <input id="municipio" name="municipio" type="text" class="form-control form-control-user" value="<%= consolidacion.municipio %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-6">
+    <label class="mr-sm-12">ETAS</label>
+  </div>
+  <div class="col-sm-6">
+    <label class="mr-sm-12">INTOXICACIONES POR
+      SUSTANCIAS QUIMICAS</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="etasPresent">Presentadas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.presentEtas %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="etasAtend">Atendidas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.atendEtas %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="intoxPresent">Presentadas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.presentIntox %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="intoxAtend">Atendidas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.atendIntox %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-6">
+    <label class="mr-sm-12">AGRESIONES</label>
+  </div>
+  <div class="col-sm-6">
+    <label class="mr-sm-12">PARTICIPACIÓN EN
+      COVE</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="agrePresent">Presentadas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.presentAgre %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="agreAtend">Atendidas</label>
+    <input type="number" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.atendAgre %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="trueFalse">Si o No</label>
+    <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForEvenSPublica.covePart %>" readonly />
+  </div>
+  <div class="col-sm-3">
+    <label class="mr-sm-2" for="fReunion">Fecha de Reunion</label>
+    <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.ForEvenSPublica.coveFech,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-12">
+    <label class="mr-sm-2" for="observacion">Observaciones</label>
+    <textarea name="observacion" id="observacion" class="form-control form-control-user" readonly><%= consolidacion.observaciones %></textarea>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-12">
+    <label class="mr-sm-2" for="fields">Archivo(s) Adjuntos</label>
+    <div class="control-group" id="fields">
+      <div class="controls">
+        <div class="entry input-group upload-input-group">
+          <input class="form-control" name="myFiles" id="myfiles" type="file" />
+          <button class="btn btn-upload btn-success btn-add" type="button">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
