@@ -157,6 +157,8 @@ router.post(
 );
 
 // Apartado: Consolidaciones
+
+// Consolidaciones - Consultar
 router.get(
   "/Consolidaciones/Ver",
   isAuthenticatedProf,
@@ -712,6 +714,21 @@ router.post(
       consolidacion: req.consolidacion,
       alert: req.alert,
       moment: moment,
+    });
+  }
+);
+
+//Consolidaciones - Reportes
+
+//Consolidaciones - Enviar Novedades
+router.get(
+  "/Consolidaciones/EnviarNA",
+  isAuthenticatedProf,
+  fillMunicipio,
+  (req, res) => {
+    res.render("profesional/EnviarNAdmin/mainEnviarNA", {
+      user: req.user,
+      fields: req.localidades,
     });
   }
 );

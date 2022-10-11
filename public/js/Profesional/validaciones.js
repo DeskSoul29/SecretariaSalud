@@ -76,12 +76,11 @@ $("#btnConsolidacionVer").click(function () {
   ) {
     toast.toastInfo("Advertencia", "Seleccione un Formato");
   } else {
-    document.getElementById("consolidacionVer").style = "display:none";
     modalsEstablecimientos.consolidacionVer(document.getElementById("consoID"));
   }
 });
 
-if (criterioProf != null) {
+if (document.getElementById("criterioProf") != null) {
   document
     .getElementById("criterioProf")
     .addEventListener("change", function () {

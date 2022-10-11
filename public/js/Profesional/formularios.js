@@ -33,6 +33,35 @@ var toast = (function () {
   };
 })();
 
+let MESES = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+
+const date = new Date();
+
+if (document.getElementById("mes") != null) {
+  if (date.getDate() < 5) {
+    document.getElementById("mes").value = MESES[date.getMonth() - 1];
+  } else {
+    document.getElementById("mes").value = MESES[date.getMonth()];
+  }
+}
+
+document.getElementById("fVisit").setAttribute("min", time.min(date));
+document.getElementById("fVisit").setAttribute("max", time.max(date));
+document.getElementById("fVisit").value = time.formatDate(date);
+
 function formChangePass(e) {
   if (
     document.getElementById("pass").value == 0 ||

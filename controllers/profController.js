@@ -504,7 +504,7 @@ export const fillMunicipio = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       const localidades = await local.find({
-        Provincia: decodificada.Provincia,
+        provincia: { $eq: decodificada.provincia },
       });
       req.localidades = localidades;
       return next();
