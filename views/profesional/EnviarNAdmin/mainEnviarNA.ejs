@@ -33,7 +33,7 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Inscribir Novedad Administrativa</h1>
                   </div>
-                  <form onsubmit="(event)" action="/profesional/Consolidaciones/EnviarNA" method="POST" autocomplete="off">
+                  <form onsubmit="novAdminis(event)" action="/profesional/Consolidaciones/EnviarNA" method="POST" autocomplete="off">
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
@@ -70,28 +70,28 @@
 
                     <div class="form-group row">
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Si/No</label>
-                        <select id="Nriesgo" name="Nriesgo" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="entreInfor">Si/No</label>
+                        <select id="entreInfor" name="entreInfor" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="SI">Si</option>
                           <option value="NO">No</option>
                         </select>
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-2" for="fechInfor">Fecha de Entrega</label>
+                        <input type="date" class="form-control form-control-user" id="fechInfor" name="fechInfor" readonly />
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Si/No</label>
-                        <select id="Nriesgo" name="Nriesgo" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="entreCrono">Si/No</label>
+                        <select id="entreCrono" name="entreCrono" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="SI">Si</option>
                           <option value="NO">No</option>
                         </select>
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-2" for="fechCrono">Fecha de Entrega</label>
+                        <input type="date" class="form-control form-control-user" id="fechCrono" name="fechCrono" readonly />
                       </div>
                     </div>
 
@@ -106,28 +106,28 @@
 
                     <div class="form-group row">
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Si/No</label>
-                        <select id="Nriesgo" name="Nriesgo" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="entreAsis">Si/No</label>
+                        <select id="entreAsis" name="entreAsis" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="SI">Si</option>
                           <option value="NO">No</option>
                         </select>
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-2" for="fechAsis">Fecha de Entrega</label>
+                        <input type="date" class="form-control form-control-user" id="fechAsis" name="fechAsis" readonly />
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">Si/No</label>
-                        <select id="Nriesgo" name="Nriesgo" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="entreCircu">Si/No</label>
+                        <select id="entreCircu" name="entreCircu" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="SI">Si</option>
                           <option value="NO">No</option>
                         </select>
                       </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="Nriesgo">N° de Circular</label>
-                        <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-2" for="NumCir">N° de Circular</label>
+                        <input type="text" class="form-control form-control-user" id="NumCir" name="NumCir" readonly />
                       </div>
                     </div>
 
@@ -139,22 +139,30 @@
 
                     <div class="form-group row">
                       <div class="col-sm-2">
-                        <label class="mr-sm-6" for="Nriesgo">Numero de Actas</label>
-                        <input type="number" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-6" for="numActas">N° de Actas</label>
+                        <input type="number" class="form-control form-control-user" value="0" min="0" id="numActas" name="numActas" />
                       </div>
                       <div class="col-sm-4">
-                        <label class="mr-sm-4" for="Nriesgo">Nombre del Acta</label>
-                        <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" />
+                        <label class="mr-sm-4" for="nomActas">Nombre del Acta</label>
+                        <textarea type="text" class="form-control form-control-user" id="nomActas" name="nomActas" placeholder="Escriba la cantida de nombres segun el numero de actas digitado" readonly></textarea>
                       </div>
                       <div class="col-sm-6">
-                        <label class="mr-sm-4" for="Nriesgo">Motivo de Devolucion</label>
-                        <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" " />
+                        <label class="mr-sm-4" for="motDevol">Motivo de Devolucion</label>
+                        <textarea type="text" class="form-control form-control-user" id="motDevol" name="motDevol" placeholder="Escriba el motivos de haber devuelto el acta" readonly></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones Y Comentarios
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
                     <button class=" btn btn-primary btn-user btn-block" type="submit">
-                        Registrar Establecimiento
-                        </button>
+                      Registrar Novedad
+                    </button>
 
                   </form>
                 </div>
@@ -231,6 +239,47 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+
+    $("#entreInfor").change(function() {
+      if (document.getElementById("entreInfor").value == "SI") {
+        $("#fechInfor").attr("readonly", false);
+      } else {
+        $("#fechInfor").attr("readonly", true);
+      }
+    });
+    $("#entreCrono").change(function() {
+      if (document.getElementById("entreCrono").value == "SI") {
+        $("#fechCrono").attr("readonly", false);
+      } else {
+        $("#fechCrono").attr("readonly", true);
+      }
+    });
+    $("#entreAsis").change(function() {
+      if (document.getElementById("entreAsis").value == "SI") {
+        $("#fechAsis").attr("readonly", false);
+      } else {
+        $("#fechAsis").attr("readonly", true);
+      }
+    });
+    $("#entreCircu").change(function() {
+      if (document.getElementById("entreCircu").value == "SI") {
+        $("#NumCir").attr("readonly", false);
+      } else {
+        $("#NumCir").attr("readonly", true);
+      }
+    });
+
+    document.getElementById("numActas").oninput = habilitar
+
+    function habilitar() {
+      if (document.getElementById("numActas").value != 0) {
+        $("#nomActas").attr("readonly", false);
+        $("#motDevol").attr("readonly", false);
+      } else {
+        $("#nomActas").attr("readonly", true);
+        $("#motDevol").attr("readonly", true);
+      }
+    }
   </script>
 
   <% if(typeof alert !="undefined" ) { %>

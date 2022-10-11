@@ -10,6 +10,7 @@ import {
   SeeProfConsolidaciones,
   ConsolidaEstadosProf,
   LisConsolidaRechazadas,
+  SendNovedad,
   SeeProfEstablecimiento,
   SendReportEstablecimiento,
   SeeProfMorgues,
@@ -729,6 +730,18 @@ router.get(
     res.render("profesional/EnviarNAdmin/mainEnviarNA", {
       user: req.user,
       fields: req.localidades,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/EnviarNA",
+  isAuthenticatedProf,
+  SendNovedad,
+  (req, res) => {
+    res.render("profesional/EnviarNAdmin/mainEnviarNA", {
+      user: req.user,
+      fields: false,
+      alert: req.alert,
     });
   }
 );

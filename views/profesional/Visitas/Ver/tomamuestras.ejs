@@ -46,8 +46,7 @@
             <!-- <button id="button-a">Create Excel</button> -->
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;
-                                                text-align: center !important;">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px; text-align: center !important;">
                   <thead>
                     <tr>
                       <th>Estado</th>
@@ -76,7 +75,7 @@
                         <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(TomaM.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(TomaM.status == "Enviado"){ %>
+                        <% }else if(TomaM.status=="Enviado" ){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(TomaM.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
@@ -114,7 +113,7 @@
                         <%= TomaM.ForTomaMuestras.objAnalisis %>
                       </td>
                       <td>
-                        <%= moment(TomaM.fvisit," YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(TomaM.fvisit," YYYY/MM/DD").add(1, 'days' ).format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= TomaM.ForTomaMuestras.acompanante %>
@@ -144,14 +143,11 @@
     </div>
     <!-- End of Page Wrapper -->
     <!-- Scroll to Top Button-->
-    <a class="scroll-to-top
-                                                                                            rounded" href="#page-top">
-      <i class="fas
-                                                                                                fa-angle-up"></i>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
-    <div class="modal
-                                                                                            fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -160,24 +156,10 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Seleccione
-            "Cerrar
-            sesión"
-            a
-            continuación
-            si
-            está
-            listo
-            para
-            finalizar
-            su
-            sesión
-            actual.</div>
+          <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
           <div class="modal-footer">
-            <button class="btn
-                                                                                                            btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn
-                                                                                                            btn-primary" href="/tecnico/logout">Cerrar
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="/profesional/logout">Cerrar
               Sesión</a>
           </div>
         </div>

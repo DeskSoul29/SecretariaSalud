@@ -144,3 +144,47 @@ function validConsolidacion(e) {
     e.preventDefault();
   }
 }
+
+function novAdminis(e) {
+  if (
+    document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
+    document.getElementById("entreInfor").value == "Seleccione" ||
+    document.getElementById("entreCrono").value == "Seleccione" ||
+    document.getElementById("entreAsis").value == "Seleccione" ||
+    document.getElementById("entreCircu").value == "Seleccione"
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("entreInfor").value == "SI" &&
+    document.getElementById("fechInfor").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("entreCrono").value == "SI" &&
+    document.getElementById("fechCrono").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("entreAsis").value == "SI" &&
+    document.getElementById("fechAsis").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("entreCircu").value == "SI" &&
+    document.getElementById("NumCir").value == ""
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("numActas").value != 0 &&
+    (document.getElementById("nomActas").value == "" ||
+      document.getElementById("motDevol").value == "")
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  }
+}

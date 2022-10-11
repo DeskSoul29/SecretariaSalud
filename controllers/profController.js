@@ -124,7 +124,7 @@ var authProf = (function () {
   var SearchNextEstablecimiento = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -142,7 +142,7 @@ var authProf = (function () {
   var SearchNextMorgue = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -161,7 +161,7 @@ var authProf = (function () {
   var SearchNextCementerio = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -180,7 +180,7 @@ var authProf = (function () {
   var SearchNextEstaRotulado = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -199,7 +199,7 @@ var authProf = (function () {
   var SearchNextEstaPublicidad = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -218,7 +218,7 @@ var authProf = (function () {
   var SearchNextMedEstable = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -237,7 +237,7 @@ var authProf = (function () {
   var SearchNextMedProduct = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
@@ -256,7 +256,7 @@ var authProf = (function () {
   var SearchNextEventSaludPubli = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.EvenSaludPubli": { $eq: "on" },
@@ -274,7 +274,7 @@ var authProf = (function () {
   var SearchNextQuejas = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.quejas": { $eq: "on" },
@@ -292,7 +292,7 @@ var authProf = (function () {
   var SearchNextCarnetzados = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.lisCarnets": { $eq: "on" },
@@ -310,7 +310,7 @@ var authProf = (function () {
   var SearchNextEduSanitaria = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.eduSanitaria": { $eq: "on" },
@@ -328,7 +328,7 @@ var authProf = (function () {
   var SearchNextVehiculos = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.vehiculos": { $eq: "on" },
@@ -346,7 +346,7 @@ var authProf = (function () {
   var SearchNextTomaMuestra = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.tomaMuestra": { $eq: "on" },
@@ -364,7 +364,7 @@ var authProf = (function () {
   var SearchNextAntirrabica = async (req, provincia) => {
     return await consolidaciones
       .find({
-        Provincia: {
+        provincia: {
           $eq: provincia,
         },
         "consolidacion.antirrabica": { $eq: "on" },
@@ -377,6 +377,23 @@ var authProf = (function () {
       })
       .sort({ createdAt: 1 })
       .limit(1);
+  };
+
+  var ValidaMunicipio = async (municipio, mes) => {
+    let today = new Date();
+    console.log(today);
+    return await consolidaciones.find({
+      municipio: {
+        $eq: municipio,
+      },
+      "ForNAdmin.mesNA": {
+        $eq: mes,
+      },
+      "consolidacion.noveadministrativa": { $eq: "on" },
+      $expr: {
+        $and: [{ $eq: [{ $year: "$createdAt" }, 2021] }],
+      },
+    });
   };
 
   return {
@@ -397,6 +414,7 @@ var authProf = (function () {
     SearchNextCarnetzados: SearchNextCarnetzados,
     SearchNextVehiculos: SearchNextVehiculos,
     SearchNextTomaMuestra: SearchNextTomaMuestra,
+    ValidaMunicipio: ValidaMunicipio,
   };
 })();
 
@@ -524,8 +542,8 @@ export const users = async (req, res, next) => {
     login
       .find({
         user: { $ne: decodificada.user },
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         rol: {
           $ne: "coordinacion",
@@ -611,7 +629,7 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
         process.env.JWT_SECRETO
       );
       const hv = await hojavida
-        .find({ Provincia: decodificada.Provincia })
+        .find({ provincia: decodificada.provincia })
         .lean();
       req.hojavida = hv;
       return next();
@@ -624,6 +642,101 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 };
 
 // Apartado: Consolidaciones
+
+//Consolidaciones - Novedades Administrativas
+export const SendNovedad = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var {
+    mes,
+    provincia,
+    municipio,
+    entreInfor,
+    fechInfor,
+    entreCrono,
+    fechCrono,
+    entreAsis,
+    fechAsis,
+    entreCircu,
+    NumCir,
+    numActas,
+    nomActas,
+    motDevol,
+    observacion,
+  } = req.body;
+
+  var validaMuni = await authProf.ValidaMunicipio(municipio, mes);
+  console.log(validaMuni);
+  console.log(validaMuni.length === 0)
+  if (validaMuni.length === 0) {
+    authProf.isUser(
+      req,
+      "Advertencia",
+      "Ya se envio un reporte en el mes actual",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/EnviarNA"
+    );
+  } else {
+    new consolidaciones({
+      provincia: provincia,
+      municipio: municipio,
+      responsable: {
+        userResponsable: decodificada.user,
+        nombreResponsable: decodificada.nombres + " " + decodificada.apellidos,
+      },
+      consolidacion: {
+        noveadministrativa: "on",
+      },
+      ForNAdmin: {
+        mesNA: mes,
+        entreInfor: entreInfor,
+        fechInfor: fechInfor,
+        entreCrono: entreCrono,
+        fechCrono: fechCrono,
+        entreAsis: entreAsis,
+        fechAsis: fechAsis,
+        entreCircu: entreCircu,
+        NumCir: NumCir,
+        numActas: numActas,
+        nomActas: nomActas,
+        motDevol: motDevol,
+      },
+      observaciones: observacion,
+    })
+      .save()
+      .then((result) => {
+        if (result) {
+          authProf.isUser(
+            req,
+            "Conexión exitosa",
+            "Consolidación Enviada",
+            "success",
+            false,
+            800,
+            "/profesional/Consolidaciones/EnviarNA"
+          );
+        } else {
+          authProf.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            false,
+            false,
+            "/profesional/Consolidaciones/EnviarNA"
+          );
+        }
+      });
+  }
+  return next();
+};
+
+//Consolidaciones - Consultar
 export const SeeProfConsolidaciones = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -632,8 +745,8 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
     );
     const Estables = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
       })
       .lean();
@@ -653,8 +766,8 @@ export const SeeProfEstablecimiento = async (req, res, next) => {
     );
     const Estables = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
       })
@@ -696,8 +809,8 @@ export const SeeProfMorgues = async (req, res, next) => {
     );
     const Morgues = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "MORGUES",
@@ -737,8 +850,8 @@ export const SeeProfCementerios = async (req, res, next) => {
     );
     const Cementerios = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "CEMENTERIOS (CON O SIN MORGUE)",
@@ -781,8 +894,8 @@ export const SeeProfEstaRotulado = async (req, res, next) => {
     );
     const Rotulado = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.rotulado": { $eq: "on" },
@@ -825,8 +938,8 @@ export const SeeProfEstaPublicidad = async (req, res, next) => {
     );
     const Publicidad = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.publicidad": { $eq: "on" },
@@ -869,8 +982,8 @@ export const SeeProfMedEstable = async (req, res, next) => {
     );
     const MedEstable = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSEstablecimientos": { $eq: "on" },
@@ -913,8 +1026,8 @@ export const SeeProfMedProduct = async (req, res, next) => {
     );
     const MedProduct = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSProductos": { $eq: "on" },
@@ -957,8 +1070,8 @@ export const SeeProfEventSaludPubli = async (req, res, next) => {
     );
     const EventSalud = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.EvenSaludPubli": { $eq: "on" },
       })
@@ -1000,8 +1113,8 @@ export const SeeProfQuejas = async (req, res, next) => {
     );
     const Queja = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.quejas": { $eq: "on" },
       })
@@ -1040,8 +1153,8 @@ export const SeeProfAntirrabica = async (req, res, next) => {
     );
     const AntiRa = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.antirrabica": { $eq: "on" },
       })
@@ -1083,8 +1196,8 @@ export const SeeProfCarnetizados = async (req, res, next) => {
     );
     const Carnets = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.lisCarnets": { $eq: "on" },
       })
@@ -1126,8 +1239,8 @@ export const SeeProfEduSanitaria = async (req, res, next) => {
     );
     const EduSani = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.eduSanitaria": { $eq: "on" },
       })
@@ -1169,8 +1282,8 @@ export const SeeProfVehiculos = async (req, res, next) => {
     );
     const Vehicu = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.vehiculos": { $eq: "on" },
       })
@@ -1212,8 +1325,8 @@ export const SeeProfTomaMuestra = async (req, res, next) => {
     );
     const TomaM = await consolidaciones
       .find({
-        Provincia: {
-          $eq: decodificada.Provincia,
+        provincia: {
+          $eq: decodificada.provincia,
         },
         "consolidacion.tomaMuestra": { $eq: "on" },
       })

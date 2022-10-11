@@ -12,18 +12,21 @@
 
     <!-- Nav Item - User Information -->
     <li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <% if (user) { %>
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-            <%= user.nombre %>
-              <%= user.apellido%>
-          </span>
-          <% } %>
-            <img class="img-profile rounded-circle" src="/img/undraw_profile.svg" />
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+          <%= user.nombre %>
+          <%= user.apellido%>
+        </span>
+        <% } %>
+        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg" />
       </a>
       <!-- Dropdown - User Information -->
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+        <a class="dropdown-item" style="cursor: pointer" data-toggle="modal" data-target="#userInformation">
+          <i class="fas fa-user-large fa-sm fa-fw mr-2 text-gray-400"></i>
+          Información del Usuario
+        </a>
         <a class="dropdown-item" href="/Tools/changePassword">
           <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
           Cambiar Contraseña

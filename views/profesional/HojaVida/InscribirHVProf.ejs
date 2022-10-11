@@ -159,13 +159,13 @@
           </div>
 
           <script type="text/JavaScript">
+            <% if(codigos){ %>
             const arrayCod = []
-                            <% if(codigos){ %>
-                                <% codigos.forEach((codigos)=> { %>
-                                    arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
-                                <% }) %>
-                            <% } %>
-                          </script>
+              <% codigos.forEach((codigos)=> { %>
+                arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+              <% }) %>
+            <% } %>
+            </script>
 
         </div>
         <!-- /.container-fluid -->

@@ -1,9 +1,82 @@
 <!-- Footer -->
 <footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; SETIC 2022</span>
-        </div>
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>Copyright &copy; SETIC 2022</span>
     </div>
+  </div>
 </footer>
 <!-- End of Footer -->
+
+<!-- User Information Modal-->
+<div class="modal fade" id="userInformation" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Información del Usuario</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="mr-sm-2">Identificación</label>
+            <input type="number" class="form-control form-control-user" value="<%= user.user %>" readonly />
+          </div>
+          <div class="col-sm-6">
+            <label class="mr-sm-2">Rol</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.rol %>" readonly />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <label class="mr-sm-2">Nombre</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.nombre %> <%= user.apellido %>" readonly />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <label class="mr-sm-2">Provincia</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.provincia %>" readonly />
+          </div>
+          <div class="col-sm-6">
+            <label class="mr-sm-2">Municipio</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.municipio %>" readonly />
+          </div>
+        </div>
+
+        <% if(user.rol == "tecnico"){ %>
+        <div class="row">
+          <% if(user.municipioExtra1 != ""){ %>
+          <div class="col-sm-4">
+            <label class="mr-sm-3">Municipio Apoyo</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.municipioExtra1 %>" readonly />
+          </div>
+          <% } %>
+          <% if(user.municipioExtra2 != ""){ %>
+          <div class="col-sm-4">
+            <label class="mr-sm-3">Municipio Apoyo</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.municipioExtra2 %>" readonly />
+          </div>
+          <% } %>
+          <% if(user.municipioExtra3 != ""){ %>
+          <div class="col-sm-4">
+            <label class="mr-sm-3">Municipio Apoyo</label>
+            <input type="text" class="form-control form-control-user" value="<%= user.municipioExtra3 %>" readonly />
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

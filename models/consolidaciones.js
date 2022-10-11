@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
-// var fecha = new Date();
-// db.publication.save({ date: fecha, offset: fecha.getTimezoneOffset() });
-
 var EstablecimientosSchema = new Schema({
   status: { type: String, default: "Pendiente" },
 
@@ -28,6 +25,7 @@ var EstablecimientosSchema = new Schema({
     vehiculos: String,
     tomaMuestra: String,
     quejas: String,
+    noveadministrativa: String,
   },
 
   grupo: String,
@@ -165,9 +163,25 @@ var EstablecimientosSchema = new Schema({
     productosVehiculo: String,
   },
 
+  //Novedades Administrativas
+  ForNAdmin: {
+    mesNA: String,
+    entreInfor: String,
+    fechInfor: Date,
+    entreCrono: String,
+    fechCrono: Date,
+    entreAsis: String,
+    fechAsis: Date,
+    entreCircu: String,
+    NumCir: String,
+    numActas: Number,
+    nomActas: String,
+    motDevol: String,
+  },
+
   // Evidencias
   evidencias: {
-    file1: { type: String, required: true },
+    file1: { type: String },
     file2: { type: String },
     file3: { type: String },
     file4: { type: String },
