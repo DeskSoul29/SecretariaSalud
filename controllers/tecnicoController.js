@@ -292,6 +292,7 @@ var authTec = (function () {
           file4: file4,
           file5: file5,
         },
+        createdAt: new Date(),
         observaciones: observacion,
       })
         .save()
@@ -382,32 +383,6 @@ export const ConsolidaEstados = async (req, res, next) => {
     return next();
   }
 };
-export const LisConsolidaRechazadas = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    await reportes
-      .find({
-        "consolidacion.userTec": {
-          $eq: decodificada.user,
-        },
-        "respuestaProf.criterioProf": { $eq: "Rechazado" },
-      })
-      .sort({ createdAt: 1 })
-      .then((data) => {
-        req.ListconsRech = data;
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
 
 //Apartado: Hojas de Vida
 export const hojavidaConsultAllTec = async (req, res, next) => {
@@ -449,6 +424,9 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
       .find({
         "responsable.userResponsable": {
           $eq: decodificada.user,
+        },
+        "consolidaciones.noveadministrativa": {
+          $ne: "on",
         },
       })
       .lean();

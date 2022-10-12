@@ -62,6 +62,23 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Tema de Capacitación</th>
+                      <th>Otros, ¿Cuál?</th>
+                      <th>Lugar de Capacitación</th>
+                      <th>Personal Dirigido</th>
+                      <th>Fecha Capacitación</th>
+                      <th>Intensidad Horaria</th>
+                      <th>Total Personal Capacitado</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (EduSani){ %>
                     <% EduSani.forEach((EduSani)=> { %>
@@ -78,7 +95,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(EduSani.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(EduSani.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= EduSani.provincia %>
@@ -196,7 +213,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

@@ -3,7 +3,6 @@ import moment from "moment";
 
 import {
   ConsolidaEstados,
-  LisConsolidaRechazadas,
   SeeTecConsolidaciones,
   hojavidaConsultAllTec,
   SendEstablecimiento,
@@ -35,6 +34,8 @@ import {
   CodigosEstablecimientos,
   inscribirEstablecimiento,
   ValConsolidaciones,
+  LisConsolidaRechazadas,
+  ConsolidaRechazada,
   logout,
 } from "../helpers/auth.js";
 
@@ -442,10 +443,12 @@ router.get(
   "/Consolidaciones/Rechazado/Establecimientos/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -455,10 +458,12 @@ router.post(
   "/Consolidaciones/Rechazado/Establecimientos/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: req.alert,
     });
@@ -468,10 +473,12 @@ router.get(
   "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/antirrabica", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -481,10 +488,12 @@ router.post(
   "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/antirrabica", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -494,10 +503,12 @@ router.get(
   "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/listCarnets", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -507,10 +518,12 @@ router.post(
   "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/listCarnets", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -520,10 +533,12 @@ router.get(
   "/Consolidaciones/Rechazado/EduSanitaria/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eduSanitaria", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -533,10 +548,12 @@ router.post(
   "/Consolidaciones/Rechazado/EduSanitaria/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eduSanitaria", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -546,10 +563,12 @@ router.get(
   "/Consolidaciones/Rechazado/TomaMuestras/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/tomamuestras", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -559,10 +578,12 @@ router.post(
   "/Consolidaciones/Rechazado/TomaMuestras/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/tomamuestras", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -572,10 +593,12 @@ router.get(
   "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -585,10 +608,12 @@ router.post(
   "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -598,10 +623,12 @@ router.get(
   "/Consolidaciones/Rechazado/Vehiculos/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -611,10 +638,12 @@ router.post(
   "/Consolidaciones/Rechazado/Vehiculos/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: req.alert,
     });
@@ -624,10 +653,12 @@ router.get(
   "/Consolidaciones/Rechazado/Quejas/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/quejas", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -637,10 +668,12 @@ router.post(
   "/Consolidaciones/Rechazado/Quejas/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/quejas", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: req.alert,
     });

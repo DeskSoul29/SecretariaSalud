@@ -148,17 +148,17 @@
                             <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } else if(ListconsRech.tipo == "Antirrabica" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "eduSanitaria" ){ %>
+                            <% } else if(ListconsRech.tipo == "Edu. Sanitaria" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "EvenSaludPubli" ){ %>
+                            <% } else if(ListconsRech.tipo == "Eventos Salud Publica" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "lisCarnets" ){ %>
+                            <% } else if(ListconsRech.tipo == "Carnetizados" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "vehiculos" ){ %>
+                            <% } else if(ListconsRech.tipo == "Vehiculos" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/Vehiculos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "tomaMuestra" ){ %>
+                            <% } else if(ListconsRech.tipo == "Toma de Muestra" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "quejas" ){ %>
+                            <% } else if(ListconsRech.tipo == "Quejas" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
@@ -169,26 +169,10 @@
                             <%= ListconsRech.consolidacion.municipio %>
                           </td>
                           <td>
-                            <% if(ListconsRech.tipo == "Establecimiento" ){ %>
-                            Establecimientos
-                            <% } else if(ListconsRech.tipo == "Antirrabica" ){ %>
-                            Antirrabica Animal
-                            <% } else if(ListconsRech.tipo == "eduSanitaria" ){ %>
-                            Educación Sanitraria
-                            <% } else if(ListconsRech.tipo == "EvenSaludPubli" ){ %>
-                            Eventos de Salud Publica
-                            <% } else if(ListconsRech.tipo == "lisCarnets" ){ %>
-                            Listado de Carnetizados
-                            <% } else if(ListconsRech.tipo == "vehiculos" ){ %>
-                            Vehiculos
-                            <% } else if(ListconsRech.tipo == "tomaMuestra" ){ %>
-                            Toma de Muestras
-                            <% } else if(ListconsRech.tipo == "quejas" ){ %>
-                            Quejas
-                            <% } %>
+                            <%= ListconsRech.tipo %>
                           </td>
                           <td>
-                            <%= ListconsRech.respuestaProf.motivoProf %>
+                            <%= ListconsRech.respuesta.motivo %>
                           </td>
                         </tr>
                         <% }); %>
@@ -266,7 +250,7 @@
     });
     $('#dataTable').DataTable({
       order: [
-        [1, 'asc']
+        [1, 'desc']
       ],
       dom: 'Bfrtip',
       buttons: [{

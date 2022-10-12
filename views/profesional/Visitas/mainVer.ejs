@@ -126,7 +126,7 @@
                               <% } %>
                             </td>
                             <td>
-                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                             </td>
                             <td>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>
@@ -134,7 +134,7 @@
                               <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
                               Antirrabica Animal
                               <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
-                              Educación Sanitraria
+                              Educación Sanitaria
                               <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
                               Eventos de Salud Publica
                               <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
@@ -243,7 +243,7 @@
     });
     $('#dataTable').DataTable({
       order: [
-        [1, 'asc']
+        [1, 'desc']
       ],
     });
   </script>

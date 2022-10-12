@@ -5,32 +5,22 @@ var ReporteSchema = new Schema({
   tipo: String,
 
   consolidacion: {
+    consID: { type: Schema.ObjectId, required: true, unique: true },
     userTec: { type: Number, required: true },
     nomTec: { type: String, required: true },
     provincia: { type: String, required: true },
     municipio: { type: String, required: true },
-    consID: { type: Schema.ObjectId, required: true, unique: true },
   },
 
-  profesional: {
-    userProf: { type: Number, required: true },
-    nomProf: { type: String, required: true },
-  },
-  respuestaProf: {
-    criterioProf: { type: String, required: true },
-    motivoProf: String,
-  },
-  coordinador: {
-    userCoordi: Number,
-    nomCoordi: String,
-  },
-  respuestaCoordi: {
-    fechaRes: { type: Date },
-    criterioCoordi: String,
-    motivoCoordi: String,
+  respuesta: {
+    userRes: { type: Number, required: true },
+    nombreRes: { type: String, required: true },
+    rol: { type: String, required: true },
+    criterio: { type: String, required: true },
+    motivo: String,
   },
 
-  createdAt: { type: Date, default: Date.now() },
+  createdAt: { type: Date },
 });
 
 export default mongoose.model("reportes", ReporteSchema);

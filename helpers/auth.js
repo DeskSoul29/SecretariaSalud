@@ -1,5 +1,6 @@
 import login from "../models/user.js";
 import { promisify } from "util";
+import reportes from "../models/reportes.js";
 import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
@@ -284,6 +285,7 @@ export const inscribirEstablecimiento = async (req, res, next) => {
           direccion: direccion,
           repreLegal: rLegal,
           estado: estado,
+          createdAt: new Date(),
         });
         await estaNew
           .save()
@@ -325,8 +327,60 @@ export const inscribirEstablecimiento = async (req, res, next) => {
 
 //Consolidaciones
 export const ValConsolidaciones = async (req, res, next) => {
-  req.consolidacion = await consolidaciones.findById(req.params._id).lean();
+  req.consolidacion = await consolidaciones.findById(req.params._id);
   return next();
+};
+export const LisConsolidaRechazadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .find({
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+      })
+      .sort({ createdAt: 1 })
+      .then((data) => {
+        req.ListconsRech = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const ConsolidaRechazada = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .findOne({
+        "consolidacion.consID": { $eq: req.params._id },
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+      })
+      .then((data) => {
+        req.consRech = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };
 
 export const logout = (req, res) => {

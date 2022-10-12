@@ -48,7 +48,7 @@
                       <a href="/tecnico/Consolidaciones/Ver/EduSanitaria">Educación Sanitaria</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Validar
+                      Corregir
                     </li>
                   </ol>
                 </nav>
@@ -59,39 +59,107 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
-                      </div>
-                    </div>
-
-                    <%- include('../../../tools/Templates/eduSaniTem'); %>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" class="form-control form-control-user" readonly><%= consRech.respuesta.motivo %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="temaCap">Tema De
+                          Capacitación</label>
+                        <select id="temaCap" name="temaCap" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="AGUA (CONSUMO - RECREATIVAS)">AGUA (CONSUMO -
+                            RECREATIVAS)</option>
+                          <option value="ENTORNO SALUDABLE">ENTORNO SALUDABLE</option>
+                          <option value="AIRE - RUIDO">AIRE - RUIDO</option>
+                          <option value="ALIMENTOS">ALIMENTOS</option>
+                          <option value="ZOONOSIS">ZOONOSIS</option>
+                          <option value="RESIDUOS SOLIDOS Y ESPECIALES">RESIDUOS
+                            SOLIDOS Y ESPECIALES</option>
+                          <option value="USO Y MANEJO DE PLAGUICIDAS">USO Y MANEJO DE
+                            PLAGUICIDAS</option>
+                          <option value="NORMAS DE BIOSEGURIDAD">NORMAS DE
+                            BIOSEGURIDAD</option>
+                          <option value="OTROS">OTROS</option>
                         </select>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="otrosCap">Otros</label>
+                        <input type="text" placeholder="¿Cual?" class="form-control form-control-user" value="<%= consolidacion.ForEduSanitaria.otroTema %>" id="otrosCap" name="otrosCap" onkeyup="mayus(this);" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fechaCap">Fecha</label>
+                        <input type="date" class="form-control form-control-user" id="fechaCap" name="fechaCap" value="<%= moment(consolidacion.ForEduSanitaria.fechaCap).format('YYYY-MM-DD'); %>" />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="intensidadCap">Intensidad(Horas)</label>
+                        <input type="number" placeholder="1.0" min="0.5" value="<%= consolidacion.ForEduSanitaria.intensidad %>" class="form-control form-control-user" step="0.5" id="intensidadCap" name="intensidadCap" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="lugCap">Lugar de
+                          Capacitación</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForEduSanitaria.lugarCapa %>" id="lugCap" name="lugCap" onkeyup="mayus(this);" />
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="personalCap">Personal
+                          Dirigido</label>
+                        <select id="personalCap" name="personalCap" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="COMUNIDAD">COMUNIDAD</option>
+                          <option value="COMERCIANTES">COMERCIANTES</option>
+                          <option value="EXPENDEDORES DE ALIMENTOS">EXPENDEDORES DE
+                            ALIMENTOS</option>
+                          <option value="OTROS">OTROS</option>
+                        </select>
+
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="totalPersCap">Total Personal
+                          Capacitado</label>
+                        <input type="number" value="<%= consolidacion.ForEduSanitaria.totalPersCap %>" min="1" class="form-control form-control-user" id="totalPersCap" name="totalPersCap" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Reporte
+                      Enviar Corrección
                     </button>
                   </form>
                 </div>
@@ -152,8 +220,8 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/validaciones.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -181,6 +249,15 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+      document.getElementById("temaCap").value = "<%= consolidacion.ForEduSanitaria.tema %>"
+      document.getElementById("personalCap").value = "<%= consolidacion.ForEduSanitaria.personalDiri %>"
+    });
+    $("#temaCap").change(function() {
+      if (document.getElementById("temaCap").value == "OTROS") {
+        $("#otrosCap").attr("readonly", false);
+      } else {
+        $("#otrosCap").attr("readonly", true);
+      }
     });
   </script>
 </body>

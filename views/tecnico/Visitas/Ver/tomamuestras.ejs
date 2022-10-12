@@ -64,6 +64,24 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Tipo de Muestra</th>
+                      <th>Descripción de la Muestra</th>
+                      <th>Establecimiento</th>
+                      <th>Tipo de Analisis</th>
+                      <th>Rural / Urbano</th>
+                      <th>Objeto del Analisis</th>
+                      <th>Fecha_Visita</th>
+                      <th>Nombre Y Cargo del Acompañante</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (TomaM){ %>
                     <% TomaM.forEach((TomaM)=>{ %>
@@ -80,7 +98,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(TomaM.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(TomaM.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= TomaM.provincia %>
@@ -205,7 +223,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

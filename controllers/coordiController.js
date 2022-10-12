@@ -50,6 +50,7 @@ export const register = async (req, res, next) => {
         provincia: provincia,
         municipio: municipio,
         rol: rol,
+        createdAt: new Date(),
       });
 
       await userNew.save().then((result) => {

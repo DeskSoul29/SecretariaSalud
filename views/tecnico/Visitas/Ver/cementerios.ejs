@@ -62,6 +62,24 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Dirección</th>
+                      <th>Telefono</th>
+                      <th>Representante Legal</th>
+                      <th>Fecha_Visita</th>
+                      <th>Puntaje</th>
+                      <th>Concepto</th>
+                      <th>Acción Realizada</th>
+                      <th>Sala de Necropsia o Morgue</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (cementerio){ %>
                     <% cementerio.forEach((cementerio)=> { %>
@@ -78,7 +96,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(cementerio.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(cementerio.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= cementerio.provincia %>
@@ -199,7 +217,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

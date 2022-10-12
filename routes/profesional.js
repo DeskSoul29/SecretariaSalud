@@ -9,7 +9,6 @@ import {
   addMuniApoyo,
   SeeProfConsolidaciones,
   ConsolidaEstadosProf,
-  LisConsolidaRechazadas,
   SendNovedad,
   SeeProfEstablecimiento,
   SendReportEstablecimiento,
@@ -47,6 +46,7 @@ import {
   consultUser,
   inscribirEstablecimiento,
   ValConsolidaciones,
+  LisConsolidaRechazadas,
   logout,
 } from "../helpers/auth.js";
 
@@ -64,7 +64,7 @@ router.get(
       consEnv: req.consEnv,
       consAcep: req.consAcep,
       consRech: req.consRech,
-      ListRechazo: req.ListRechazo,
+      ListRechazo: req.ListconsRech,
     });
   }
 );

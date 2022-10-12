@@ -61,6 +61,22 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Codigo</th>
+                      <th>Tipo del Establecimiento</th>
+                      <th>Razón Social</th>
+                      <th>Dirección</th>
+                      <th>Representante Legal</th>
+                      <th>Fecha_Visita</th>
+                      <th>Producto</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (rotulado){ %>
                     <% rotulado.forEach((rotulado)=> { %>
@@ -77,7 +93,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(rotulado.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(rotulado.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= rotulado.provincia %>
@@ -193,7 +209,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

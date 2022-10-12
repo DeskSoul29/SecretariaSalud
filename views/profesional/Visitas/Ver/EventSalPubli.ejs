@@ -74,6 +74,32 @@
                       <th>Fecha Participación</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th rowspan="2">Estado</th>
+                      <th rowspan="2">Fecha_Enviado</th>
+                      <th rowspan="2">Tecnico Responsable</th>
+                      <th rowspan="2">Mes</th>
+                      <th rowspan="2">Provincia</th>
+                      <th rowspan="2">Municipio</th>
+                      <th>Etas Presentadas</th>
+                      <th>Etas Atendidas</th>
+                      <th>Intoxicaciones Presentadas</th>
+                      <th>Intoxicaciones Atendidas</th>
+                      <th>Agresiones Presentadas</th>
+                      <th>Agresiones Atendidas</th>
+                      <th>Si/No</th>
+                      <th>Fecha Participación</th>
+                      <th rowspan="2">Observaciones</th>
+                      <th rowspan="2">Archivos</th>
+                    </tr>
+                    <tr>
+                      <th colspan="2">Etas</th>
+                      <th colspan="2">Intoxicaciones Por Sustancias Quimicas</th>
+                      <th colspan="2">Agresiones</th>
+                      <th colspan="2">Participación En Cove</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (consultES){ %>
                     <% consultES.forEach((consultES)=> { %>
@@ -218,7 +244,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

@@ -67,6 +67,28 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Codigo</th>
+                      <th>Tipo del Establecimiento</th>
+                      <th>Razón Social</th>
+                      <th>Dirección</th>
+                      <th>Representante Legal</th>
+                      <th>Fecha_Visita</th>
+                      <th>Puntaje</th>
+                      <th>Concepto</th>
+                      <th>Acción</th>
+                      <th>Tipo de Acta Utilizada</th>
+                      <th>Acta Anulada</th>
+                      <th>Acta_Ley 1335</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (Estable){ %>
                     <% Estable.forEach((Estable)=> { %>
@@ -83,7 +105,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Estable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Estable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Estable.provincia %>
@@ -216,7 +238,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

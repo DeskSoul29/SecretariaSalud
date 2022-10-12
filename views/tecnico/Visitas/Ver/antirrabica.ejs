@@ -69,6 +69,27 @@
                       <th>Rural</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th rowspan="2">Estado</th>
+                      <th rowspan="2">Fecha_Enviado</th>
+                      <th rowspan="2">Provincia</th>
+                      <th rowspan="2">Municipio</th>
+                      <th rowspan="2">Población Canina</th>
+                      <th rowspan="2">Población Felina</th>
+                      <th>Urbano</th>
+                      <th>Rural</th>
+                      <th>Urbano</th>
+                      <th>Rural</th>
+                      <th rowspan="2">Total</th>
+                      <th rowspan="2">Observaciones</th>
+                      <th rowspan="2">Archivos</th>
+                    </tr>
+                    <tr>
+                      <th colspan="2">Caninos</th>
+                      <th colspan="2">Felinos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (Antirrabi){ %>
                     <% Antirrabi.forEach((Antirrabi)=> { %>
@@ -85,7 +106,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Antirrabi.provincia %>

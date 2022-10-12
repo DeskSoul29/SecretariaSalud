@@ -103,11 +103,11 @@ if (document.getElementById("mes") != null) {
     document.getElementById("mes").value = MESES[date.getMonth()];
   }
 }
-
-document.getElementById("fVisit").setAttribute("min", time.min(date));
-document.getElementById("fVisit").setAttribute("max", time.max(date));
-document.getElementById("fVisit").value = time.formatDate(date);
-
+if (document.getElementById("fVisit") != null) {
+  document.getElementById("fVisit").setAttribute("min", time.min(date));
+  document.getElementById("fVisit").setAttribute("max", time.max(date));
+  document.getElementById("fVisit").value = time.formatDate(date);
+}
 function eventSalud(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
@@ -391,6 +391,24 @@ function vehiculosForm(e) {
 function cementerio(e) {
   if (document.getElementById("NecroMorg").value == "Seleccione") {
     toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
+    e.preventDefault();
+  }
+}
+
+function validConsolidacion(e) {
+  if (document.getElementById("criterioProf").value == "Seleccione") {
+    toast.toastInfo("Advertencia", "Seleccione un Criterio");
+    e.preventDefault();
+  } else if (
+    document.getElementById("criterioProf").value == "Rechazado" &&
+    document.getElementById("motivo").value == ""
+  ) {
+    toast.toastInfo("Advertencia", "Escribe el motivo");
+    e.preventDefault();
+  }
+
+  if (document.getElementById("actaAnul").value == "Seleccione") {
+    toast.toastInfo("Advertencia", "Seleccione si el Acta fue anulada");
     e.preventDefault();
   }
 }

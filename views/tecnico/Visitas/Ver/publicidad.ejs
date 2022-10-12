@@ -64,6 +64,25 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Codigo</th>
+                      <th>Tipo del Establecimiento</th>
+                      <th>Razón Social</th>
+                      <th>Dirección</th>
+                      <th>Representante Legal</th>
+                      <th>Fecha_Visita</th>
+                      <th>Medio Publicitario</th>
+                      <th>Producto</th>
+                      <th>Marca</th>
+                      <th>Registro/Permiso/Notificación Sanitario</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (publicidad){ %>
                     <% publicidad.forEach((publicidad)=> { %>
@@ -80,7 +99,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= publicidad.provincia %>
@@ -205,7 +224,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

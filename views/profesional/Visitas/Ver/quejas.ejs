@@ -64,6 +64,25 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Tecnico Responsable</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Tipo de Queja</th>
+                      <th>Establecimiento (Si Aplica)</th>
+                      <th>Descripción de la Queja</th>
+                      <th>Persona que Causa la Queja</th>
+                      <th>Persona Afectada</th>
+                      <th>Fecha Recepción Queja</th>
+                      <th>Fecha_Visita</th>
+                      <th>Requerimientos</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (Queja){ %>
                     <% Queja.forEach((Queja)=> { %>
@@ -206,7 +225,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

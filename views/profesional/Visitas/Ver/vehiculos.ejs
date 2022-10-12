@@ -67,6 +67,29 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Tecnico Responsable</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Codigo</th>
+                      <th>Tipo de Vehiculo</th>
+                      <th>Clase de Vehiculo</th>
+                      <th>Cedula Propietario</th>
+                      <th>Propietario</th>
+                      <th>Placa del Vehiculo</th>
+                      <th>Numero de Inscripción</th>
+                      <th>Producto Y/O Mercancia Que Transporta</th>
+                      <th>Sistema de Refrigeración</th>
+                      <th>Fecha_Visita</th>
+                      <th>Puntaje</th>
+                      <th>Concepto</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (Vehiculo){ %>
                     <% Vehiculo.forEach((Vehiculo)=> { %>
@@ -221,7 +244,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

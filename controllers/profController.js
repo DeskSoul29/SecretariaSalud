@@ -44,14 +44,14 @@ var authProf = (function () {
         municipio: municipio,
         consID: req.params._id,
       },
-      profesional: {
-        userProf: decodificada.user,
-        nomProf: decodificada.nombres + " " + decodificada.apellidos,
+      respuesta: {
+        userRes: decodificada.user,
+        nombreRes: decodificada.nombres + " " + decodificada.apellidos,
+        rol: decodificada.rol,
+        criterio: criterioProf,
+        motivo: motivo,
       },
-      respuestaProf: {
-        criterioProf: criterioProf,
-        motivoProf: motivo,
-      },
+      createdAt: new Date(),
     });
     return await report
       .save()
@@ -431,6 +431,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
         status: { $eq: "Pendiente" },
       })
       .count()
@@ -442,6 +445,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       .find({
         provincia: {
           $eq: decodificada.provincia,
+        },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
         },
         status: {
           $eq: "Enviado",
@@ -457,6 +463,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
         status: {
           $eq: "Rechazado",
         },
@@ -471,6 +480,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         provincia: {
           $eq: decodificada.provincia,
         },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
         status: {
           $eq: "Aceptado",
         },
@@ -481,32 +493,6 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       });
 
     return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const LisConsolidaRechazadas = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    await reportes
-      .find({
-        "profesional.userProf": {
-          $eq: decodificada.user,
-        },
-        "respuestaCoordi.criterioCoordi": { $eq: "Rechazado" },
-      })
-      .sort({ fechaRes: 1 })
-      .then((data) => {
-        req.ListRechazo = data;
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   } catch (error) {
     console.log(error);
     return next();
@@ -642,7 +628,6 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 };
 
 // Apartado: Consolidaciones
-
 //Consolidaciones - Novedades Administrativas
 export const SendNovedad = async (req, res, next) => {
   const decodificada = await promisify(jwt.verify)(
@@ -706,6 +691,7 @@ export const SendNovedad = async (req, res, next) => {
         nomActas: nomActas,
         motDevol: motDevol,
       },
+      createdAt: new Date(),
       observaciones: observacion,
     })
       .save()
@@ -747,6 +733,9 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
       .find({
         provincia: {
           $eq: decodificada.provincia,
+        },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
         },
       })
       .lean();

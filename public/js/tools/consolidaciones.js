@@ -97,30 +97,32 @@ razonSocial.addEventListener("change", function () {
   }
 });
 
-municipio.addEventListener("change", function () {
-  codEsta.value = "";
-  Nriesgo.value = "";
-  tipIdentificacion.value = "";
-  identificacion.value = "";
-  direccion.value = "";
-  representante.value = "";
-  estado.value = "";
-  grupEsta.selectedIndex = "Seleccione el Grupo";
-  tipEsta.selectedIndex = "Seleccione el Tipo";
-  razonSocial.selectedIndex = "Seleccione El Establecimiento";
-  phone.value = "";
-  if (document.getElementById("templeCementerios")) {
-    document.getElementById("score").value = "";
-    document.getElementById("concepto").value = "NO APLICA";
-    document.getElementById("templeCementerios").style = "display:none";
-    document.getElementById("extraEstablecimientoIVC").style = "display:none";
-    document.getElementById("extraEstablecimientoMD").style = "display:none";
-  }
-  for (let i = razonSocial.options.length; i >= 1; i--) {
-    razonSocial.remove(i);
-  }
+if (municipio != null) {
+  municipio.addEventListener("change", function () {
+    codEsta.value = "";
+    Nriesgo.value = "";
+    tipIdentificacion.value = "";
+    identificacion.value = "";
+    direccion.value = "";
+    representante.value = "";
+    estado.value = "";
+    grupEsta.selectedIndex = "Seleccione el Grupo";
+    tipEsta.selectedIndex = "Seleccione el Tipo";
+    razonSocial.selectedIndex = "Seleccione El Establecimiento";
+    phone.value = "";
+    if (document.getElementById("templeCementerios")) {
+      document.getElementById("score").value = "";
+      document.getElementById("concepto").value = "NO APLICA";
+      document.getElementById("templeCementerios").style = "display:none";
+      document.getElementById("extraEstablecimientoIVC").style = "display:none";
+      document.getElementById("extraEstablecimientoMD").style = "display:none";
+    }
+    for (let i = razonSocial.options.length; i >= 1; i--) {
+      razonSocial.remove(i);
+    }
 
-  for (let i = tipEsta.options.length; i >= 1; i--) {
-    tipEsta.remove(i);
-  }
-});
+    for (let i = tipEsta.options.length; i >= 1; i--) {
+      tipEsta.remove(i);
+    }
+  });
+}

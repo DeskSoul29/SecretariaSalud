@@ -61,6 +61,22 @@
                       <th>Archivos</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Tecnico Responsable</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Nombre Completo</th>
+                      <th>Nº de Identificación</th>
+                      <th>Nombre del Establecimiento Que Labora</th>
+                      <th>Dirección del Establecimiento</th>
+                      <th>Fecha de Expedición del Carnet</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (Carnetiz){ %>
                     <% Carnetiz.forEach((Carnetiz)=> { %>
@@ -196,7 +212,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [1, 'asc']
+          [1, 'desc']
         ],
         dom: 'Bfrtip',
         buttons: [{

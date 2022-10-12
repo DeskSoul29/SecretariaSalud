@@ -8,11 +8,7 @@
 <div class="form-group row">
   <div class="col-sm-6">
     <label class="mr-sm-2" for="medidaApliEstable">Medida Aplicada</label>
-    <select
-      id="medidaApliEstable"
-      name="medidaApliEstable"
-      class="custom-select mr-sm-2"
-    >
+    <select id="medidaApliEstable" name="medidaApliEstable" class="custom-select mr-sm-2">
       <option selected disabled>Seleccione</option>
       <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA TEMPORAL TOTAL</option>
       <option value="CLAUSURA TEMPORAL PARCIAL">
@@ -28,31 +24,14 @@
   </div>
 
   <div class="col-sm-6">
-    <label class="mr-sm-2" for="motivoApli"
-      >Motivo de Aplicación de la Medida</label
-    >
-    <input
-      type="text"
-      onkeyup="mayus(this);"
-      class="form-control form-control-user"
-      id="motivoApli"
-      name="motivoApli"
-    />
+    <label class="mr-sm-2" for="motivoApli">Motivo de Aplicación de la Medida</label>
+    <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="motivoApli" name="motivoApli" />
   </div>
 </div>
 
 <div class="form-group row">
   <div class="col-sm-12">
-    <label class="mr-sm-2" for="observacionMedEsta"
-      >Observaciones de Medidas Sanitarias a Establecimientos (Opcional)</label
-    >
-    <textarea
-      name="observacionMedEsta"
-      id="observacionMedEsta"
-      maxlength="270"
-      rows="2"
-      class="form-control form-control-user"
-      placeholder="Escribe las Observaciones Que Creas Necesarias"
-    ></textarea>
+    <label class="mr-sm-2" for="observacionMedEsta">Observaciones de Medidas Sanitarias a Establecimientos (Opcional)</label>
+    <textarea name="observacionMedEsta" onkeyup="mayus(this);" id="observacionMedEsta" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
   </div>
 </div>

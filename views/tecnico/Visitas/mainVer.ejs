@@ -100,7 +100,7 @@
                             <td>
                               <% if(allConso.status=="Rechazado" ){ %>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>
-                              <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
@@ -125,7 +125,7 @@
                               <% } %>
                             </td>
                             <td>
-                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                             </td>
                             <td>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>
@@ -238,7 +238,7 @@
     });
     $('#dataTable').DataTable({
       order: [
-        [1, 'asc']
+        [1, 'desc']
       ],
     });
   </script>

@@ -49,7 +49,7 @@
                       <a href="/tecnico/Consolidaciones/Ver/AntirrabicaAnimal">AntirrabicaAnimal</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Validar
+                      Corregir
                     </li>
                   </ol>
                 </nav>
@@ -60,39 +60,92 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
-                      </div>
-                    </div>
-
-                    <%- include('../../../tools/Templates/antirrabicaTem'); %>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
-                        </select>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
+                      <div class="col-sm-9" id="divMotivo">
                         <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                        <textarea maxlength="270" rows="2" class="form-control form-control-user" readonly><%= consRech.respuesta.motivo %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="municipio" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="Pcanina">POBLACIÓN
+                          CANINA</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.Pcanina %>" min="0" class="form-control form-control-user" id="Pcanina" name="Pcanina" />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="Pfelina">POBLACIÓN
+                          FELINA</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.Pfelina %>" min="0" class="form-control form-control-user" id="Pfelina" name="Pfelina" />
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">ANIMALES VACUNADOS</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="caninosUrbano">CANINOS -
+                          URBANO</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.canUrb %>" min="0" class="form-control form-control-user monto" id="caninosUrbano" name="caninosUrbano" onchange="sumar();" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="caninosRural">CANINOS -
+                          RURAL</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.canRur %>" min="0" class="form-control form-control-user monto" id="caninosRural" name="caninosRural" onchange="sumar();" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="felinosUrbano">FELINOS -
+                          URBANO</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.felUrb %>" min="0" class="form-control form-control-user monto" id="felinosUrbano" name="felinosUrbano" onchange="sumar();" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="felinosRural">FELINOS -
+                          RURAL</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.felRur %>" min="0" class="form-control form-control-user monto" id="felinosRural" name="felinosRural" onchange="sumar();" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="totalVacunados">TOTAL
+                          VACUNADOS</label>
+                        <input type="number" value="<%= consolidacion.ForAntirrabica.totalVac %>" min="0" class="form-control form-control-user" id="totalVacunados" name="totalVacunados" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Reporte
+                      Enviar Corrección
                     </button>
                   </form>
                 </div>
@@ -153,8 +206,7 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -183,6 +235,17 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+
+    function sumar() {
+      const $total = document.getElementById('totalVacunados');
+      let subtotal = 0;
+      [...document.getElementsByClassName("monto")].forEach(function(element) {
+        if (element.value !== '') {
+          subtotal += parseFloat(element.value);
+        }
+      });
+      $total.value = subtotal;
+    }
   </script>
 </body>
 

@@ -48,7 +48,7 @@
                       <a href="/tecnico/Consolidaciones/Ver/Establecimientos">Establecimientos</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Validar
+                      Corregir
                     </li>
                   </ol>
                 </nav>
@@ -59,39 +59,310 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
-                      </div>
-                    </div>
-
-                    <%- include('../../../tools/Templates/establecimientosTem'); %>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" class="form-control form-control-user" readonly><%= consRech.respuesta.motivo %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-8 mb-3 mb-sm-0">
+                        <label class="mr-sm-2" for="grupEsta">Grupo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="codEsta">Codigo</label>
+                        <input type="text" value="<%= consolidacion.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                        <input type="text" value="<%= consolidacion.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                        <input type="text" value="<%= consolidacion.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-3" for="tIden">Tipo </label>
+                        <input type="text" value="<%= consolidacion.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="inputIden">Identificación</label>
+                        <input type="number" value="<%= consolidacion.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="phone">Telefono</label>
+                        <input type="number" value="<%= consolidacion.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                        <input type="text" value="<%= consolidacion.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                        <input type="text" value="<%= consolidacion.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="estado">Estado</label>
+                        <input type="text" value="<%= consolidacion.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
+                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="score">Puntaje</label>
+                        <input type="number" class="form-control form-control-user" value="<%= consolidacion.score %>" readonly />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="concepto">Concepto</label>
+                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.concepto %>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="accion">Acción Realizada</label>
+                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.accion %>" />
+                      </div>
+                      <div class="col-sm-8">
+                        <label class="mr-sm-2" for="acta">Tipo de Acta
+                          Utilizada</label>
+                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.acta %>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row" id="extraEstablecimiento">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley 1335?</label>
+                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.actaLey %>" />
+                      </div>
+
+                      <div id="templeCementerios" class="col-sm-8" style="display: none;">
+                        <label class="mr-sm-3" for="NecroMorg">¿El Cementerio Cuenta con
+                          Sala de Necropsia o
+                          Morgue?</label>
+                        <select id="NecroMorg" name="NecroMorg" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="SI">SI</option>
+                          <option value="NO">NO</option>
                         </select>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                      </div>
+                    </div>
+
+
+                    <div id="productoTemple" style="display: none;">
+                      <!-- Divider -->
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">IVC Rotulado</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="productoRotulado">Producto</label>
+                          <input type="text" id="productoRotulado" name="productoRotulado" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForRotulado.productoRotulado %>" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="publicidadTemple" style="display: none;">
+                      <!-- Divider -->
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">IVC Publicidad</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="medPubli">Medio Publicitario</label>
+                          <select id="medPubli" name="medPubli" class="custom-select mr-sm-2">
+                            <option selected disabled>
+                              Seleccione
+                            </option>
+                            <option value="REVISTA">REVISTA</option>
+                            <option value="PERIODICO">PERIODICO</option>
+                            <option value="FOLLETO">FOLLETO</option>
+                            <option value="VALLA">VALLA</option>
+                            <option value="VOLANTE">VOLANTE</option>
+                            <option value="RADIO">RADIO</option>
+                            <option value="TELEVISION">TELEVISION</option>
+                            <option value="VEHICULO">VEHICULO</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-8">
+                          <label class="mr-sm-2" for="permisoSanitario">N° Registro/Permiso/Notificación Sanitario</label>
+                          <input type="text" id="permisoSanitario" name="permisoSanitario" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForPublicidad.registroSanitario %>" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="productoPublicidad">Producto</label>
+                          <input type="text" id="productoPublicidad" name="productoPublicidad" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForPublicidad.productoPublicidad %>" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="marcaPublicidad">Marca</label>
+                          <input type="text" id="marcaPublicidad" name="marcaPublicidad" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForPublicidad.marcaPublicidad %>" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="MSEstablecimientoTemple" style="display: none;">
+                      <!-- Divider -->
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Establecimientos</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="medidaApliEstable">Medida Aplicada</label>
+                          <select id="medidaApliEstable" name="medidaApliEstable" class="custom-select mr-sm-2">
+                            <option selected disabled>Seleccione</option>
+                            <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA TEMPORAL TOTAL</option>
+                            <option value="CLAUSURA TEMPORAL PARCIAL">
+                              CLAUSURA TEMPORAL PARCIAL
+                            </option>
+                            <option value="SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS">
+                              SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS
+                            </option>
+                            <option value="SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS">
+                              SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="motivoApli">Motivo de Aplicación de la Medida</label>
+                          <input type="text" id="motivoApli" name="motivoApli" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForMSEstablecimientos.motivoMSEstablecimientos %>" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="observacionMedEsta">Observaciones de Medidas Sanitarias a Establecimientos (Opcional)</label>
+                          <textarea class="form-control form-control-user" onkeyup="mayus(this);"><%= consolidacion.ForMSEstablecimientos.observacionMedEsta %></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div id="MSProductoTemple" style="display: none;">
+                      <!-- Divider -->
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Productos</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="medidaApliProduc">Medida Aplicada</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.medidaMSProductos %>" />
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="permisoProduco">Permiso o Notificación</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.permisoMSProductos %>" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="productoMed">Producto</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.productoMSProductos %>" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="marcaProduct">Marca</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.marcaMSProductos %>" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="motivoProduct">Motivo de Aplicación de la Medida</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.motivoMSProductos %>" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="presentProduct">Presentación</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.presentacionMSProductos %>" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="cantProdu">Cantidad</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.cantidadMSProductos %>" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="fabriProduc">Fabricante</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.fabricanteMSProductos %>" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="loteProduc">Lote</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.loteMSProductos %>" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="fechProduc">Fecha de Vencimiento</label>
+                          <input type="text" class="form-control form-control-user" readonly value="<%= moment(consolidacion.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>" />
+                        </div>
                       </div>
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Reporte
+                      Enviar Corrección
                     </button>
                   </form>
                 </div>
@@ -152,8 +423,7 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
