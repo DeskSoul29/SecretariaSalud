@@ -70,7 +70,7 @@
                         <% if(cementerio.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
                         <% }else if(cementerio.status == "Rechazado"){ %>
-                        <a href="<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                         <% }else if(cementerio.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(cementerio.status == "Aceptado"){ %>
@@ -96,8 +96,7 @@
                         <%= cementerio.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(cementerio.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(cementerio.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= cementerio.score %>

@@ -439,6 +439,27 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
 };
 
 //Apartado: Consolidaciones
+export const SeeTecConsolidaciones = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Estables = await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+      })
+      .lean();
+    req.allConso = Estables;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
 export const SendEstablecimiento = async (req, res, next) => {
   await upload(req, res, function (err, res) {
     if (err) {

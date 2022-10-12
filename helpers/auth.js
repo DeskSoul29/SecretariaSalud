@@ -2,6 +2,7 @@ import login from "../models/user.js";
 import { promisify } from "util";
 import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
+import consolidaciones from "../models/consolidaciones.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 
@@ -320,6 +321,12 @@ export const inscribirEstablecimiento = async (req, res, next) => {
   } else {
     return res.redirect("/");
   }
+};
+
+//Consolidaciones
+export const ValConsolidaciones = async (req, res, next) => {
+  req.consolidacion = await consolidaciones.findById(req.params._id).lean();
+  return next();
 };
 
 export const logout = (req, res) => {

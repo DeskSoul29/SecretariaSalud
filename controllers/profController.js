@@ -670,7 +670,7 @@ export const SendNovedad = async (req, res, next) => {
 
   var validaMuni = await authProf.ValidaMunicipio(municipio, mes);
   console.log(validaMuni);
-  console.log(validaMuni.length === 0)
+  console.log(validaMuni.length === 0);
   if (validaMuni.length === 0) {
     authProf.isUser(
       req,
@@ -1358,9 +1358,4 @@ export const SendReportTomaMuestra = async (req, res, next) => {
     "/profesional/Consolidaciones/Ver/TomaMuestras",
     "/profesional/Consolidaciones/Validar/TomaMuestras/"
   );
-};
-
-export const ValProfConsolidaciones = async (req, res, next) => {
-  req.consolidacion = await consolidaciones.findById(req.params._id).lean();
-  return next();
 };

@@ -149,6 +149,9 @@
                             </td>
                             <td>
                               <%= allConso.municipio %>
+                              <% if(typeof allConso.ForQuejas != "undefined") { %>
+                              <%= allConso.ForQuejas.municipioComuni %>
+                              <% } %>
                             </td>
                             <td>
                               <%= allConso.responsable.userResponsable %> -

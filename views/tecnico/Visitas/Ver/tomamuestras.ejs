@@ -72,7 +72,7 @@
                         <% if(TomaM.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
                         <% }else if(TomaM.status == "Rechazado"){ %>
-                        <a href="<%= TomaM._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                         <% }else if(TomaM.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(TomaM.status == "Aceptado"){ %>

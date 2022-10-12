@@ -4,6 +4,7 @@ import moment from "moment";
 import {
   ConsolidaEstados,
   LisConsolidaRechazadas,
+  SeeTecConsolidaciones,
   hojavidaConsultAllTec,
   SendEstablecimiento,
   SeeEstablecimiento,
@@ -33,6 +34,7 @@ import {
   isAuthenticatedTecnic,
   CodigosEstablecimientos,
   inscribirEstablecimiento,
+  ValConsolidaciones,
   logout,
 } from "../helpers/auth.js";
 
@@ -57,11 +59,18 @@ router.get(
 );
 
 // Apartado: Consolidaciones
-router.get("/Consolidaciones/Ver", isAuthenticatedTecnic, (req, res) => {
-  res.render("tecnico/Visitas/mainVer", {
-    user: req.user,
-  });
-});
+router.get(
+  "/Consolidaciones/Ver",
+  isAuthenticatedTecnic,
+  SeeTecConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/mainVer", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
 router.get("/Consolidaciones/Enviar", isAuthenticatedTecnic, (req, res) => {
   res.render("tecnico/Visitas/mainEnviar", {
     user: req.user,
@@ -424,6 +433,216 @@ router.get(
       user: req.user,
       Queja: req.consultQueja,
       moment: moment,
+    });
+  }
+);
+
+//Consolidaciones - Rechazos
+router.get(
+  "/Consolidaciones/Rechazado/Establecimientos/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Establecimientos/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/EduSanitaria/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/EduSanitaria/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/TomaMuestras/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/TomaMuestras/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/Vehiculos/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Vehiculos/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/Quejas/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Quejas/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
     });
   }
 );

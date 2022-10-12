@@ -39,7 +39,6 @@ import {
   SendReportVehiculos,
   SeeProfTomaMuestra,
   SendReportTomaMuestra,
-  ValProfConsolidaciones,
 } from "../controllers/profController.js";
 
 import {
@@ -47,6 +46,7 @@ import {
   CodigosEstablecimientos,
   consultUser,
   inscribirEstablecimiento,
+  ValConsolidaciones,
   logout,
 } from "../helpers/auth.js";
 
@@ -187,7 +187,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/Establecimientos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/establecimientos", {
       user: req.user,
@@ -200,7 +200,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/Establecimientos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportEstablecimiento,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/establecimientos", {
@@ -226,7 +226,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/Morgues/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/morgues", {
       user: req.user,
@@ -239,7 +239,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/Morgues/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportMorgues,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/morgues", {
@@ -265,7 +265,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/Cementerios/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/cementerios", {
       user: req.user,
@@ -278,7 +278,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/Cementerios/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportCementerios,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/cementerios", {
@@ -304,7 +304,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/IVCRotulado/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/rotulado", {
       user: req.user,
@@ -317,7 +317,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/IVCRotulado/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportEstaRotulado,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/rotulado", {
@@ -343,7 +343,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/IVCPublicidad/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/publicidad", {
       user: req.user,
@@ -356,7 +356,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/IVCPublicidad/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportEstaPublicidad,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/publicidad", {
@@ -382,7 +382,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/MedSaniEstablecimientos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
       user: req.user,
@@ -395,7 +395,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/MedSaniEstablecimientos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportMedEstable,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
@@ -421,7 +421,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/MedSaniProductos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/medProductos", {
       user: req.user,
@@ -434,7 +434,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/MedSaniProductos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportMedProduct,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/medProductos", {
@@ -460,7 +460,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/Vehiculos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/vehiculos", {
       user: req.user,
@@ -473,7 +473,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/Vehiculos/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportVehiculos,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/vehiculos", {
@@ -499,7 +499,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/EventosSaludPublica/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/eventSaludPublic", {
       user: req.user,
@@ -512,7 +512,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/EventosSaludPublica/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportEventSaludPubli,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/eventSaludPublic", {
@@ -538,7 +538,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/TomaMuestras/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/tomamuestras", {
       user: req.user,
@@ -551,7 +551,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/TomaMuestras/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportTomaMuestra,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/tomamuestras", {
@@ -577,7 +577,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/EduSanitaria/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/eduSanitaria", {
       user: req.user,
@@ -590,7 +590,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/EduSanitaria/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportEduSanitaria,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/eduSanitaria", {
@@ -616,7 +616,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/ListadoCarnetizados/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/listCarnets", {
       user: req.user,
@@ -629,7 +629,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/ListadoCarnetizados/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportCarnetzados,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/listCarnets", {
@@ -655,7 +655,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/AntirrabicaAnimal/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/antirrabica", {
       user: req.user,
@@ -668,7 +668,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/AntirrabicaAnimal/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportAntirrabica,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/antirrabica", {
@@ -694,7 +694,7 @@ router.get(
 router.get(
   "/Consolidaciones/Validar/Quejas/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/quejas", {
       user: req.user,
@@ -707,7 +707,7 @@ router.get(
 router.post(
   "/Consolidaciones/Validar/Quejas/:_id",
   isAuthenticatedProf,
-  ValProfConsolidaciones,
+  ValConsolidaciones,
   SendReportQuejas,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/quejas", {

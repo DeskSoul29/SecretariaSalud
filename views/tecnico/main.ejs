@@ -144,8 +144,22 @@
                         <% ListconsRech.forEach((ListconsRech)=> { %>
                         <tr>
                           <td>
-                            <% if(ListconsRech.respuestaProf.criterioProf=="Rechazado" ){ %>
-                            <a><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% if(ListconsRech.tipo == "Establecimiento" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "Antirrabica" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "eduSanitaria" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "EvenSaludPubli" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "lisCarnets" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "vehiculos" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Vehiculos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "tomaMuestra" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.tipo == "quejas" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
                           <td>
@@ -155,7 +169,23 @@
                             <%= ListconsRech.consolidacion.municipio %>
                           </td>
                           <td>
-                            <%= ListconsRech.tipo %>
+                            <% if(ListconsRech.tipo == "Establecimiento" ){ %>
+                            Establecimientos
+                            <% } else if(ListconsRech.tipo == "Antirrabica" ){ %>
+                            Antirrabica Animal
+                            <% } else if(ListconsRech.tipo == "eduSanitaria" ){ %>
+                            Educación Sanitraria
+                            <% } else if(ListconsRech.tipo == "EvenSaludPubli" ){ %>
+                            Eventos de Salud Publica
+                            <% } else if(ListconsRech.tipo == "lisCarnets" ){ %>
+                            Listado de Carnetizados
+                            <% } else if(ListconsRech.tipo == "vehiculos" ){ %>
+                            Vehiculos
+                            <% } else if(ListconsRech.tipo == "tomaMuestra" ){ %>
+                            Toma de Muestras
+                            <% } else if(ListconsRech.tipo == "quejas" ){ %>
+                            Quejas
+                            <% } %>
                           </td>
                           <td>
                             <%= ListconsRech.respuestaProf.motivoProf %>
