@@ -58,7 +58,7 @@
                     <h1 class="h4 text-gray-900 mb-4">ESTABLECIMIENTOS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form action="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
 
                     <div class="form-group row">
                       <div class="col-sm-3">
@@ -560,8 +560,9 @@
       document.getElementById("MSProductoTemple").removeAttribute("style");
       document.getElementById("medidaApliProduc").value = "<%= consolidacion.ForMSProductos.medidaMSProductos %>"
     }
-    if (Cementerio === "on") {
+    if (Cementerio != "") {
       document.getElementById("templeCementerios").removeAttribute("style");
+      document.getElementById("NecroMorg").value = "<%= consolidacion.salaNM %>"
     }
   </script>
 </body>

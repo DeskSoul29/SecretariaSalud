@@ -325,9 +325,64 @@ var authTec = (function () {
     }
   };
 
+  var EditReport = async (req) => {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    var Ruta = await authTec.NextReport(req, decodificada);
+
+    await reportes
+      .findOneAndUpdate(
+        { "consolidacion.consID": req.params._id },
+        { $set: { "respuesta.criterio": "Corregido" } },
+        { new: true }
+      )
+      .then((result) => {
+        if (Ruta.length === 0) {
+          return authTec.isUser(
+            req,
+            "Reportes Terminados",
+            "Ha Terminado El Listado",
+            "success",
+            true,
+            false,
+            "/tecnico"
+          );
+        } else {
+          return authTec.isUser(
+            req,
+            "Conexión exitosa",
+            "Consolidación Enviada",
+            "success",
+            false,
+            800,
+            "/tecnico/Consolidaciones/" + Ruta[0]._id
+          );
+        }
+      });
+  };
+
+  var NextReport = async (req, decodificada) => {
+    return await reportes
+      .find({
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+        "consolidacion.consID": {
+          $ne: req.params._id,
+        },
+      })
+      .sort({ createdAt: 1 })
+      .limit(1);
+  };
+
   return {
     isUser: isUser,
     SendConsolidacion: SendConsolidacion,
+    EditReport: EditReport,
+    NextReport: NextReport,
   };
 })();
 
@@ -414,6 +469,8 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
 };
 
 //Apartado: Consolidaciones
+
+//Consolidaciones - Ver
 export const SeeTecConsolidaciones = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -436,15 +493,6 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
     console.log(error);
     return next();
   }
-};
-
-export const SendEstablecimiento = async (req, res, next) => {
-  await upload(req, res, function (err, res) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "on", "", "", "", "", "", "", "");
-  });
 };
 export const SeeEstablecimiento = async (req, res, next) => {
   try {
@@ -599,14 +647,6 @@ export const SeeMedProduct = async (req, res, next) => {
     return next();
   }
 };
-export const SendEventSaludPubli = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "on", "", "", "", "");
-  });
-};
 export const SeeEventSaludPubli = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -627,14 +667,6 @@ export const SeeEventSaludPubli = async (req, res, next) => {
     console.log(error);
     return next();
   }
-};
-export const SendQuejas = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "", "on");
-  });
 };
 export const SeeQuejas = async (req, res, next) => {
   try {
@@ -657,14 +689,6 @@ export const SeeQuejas = async (req, res, next) => {
     return next();
   }
 };
-export const SendAntirrabica = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "on", "", "", "", "", "", "");
-  });
-};
 export const SeeAntirrabica = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -685,14 +709,6 @@ export const SeeAntirrabica = async (req, res, next) => {
     console.log(error);
     return next();
   }
-};
-export const SendCarnetizados = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "on", "", "", "");
-  });
 };
 export const SeeCarnetizados = async (req, res, next) => {
   try {
@@ -715,14 +731,6 @@ export const SeeCarnetizados = async (req, res, next) => {
     return next();
   }
 };
-export const SendEduSanitaria = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "on", "", "", "", "", "");
-  });
-};
 export const SeeEduSanitaria = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -743,14 +751,6 @@ export const SeeEduSanitaria = async (req, res, next) => {
     console.log(error);
     return next();
   }
-};
-export const SendVehiculos = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "on", "", "");
-  });
 };
 export const SeeVehiculos = async (req, res, next) => {
   try {
@@ -773,14 +773,6 @@ export const SeeVehiculos = async (req, res, next) => {
     return next();
   }
 };
-export const SendTomaMuestra = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "on", "");
-  });
-};
 export const SeeTomaMuestra = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -799,6 +791,299 @@ export const SeeTomaMuestra = async (req, res, next) => {
     return next();
   } catch (error) {
     console.log(error);
+    return next();
+  }
+};
+
+//Consolidaciones - Enviar
+export const SendEstablecimiento = async (req, res, next) => {
+  await upload(req, res, function (err, res) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "on", "", "", "", "", "", "", "");
+  });
+};
+export const SendEventSaludPubli = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "", "on", "", "", "", "");
+  });
+};
+export const SendQuejas = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "", "on");
+  });
+};
+export const SendAntirrabica = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "on", "", "", "", "", "", "");
+  });
+};
+export const SendCarnetizados = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "", "", "on", "", "", "");
+  });
+};
+export const SendEduSanitaria = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "on", "", "", "", "", "");
+  });
+};
+export const SendVehiculos = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "on", "", "");
+  });
+};
+export const SendTomaMuestra = async (req, res, next) => {
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "on", "");
+  });
+};
+
+//Consolidaciones - Rechazos
+export const EditConsolidacionRech = async (req, res, next) => {
+  try {
+    var {
+      fVisit,
+      score,
+      concepto,
+      accion,
+      //Cementerio
+      NecroMorg,
+      //Establecimiento
+      acta,
+      actaLey,
+      //Rotulado
+      productoRotulado,
+      //Publicidad
+      medPubli,
+      permisoSanitario,
+      productoPublicidad,
+      marcaPublicidad,
+      //MEDEstablecimientos
+      medidaApliEstable,
+      motivoApli,
+      observacionMedEsta,
+      //MEDProductos
+      medidaApliProduc,
+      permisoProduco,
+      productoMed,
+      marcaProduct,
+      motivoProduct,
+      presentProduct,
+      cantProdu,
+      fabriProduc,
+      loteProduc,
+      fechProduc,
+      observacionMedProd,
+      //Antirrabica
+      Pcanina,
+      Pfelina,
+      caninosUrbano,
+      caninosRural,
+      felinosUrbano,
+      felinosRural,
+      totalVacunados,
+      //EduSanitaria
+      temaCap,
+      otrosCap,
+      fechaCap,
+      intensidadCap,
+      lugCap,
+      personalCap,
+      totalPersCap,
+      //EvenSalPublica
+      etasPresent,
+      etasAtend,
+      intoxPresent,
+      intoxAtend,
+      agrePresent,
+      agreAtend,
+      trueFalse,
+      fReunion,
+      //Carnetizados
+      expCarnet,
+      idenCarnet,
+      nameCarnet,
+      estableciCarnet,
+      direcCarnet,
+      //Quejas
+      tipQueja,
+      fechRece,
+      perCausa,
+      perAfec,
+      descQueja,
+      requeQueja,
+      //Toma de Muestras
+      tipMues,
+      descripTip,
+      tipAnali,
+      zona,
+      objEst,
+      acompananteEmp,
+      observacion,
+      //Vehiculos
+      classVehi,
+      otroV,
+      placa,
+      refriV,
+      nInscrip,
+      produTrans,
+    } = req.body;
+
+    await consolidaciones
+      .findByIdAndUpdate(
+        req.params._id,
+        {
+          $set: {
+            status: "Corregido",
+            fvisit: fVisit,
+            score: score,
+            concepto: concepto,
+            accion: accion,
+
+            acta: acta,
+            actaLey: actaLey,
+
+            salaNM: NecroMorg,
+
+            ForRotulado: {
+              productoRotulado: productoRotulado,
+            },
+            ForPublicidad: {
+              medioPublicitario: medPubli,
+              registroSanitario: permisoSanitario,
+              productoPublicidad: productoPublicidad,
+              marcaPublicidad: marcaPublicidad,
+            },
+            ForMSEstablecimientos: {
+              medidaMSEstablecimientos: medidaApliEstable,
+              motivoMSEstablecimientos: motivoApli,
+              observacionMedEsta: observacionMedEsta,
+            },
+            ForMSProductos: {
+              medidaMSProductos: medidaApliProduc,
+              permisoMSProductos: permisoProduco,
+              productoMSProductos: productoMed,
+              marcaMSProductos: marcaProduct,
+              motivoMSProductos: motivoProduct,
+              presentacionMSProductos: presentProduct,
+              cantidadMSProductos: cantProdu,
+              fabricanteMSProductos: fabriProduc,
+              loteMSProductos: loteProduc,
+              vencimientoMSProductos: fechProduc,
+              observacionMedProd: observacionMedProd,
+            },
+            ForAntirrabica: {
+              Pcanina: Pcanina,
+              Pfelina: Pfelina,
+              canUrb: caninosUrbano,
+              canRur: caninosRural,
+              felUrb: felinosUrbano,
+              felRur: felinosRural,
+              totalVac: totalVacunados,
+            },
+            ForEduSanitaria: {
+              tema: temaCap,
+              otroTema: otrosCap,
+              fechaCap: fechaCap,
+              intensidad: intensidadCap,
+              lugarCapa: lugCap,
+              personalDiri: personalCap,
+              totalPersCap: totalPersCap,
+            },
+            ForEvenSPublica: {
+              presentEtas: etasPresent,
+              atendEtas: etasAtend,
+              presentIntox: intoxPresent,
+              atendIntox: intoxAtend,
+              presentAgre: agrePresent,
+              atendAgre: agreAtend,
+              covePart: trueFalse,
+              coveFech: fReunion,
+            },
+            ForCarnets: {
+              expCarnet: expCarnet,
+              idenCarnet: idenCarnet,
+              nombreCarnet: nameCarnet,
+              establecimientoCarnet: estableciCarnet,
+              direccionCarnet: direcCarnet,
+            },
+            ForQuejas: {
+              tipoQueja: tipQueja,
+              frecep: fechRece,
+              perCausaQueja: perCausa,
+              perAfectQueja: perAfec,
+              descQueja: descQueja,
+              reqQueja: requeQueja,
+            },
+            ForTomaMuestras: {
+              tipMuestra: tipMues,
+              descMuestra: descripTip,
+              tipAnalisis: tipAnali,
+              zona: zona,
+              objAnalisis: objEst,
+              acompanante: acompananteEmp,
+            },
+            ForVehiculos: {
+              claseVehiculo: classVehi,
+              otraClase: otroV,
+              placa: placa,
+              refrigeracion: refriV,
+              nInscripcion: nInscrip,
+              productosVehiculo: produTrans,
+            },
+            // evidencias: {
+            //   file1: req.files[0].filename,
+            //   file2: file2,
+            //   file3: file3,
+            //   file4: file4,
+            //   file5: file5,
+            // },
+            observaciones: observacion,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        if (result != null) {
+          authTec.EditReport(req);
+          return next();
+        } else {
+          authTec.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            false,
+            false,
+            "/tecnico/Consolidaciones/Enviar"
+          );
+          return next();
+        }
+      });
+  } catch (error) {
     return next();
   }
 };

@@ -107,6 +107,8 @@
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
                         <% }else if(medProduc.status == "Rechazado"){ %>
                         <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= medProduc._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(medProduc.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
                         <% }else if(medProduc.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(medProduc.status == "Aceptado"){ %>

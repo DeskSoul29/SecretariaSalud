@@ -84,6 +84,8 @@
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
                         <% }else if(Carnetiz.status == "Rechazado"){ %>
                         <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= Carnetiz._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(Carnetiz.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
                         <% }else if(Carnetiz.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(Carnetiz.status == "Aceptado"){ %>

@@ -99,6 +99,8 @@
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
                         <% }else if(Antirrabi.status == "Rechazado"){ %>
                         <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= Antirrabi._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(Antirrabi.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
                         <% }else if(Antirrabi.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(Antirrabi.status == "Aceptado"){ %>

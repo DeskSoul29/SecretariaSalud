@@ -5,6 +5,7 @@ import {
   ConsolidaEstados,
   SeeTecConsolidaciones,
   hojavidaConsultAllTec,
+  EditConsolidacionRech,
   SendEstablecimiento,
   SeeEstablecimiento,
   SeeMorgues,
@@ -459,6 +460,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/establecimientos", {
       user: req.user,
