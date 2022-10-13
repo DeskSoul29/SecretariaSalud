@@ -59,34 +59,157 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
                       </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" class="form-control form-control-user" readonly><%= consRech.respuesta.motivo %></textarea>
                       </div>
                     </div>
-
-                    <%- include('../../../tools/Templates/quejasTem'); %>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.ForQuejas.municipioEstable %><%= consolidacion.ForQuejas.municipioComuni %>" readonly>
+                      </div>
+                    </div>
+
+                    <div id="quejaEstable" style="display: none;">
+                      <div class="form-group row">
+                        <div class="col-sm-8 mb-3 mb-sm-0">
+                          <label class="mr-sm-2" for="grupEsta">Grupo Del
+                            Establecimiento</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.grupo %>" readonly>
+                        </div>
+                        <div class="col-sm-2">
+                          <label class="mr-sm-2" for="codEsta">Codigo</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.codigo %>" readonly />
+                        </div>
+                        <div class="col-sm-2">
+                          <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.nivelRiesgo %>" readonly />
+                        </div>
+
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                            Establecimiento</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.tipo %>" readonly />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-5">
+                          <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.razonSocial %>" readonly />
+                        </div>
+                        <div class="col-sm-2">
+                          <label class="mr-sm-3" for="tIden">Tipo </label>
+                          <input type="text" value="<%= consolidacion.tipoIdentificacion %>" class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-3">
+                          <label class="mr-sm-2" for="inputIden">Identificación</label>
+                          <input type="number" value="<%= consolidacion.identificacion %>" class="form-control form-control-user" readonly>
+                        </div>
+                        <div class="col-sm-2">
+                          <label class="mr-sm-2" for="phone">Telefono</label>
+                          <input type="number" value="<%= consolidacion.telefono %>" class="form-control form-control-user" readonly>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.repreLegal %>" readonly />
+                        </div>
+                        <div class="col-sm-3">
+                          <label class="mr-sm-2" for="direccion">Dirección</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.direccion %>" readonly />
+                        </div>
+                        <div class="col-sm-3">
+                          <label class="mr-sm-2" for="estado">Estado</label>
+                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.estado %>" readonly />
+                        </div>
+                      </div>
+                    </div>
+
                     <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="tipQueja">Tipo de Queja</label>
+                        <select id="tipQueja" name="tipQueja" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="AGUA (CONSUMO - RECREATIVAS)">AGUA
+                            (CONSUMO - RECREATIVAS)
+                          </option>
+                          <option value="AGUAS RESIDUALES">AGUAS RESIDUALES
+                          </option>
+                          <option value="AIRE – RUIDO">AIRE – RUIDO</option>
+                          <option value="ALIMENTOS">ALIMENTOS</option>
+                          <option value="ZOONOSIS">ZOONOSIS</option>
+                          <option value="RESIDUOS SOLIDOS Y ESPECIALES">RESIDUOS
+                            SOLIDOS Y ESPECIALES</option>
+                          <option value="USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS QUIMICAS">
+                            USO Y MANEJO DE PLAGUICIDAS Y OTRAS SUSTANCIAS
+                            QUIMICAS</option>
+                          <option value="OTROS">OTROS</option>
                         </select>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fechRece">Fecha de
+                          Recepción</label>
+                        <input type="date" class="form-control form-control-user" id="fechRece" name="fechRece" value="<%= moment(consolidacion.ForQuejas.frecep).add(1, 'days').format('YYYY-MM-DD'); %>" onkeyup="mayus(this);" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fVisit">Fecha de
+                          Visita</label>
+                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="perCausa">Persona Que Causa La
+                          Queja</label>
+                        <input type="text" class="form-control form-control-user" id="perCausa" name="perCausa" value="<%= consolidacion.ForQuejas.perCausaQueja %>" onkeyup="mayus(this);" />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="perAfec">Persona
+                          Afectada</label>
+                        <input type="text" class="form-control form-control-user" id="perAfec" name="perAfec" value="<%= consolidacion.ForQuejas.perAfectQueja %>" onkeyup="mayus(this);" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="descQueja">Descripción De La
+                          Queja</label>
+                        <textarea name="descQueja" id="descQueja" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user"><%= consolidacion.ForQuejas.descQueja %></textarea>
+                      </div>
+                      <div class=" col-sm-6">
+                        <label class="mr-sm-2" for="requeQueja">Requerimientos</label>
+                        <textarea name="requeQueja" id="requeQueja" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user"><%= consolidacion.ForQuejas.reqQueja %></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
@@ -182,6 +305,7 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+    document.getElementById("tipQueja").value = "<%= consolidacion.ForQuejas.tipoQueja %>"
   </script>
 
   <script type="text/JavaScript">

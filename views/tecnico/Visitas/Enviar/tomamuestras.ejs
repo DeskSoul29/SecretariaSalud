@@ -259,6 +259,7 @@
           if (document.getElementById("tipMues").value == "ALIMENTOS" || document.getElementById("tipMues").value == "BEBIDAS ALCOHOLICAS") {
               $("#descripTip").attr("readonly", false);
           } else {
+            document.getElementById("descripTip").value = ""
               $("#descripTip").attr("readonly", true);
           }
       });

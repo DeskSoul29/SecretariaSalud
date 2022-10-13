@@ -59,34 +59,173 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
                       </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" class="form-control form-control-user" readonly><%= consRech.respuesta.motivo %></textarea>
                       </div>
                     </div>
-
-                    <%- include('../../../tools/Templates/tomaMuestraTem'); %>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
                     <div class="form-group row">
+                      <div class="col-sm-8 mb-3 mb-sm-0">
+                        <label class="mr-sm-2" for="grupEsta">Grupo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="codEsta">Codigo</label>
+                        <input type="text" value="<%= consolidacion.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                        <input type="text" value="<%= consolidacion.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                        <input type="text" value="<%= consolidacion.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-3" for="tIden">Tipo </label>
+                        <input type="text" value="<%= consolidacion.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
+                      </div>
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="inputIden">Identificación</label>
+                        <input type="number" value="<%= consolidacion.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="phone">Telefono</label>
+                        <input type="number" value="<%= consolidacion.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                        <input type="text" value="<%= consolidacion.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                        <input type="text" value="<%= consolidacion.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="estado">Estado</label>
+                        <input type="text" value="<%= consolidacion.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="tipMues">Tipo de Muestra</label>
+                        <select id="tipMues" name="tipMues" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
+                          <option value="AGUA PARA CONSUMO HUMANO">
+                            AGUA PARA CONSUMO HUMANO
+                          </option>
+                          <option value="AGUA DE USO RECREATIVO">
+                            AGUA DE USO RECREATIVO
+                          </option>
+                          <option value="ALIMENTOS">ALIMENTOS</option>
+                          <option value="BEBIDAS ALCOHOLICAS">
+                            BEBIDAS ALCOHOLICAS
+                          </option>
+                          <option value="INTOXICACIONES ETAS">
+                            INTOXICACIONES ETAS
+                          </option>
                         </select>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="descripTip">Descripción De La Muestra</label>
+                        <input type="text" class="form-control form-control-user" id="descripTip" name="descripTip" onkeyup="mayus(this);" readonly />
+                      </div>
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="tipAnali">Tipo de Analisis</label>
+                        <select id="tipAnali" name="tipAnali" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="FISICOQUÍMICO">FISICOQUÍMICO</option>
+                          <option value="MICROBIOLÓGICO">
+                            MICROBIOLÓGICO
+                          </option>
+                          <option value="FISICOQUÍMICO Y MICROBIOLÓGICO">
+                            FISICOQUÍMICO Y MICROBIOLÓGICO
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="zona">Zona</label>
+                        <select id="zona" name="zona" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="RURAL">RURAL</option>
+                          <option value="URBANA">URBANA</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="objEst">Objeto de Analisis</label>
+                        <select id="objEst" name="objEst" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="VIGILANCIA">VIGILANCIA</option>
+                          <option value="POR REQUERIMIENTO DE ALGUN ENTE DE CONTROL">
+                            POR REQUERIMIENTO DE ALGUN ENTE DE CONTROL
+                          </option>
+                          <option value="POR QUEJA, ACCION POPULAR, DERECHO DE PETICIÓN">
+                            POR QUEJA, ACCION POPULAR, DERECHO DE PETICIÓN
+                          </option>
+                          <option value="MAPA DE RIESGO">
+                            MAPA DE RIESGO
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
+                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="acompananteEmp">Nombre Y Cargo Del Acompañante Por Parte De La
+                          Empresa Y/O Institución</label>
+                        <input type="text" class="form-control form-control-user" id="acompananteEmp" name="acompananteEmp" onkeyup="mayus(this);" value="<%= consolidacion.ForTomaMuestras.acompanante %>" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
@@ -181,6 +320,24 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+    });
+
+    document.getElementById("tipMues").value = "<%= consolidacion.ForTomaMuestras.tipMuestra %>"
+    document.getElementById("tipAnali").value = "<%= consolidacion.ForTomaMuestras.tipAnalisis %>"
+    document.getElementById("zona").value = "<%= consolidacion.ForTomaMuestras.zona %>"
+    document.getElementById("objEst").value = "<%= consolidacion.ForTomaMuestras.objAnalisis %>"
+
+    if ("<%= consolidacion.ForTomaMuestras.tipMuestra %>" == "ALIMENTOS" || "<%= consolidacion.ForTomaMuestras.tipMuestra %>" == "BEBIDAS ALCOHOLICAS") {
+      document.getElementById("descripTip").value = "<%= consolidacion.ForTomaMuestras.descMuestra %>"
+      $("#descripTip").attr("readonly", false);
+    }
+    $("#tipMues").change(function() {
+      if (document.getElementById("tipMues").value == "ALIMENTOS" || document.getElementById("tipMues").value == "BEBIDAS ALCOHOLICAS") {
+        $("#descripTip").attr("readonly", false);
+      } else {
+        document.getElementById("descripTip").value = ""
+        $("#descripTip").attr("readonly", true);
+      }
     });
   </script>
 </body>

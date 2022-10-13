@@ -147,34 +147,83 @@
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
-                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
+                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="score">Puntaje</label>
-                        <input type="number" class="form-control form-control-user" value="<%= consolidacion.score %>" readonly />
+                        <input type="number" type="number" placeholder="1.0" min="0" max="100" step="0.1" id="score" name="score" class="form-control form-control-user" value="<%= consolidacion.score %>" />
                       </div>
                       <div class="col-sm-6">
                         <label class="mr-sm-2" for="concepto">Concepto</label>
-                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.concepto %>" />
+                        <input type="text" class="form-control form-control-user" id="concepto" name="concepto" readonly value="<%= consolidacion.concepto %>" readonly />
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-4">
                         <label class="mr-sm-2" for="accion">Acción Realizada</label>
-                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.accion %>" />
+                        <select id="accion" name="accion" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione La Acción
+                          </option>
+                          <option value="INSPECCIÓN">INSPECCIÓN</option>
+                          <option value="CONTROL">CONTROL</option>
+                        </select>
                       </div>
                       <div class="col-sm-8">
                         <label class="mr-sm-2" for="acta">Tipo de Acta
                           Utilizada</label>
-                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.acta %>" />
+                        <select id="acta" name="acta" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE CARNE">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE CARNE
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - GRANDES SUPERFICIES">
+                            ENFOQUE DE RIESGO - GRANDES SUPERFICIES
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - ALMACENAMIENTO">
+                            ENFOQUE DE RIESGO - ALMACENAMIENTO
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA">
+                            ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - PLAZAS DE MERCADO">
+                            ENFOQUE DE RIESGO - PLAZAS DE MERCADO
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS
+                          </option>
+                          <option value="PGIRHS">PGIRHS</option>
+                          <option value="CEMENTERIOS">CEMENTERIOS</option>
+                          <option value="ACUEDUCTOS">ACUEDUCTOS</option>
+                          <option value="PISCINAS">PISCINAS</option>
+                          <option value="PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE PLAGUICIDAS">
+                            PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE
+                            PLAGUICIDAS
+                          </option>
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row" id="extraEstablecimiento">
                       <div class="col-sm-4">
                         <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley 1335?</label>
-                        <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.actaLey %>" />
+                        <select id="actaLey" name="actaLey" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="SI">SI</option>
+                          <option value="NO">NO</option>
+                        </select>
                       </div>
 
                       <div id="templeCementerios" class="col-sm-8" style="display: none;">
@@ -310,55 +359,69 @@
                       <div class="form-group row">
                         <div class="col-sm-6">
                           <label class="mr-sm-2" for="medidaApliProduc">Medida Aplicada</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.medidaMSProductos %>" />
+                          <select id="medidaApliProduc" name="medidaApliProduc" class="custom-select mr-sm-2">
+                            <option selected disabled>Seleccione</option>
+                            <option value="CONGELAMIENTO">CONGELAMIENTO</option>
+                            <option value="DECOMISO">DECOMISO</option>
+                            <option value="DESTRUCCIÓN">DESTRUCCIÓN</option>
+                          </select>
                         </div>
 
                         <div class="col-sm-6">
                           <label class="mr-sm-2" for="permisoProduco">Permiso o Notificación</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.permisoMSProductos %>" />
+                          <input type="text" id="permisoProduco" name="permisoProduco" class="form-control form-control-user" value="<%= consolidacion.ForMSProductos.permisoMSProductos %>" />
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <div class="col-sm-6">
                           <label class="mr-sm-2" for="productoMed">Producto</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.productoMSProductos %>" />
+                          <input type="text" id="productoMed" name="productoMed" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForMSProductos.productoMSProductos %>" />
                         </div>
                         <div class="col-sm-6">
                           <label class="mr-sm-2" for="marcaProduct">Marca</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.marcaMSProductos %>" />
+                          <input type="text" id="marcaProduct" name="marcaProduct" onkeyup="mayus(this);" class="form-control form-control-user" value="<%= consolidacion.ForMSProductos.marcaMSProductos %>" />
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="motivoProduct">Motivo de Aplicación de la Medida</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.motivoMSProductos %>" />
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="motivoProduct" name="motivoProduct" value="<%= consolidacion.ForMSProductos.motivoMSProductos %>" />
                         </div>
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="presentProduct">Presentación</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.presentacionMSProductos %>" />
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="presentProduct" name="presentProduct" value="<%= consolidacion.ForMSProductos.presentacionMSProductos %>" />
                         </div>
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="cantProdu">Cantidad</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.cantidadMSProductos %>" />
+                          <input type="number" min="0" class="form-control form-control-user monto" id="cantProdu" name="cantProdu" value="<%= consolidacion.ForMSProductos.cantidadMSProductos %>" />
                         </div>
                       </div>
 
                       <div class="form-group row">
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="fabriProduc">Fabricante</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.fabricanteMSProductos %>" />
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="fabriProduc" name="fabriProduc" value="<%= consolidacion.ForMSProductos.fabricanteMSProductos %>" />
                         </div>
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="loteProduc">Lote</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= consolidacion.ForMSProductos.loteMSProductos %>" />
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="loteProduc" name="loteProduc" value="<%= consolidacion.ForMSProductos.loteMSProductos %>" />
                         </div>
                         <div class="col-sm-4">
                           <label class="mr-sm-2" for="fechProduc">Fecha de Vencimiento</label>
-                          <input type="text" class="form-control form-control-user" readonly value="<%= moment(consolidacion.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>" />
+                          <input type="date" class="form-control form-control-user" id="fechProduc" name="fechProduc" value="<%= moment(consolidacion.ForMSProductos.vencimientoMSProductos).format('YYYY-MM-DD'); %>" />
                         </div>
                       </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="observacionMedProd">Observaciones de Medidas Sanitarias a Productos
+                            (Opcional)</label>
+                          <textarea name="observacionMedProd" id="observacionMedProd" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.ForMSEstablecimientos.observacionMedProd %></textarea>
+                        </div>
+                      </div>
+
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
@@ -454,24 +517,48 @@
     });
   </script>
 
-  <script type="text/JavaScript">
+  <script>
     var rotulado = "<%= consolidacion.consolidacion.rotulado %>";
     var publicidad = "<%= consolidacion.consolidacion.publicidad %>";
     var MSEstable = "<%= consolidacion.consolidacion.MSEstablecimientos %>";
     var MSProduct = "<%= consolidacion.consolidacion.MSProductos %>";
     var Cementerio = "<%= consolidacion.salaNM %>";
 
+    if (document.getElementById("grupEsta").value == "ACUEDUCTO") {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "AcueductoConcepto(this);");
+    } else if (
+      document.getElementById("codEsta").value >= 1 &&
+      document.getElementById("codEsta").value < 11
+    ) {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "AlimentosConcepto(this);");
+    } else if (document.getElementById("codEsta").value >= 12) {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "EstablecimientosConcepto(this);");
+    }
+
+    document.getElementById("accion").value = "<%= consolidacion.accion %>"
+    document.getElementById("acta").value = "<%= consolidacion.acta %>"
+    document.getElementById("actaLey").value = "<%= consolidacion.actaLey %>"
+
     if (rotulado === "on") {
       document.getElementById("productoTemple").removeAttribute("style");
     }
     if (publicidad === "on") {
       document.getElementById("publicidadTemple").removeAttribute("style");
+      document.getElementById("medPubli").value = "<%= consolidacion.ForPublicidad.medioPublicitario %>"
     }
     if (MSEstable === "on") {
       document.getElementById("MSEstablecimientoTemple").removeAttribute("style");
+      document.getElementById("medidaApliEstable").value = "<%= consolidacion.ForMSEstablecimientos.medidaMSEstablecimientos %>"
     }
     if (MSProduct === "on") {
       document.getElementById("MSProductoTemple").removeAttribute("style");
+      document.getElementById("medidaApliProduc").value = "<%= consolidacion.ForMSProductos.medidaMSProductos %>"
     }
     if (Cementerio === "on") {
       document.getElementById("templeCementerios").removeAttribute("style");

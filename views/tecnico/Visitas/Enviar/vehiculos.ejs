@@ -348,6 +348,7 @@
           if (document.getElementById("classVehi").value == "OTRO") {
               $("#otroV").attr("readonly", false);
           } else {
+            document.getElementById("otroV").value = ""
               $("#otroV").attr("readonly", true);
           }
       });

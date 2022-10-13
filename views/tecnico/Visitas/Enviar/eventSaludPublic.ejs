@@ -280,6 +280,7 @@
       if (document.getElementById("trueFalse").value == "SI") {
         $("#fReunion").attr("readonly", false);
       } else {
+        document.getElementById("fReunion").value = "dd/mm/aaaa"
         $("#fReunion").attr("readonly", true);
       }
     });
