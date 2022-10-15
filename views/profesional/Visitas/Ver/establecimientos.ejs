@@ -98,6 +98,8 @@
                       <td>
                         <% if(Estable.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= Estable._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(Estable.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= Estable._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(Estable.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(Estable.status == "Enviado"){ %>

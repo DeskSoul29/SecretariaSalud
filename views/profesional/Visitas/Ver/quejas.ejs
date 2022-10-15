@@ -90,6 +90,8 @@
                       <td>
                         <% if(Queja.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/Quejas/<%= Queja._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(Queja.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= Queja._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(Queja.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(Queja.status == "Enviado"){ %>

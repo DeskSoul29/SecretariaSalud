@@ -4,6 +4,7 @@ import moment from "moment";
 import {
   ConsolidaEstados,
   SeeTecConsolidaciones,
+  LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   EditConsolidacionRech,
   SendEstablecimiento,
@@ -35,7 +36,6 @@ import {
   CodigosEstablecimientos,
   inscribirEstablecimiento,
   ValConsolidaciones,
-  LisConsolidaRechazadas,
   ConsolidaRechazada,
   logout,
 } from "../helpers/auth.js";
@@ -52,6 +52,7 @@ router.get(
     res.render("tecnico/main", {
       user: req.user,
       consPend: req.consPend,
+      consCorre: req.consCorre,
       consEnv: req.consEnv,
       consAcep: req.consAcep,
       ListconsRech: req.ListconsRech,
@@ -491,6 +492,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/antirrabica", {
       user: req.user,
@@ -521,6 +523,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/listCarnets", {
       user: req.user,
@@ -551,6 +554,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eduSanitaria", {
       user: req.user,
@@ -581,6 +585,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/tomamuestras", {
       user: req.user,
@@ -611,6 +616,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/eventSaludPublic", {
       user: req.user,
@@ -641,6 +647,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/vehiculos", {
       user: req.user,
@@ -671,6 +678,7 @@ router.post(
   isAuthenticatedTecnic,
   ValConsolidaciones,
   ConsolidaRechazada,
+  EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/quejas", {
       user: req.user,

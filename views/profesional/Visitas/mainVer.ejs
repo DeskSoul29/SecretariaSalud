@@ -119,6 +119,24 @@
                               <% } %>
                               <% }else if(allConso.status=="Rechazado" ){ %>
                               <span class="badge badge-danger text-uppercase">Rechazado</span>
+                              <% }else if(allConso.status=="Corregido" ){ %>
+                              <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/EduSanitaria/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/EventosSaludPublica/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/Vehiculos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span> </a>
+                              <% } %>
                               <% }else if(allConso.status=="Enviado" ){ %>
                               <span class="badge badge-info text-uppercase">Enviado</span>
                               <% }else if(allConso.status=="Aceptado" ){ %>

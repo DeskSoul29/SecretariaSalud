@@ -45,20 +45,20 @@
                       <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/profesional/Consolidaciones/Ver/MedSaniProductos">Medidas Sanitarias a Productos</a>
+                      <a href="/profesional/Consolidaciones/Ver/ListadoCarnetizados">Listado de Carnetizados</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Validar
+                      Correcciones
                     </li>
                   </ol>
                 </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">MEDIDAS SANITARIAS A PRODUCTOS</h1>
+                    <h1 class="h4 text-gray-900 mb-4">LISTADO DE CARNETIZADOS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/MedSaniProductos/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Correccion/ListadoCarnetizados/<%= consolidacion._id %>" method="POST" autocomplete="off">
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2">Identificación Responsable</label>
@@ -70,7 +70,7 @@
                       </div>
                     </div>
 
-                    <%- include('../../../../tools/Templates/establecimientosTem'); %>
+                    <%- include('../../../../tools/Templates/listCarnetTem'); %>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
@@ -183,31 +183,6 @@
       nav4.className += "  active";
     });
   </script>
-
-  <script type="text/JavaScript">
-    var rotulado = "<%= consolidacion.consolidacion.rotulado %>";
-    var publicidad = "<%= consolidacion.consolidacion.publicidad %>";
-    var MSEstable = "<%= consolidacion.consolidacion.MSEstablecimientos %>";
-    var MSProduct = "<%= consolidacion.consolidacion.MSProductos %>";
-    var Cementerio = "<%= consolidacion.salaNM %>";
-
-    if (rotulado === "on") {
-      document.getElementById("productoTemple").removeAttribute("style");
-    }
-    if (publicidad === "on") {
-      document.getElementById("publicidadTemple").removeAttribute("style");
-    }
-    if (MSEstable === "on") {
-      document.getElementById("MSEstablecimientoTemple").removeAttribute("style");
-    }
-    if (MSProduct === "on") {
-      document.getElementById("MSProductoTemple").removeAttribute("style");
-    }
-    if (Cementerio === "on") {
-      document.getElementById("templeCementerios").removeAttribute("style");
-    }
-  </script>
-
 </body>
 
 </html>

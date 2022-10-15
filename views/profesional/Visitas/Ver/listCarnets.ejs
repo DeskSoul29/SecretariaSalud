@@ -84,6 +84,8 @@
                       <td>
                         <% if(Carnetiz.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/ListadoCarnetizados/<%= Carnetiz._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(Carnetiz.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/ListadoCarnetizados/<%= Carnetiz._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(Carnetiz.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(Carnetiz.status == "Enviado"){ %>

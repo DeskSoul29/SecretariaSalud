@@ -107,6 +107,8 @@
                       <td>
                         <% if(consultES.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/EventosSaludPublica/<%= consultES._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(consultES.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/EventosSaludPublica/<%= consultES._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(consultES.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(consultES.status == "Enviado"){ %>

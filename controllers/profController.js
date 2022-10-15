@@ -450,6 +450,23 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
           $ne: "on",
         },
         status: {
+          $eq: "Corregido",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.consCorre = data;
+      });
+
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
+        status: {
           $eq: "Enviado",
         },
       })
@@ -493,6 +510,32 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       });
 
     return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const LisConsolidaProfRechazadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+      })
+      .sort({ createdAt: 1 })
+      .then((data) => {
+        req.ListconsRech = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   } catch (error) {
     console.log(error);
     return next();
@@ -629,6 +672,35 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 
 // Apartado: Consolidaciones
 //Consolidaciones - Novedades Administrativas
+export const CountActas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        actaAnul: {
+          $eq: "SI",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.actaAnul = data;
+      });
+
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const SendNovedad = async (req, res, next) => {
   const decodificada = await promisify(jwt.verify)(
     req.cookies.jwt,

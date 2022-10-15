@@ -97,6 +97,8 @@
                       <td>
                         <% if(Vehiculo.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/Vehiculos/<%= Vehiculo._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(Vehiculo.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Vehiculos/<%= Vehiculo._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(Vehiculo.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(Vehiculo.status == "Enviado"){ %>

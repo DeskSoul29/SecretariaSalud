@@ -92,6 +92,8 @@
                       <td>
                         <% if(TomaM.status=="Pendiente" ){ %>
                         <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(TomaM.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(TomaM.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(TomaM.status=="Enviado" ){ %>

@@ -325,13 +325,13 @@ var authTec = (function () {
     }
   };
 
-  var EditReport = async (req) => {
+  var EditReport = async (req, next) => {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
     var Ruta = await authTec.NextReport(req, decodificada);
-
+    var tipoRuta = "";
     await reportes
       .findOneAndUpdate(
         { "consolidacion.consID": req.params._id },
@@ -340,7 +340,7 @@ var authTec = (function () {
       )
       .then((result) => {
         if (Ruta.length === 0) {
-          return authTec.isUser(
+          authTec.isUser(
             req,
             "Reportes Terminados",
             "Ha Terminado El Listado",
@@ -349,16 +349,35 @@ var authTec = (function () {
             false,
             "/tecnico"
           );
+          return next();
         } else {
-          return authTec.isUser(
+          if (Ruta[0].tipo == "Establecimiento") {
+            tipoRuta = "Establecimientos/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Quejas") {
+            tipoRuta = "Quejas/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Toma de Muestra") {
+            tipoRuta = "TomaMuestras/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Edu. Sanitaria") {
+            tipoRuta = "EduSanitaria/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Vehiculos") {
+            tipoRuta = "Vehiculos/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Carnetizados") {
+            tipoRuta = "ListadoCarnetizados/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Eventos Salud Publica") {
+            tipoRuta = "EventosSaludPublica/" + Ruta[0].consolidacion.consID;
+          } else if (Ruta[0].tipo == "Antirrabica") {
+            tipoRuta = "AntirrabicaAnimal/" + Ruta[0].consolidacion.consID;
+          }
+          authTec.isUser(
             req,
             "Conexión exitosa",
             "Consolidación Enviada",
             "success",
             false,
             800,
-            "/tecnico/Consolidaciones/" + Ruta[0]._id
+            "/tecnico/Consolidaciones/Rechazado/" + tipoRuta
           );
+          return next();
         }
       });
   };
@@ -412,6 +431,19 @@ export const ConsolidaEstados = async (req, res, next) => {
           $eq: decodificada.user,
         },
         status: {
+          $eq: "Corregido",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.consCorre = data;
+      });
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
           $eq: "Enviado",
         },
       })
@@ -433,6 +465,32 @@ export const ConsolidaEstados = async (req, res, next) => {
         req.consAcep = data;
       });
     return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const LisConsolidaRechazadas = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .find({
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+      })
+      .sort({ createdAt: 1 })
+      .then((data) => {
+        req.ListconsRech = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   } catch (error) {
     console.log(error);
     return next();
@@ -1068,8 +1126,7 @@ export const EditConsolidacionRech = async (req, res, next) => {
       )
       .then((result) => {
         if (result != null) {
-          authTec.EditReport(req);
-          return next();
+          authTec.EditReport(req, next);
         } else {
           authTec.isUser(
             req,
@@ -1078,7 +1135,7 @@ export const EditConsolidacionRech = async (req, res, next) => {
             "error",
             false,
             false,
-            "/tecnico/Consolidaciones/Enviar"
+            "/tecnico"
           );
           return next();
         }
