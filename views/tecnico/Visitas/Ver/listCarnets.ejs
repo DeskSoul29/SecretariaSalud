@@ -114,14 +114,13 @@
                         <%= Carnetiz.ForCarnets.direccionCarnet %>
                       </td>
                       <td>
-                        <%= moment(Carnetiz.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(Carnetiz.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= Carnetiz.observaciones %>
                       </td>
                       <td>
-                        <a type="button"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= Carnetiz._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

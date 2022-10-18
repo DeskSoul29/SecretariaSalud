@@ -1,11 +1,14 @@
 import login from "../models/user.js";
-import { promisify } from "util";
 import reportes from "../models/reportes.js";
 import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
+
+import { promisify } from "util";
+import download from "download";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import https from "https";
 
 var authLogin = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -359,6 +362,20 @@ export const ConsolidaRechazada = async (req, res, next) => {
     console.log(error);
     return next();
   }
+};
+export const DownloadFile = async (req, res, next) => {
+  await consolidaciones
+    .findOne({ _id: req.params.id })
+    .then((result) => {
+      res.download("./upload/" + result.evidencia.file, (err) => {
+        if (err) console.log(err);
+        res.status(200);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return next();
+    });
 };
 
 export const logout = (req, res) => {

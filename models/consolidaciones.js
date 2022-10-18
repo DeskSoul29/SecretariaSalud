@@ -133,7 +133,6 @@ var EstablecimientosSchema = new Schema({
 
   //Quejas
   ForQuejas: {
-    municipioEstable: String,
     municipioComuni: String,
     tipoQueja: String,
     frecep: Date,
@@ -180,8 +179,8 @@ var EstablecimientosSchema = new Schema({
   },
 
   // Evidencias
-  evidencias: {
-    file1: { type: String },
+  evidencia: {
+    file: { type: String },
   },
 
   observaciones: { type: String },

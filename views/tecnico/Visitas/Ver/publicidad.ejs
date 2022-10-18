@@ -125,8 +125,7 @@
                         <%= publicidad.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(publicidad.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(publicidad.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= publicidad.ForPublicidad.medioPublicitario %>
@@ -141,7 +140,7 @@
                         <%= publicidad.ForPublicidad.registroSanitario %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= publicidad._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

@@ -3,21 +3,7 @@
 
 <head>
   <%- include('../../../tools/head'); %>
-  <style>
-    .btn-upload {
-      padding: 10px 20px;
-      margin-left: 10px;
-    }
-
-    .upload-input-group {
-      margin-bottom: 10px;
-    }
-
-    .input-group>.custom-select:not(:last-child),
-    .input-group>.form-control:not(:last-child) {
-      height: 45px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -229,16 +215,11 @@
 
                     <div class="form-group row">
                       <div class="col-sm-12">
-                        <label class="mr-sm-2" for="fields">Adjuntar Archivo(s)</label>
-                        <div class="control-group" id="fields">
-                          <div class="controls">
-                            <div class="entry input-group upload-input-group">
-                              <input class="form-control" name="myfile" id="myfile" type="file" />
-                              <button class="btn btn-upload btn-success btn-add" type="button">
-                                <i class="fa fa-plus"></i>
-                              </button>
-                            </div>
-                          </div>
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s)</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
                         </div>
                       </div>
                     </div>

@@ -117,7 +117,7 @@ function eventSalud(e) {
     document.getElementById("intoxAtend").value == "" ||
     document.getElementById("agrePresent").value == "" ||
     document.getElementById("agreAtend").value == "" ||
-    document.getElementById("myfiles").files.length == 0 ||
+    document.getElementById("myFile").files.length == 0 ||
     document.getElementById("trueFalse").value == "Seleccione"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
@@ -137,6 +137,9 @@ function eventSalud(e) {
       toast.toastInfo("Advertencia", "Ingresar todos los Campos");
       e.preventDefault();
     }
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
   }
 }
 
@@ -150,7 +153,7 @@ function tomMuestraForm(e) {
     document.getElementById("objEst").value == "Seleccione" ||
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("acompananteEmp").value == 0 ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -162,6 +165,9 @@ function tomMuestraForm(e) {
       toast.toastInfo("Advertencia", "Ingresar todos los Campos");
       e.preventDefault();
     }
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
   }
 }
 
@@ -174,7 +180,7 @@ function eduSanitaria(e) {
     document.getElementById("totalPersCap").value == "" ||
     document.getElementById("lugCap").value == 0 ||
     document.getElementById("personalCap").value == "Seleccione" ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -186,6 +192,9 @@ function eduSanitaria(e) {
       toast.toastInfo("Advertencia", "Ingresar todos los Campos");
       e.preventDefault();
     }
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
   }
 }
 
@@ -197,9 +206,12 @@ function listCarnetsForm(e) {
     document.getElementById("nameCarnet").value == 0 ||
     document.getElementById("estableciCarnet").value == 0 ||
     document.getElementById("direcCarnet").value == 0 ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }
@@ -213,9 +225,12 @@ function antirrabicalAnimalForm(e) {
     document.getElementById("caninosRural").value === "" ||
     document.getElementById("felinosUrbano").value === "" ||
     document.getElementById("felinosRural").value === "" ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }
@@ -229,12 +244,15 @@ function establecimientosForm(e) {
     document.getElementById("accion").value == "Seleccione La Acción" ||
     document.getElementById("actaLey").value == "Seleccione" ||
     document.getElementById("acta").value == "Seleccione" ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
   } else if (document.getElementById("score").value > 100) {
     toast.toastInfo("Advertencia", "Ingresar un puntaje menor a 100");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 
@@ -259,6 +277,13 @@ function establecimientosForm(e) {
 
     //Medidas Sanitarias a Productos
     medSaniProductos(e);
+  }
+}
+
+function cementerio(e) {
+  if (document.getElementById("NecroMorg").value == "Seleccione") {
+    toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
+    e.preventDefault();
   }
 }
 
@@ -354,9 +379,12 @@ function quejasForm(e) {
     document.getElementById("perAfec").value == 0 ||
     document.getElementById("descQueja").value == 0 ||
     document.getElementById("requeQueja").value == 0 ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }
@@ -372,7 +400,7 @@ function vehiculosForm(e) {
     document.getElementById("produTrans").value == 0 ||
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("score").value == 0 ||
-    document.getElementById("myfiles").files.length == 0
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -385,12 +413,8 @@ function vehiculosForm(e) {
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
-  }
-}
-
-function cementerio(e) {
-  if (document.getElementById("NecroMorg").value == "Seleccione") {
-    toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }

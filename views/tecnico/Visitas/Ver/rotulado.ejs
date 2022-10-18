@@ -119,14 +119,13 @@
                         <%= rotulado.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(rotulado.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(rotulado.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= rotulado.ForRotulado.productoRotulado %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= rotulado._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

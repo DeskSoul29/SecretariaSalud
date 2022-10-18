@@ -2,21 +2,7 @@
 
 <head>
   <%- include('../../../tools/head'); %>
-  <style>
-    .btn-upload {
-      padding: 10px 20px;
-      margin-left: 10px;
-    }
-
-    .upload-input-group {
-      margin-bottom: 10px;
-    }
-
-    .input-group>.custom-select:not(:last-child),
-    .input-group>.form-control:not(:last-child) {
-      height: 45px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -114,12 +100,29 @@
                       </div>
                     </div>
 
-
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones
                           (Opcional)</label>
                         <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s) Nuevos</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
                       </div>
                     </div>
 

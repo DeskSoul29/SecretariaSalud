@@ -89,7 +89,7 @@
                         <% }else if(EduSani.status == "Rechazado"){ %>
                         <a href="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= EduSani._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                         <% }else if(EduSani.status=="Corregido" ){ %>
-                          <span class="badge badge-primary text-uppercase">Corregido</span>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
                         <% }else if(EduSani.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
                         <% }else if(EduSani.status == "Aceptado"){ %>
@@ -130,7 +130,7 @@
                         <%= EduSani.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= EduSani._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

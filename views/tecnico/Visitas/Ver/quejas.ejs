@@ -123,12 +123,10 @@
                         <%= Queja.ForQuejas.perAfectQueja %>
                       </td>
                       <td>
-                        <%= moment(Queja.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(Queja.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= moment(Queja.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(Queja.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= Queja.ForQuejas.reqQueja %>
@@ -137,7 +135,7 @@
                         <%= Queja.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= Queja._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>
