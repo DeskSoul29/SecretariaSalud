@@ -92,7 +92,7 @@
                     <tr>
                       <td>
                         <% if(medEstable.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/MedSaniEstablecimientos/<%= medEstable._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= medEstable._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(medEstable.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= medEstable._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(medEstable.status=="Rechazado" ){ %>

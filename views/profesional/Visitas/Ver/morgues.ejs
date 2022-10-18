@@ -87,7 +87,7 @@
                     <tr>
                       <td>
                         <% if(morgues.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Morgues/<%= morgues._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= morgues._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(morgues.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= morgues._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(morgues.status=="Rechazado" ){ %>

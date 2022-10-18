@@ -149,10 +149,7 @@
                               <% } %>
                             </td>
                             <td>
-                              <%= allConso.municipio %>
-                              <% if(typeof allConso.ForQuejas != "undefined") { %>
-                              <%= allConso.ForQuejas.municipioComuni %>
-                              <% } %>
+                              <%= allConso.municipio %><%= allConso.ForQuejas.municipioComuni %>
                             </td>
                           </tr>
                           <% }); %>

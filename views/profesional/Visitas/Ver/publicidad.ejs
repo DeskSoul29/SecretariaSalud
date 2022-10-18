@@ -91,7 +91,7 @@
                     <tr>
                       <td>
                         <% if(publicidad.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/IVCPublicidad/<%= publicidad._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= publicidad._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(publicidad.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= publicidad._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(publicidad.status=="Rechazado" ){ %>

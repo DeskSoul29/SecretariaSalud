@@ -61,7 +61,7 @@
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off">
                     <div class="form-group row">
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
                         <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
                       </div>
                       <div class="col-sm-9" id="divMotivo">
@@ -309,7 +309,7 @@
   </script>
 
   <script type="text/JavaScript">
-    var establecimiento = "<%= consolidacion.ForQuejas.municipioEstable %>";
+    var establecimiento = "<%= consolidacion.municipio %>";
     var comunidad = "<%= consolidacion.ForQuejas.municipioComuni %>";
 
     if (establecimiento != "") {

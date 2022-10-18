@@ -1,6 +1,10 @@
 import { Router } from "express";
 import moment from "moment";
 
+import fs from "fs";
+import https from "https";
+import consolidaciones from "../models/consolidaciones.js";
+
 import {
   ConsolidaEstados,
   SeeTecConsolidaciones,
@@ -726,6 +730,31 @@ router.post(
     });
   }
 );
+
+// router.get("/evidencia/:id", (req, res) => {
+//   consolidaciones.findOne({ _id: req.params.id }, (err, result) => {
+//     if (err) return console.log(err);
+
+//     const url = "./upload/" + result.evidencias.file1
+//     https.get(url,(res) => {
+//       // Image will be stored at this path
+//       const path = `${__dirname}/files/img.jpeg`;
+//       const filePath = fs.createWriteStream(path);
+//       res.pipe(filePath);
+//       filePath.on('finish',() => {
+//           filePath.close();
+//           console.log('Download Completed');
+//       })
+//   })
+//     fs.open(", "w+", function (err, f) {
+//       if (err) {
+//         return console.error(err);
+//       }
+//       console.log(f);
+//       console.log("File opened!!");
+//     });
+//   });
+// });
 
 router.get("/logout", logout);
 

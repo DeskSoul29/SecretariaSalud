@@ -45,20 +45,20 @@
                       <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/profesional/Consolidaciones/Ver/IVCPublicidad">IVC Publicidad</a>
+                      <a href="/profesional/Consolidaciones/Ver/Establecimientos">Establecimientos</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Correcciones
+                      Validar
                     </li>
                   </ol>
                 </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">IVC PUBLICIDAD</h1>
+                    <h1 class="h4 text-gray-900 mb-4">ESTABLECIMIENTOS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Correccion/IVCPublicidad/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2">Identificación Responsable</label>
@@ -77,8 +77,8 @@
 
                     <div class="form-group row">
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <select id="criterio" name="criterio" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="Enviado">Aceptable</option>
                           <option value="Rechazado">Rechazar</option>
@@ -203,11 +203,11 @@
     if (MSProduct === "on") {
       document.getElementById("MSProductoTemple").removeAttribute("style");
     }
-    if (Cementerio === "on") {
+    if (Cementerio != "") {
       document.getElementById("templeCementerios").removeAttribute("style");
+      document.getElementById("NecroMorg").value = "<%= consolidacion.salaNM %>"
     }
   </script>
-
 </body>
 
 </html>

@@ -5,7 +5,6 @@ import hojavida from "../models/hojavida.js";
 
 import jwt from "jsonwebtoken";
 import upload from "../middleware/upload.js";
-import fs from "fs";
 import { promisify } from "util";
 
 var authTec = (function () {
@@ -147,11 +146,6 @@ var authTec = (function () {
         produTrans,
       } = req.body;
 
-      var file2 = req.files[1] === undefined ? false : req.files[1].filename;
-      var file3 = req.files[2] === undefined ? false : req.files[2].filename;
-      var file4 = req.files[3] === undefined ? false : req.files[3].filename;
-      var file5 = req.files[4] === undefined ? false : req.files[4].filename;
-
       new consolidaciones({
         provincia: provincia,
         municipio: municipio,
@@ -285,12 +279,8 @@ var authTec = (function () {
           nInscripcion: nInscrip,
           productosVehiculo: produTrans,
         },
-        evidencias: {
-          file1: req.files[0].filename,
-          file2: file2,
-          file3: file3,
-          file4: file4,
-          file5: file5,
+        evidencia: {
+          file: req.file.filename,
         },
         createdAt: new Date(),
         observaciones: observacion,
@@ -321,6 +311,7 @@ var authTec = (function () {
           return next();
         });
     } catch (error) {
+      console.log(error);
       return error;
     }
   };
@@ -535,16 +526,14 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidaciones.noveadministrativa": {
-          $ne: "on",
-        },
-      })
-      .lean();
+    const Estables = await consolidaciones.find({
+      "responsable.userResponsable": {
+        $eq: decodificada.user,
+      },
+      "consolidaciones.noveadministrativa": {
+        $ne: "on",
+      },
+    });
     req.allConso = Estables;
     return next();
   } catch (error) {

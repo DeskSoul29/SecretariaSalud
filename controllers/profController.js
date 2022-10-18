@@ -7,6 +7,7 @@ import reportes from "../models/reportes.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
+import { report } from "process";
 
 var authProf = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -29,10 +30,9 @@ var authProf = (function () {
     decodificada,
     tipCon,
     nextCons,
-    rutaVer,
-    rutaValidar
+    rutaVer
   ) => {
-    var { userTec, nameTec, municipio, criterioProf, motivo } = req.body;
+    var { userTec, nameTec, municipio, criterio, motivo } = req.body;
 
     var report = new reportes({
       tipo: tipCon,
@@ -48,7 +48,7 @@ var authProf = (function () {
         userRes: decodificada.user,
         nombreRes: decodificada.nombres + " " + decodificada.apellidos,
         rol: decodificada.rol,
-        criterio: criterioProf,
+        criterio: criterio,
         motivo: motivo,
       },
       createdAt: new Date(),
@@ -61,7 +61,7 @@ var authProf = (function () {
             req.params._id,
             {
               $set: {
-                status: criterioProf,
+                status: criterio,
               },
             },
             { new: true }
@@ -81,6 +81,39 @@ var authProf = (function () {
                 rutaVer
               );
             } else {
+              if (nextCons[0].consolidacion.establecimiento == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/Establecimientos/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.antirrabica == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/AntirrabicaAnimal/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/EduSanitaria/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/EventosSaludPublica/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.lisCarnets == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/ListadoCarnetizados/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.vehiculos == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/Vehiculos/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/TomaMuestras/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.quejas == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Validar/Quejas/" +
+                  nextCons[0]._id;
+              }
               authProf.isUser(
                 req,
                 "Conexión exitosa",
@@ -88,14 +121,13 @@ var authProf = (function () {
                 "success",
                 false,
                 800,
-                rutaValidar + nextCons[0]._id
+                rutaValidar
               );
             }
             return next();
           });
       })
       .catch((error) => {
-        console.log(error);
         authProf.isUser(
           req,
           "Reporte Cancelado",
@@ -106,6 +138,105 @@ var authProf = (function () {
           rutaVer
         );
         return next();
+      });
+  };
+
+  var UpdateCorreccion = async (
+    req,
+    next,
+    decodificada,
+    tipCon,
+    nextCons,
+    rutaVer
+  ) => {
+    var { criterio, motivo } = req.body;
+
+    await consolidaciones
+      .findByIdAndUpdate(
+        req.params._id,
+        {
+          $set: {
+            status: criterio,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        reportes
+          .findOneAndUpdate(
+            { "consolidacion.consID": req.params._id },
+            {
+              $set: {
+                "consolidacion.userRes": decodificada.user,
+                "consolidacion.nombreRes":
+                  decodificada.nombres + " " + decodificada.apellidos,
+                "respuesta.criterio": criterio,
+                "respuesta.motivo": motivo,
+                createdAt: new Date(),
+              },
+            },
+            { new: true }
+          )
+          .then((result) => {
+            if (tipCon == "Establecimiento") {
+              authProf.UpdateActa(req);
+            }
+            if (nextCons.length === 0) {
+              authProf.isUser(
+                req,
+                "Reportes Terminados",
+                "Ha Terminado El Listado",
+                "success",
+                true,
+                false,
+                rutaVer
+              );
+            } else {
+              if (nextCons[0].consolidacion.establecimiento == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/Establecimientos/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.antirrabica == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/EduSanitaria/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/EventosSaludPublica/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.lisCarnets == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/ListadoCarnetizados/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.vehiculos == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/Vehiculos/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/TomaMuestras/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.quejas == "on") {
+                var rutaValidar =
+                  "/profesional/Consolidaciones/Correccion/Quejas/" +
+                  nextCons[0]._id;
+              }
+              authProf.isUser(
+                req,
+                "Conexión exitosa",
+                "Consolidación Enviada",
+                "success",
+                false,
+                800,
+                rutaValidar
+              );
+            }
+            return next();
+          });
       });
   };
 
@@ -121,13 +252,12 @@ var authProf = (function () {
     );
   };
 
-  var SearchNextEstablecimiento = async (req, provincia) => {
+  var SearchNextConsolidacion = async (req, provincia) => {
     return await consolidaciones
       .find({
         provincia: {
           $eq: provincia,
         },
-        "consolidacion.establecimiento": { $eq: "on" },
         status: {
           $eq: "Pendiente",
         },
@@ -139,237 +269,14 @@ var authProf = (function () {
       .limit(1);
   };
 
-  var SearchNextMorgue = async (req, provincia) => {
+  var SearchNextCorrec = async (req, provincia) => {
     return await consolidaciones
       .find({
         provincia: {
           $eq: provincia,
         },
-        "consolidacion.establecimiento": { $eq: "on" },
-        tipo: "MORGUES",
         status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextCementerio = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextEstaRotulado = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.rotulado": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextEstaPublicidad = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.publicidad": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextMedEstable = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.MSEstablecimientos": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextMedProduct = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.MSProductos": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextEventSaludPubli = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.EvenSaludPubli": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextQuejas = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.quejas": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextCarnetzados = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.lisCarnets": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextEduSanitaria = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.eduSanitaria": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextVehiculos = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.vehiculos": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextTomaMuestra = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.tomaMuestra": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
-        },
-        _id: {
-          $ne: req.params._id,
-        },
-      })
-      .sort({ createdAt: 1 })
-      .limit(1);
-  };
-
-  var SearchNextAntirrabica = async (req, provincia) => {
-    return await consolidaciones
-      .find({
-        provincia: {
-          $eq: provincia,
-        },
-        "consolidacion.antirrabica": { $eq: "on" },
-        status: {
-          $eq: "Pendiente",
+          $eq: "Corregido",
         },
         _id: {
           $ne: req.params._id,
@@ -399,21 +306,10 @@ var authProf = (function () {
   return {
     isUser: isUser,
     UpdateConsoli: UpdateConsoli,
+    UpdateCorreccion: UpdateCorreccion,
     UpdateActa: UpdateActa,
-    SearchNextEstablecimiento: SearchNextEstablecimiento,
-    SearchNextMorgue: SearchNextMorgue,
-    SearchNextCementerio: SearchNextCementerio,
-    SearchNextMedEstable: SearchNextMedEstable,
-    SearchNextEstaPublicidad: SearchNextEstaPublicidad,
-    SearchNextEstaRotulado: SearchNextEstaRotulado,
-    SearchNextMedProduct: SearchNextMedProduct,
-    SearchNextEventSaludPubli: SearchNextEventSaludPubli,
-    SearchNextQuejas: SearchNextQuejas,
-    SearchNextAntirrabica: SearchNextAntirrabica,
-    SearchNextEduSanitaria: SearchNextEduSanitaria,
-    SearchNextCarnetzados: SearchNextCarnetzados,
-    SearchNextVehiculos: SearchNextVehiculos,
-    SearchNextTomaMuestra: SearchNextTomaMuestra,
+    SearchNextConsolidacion: SearchNextConsolidacion,
+    SearchNextCorrec: SearchNextCorrec,
     ValidaMunicipio: ValidaMunicipio,
   };
 })();
@@ -801,17 +697,36 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
-        },
-      })
-      .lean();
+    const Estables = await consolidaciones.find({
+      provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.noveadministrativa": {
+        $ne: "on",
+      },
+    });
     req.allConso = Estables;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+export const SeeProfNAdmin = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const Estables = await consolidaciones.find({
+      provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.noveadministrativa": {
+        $eq: "on",
+      },
+    });
+    req.allNAdmin = Estables;
     return next();
   } catch (error) {
     console.log(error);
@@ -840,28 +755,6 @@ export const SeeProfEstablecimiento = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportEstablecimiento = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextEstablecimiento(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/Establecimientos",
-    "/profesional/Consolidaciones/Validar/Establecimientos/"
-  );
-};
-
 export const SeeProfMorgues = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -884,25 +777,6 @@ export const SeeProfMorgues = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportMorgues = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextMorgue(req, decodificada.provincia);
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/Morgues",
-    "/profesional/Consolidaciones/Validar/Morgues/"
-  );
-};
-
 export const SeeProfCementerios = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -925,28 +799,6 @@ export const SeeProfCementerios = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportCementerios = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextCementerio(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/Cementerios",
-    "/profesional/Consolidaciones/Validar/Cementerios/"
-  );
-};
-
 export const SeeProfEstaRotulado = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -969,28 +821,6 @@ export const SeeProfEstaRotulado = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportEstaRotulado = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextEstaRotulado(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/IVCRotulado",
-    "/profesional/Consolidaciones/Validar/IVCRotulado/"
-  );
-};
-
 export const SeeProfEstaPublicidad = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1013,28 +843,6 @@ export const SeeProfEstaPublicidad = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportEstaPublicidad = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextEstaPublicidad(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/IVCPublicidad",
-    "/profesional/Consolidaciones/Validar/IVCPublicidad/"
-  );
-};
-
 export const SeeProfMedEstable = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1057,28 +865,6 @@ export const SeeProfMedEstable = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportMedEstable = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextMedEstable(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/MedSaniEstablecimientos",
-    "/profesional/Consolidaciones/Validar/MedSaniEstablecimientos/"
-  );
-};
-
 export const SeeProfMedProduct = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1101,28 +887,6 @@ export const SeeProfMedProduct = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportMedProduct = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextMedProduct(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Establecimiento",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/MedSaniProductos",
-    "/profesional/Consolidaciones/Validar/MedSaniProductos/"
-  );
-};
-
 export const SeeProfEventSaludPubli = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1144,28 +908,6 @@ export const SeeProfEventSaludPubli = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportEventSaludPubli = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextEventSaludPubli(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Eventos Salud Publica",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/EventosSaludPublica",
-    "/profesional/Consolidaciones/Validar/EventosSaludPublica/"
-  );
-};
-
 export const SeeProfQuejas = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1187,25 +929,6 @@ export const SeeProfQuejas = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportQuejas = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextQuejas(req, decodificada.provincia);
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Quejas",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/Quejas",
-    "/profesional/Consolidaciones/Validar/Quejas/"
-  );
-};
-
 export const SeeProfAntirrabica = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1227,28 +950,6 @@ export const SeeProfAntirrabica = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportAntirrabica = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextAntirrabica(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Antirrabica",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/AntirrabicaAnimal",
-    "/profesional/Consolidaciones/Validar/AntirrabicaAnimal/"
-  );
-};
-
 export const SeeProfCarnetizados = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1270,28 +971,6 @@ export const SeeProfCarnetizados = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportCarnetzados = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextCarnetzados(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Carnetizados",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/ListadoCarnetizados",
-    "/profesional/Consolidaciones/Validar/ListadoCarnetizados/"
-  );
-};
-
 export const SeeProfEduSanitaria = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1313,28 +992,6 @@ export const SeeProfEduSanitaria = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportEduSanitaria = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextEduSanitaria(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Edu. Sanitaria",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/EduSanitaria",
-    "/profesional/Consolidaciones/Validar/EduSanitaria/"
-  );
-};
-
 export const SeeProfVehiculos = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1356,28 +1013,6 @@ export const SeeProfVehiculos = async (req, res, next) => {
     return next();
   }
 };
-export const SendReportVehiculos = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-
-  var nextCons = await authProf.SearchNextVehiculos(
-    req,
-    decodificada.provincia
-  );
-
-  authProf.UpdateConsoli(
-    req,
-    next,
-    decodificada,
-    "Vehiculos",
-    nextCons,
-    "/profesional/Consolidaciones/Ver/Vehiculos",
-    "/profesional/Consolidaciones/Validar/Vehiculos/"
-  );
-};
-
 export const SeeProfTomaMuestra = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -1399,13 +1034,155 @@ export const SeeProfTomaMuestra = async (req, res, next) => {
     return next();
   }
 };
+
+//Consolidaciones - Validar
+export const SendReportEstablecimiento = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Establecimiento",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/Establecimientos"
+  );
+};
+export const SendReportEventSaludPubli = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Eventos Salud Publica",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/EventosSaludPublica"
+  );
+};
+export const SendReportQuejas = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Quejas",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/Quejas"
+  );
+};
+export const SendReportAntirrabica = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Antirrabica",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/AntirrabicaAnimal"
+  );
+};
+export const SendReportCarnetzados = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Carnetizados",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/ListadoCarnetizados"
+  );
+};
+export const SendReportEduSanitaria = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Edu. Sanitaria",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/EduSanitaria"
+  );
+};
+export const SendReportVehiculos = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var nextCons = await authProf.SearchNextConsolidacion(
+    req,
+    decodificada.provincia
+  );
+
+  authProf.UpdateConsoli(
+    req,
+    next,
+    decodificada,
+    "Vehiculos",
+    nextCons,
+    "/profesional/Consolidaciones/Ver/Vehiculos"
+  );
+};
 export const SendReportTomaMuestra = async (req, res, next) => {
   const decodificada = await promisify(jwt.verify)(
     req.cookies.jwt,
     process.env.JWT_SECRETO
   );
 
-  var nextCons = await authProf.SearchNextTomaMuestra(
+  var nextCons = await authProf.SearchNextConsolidacion(
     req,
     decodificada.provincia
   );
@@ -1416,7 +1193,284 @@ export const SendReportTomaMuestra = async (req, res, next) => {
     decodificada,
     "Toma de Muestra",
     nextCons,
-    "/profesional/Consolidaciones/Ver/TomaMuestras",
-    "/profesional/Consolidaciones/Validar/TomaMuestras/"
+    "/profesional/Consolidaciones/Ver/TomaMuestras"
   );
+};
+
+//Consolidaciones - Correcion
+export const ConsolidaRechazada = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .findOne({
+        "consolidacion.provincia": { $eq: decodificada.provincia },
+        "consolidacion.consID": { $eq: req.params._id },
+      })
+      .then((data) => {
+        if (data == null) {
+          res.redirect("/404");
+        } else {
+          req.consRech = data;
+        }
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
+
+export const EditReportEstablecimiento = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Establecimiento",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/Establecimientos"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportEventSaludPubli = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Eventos Salud Publica",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/EventosSaludPublica"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportQuejas = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Quejas",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/Quejas"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportAntirrabica = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Antirrabica",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/AntirrabicaAnimal"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportCarnetzados = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Carnetizados",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/ListadoCarnetizados"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportEduSanitaria = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Edu. Sanitaria",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/EduSanitaria"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportVehiculos = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Vehiculos",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/Vehiculos"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+export const EditReportTomaMuestra = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Corregido") {
+    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
+
+    authProf.UpdateCorreccion(
+      req,
+      next,
+      decodificada,
+      "Toma de Muestra",
+      nextCons,
+      "/profesional/Consolidaciones/Ver/TomaMuestras"
+    );
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
 };

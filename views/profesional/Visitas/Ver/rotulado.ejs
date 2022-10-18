@@ -86,7 +86,7 @@
                     <tr>
                       <td>
                         <% if(rotulado.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/IVCRotulado/<%= rotulado._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= rotulado._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(rotulado.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= rotulado._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(rotulado.status=="Rechazado" ){ %>

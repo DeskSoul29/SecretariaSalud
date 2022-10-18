@@ -73,6 +73,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="card">
                 <div class="card-header" id="headingTwo">
                   <h5 class="mb-0">
@@ -84,7 +85,7 @@
                 <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                      <table class="table table-bordered table-hover" id="dataTable2" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                         <thead>
                           <tr>
                             <th>Estado</th>
@@ -94,6 +95,15 @@
                             <th>Tecnico Responsable</th>
                           </tr>
                         </thead>
+                        <tfoot>
+                          <tr>
+                            <th>Estado</th>
+                            <th>Fecha_Enviado</th>
+                            <th>Tipo Consolidación</th>
+                            <th>Municipio</th>
+                            <th>Tecnico Responsable</th>
+                          </tr>
+                        </tfoot>
                         <tbody>
                           <% if (allConso){ %>
                           <% allConso.forEach((allConso)=> { %>
@@ -166,14 +176,123 @@
                               <% } %>
                             </td>
                             <td>
-                              <%= allConso.municipio %>
-                              <% if(typeof allConso.ForQuejas != "undefined") { %>
-                              <%= allConso.ForQuejas.municipioComuni %>
-                              <% } %>
+                              <%= allConso.municipio %><%= allConso.ForQuejas.municipioComuni %>
                             </td>
                             <td>
                               <%= allConso.responsable.userResponsable %> -
                               <%= allConso.responsable.nombreResponsable %>
+                            </td>
+                          </tr>
+                          <% }); %>
+                          <% } %>
+                        </tbody>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                      Listado de Novedades Administrativas
+                    </button>
+                    </h2>
+                </div>
+                <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                        <thead>
+                          <tr>
+                            <th rowspan="2">Estado</th>
+                            <th rowspan="2">Fecha_Enviado</th>
+                            <th rowspan="2">Mes</th>
+                            <th rowspan="2">Municipio</th>
+                            <th colspan="2">Entrega Informe Mensual</th>
+                            <th colspan="2">Entrega de Cronograma de Actividades</th>
+                            <th colspan="2">Control de Asistencia Al Municipio</th>
+                            <th colspan="2">Cumplimiento de Circulares</th>
+                            <th colspan="3">Devolución de Actas</th>
+                            <th rowspan="2">Observaciones_Recomendaciones</th>
+                          </tr>
+                          <tr>
+                            <th>Si/No</th>
+                            <th>Fecha_Entrega</th>
+                            <th>Si/No</th>
+                            <th>Fecha_Entrega</th>
+                            <th>Si/No</th>
+                            <th>Fecha_Entrega</th>
+                            <th>Si/No</th>
+                            <th>N° Circular</th>
+                            <th>N° de Actas</th>
+                            <th>Nombre_Acta</th>
+                            <th>Motivo de Devolución</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% if (allNAdmin){ %>
+                          <% allNAdmin.forEach((allNAdmin)=> { %>
+                          <tr>
+                            <td>
+                              <% if(allNAdmin.status=="Pendiente" ){ %>
+                              <span class="badge badge-warning text-uppercase">Pendiente</span>
+                              <% }else if(allNAdmin.status=="Rechazado" ){ %>
+                              <span class="badge badge-danger text-uppercase">Rechazado</span>
+                              <% }else if(allNAdmin.status=="Corregido" ){ %>
+                              <span class="badge badge-primary text-uppercase">Corregido</span>
+                              <% }else if(allNAdmin.status=="Enviado" ){ %>
+                              <span class="badge badge-info text-uppercase">Enviado</span>
+                              <% }else if(allNAdmin.status=="Aceptado" ){ %>
+                              <span class="badge badge-success text-uppercase">Aceptado</span>
+                              <% } %>
+                            </td>
+                            <td>
+                              <%= moment(allNAdmin.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.mesNA %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.municipio %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.entreInfor %>
+                            </td>
+                            <td>
+                              <%= moment(allNAdmin.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.entreCrono %>
+                            </td>
+                            <td>
+                              <%= moment(allNAdmin.ForNAdmin.fechCrono,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.entreAsis %>
+                            </td>
+                            <td>
+                              <%= moment(allNAdmin.ForNAdmin.fechAsis,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.entreCircu %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.NumCir %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.numActas %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.nomActas %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.ForNAdmin.motDevol %>
+                            </td>
+                            <td>
+                              <%= allNAdmin.Observaciones %>
                             </td>
                           </tr>
                           <% }); %>
@@ -260,6 +379,11 @@
       nav4.className += "  active";
     });
     $('#dataTable').DataTable({
+      order: [
+        [1, 'desc']
+      ],
+    });
+    $('#dataTable2').DataTable({
       order: [
         [1, 'desc']
       ],

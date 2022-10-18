@@ -106,7 +106,7 @@
                     <tr>
                       <td>
                         <% if(medProduc.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/MedSaniProductos/<%= medProduc._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= medProduc._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(medProduc.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= medProduc._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(medProduc.status=="Rechazado" ){ %>

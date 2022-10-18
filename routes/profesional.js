@@ -9,37 +9,41 @@ import {
   changePass,
   addMuniApoyo,
   SeeProfConsolidaciones,
+  SeeProfNAdmin,
   ConsolidaEstadosProf,
   SendNovedad,
   CountActas,
   SeeProfEstablecimiento,
   SendReportEstablecimiento,
+  EditReportEstablecimiento,
   SeeProfMorgues,
-  SendReportMorgues,
   SeeProfCementerios,
-  SendReportCementerios,
   SeeProfEstaRotulado,
-  SendReportEstaRotulado,
   SeeProfEstaPublicidad,
-  SendReportEstaPublicidad,
   SeeProfMedEstable,
-  SendReportMedEstable,
   SeeProfMedProduct,
-  SendReportMedProduct,
   SeeProfEventSaludPubli,
   SendReportEventSaludPubli,
+  EditReportEventSaludPubli,
   SeeProfQuejas,
   SendReportQuejas,
+  EditReportQuejas,
   SeeProfAntirrabica,
   SendReportAntirrabica,
+  EditReportAntirrabica,
   SeeProfCarnetizados,
   SendReportCarnetzados,
+  EditReportCarnetzados,
   SeeProfEduSanitaria,
   SendReportEduSanitaria,
+  EditReportEduSanitaria,
   SeeProfVehiculos,
   SendReportVehiculos,
+  EditReportVehiculos,
   SeeProfTomaMuestra,
   SendReportTomaMuestra,
+  EditReportTomaMuestra,
+  ConsolidaRechazada,
 } from "../controllers/profController.js";
 
 import {
@@ -167,10 +171,12 @@ router.get(
   "/Consolidaciones/Ver",
   isAuthenticatedProf,
   SeeProfConsolidaciones,
+  SeeProfNAdmin,
   (req, res) => {
     res.render("profesional/Visitas/mainVer", {
       user: req.user,
       allConso: req.allConso,
+      allNAdmin: req.allNAdmin,
       moment: moment,
     });
   }
@@ -373,168 +379,6 @@ router.post(
   }
 );
 router.get(
-  "/Consolidaciones/Validar/Morgues/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/morgues", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/Morgues/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMorgues,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/morgues", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/Cementerios/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/cementerios", {
-      user: req.user,
-      moment: moment,
-      consolidacion: req.consolidacion,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/Cementerios/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportCementerios,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/cementerios", {
-      user: req.user,
-      moment: moment,
-      consolidacion: req.consolidacion,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/IVCRotulado/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/rotulado", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/IVCRotulado/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportEstaRotulado,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/rotulado", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/IVCPublicidad/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/publicidad", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/IVCPublicidad/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportEstaPublicidad,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/publicidad", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/MedSaniEstablecimientos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/MedSaniEstablecimientos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMedEstable,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medEstablecimientos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/MedSaniProductos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medProductos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/MedSaniProductos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMedProduct,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/medProductos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
   "/Consolidaciones/Validar/Vehiculos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
@@ -729,10 +573,12 @@ router.get(
   "/Consolidaciones/Correccion/Establecimientos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -742,7 +588,7 @@ router.post(
   "/Consolidaciones/Correccion/Establecimientos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportEstablecimiento,
+  EditReportEstablecimiento,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/establecimientos", {
       user: req.user,
@@ -753,175 +599,15 @@ router.post(
   }
 );
 router.get(
-  "/Consolidaciones/Validar/Morgues/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/morgues", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/Morgues/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMorgues,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/morgues", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Correccion/Cementerios/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/cementerios", {
-      user: req.user,
-      moment: moment,
-      consolidacion: req.consolidacion,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/Cementerios/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportCementerios,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/cementerios", {
-      user: req.user,
-      moment: moment,
-      consolidacion: req.consolidacion,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Correccion/IVCRotulado/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/rotulado", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/IVCRotulado/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportEstaRotulado,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/rotulado", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Correccion/IVCPublicidad/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/publicidad", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/IVCPublicidad/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportEstaPublicidad,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/publicidad", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Correccion/MedSaniEstablecimientos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/medEstablecimientos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/MedSaniEstablecimientos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMedEstable,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/medEstablecimientos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Correccion/MedSaniProductos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/medProductos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/MedSaniProductos/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReportMedProduct,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/medProductos", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      moment: moment,
-      alert: req.alert,
-    });
-  }
-);
-router.get(
   "/Consolidaciones/Correccion/Vehiculos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -931,7 +617,7 @@ router.post(
   "/Consolidaciones/Correccion/Vehiculos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportVehiculos,
+  EditReportVehiculos,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/vehiculos", {
       user: req.user,
@@ -945,10 +631,12 @@ router.get(
   "/Consolidaciones/Correccion/EventosSaludPublica/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: undefined,
     });
@@ -958,7 +646,7 @@ router.post(
   "/Consolidaciones/Correccion/EventosSaludPublica/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportEventSaludPubli,
+  EditReportEventSaludPubli,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eventSaludPublic", {
       user: req.user,
@@ -972,10 +660,12 @@ router.get(
   "/Consolidaciones/Correccion/TomaMuestras/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/tomamuestras", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -985,7 +675,7 @@ router.post(
   "/Consolidaciones/Correccion/TomaMuestras/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportTomaMuestra,
+  EditReportTomaMuestra,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/tomamuestras", {
       user: req.user,
@@ -999,10 +689,12 @@ router.get(
   "/Consolidaciones/Correccion/EduSanitaria/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eduSanitaria", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -1012,7 +704,7 @@ router.post(
   "/Consolidaciones/Correccion/EduSanitaria/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportEduSanitaria,
+  EditReportEduSanitaria,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eduSanitaria", {
       user: req.user,
@@ -1026,10 +718,12 @@ router.get(
   "/Consolidaciones/Correccion/ListadoCarnetizados/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/listCarnets", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -1039,7 +733,7 @@ router.post(
   "/Consolidaciones/Correccion/ListadoCarnetizados/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportCarnetzados,
+  EditReportCarnetzados,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/listCarnets", {
       user: req.user,
@@ -1053,10 +747,12 @@ router.get(
   "/Consolidaciones/Correccion/AntirrabicaAnimal/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/antirrabica", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -1066,7 +762,7 @@ router.post(
   "/Consolidaciones/Correccion/AntirrabicaAnimal/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportAntirrabica,
+  EditReportAntirrabica,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/antirrabica", {
       user: req.user,
@@ -1080,10 +776,12 @@ router.get(
   "/Consolidaciones/Correccion/Quejas/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/quejas", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: undefined,
       moment: moment,
     });
@@ -1093,7 +791,7 @@ router.post(
   "/Consolidaciones/Correccion/Quejas/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
-  SendReportQuejas,
+  EditReportQuejas,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/quejas", {
       user: req.user,
@@ -1128,6 +826,7 @@ router.post(
     res.render("profesional/EnviarNAdmin/mainEnviarNA", {
       user: req.user,
       fields: false,
+      actaAnul: false,
       alert: req.alert,
     });
   }

@@ -3,6 +3,8 @@ import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import consolidaciones from "../models/consolidaciones.js";
+import reportes from "../models/reportes.js";
 import { promisify } from "util";
 
 var authCoordi = (function () {
@@ -25,7 +27,10 @@ var authCoordi = (function () {
   };
 })();
 
-// Apartado: Cuentas - Register
+//Dashboard
+
+//Apartado: Cuentas
+// Cuentas: Register
 export const register = async (req, res, next) => {
   const { name, lastname, user, pass, provincia, municipio, rol } = req.body;
 
@@ -73,8 +78,7 @@ export const fillFields = async (req, res, next) => {
   req.localidades = localidades;
   return next();
 };
-
-//Apartado Cuentas - Usuarios
+// Cuentas: Usuarios
 export const users = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
@@ -183,6 +187,158 @@ export const changePass = async (req, res, next) => {
       );
     })
     .catch((error) => console.error(error));
+  return next();
+};
+
+//Apartado: Consolidaciones
+//Consolidaciones - Main
+export const SeeCoorConsolidaciones = async (req, res, next) => {
+  req.allConso = await consolidaciones.find({});
+  return next();
+};
+//Consolidaciones - Consultar
+export const SeeCoorNAdmin = async (req, res, next) => {
+  const Estables = await consolidaciones.find({
+    "consolidacion.noveadministrativa": {
+      $eq: "on",
+    },
+  });
+  req.allNAdmin = Estables;
+  return next();
+};
+export const SeeCoorEstablecimiento = async (req, res, next) => {
+  const Estables = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+    })
+    .lean();
+  req.consultEstable = Estables;
+  return next();
+};
+export const SeeCoorMorgues = async (req, res, next) => {
+  const Morgues = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      tipo: "MORGUES",
+    })
+    .lean();
+  req.morgues = Morgues;
+  return next();
+};
+export const SeeCoorCementerios = async (req, res, next) => {
+  const Cementerios = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      tipo: "CEMENTERIOS (CON O SIN MORGUE)",
+    })
+    .lean();
+  req.consultCementerios = Cementerios;
+  return next();
+};
+export const SeeCoorEstaRotulado = async (req, res, next) => {
+  const Rotulado = await consolidaciones
+    .find({
+      provincia: {
+        $eq: decodificada.provincia,
+      },
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.rotulado": { $eq: "on" },
+    })
+    .lean();
+  req.consultRotulado = Rotulado;
+  return next();
+};
+export const SeeCoorEstaPublicidad = async (req, res, next) => {
+  const Publicidad = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.publicidad": { $eq: "on" },
+    })
+    .lean();
+  req.consultPublicidad = Publicidad;
+  return next();
+};
+export const SeeCoorMedEstable = async (req, res, next) => {
+  const MedEstable = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.MSEstablecimientos": { $eq: "on" },
+    })
+    .lean();
+  req.consultMedEstable = MedEstable;
+  return next();
+};
+export const SeeCoorMedProduct = async (req, res, next) => {
+  const MedProduct = await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      "consolidacion.MSProductos": { $eq: "on" },
+    })
+    .lean();
+  req.consultMedProduct = MedProduct;
+  return next();
+};
+export const SeeCoorEventSaludPubli = async (req, res, next) => {
+  const EventSalud = await consolidaciones
+    .find({
+      "consolidacion.EvenSaludPubli": { $eq: "on" },
+    })
+    .lean();
+  req.consultES = EventSalud;
+  return next();
+};
+export const SeeCoorQuejas = async (req, res, next) => {
+  const Queja = await consolidaciones
+    .find({
+      "consolidacion.quejas": { $eq: "on" },
+    })
+    .lean();
+  req.consultQueja = Queja;
+  return next();
+};
+export const SeeCoorAntirrabica = async (req, res, next) => {
+  const AntiRa = await consolidaciones
+    .find({
+      "consolidacion.antirrabica": { $eq: "on" },
+    })
+    .lean();
+  req.consultAntirrabi = AntiRa;
+  return next();
+};
+export const SeeCoorCarnetizados = async (req, res, next) => {
+  const Carnets = await consolidaciones
+    .find({
+      "consolidacion.lisCarnets": { $eq: "on" },
+    })
+    .lean();
+  req.consultCarnetiz = Carnets;
+  return next();
+};
+export const SeeCoorEduSanitaria = async (req, res, next) => {
+  const EduSani = await consolidaciones
+    .find({
+      "consolidacion.eduSanitaria": { $eq: "on" },
+    })
+    .lean();
+  req.consultEdusani = EduSani;
+  return next();
+};
+export const SeeCoorVehiculos = async (req, res, next) => {
+  const Vehicu = await consolidaciones
+    .find({
+      "consolidacion.vehiculos": { $eq: "on" },
+    })
+    .lean();
+  req.consultVehiculos = Vehicu;
+  return next();
+};
+export const SeeCoorTomaMuestra = async (req, res, next) => {
+  const TomaM = await consolidaciones
+    .find({
+      "consolidacion.tomaMuestra": { $eq: "on" },
+    })
+    .lean();
+  req.consultTomaM = TomaM;
   return next();
 };
 

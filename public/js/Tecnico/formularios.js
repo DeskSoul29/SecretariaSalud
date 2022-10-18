@@ -396,11 +396,11 @@ function cementerio(e) {
 }
 
 function validConsolidacion(e) {
-  if (document.getElementById("criterioProf").value == "Seleccione") {
+  if (document.getElementById("criterio").value == "Seleccione") {
     toast.toastInfo("Advertencia", "Seleccione un Criterio");
     e.preventDefault();
   } else if (
-    document.getElementById("criterioProf").value == "Rechazado" &&
+    document.getElementById("criterio").value == "Rechazado" &&
     document.getElementById("motivo").value == ""
   ) {
     toast.toastInfo("Advertencia", "Escribe el motivo");

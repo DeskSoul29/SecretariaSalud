@@ -45,20 +45,20 @@
                       <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/profesional/Consolidaciones/Ver/EventosSaludPublica">Eventos En Salud Publica</a>
+                      <a href="/profesional/Consolidaciones/Ver/Quejas">Quejas</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Correcciones
+                      Validar
                     </li>
                   </ol>
                 </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">EVENTOS EN SALUD PUBLICA</h1>
+                    <h1 class="h4 text-gray-900 mb-4">QUEJAS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Correccion/EventosSaludPublica/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off">
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2">Identificación Responsable</label>
@@ -70,7 +70,7 @@
                       </div>
                     </div>
 
-                    <%- include('../../../../tools/Templates/evenSalPubliTem'); %>
+                    <%- include('../../../../tools/Templates/quejasTem'); %>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
@@ -79,14 +79,14 @@
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterio">Criterio</label>
                         <select id="criterio" name="criterio" class="custom-select mr-sm-2">
-                          <option disabled>Seleccione</option>
+                          <option selected disabled>Seleccione</option>
                           <option value="Enviado">Aceptable</option>
-                          <option selected value="Rechazado">Rechazar</option>
+                          <option value="Rechazado">Rechazar</option>
                         </select>
                       </div>
-                      <div class="col-sm-9" id="divMotivo">
+                      <div class="col-sm-9" id="divMotivo" style="display: none">
                         <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"><%= consRech.respuesta.motivo %></textarea>
+                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
                       </div>
                     </div>
 
@@ -184,6 +184,15 @@
     });
   </script>
 
+  <script type="text/JavaScript">
+    var establecimiento = "<%= consolidacion.municipio %>";
+    var comunidad = "<%= consolidacion.ForQuejas.municipioComuni %>";
+
+    if (establecimiento != "") {
+      document.getElementById("quejaEstable").removeAttribute("style");
+    }
+    
+  </script>
 </body>
 
 </html>

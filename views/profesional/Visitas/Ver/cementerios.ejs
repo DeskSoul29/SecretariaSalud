@@ -89,7 +89,7 @@
                     <tr>
                       <td>
                         <% if(cementerio.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Cementerios/<%= cementerio._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= cementerio._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(cementerio.status=="Corregido" ){ %>
                         <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= cementerio._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(cementerio.status=="Rechazado" ){ %>

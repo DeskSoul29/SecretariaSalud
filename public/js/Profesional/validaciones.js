@@ -80,15 +80,13 @@ $("#btnConsolidacionVer").click(function () {
   }
 });
 
-if (document.getElementById("criterioProf") != null) {
-  document
-    .getElementById("criterioProf")
-    .addEventListener("change", function () {
-      if (document.getElementById("criterioProf").value == "Rechazado") {
-        document.getElementById("divMotivo").removeAttribute("style");
-        document.getElementById("motivo").value = "";
-      } else {
-        document.getElementById("divMotivo").style = "display:none";
-      }
-    });
+if (document.getElementById("criterio") != null) {
+  document.getElementById("criterio").addEventListener("change", function () {
+    if (document.getElementById("criterio").value == "Rechazado") {
+      document.getElementById("divMotivo").removeAttribute("style");
+      document.getElementById("motivo").value = "";
+    } else {
+      document.getElementById("divMotivo").style = "display:none";
+    }
+  });
 }

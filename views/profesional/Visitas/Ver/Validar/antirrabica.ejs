@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -45,20 +46,20 @@
                       <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/profesional/Consolidaciones/Ver/MedSaniEstablecimientos">Medidas Sanitarias a Establecimientos</a>
+                      <a href="/profesional/Consolidaciones/Ver/AntirrabicaAnimal">AntirrabicaAnimal</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Correcciones
+                      Validar
                     </li>
                   </ol>
                 </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">MEDIDAS SANITARIAS A ESTABLECIMIENTOS</h1>
+                    <h1 class="h4 text-gray-900 mb-4">ANTIRRABICA ANIMAL</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Correccion/MedSaniEstablecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/AntirrabicaAnimal/<%= consolidacion._id %>" method="POST" autocomplete="off">
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2">Identificación Responsable</label>
@@ -70,15 +71,15 @@
                       </div>
                     </div>
 
-                    <%- include('../../../../tools/Templates/establecimientosTem'); %>
+                    <%- include('../../../../tools/Templates/antirrabicaTem'); %>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
                       <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterioProf">Criterio</label>
-                        <select id="criterioProf" name="criterioProf" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <select id="criterio" name="criterio" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="Enviado">Aceptable</option>
                           <option value="Rechazado">Rechazar</option>
@@ -86,7 +87,7 @@
                       </div>
                       <div class="col-sm-9" id="divMotivo" style="display: none">
                         <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                        <textarea name="motivo" id="motivo" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
                       </div>
                     </div>
 
@@ -183,31 +184,6 @@
       nav4.className += "  active";
     });
   </script>
-
-  <script type="text/JavaScript">
-    var rotulado = "<%= consolidacion.consolidacion.rotulado %>";
-    var publicidad = "<%= consolidacion.consolidacion.publicidad %>";
-    var MSEstable = "<%= consolidacion.consolidacion.MSEstablecimientos %>";
-    var MSProduct = "<%= consolidacion.consolidacion.MSProductos %>";
-    var Cementerio = "<%= consolidacion.salaNM %>";
-
-    if (rotulado === "on") {
-      document.getElementById("productoTemple").removeAttribute("style");
-    }
-    if (publicidad === "on") {
-      document.getElementById("publicidadTemple").removeAttribute("style");
-    }
-    if (MSEstable === "on") {
-      document.getElementById("MSEstablecimientoTemple").removeAttribute("style");
-    }
-    if (MSProduct === "on") {
-      document.getElementById("MSProductoTemple").removeAttribute("style");
-    }
-    if (Cementerio === "on") {
-      document.getElementById("templeCementerios").removeAttribute("style");
-    }
-  </script>
-
 </body>
 
 </html>

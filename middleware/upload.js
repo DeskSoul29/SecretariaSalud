@@ -18,7 +18,7 @@ var storage = multer.diskStorage({
 var uploadFiles = multer({
   storage: storage,
   limits: { fileSize: 20000000 },
-}).array("myFiles", 5);
+}).single("myFile");
 
 var uploadFilesMiddleware = promisify(uploadFiles);
 
