@@ -111,7 +111,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Antirrabi.responsable.userResponsable %>
@@ -148,7 +148,7 @@
                         <%= Antirrabi.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= Antirrabi._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

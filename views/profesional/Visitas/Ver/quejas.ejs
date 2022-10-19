@@ -101,7 +101,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Queja.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Queja.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Queja.responsable.userResponsable %>
@@ -111,8 +111,7 @@
                         <%= Queja.provincia %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.municipioComuni %>
-                        <%= Queja.municipio %>
+                        <%= Queja.ForQuejas.municipioComuni %><%= Queja.municipio %>
                       </td>
                       <td>
                         <%= Queja.ForQuejas.tipoQueja %>
@@ -142,7 +141,7 @@
                         <%= Queja.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesonal/evidencia/<%= Queja._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

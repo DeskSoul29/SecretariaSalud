@@ -44,7 +44,7 @@
                     <h1 class="h4 text-gray-900 mb-4">EDUCACIÓN SANITARIA</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="eduSanitaria(event)" action="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
 
                     <div class="form-group row">
                       <div class="col-sm-3">
@@ -256,10 +256,14 @@
       document.getElementById("temaCap").value = "<%= consolidacion.ForEduSanitaria.tema %>"
       document.getElementById("personalCap").value = "<%= consolidacion.ForEduSanitaria.personalDiri %>"
     });
+    if ("<%= consolidacion.ForEduSanitaria.tema %>" == "OTROS") {
+      $("#otrosCap").attr("readonly", false);
+    }
     $("#temaCap").change(function() {
       if (document.getElementById("temaCap").value == "OTROS") {
         $("#otrosCap").attr("readonly", false);
       } else {
+        document.getElementById("otrosCap").value = ""
         $("#otrosCap").attr("readonly", true);
       }
     });

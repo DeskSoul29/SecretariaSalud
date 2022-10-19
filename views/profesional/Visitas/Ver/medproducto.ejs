@@ -118,7 +118,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(medProduc.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(medProduc.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= medProduc.responsable.userResponsable %>
@@ -149,8 +149,7 @@
                         <%= medProduc.ForMSProductos.medidaMSProductos %>
                       </td>
                       <td>
-                        <%= moment(medProduc.fvisit,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(medProduc.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= medProduc.ForMSProductos.productoMSProductos %>
@@ -174,8 +173,7 @@
                         <%= medProduc.ForMSProductos.loteMSProductos %>
                       </td>
                       <td>
-                        <%= moment(medProduc.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days'
-                                                                    ).format('DD-MM-YYYY'); %>
+                        <%= moment(medProduc.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
                         <%= medProduc.ForMSProductos.motivoMSProductos %>
@@ -184,7 +182,7 @@
                         <%= medProduc.ForMSProductos.observacionMedProd %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= medProduc._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

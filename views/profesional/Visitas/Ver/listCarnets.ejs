@@ -95,7 +95,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Carnetiz.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Carnetiz.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Carnetiz.responsable.userResponsable %>
@@ -126,7 +126,7 @@
                         <%= Carnetiz.observaciones %>
                       </td>
                       <td>
-                        <a type="button"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= Carnetiz._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

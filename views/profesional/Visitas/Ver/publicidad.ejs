@@ -103,7 +103,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= publicidad.responsable.userResponsable %>
@@ -146,7 +146,7 @@
                         <%= publicidad.ForPublicidad.registroSanitario %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= publicidad._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

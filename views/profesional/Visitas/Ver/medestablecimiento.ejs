@@ -104,7 +104,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(medEstable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(medEstable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= medEstable.responsable.userResponsable %>
@@ -147,7 +147,7 @@
                         <%= medEstable.ForMSEstablecimientos.observacionMedEsta %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= medEstable._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

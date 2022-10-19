@@ -45,7 +45,7 @@
                     <h1 class="h4 text-gray-900 mb-4">ANTIRRABICA ANIMAL</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="antirrabicalAnimalForm(event)" action="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
 
                     <div class="form-group row">
                       <div class="col-sm-3">
@@ -209,8 +209,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

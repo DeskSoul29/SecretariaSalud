@@ -118,7 +118,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(consultES.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(consultES.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= consultES.responsable.userResponsable %>
@@ -161,7 +161,7 @@
                         <%= consultES.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= consultES._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

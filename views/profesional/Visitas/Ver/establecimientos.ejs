@@ -109,7 +109,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Estable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(Estable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= Estable.responsable.userResponsable %>
@@ -161,7 +161,7 @@
                         <%= Estable.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesinal/evidencia/<%= Estable._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

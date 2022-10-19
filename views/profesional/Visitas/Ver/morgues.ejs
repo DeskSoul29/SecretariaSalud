@@ -99,7 +99,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(morgues.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(morgues.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
                         <%= morgues.responsable.userResponsable %>
@@ -136,7 +136,7 @@
                         <%= morgues.observaciones %>
                       </td>
                       <td>
-                        <a onclick=""><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= morgues._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% }); %>

@@ -44,7 +44,7 @@
                     <h1 class="h4 text-gray-900 mb-4">LISTADO DE CARNETIZADOS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                  <form onsubmit="listCarnetsForm(event)" action="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterio">Criterio</label>
@@ -188,8 +188,7 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

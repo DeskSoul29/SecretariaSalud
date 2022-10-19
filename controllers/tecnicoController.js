@@ -314,11 +314,226 @@ var authTec = (function () {
     }
   };
 
-  var EditReport = async (req, next) => {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
+  var SendCorreccion = async (req, res, next, decodificada) => {
+    var {
+      fVisit,
+      score,
+      concepto,
+      accion,
+      //Cementerio
+      NecroMorg,
+      //Establecimiento
+      acta,
+      actaLey,
+      //Rotulado
+      productoRotulado,
+      //Publicidad
+      medPubli,
+      permisoSanitario,
+      productoPublicidad,
+      marcaPublicidad,
+      //MEDEstablecimientos
+      medidaApliEstable,
+      motivoApli,
+      observacionMedEsta,
+      //MEDProductos
+      medidaApliProduc,
+      permisoProduco,
+      productoMed,
+      marcaProduct,
+      motivoProduct,
+      presentProduct,
+      cantProdu,
+      fabriProduc,
+      loteProduc,
+      fechProduc,
+      observacionMedProd,
+      //Antirrabica
+      Pcanina,
+      Pfelina,
+      caninosUrbano,
+      caninosRural,
+      felinosUrbano,
+      felinosRural,
+      totalVacunados,
+      //EduSanitaria
+      temaCap,
+      otrosCap,
+      fechaCap,
+      intensidadCap,
+      lugCap,
+      personalCap,
+      totalPersCap,
+      //EvenSalPublica
+      mes,
+      etasPresent,
+      etasAtend,
+      intoxPresent,
+      intoxAtend,
+      agrePresent,
+      agreAtend,
+      trueFalse,
+      fReunion,
+      //Carnetizados
+      expCarnet,
+      idenCarnet,
+      nameCarnet,
+      estableciCarnet,
+      direcCarnet,
+      //Quejas
+      tipQueja,
+      fechRece,
+      perCausa,
+      perAfec,
+      descQueja,
+      requeQueja,
+      //Toma de Muestras
+      tipMues,
+      descripTip,
+      tipAnali,
+      zona,
+      objEst,
+      acompananteEmp,
+      observacion,
+      //Vehiculos
+      classVehi,
+      otroV,
+      placa,
+      refriV,
+      nInscrip,
+      produTrans,
+    } = req.body;
+
+    await consolidaciones
+      .findByIdAndUpdate(
+        req.params._id,
+        {
+          $set: {
+            status: "Corregido",
+            fvisit: fVisit,
+            score: score,
+            concepto: concepto,
+            accion: accion,
+
+            acta: acta,
+            actaLey: actaLey,
+
+            salaNM: NecroMorg,
+
+            ForRotulado: {
+              productoRotulado: productoRotulado,
+            },
+            ForPublicidad: {
+              medioPublicitario: medPubli,
+              registroSanitario: permisoSanitario,
+              productoPublicidad: productoPublicidad,
+              marcaPublicidad: marcaPublicidad,
+            },
+            ForMSEstablecimientos: {
+              medidaMSEstablecimientos: medidaApliEstable,
+              motivoMSEstablecimientos: motivoApli,
+              observacionMedEsta: observacionMedEsta,
+            },
+            ForMSProductos: {
+              medidaMSProductos: medidaApliProduc,
+              permisoMSProductos: permisoProduco,
+              productoMSProductos: productoMed,
+              marcaMSProductos: marcaProduct,
+              motivoMSProductos: motivoProduct,
+              presentacionMSProductos: presentProduct,
+              cantidadMSProductos: cantProdu,
+              fabricanteMSProductos: fabriProduc,
+              loteMSProductos: loteProduc,
+              vencimientoMSProductos: fechProduc,
+              observacionMedProd: observacionMedProd,
+            },
+            ForAntirrabica: {
+              Pcanina: Pcanina,
+              Pfelina: Pfelina,
+              canUrb: caninosUrbano,
+              canRur: caninosRural,
+              felUrb: felinosUrbano,
+              felRur: felinosRural,
+              totalVac: totalVacunados,
+            },
+            ForEduSanitaria: {
+              tema: temaCap,
+              otroTema: otrosCap,
+              fechaCap: fechaCap,
+              intensidad: intensidadCap,
+              lugarCapa: lugCap,
+              personalDiri: personalCap,
+              totalPersCap: totalPersCap,
+            },
+            ForEvenSPublica: {
+              mes: mes,
+              presentEtas: etasPresent,
+              atendEtas: etasAtend,
+              presentIntox: intoxPresent,
+              atendIntox: intoxAtend,
+              presentAgre: agrePresent,
+              atendAgre: agreAtend,
+              covePart: trueFalse,
+              coveFech: fReunion,
+            },
+            ForCarnets: {
+              expCarnet: expCarnet,
+              idenCarnet: idenCarnet,
+              nombreCarnet: nameCarnet,
+              establecimientoCarnet: estableciCarnet,
+              direccionCarnet: direcCarnet,
+            },
+            ForQuejas: {
+              tipoQueja: tipQueja,
+              frecep: fechRece,
+              perCausaQueja: perCausa,
+              perAfectQueja: perAfec,
+              descQueja: descQueja,
+              reqQueja: requeQueja,
+            },
+            ForTomaMuestras: {
+              tipMuestra: tipMues,
+              descMuestra: descripTip,
+              tipAnalisis: tipAnali,
+              zona: zona,
+              objAnalisis: objEst,
+              acompanante: acompananteEmp,
+            },
+            ForVehiculos: {
+              claseVehiculo: classVehi,
+              otraClase: otroV,
+              placa: placa,
+              refrigeracion: refriV,
+              nInscripcion: nInscrip,
+              productosVehiculo: produTrans,
+            },
+            evidencia: {
+              file: req.file.filename,
+            },
+            observaciones: observacion,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        if (result != null) {
+          authTec.EditReport(req, next, decodificada);
+        } else {
+          authTec.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            false,
+            false,
+            "/tecnico"
+          );
+          return next();
+        }
+      });
+  };
+
+  var EditReport = async (req, next, decodificada) => {
     var Ruta = await authTec.NextReport(req, decodificada);
     var tipoRuta = "";
     await reportes
@@ -389,6 +604,7 @@ var authTec = (function () {
   return {
     isUser: isUser,
     SendConsolidacion: SendConsolidacion,
+    SendCorreccion: SendCorreccion,
     EditReport: EditReport,
     NextReport: NextReport,
   };
@@ -908,226 +1124,15 @@ export const SendTomaMuestra = async (req, res, next) => {
 
 //Consolidaciones - Rechazos
 export const EditConsolidacionRech = async (req, res, next) => {
-  var {
-    fVisit,
-    score,
-    concepto,
-    accion,
-    //Cementerio
-    NecroMorg,
-    //Establecimiento
-    acta,
-    actaLey,
-    //Rotulado
-    productoRotulado,
-    //Publicidad
-    medPubli,
-    permisoSanitario,
-    productoPublicidad,
-    marcaPublicidad,
-    //MEDEstablecimientos
-    medidaApliEstable,
-    motivoApli,
-    observacionMedEsta,
-    //MEDProductos
-    medidaApliProduc,
-    permisoProduco,
-    productoMed,
-    marcaProduct,
-    motivoProduct,
-    presentProduct,
-    cantProdu,
-    fabriProduc,
-    loteProduc,
-    fechProduc,
-    observacionMedProd,
-    //Antirrabica
-    Pcanina,
-    Pfelina,
-    caninosUrbano,
-    caninosRural,
-    felinosUrbano,
-    felinosRural,
-    totalVacunados,
-    //EduSanitaria
-    temaCap,
-    otrosCap,
-    fechaCap,
-    intensidadCap,
-    lugCap,
-    personalCap,
-    totalPersCap,
-    //EvenSalPublica
-    etasPresent,
-    etasAtend,
-    intoxPresent,
-    intoxAtend,
-    agrePresent,
-    agreAtend,
-    trueFalse,
-    fReunion,
-    //Carnetizados
-    expCarnet,
-    idenCarnet,
-    nameCarnet,
-    estableciCarnet,
-    direcCarnet,
-    //Quejas
-    tipQueja,
-    fechRece,
-    perCausa,
-    perAfec,
-    descQueja,
-    requeQueja,
-    //Toma de Muestras
-    tipMues,
-    descripTip,
-    tipAnali,
-    zona,
-    objEst,
-    acompananteEmp,
-    observacion,
-    //Vehiculos
-    classVehi,
-    otroV,
-    placa,
-    refriV,
-    nInscrip,
-    produTrans,
-  } = req.body;
-
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  req.params.user = decodificada.user;
   await upload(req, res, function (err) {
     if (err) {
       return res.end("Error uploading file.");
     }
-    console.log("hola");
+    authTec.SendCorreccion(req, res, next, decodificada);
   });
-
-  await consolidaciones
-    .findByIdAndUpdate(
-      req.params._id,
-      {
-        $set: {
-          status: "Corregido",
-          fvisit: fVisit,
-          score: score,
-          concepto: concepto,
-          accion: accion,
-
-          acta: acta,
-          actaLey: actaLey,
-
-          salaNM: NecroMorg,
-
-          ForRotulado: {
-            productoRotulado: productoRotulado,
-          },
-          ForPublicidad: {
-            medioPublicitario: medPubli,
-            registroSanitario: permisoSanitario,
-            productoPublicidad: productoPublicidad,
-            marcaPublicidad: marcaPublicidad,
-          },
-          ForMSEstablecimientos: {
-            medidaMSEstablecimientos: medidaApliEstable,
-            motivoMSEstablecimientos: motivoApli,
-            observacionMedEsta: observacionMedEsta,
-          },
-          ForMSProductos: {
-            medidaMSProductos: medidaApliProduc,
-            permisoMSProductos: permisoProduco,
-            productoMSProductos: productoMed,
-            marcaMSProductos: marcaProduct,
-            motivoMSProductos: motivoProduct,
-            presentacionMSProductos: presentProduct,
-            cantidadMSProductos: cantProdu,
-            fabricanteMSProductos: fabriProduc,
-            loteMSProductos: loteProduc,
-            vencimientoMSProductos: fechProduc,
-            observacionMedProd: observacionMedProd,
-          },
-          ForAntirrabica: {
-            Pcanina: Pcanina,
-            Pfelina: Pfelina,
-            canUrb: caninosUrbano,
-            canRur: caninosRural,
-            felUrb: felinosUrbano,
-            felRur: felinosRural,
-            totalVac: totalVacunados,
-          },
-          ForEduSanitaria: {
-            tema: temaCap,
-            otroTema: otrosCap,
-            fechaCap: fechaCap,
-            intensidad: intensidadCap,
-            lugarCapa: lugCap,
-            personalDiri: personalCap,
-            totalPersCap: totalPersCap,
-          },
-          ForEvenSPublica: {
-            presentEtas: etasPresent,
-            atendEtas: etasAtend,
-            presentIntox: intoxPresent,
-            atendIntox: intoxAtend,
-            presentAgre: agrePresent,
-            atendAgre: agreAtend,
-            covePart: trueFalse,
-            coveFech: fReunion,
-          },
-          ForCarnets: {
-            expCarnet: expCarnet,
-            idenCarnet: idenCarnet,
-            nombreCarnet: nameCarnet,
-            establecimientoCarnet: estableciCarnet,
-            direccionCarnet: direcCarnet,
-          },
-          ForQuejas: {
-            tipoQueja: tipQueja,
-            frecep: fechRece,
-            perCausaQueja: perCausa,
-            perAfectQueja: perAfec,
-            descQueja: descQueja,
-            reqQueja: requeQueja,
-          },
-          ForTomaMuestras: {
-            tipMuestra: tipMues,
-            descMuestra: descripTip,
-            tipAnalisis: tipAnali,
-            zona: zona,
-            objAnalisis: objEst,
-            acompanante: acompananteEmp,
-          },
-          ForVehiculos: {
-            claseVehiculo: classVehi,
-            otraClase: otroV,
-            placa: placa,
-            refrigeracion: refriV,
-            nInscripcion: nInscrip,
-            productosVehiculo: produTrans,
-          },
-          evidencia: {
-            file: req.file.filename,
-          },
-          observaciones: observacion,
-        },
-      },
-      { new: true }
-    )
-    .then((result) => {
-      console.log(result);
-      if (result != null) {
-        authTec.EditReport(req, next);
-      } else {
-        authTec.isUser(
-          req,
-          "Error en la Base de Datos",
-          "Envio Cancelado",
-          "error",
-          false,
-          false,
-          "/tecnico"
-        );
-        return next();
-      }
-    });
 };
