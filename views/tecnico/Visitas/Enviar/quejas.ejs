@@ -62,7 +62,7 @@
                         </div>
                         <div class="col my-1">
                           <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                          <select id="muniSelect2" name="municipioComuni" class="custom-select mr-sm-2">
+                          <select id="muniSelect2" name="municipio" class="custom-select mr-sm-2">
                             <option selected disabled>Seleccione el Municipio
                             </option>
                             <option value="<%= user.municipio %>">
@@ -152,7 +152,7 @@
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones
                           (Opcional)</label>
-                        <textarea name="observacion" id="observacion" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                        <textarea name="observacion" id="observacion" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
@@ -288,7 +288,9 @@
 
     $("#estableQueja").change(function() {
       if ($("#estableQueja").is(":checked")) {
+        document.getElementById("muniSelect2").selectedIndex = "Seleccione el Municipio";
         document.getElementById("muniSelect").selectedIndex = "Seleccione el Municipio";
+        document.getElementById("grupEsta").selectedIndex = "Seleccione el Grupo";
         document.getElementById("EstbleTemple").removeAttribute("style");
         document.getElementById("ComuniTemple").style = "display:none";
       }
@@ -297,6 +299,7 @@
     $("#comuniQuejas").change(function() {
       if ($("#comuniQuejas").is(":checked")) {
         document.getElementById("muniSelect2").selectedIndex = "Seleccione el Municipio";
+        document.getElementById("muniSelect").selectedIndex = "Seleccione el Municipio";
         document.getElementById("EstbleTemple").style = "display:none";
         document.getElementById("ComuniTemple").removeAttribute("style");
       }

@@ -6,7 +6,7 @@
     justify-items: center;
     text-align: center;
     cursor: pointer;
-    color: lightgrey;
+    color: rgb(52, 49, 49);
     border: 4px dashed seagreen;
     border-radius: 10px;
   }

@@ -7,7 +7,7 @@ import {
   LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   EditConsolidacionRech,
-  SendEstablecimiento,
+  SendConsolidacion,
   SeeEstablecimiento,
   SeeMorgues,
   SeeCementerios,
@@ -15,19 +15,12 @@ import {
   SeeEstaPublicidad,
   SeeMedEstable,
   SeeMedProduct,
-  SendEventSaludPubli,
   SeeEventSaludPubli,
-  SendQuejas,
   SeeQuejas,
-  SendAntirrabica,
   SeeAntirrabica,
-  SendCarnetizados,
   SeeCarnetizados,
-  SendEduSanitaria,
   SeeEduSanitaria,
-  SendVehiculos,
   SeeVehiculos,
-  SendTomaMuestra,
   SeeTomaMuestra,
 } from "../controllers/tecnicoController.js";
 
@@ -63,6 +56,8 @@ router.get(
 );
 
 // Apartado: Consolidaciones
+
+//Consolidaciones - Ver
 router.get(
   "/Consolidaciones/Ver",
   isAuthenticatedTecnic,
@@ -72,38 +67,6 @@ router.get(
       user: req.user,
       allConso: req.allConso,
       moment: moment,
-    });
-  }
-);
-router.get("/Consolidaciones/Enviar", isAuthenticatedTecnic, (req, res) => {
-  res.render("tecnico/Visitas/mainEnviar", {
-    user: req.user,
-  });
-});
-router.get(
-  "/Consolidaciones/Enviar/Establecimientos",
-  isAuthenticatedTecnic,
-  CodigosEstablecimientos,
-  hojavidaConsultAllTec,
-  (req, res) => {
-    res.render("tecnico/Visitas/Enviar/establecimientos", {
-      user: req.user,
-      codigos: req.codigos,
-      hojavida: req.hojavida,
-      alert: undefined,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Enviar/Establecimientos/:user",
-  isAuthenticatedTecnic,
-  SendEstablecimiento,
-  (req, res) => {
-    res.render("tecnico/Visitas/Enviar/establecimientos", {
-      user: req.user,
-      codigos: null,
-      hojavida: null,
-      alert: req.alert,
     });
   }
 );
@@ -192,6 +155,124 @@ router.get(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/Vehiculos",
+  isAuthenticatedTecnic,
+  SeeVehiculos,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/vehiculos", {
+      user: req.user,
+      Vehiculo: req.consultVehiculos,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EventosSaludPublica",
+  isAuthenticatedTecnic,
+  SeeEventSaludPubli,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/EventSalPubli", {
+      user: req.user,
+      consultES: req.consultES,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/TomaMuestras",
+  isAuthenticatedTecnic,
+  SeeTomaMuestra,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      TomaM: req.consultTomaM,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EduSanitaria",
+  isAuthenticatedTecnic,
+  SeeEduSanitaria,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/eduSanitaria", {
+      user: req.user,
+      EduSani: req.consultEdusani,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/ListadoCarnetizados",
+  isAuthenticatedTecnic,
+  SeeCarnetizados,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/listCarnets", {
+      user: req.user,
+      Carnetiz: req.consultCarnetiz,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/AntirrabicaAnimal",
+  isAuthenticatedTecnic,
+  SeeAntirrabica,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/antirrabica", {
+      user: req.user,
+      Antirrabi: req.consultAntirrabi,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Quejas",
+  isAuthenticatedTecnic,
+  SeeQuejas,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/quejas", {
+      user: req.user,
+      Queja: req.consultQueja,
+      moment: moment,
+    });
+  }
+);
+
+//Consolidaciones - Enviar
+router.get("/Consolidaciones/Enviar", isAuthenticatedTecnic, (req, res) => {
+  res.render("tecnico/Visitas/mainEnviar", {
+    user: req.user,
+  });
+});
+router.get(
+  "/Consolidaciones/Enviar/Establecimientos",
+  isAuthenticatedTecnic,
+  CodigosEstablecimientos,
+  hojavidaConsultAllTec,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/establecimientos", {
+      user: req.user,
+      codigos: req.codigos,
+      hojavida: req.hojavida,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/Establecimientos/:user",
+  isAuthenticatedTecnic,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/establecimientos", {
+      user: req.user,
+      codigos: null,
+      hojavida: null,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Enviar/Vehiculos",
   isAuthenticatedTecnic,
   CodigosEstablecimientos,
@@ -208,25 +289,13 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/Vehiculos/:user",
   isAuthenticatedTecnic,
-  SendVehiculos,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/vehiculos", {
       user: req.user,
       codigos: null,
       hojavida: null,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/Vehiculos",
-  isAuthenticatedTecnic,
-  SeeVehiculos,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/vehiculos", {
-      user: req.user,
-      Vehiculo: req.consultVehiculos,
-      moment: moment,
     });
   }
 );
@@ -243,23 +312,11 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/EventosSaludPublica/:user",
   isAuthenticatedTecnic,
-  SendEventSaludPubli,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/eventSaludPublic", {
       user: req.user,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/EventosSaludPublica",
-  isAuthenticatedTecnic,
-  SeeEventSaludPubli,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/EventSalPubli", {
-      user: req.user,
-      consultES: req.consultES,
-      moment: moment,
     });
   }
 );
@@ -280,25 +337,13 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/TomaMuestras/:user",
   isAuthenticatedTecnic,
-  SendTomaMuestra,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/tomamuestras", {
       user: req.user,
       codigos: null,
       hojavida: null,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/TomaMuestras",
-  isAuthenticatedTecnic,
-  SeeTomaMuestra,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/tomamuestras", {
-      user: req.user,
-      TomaM: req.consultTomaM,
-      moment: moment,
     });
   }
 );
@@ -315,23 +360,11 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/EduSanitaria/:user",
   isAuthenticatedTecnic,
-  SendEduSanitaria,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/eduSanitaria", {
       user: req.user,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/EduSanitaria",
-  isAuthenticatedTecnic,
-  SeeEduSanitaria,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/eduSanitaria", {
-      user: req.user,
-      EduSani: req.consultEdusani,
-      moment: moment,
     });
   }
 );
@@ -348,23 +381,11 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/ListadoCarnetizados/:user",
   isAuthenticatedTecnic,
-  SendCarnetizados,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/listCarnets", {
       user: req.user,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/ListadoCarnetizados",
-  isAuthenticatedTecnic,
-  SeeCarnetizados,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/listCarnets", {
-      user: req.user,
-      Carnetiz: req.consultCarnetiz,
-      moment: moment,
     });
   }
 );
@@ -381,23 +402,11 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/AntirrabicaAnimal/:user",
   isAuthenticatedTecnic,
-  SendAntirrabica,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/antirrabica", {
       user: req.user,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/AntirrabicaAnimal",
-  isAuthenticatedTecnic,
-  SeeAntirrabica,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/antirrabica", {
-      user: req.user,
-      Antirrabi: req.consultAntirrabi,
-      moment: moment,
     });
   }
 );
@@ -418,25 +427,13 @@ router.get(
 router.post(
   "/Consolidaciones/Enviar/Quejas/:user",
   isAuthenticatedTecnic,
-  SendQuejas,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/quejas", {
       user: req.user,
       codigos: null,
       hojavida: null,
       alert: req.alert,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Ver/Quejas",
-  isAuthenticatedTecnic,
-  SeeQuejas,
-  (req, res) => {
-    res.render("tecnico/Visitas/Ver/quejas", {
-      user: req.user,
-      Queja: req.consultQueja,
-      moment: moment,
     });
   }
 );

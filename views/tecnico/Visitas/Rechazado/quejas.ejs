@@ -45,6 +45,8 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="quejasON" name="quejasON" style="display: none;" readonly>
+
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="criterio">Criterio</label>
@@ -66,7 +68,7 @@
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.ForQuejas.municipioEstable %><%= consolidacion.ForQuejas.municipioComuni %>" readonly>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
                       </div>
                     </div>
 
@@ -312,8 +314,7 @@
   </script>
 
   <script type="text/JavaScript">
-    var establecimiento = "<%= consolidacion.municipio %>";
-    var comunidad = "<%= consolidacion.ForQuejas.municipioComuni %>";
+    var establecimiento = "<%= consolidacion.grupo %>";
 
     if (establecimiento != "") {
       document.getElementById("quejaEstable").removeAttribute("style");

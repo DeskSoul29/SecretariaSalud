@@ -32,6 +32,8 @@
                     <h1 class="h4 text-gray-900 mb-4">VEHICULOS</h1>
                   </div>
                   <form onsubmit="vehiculosForm(event)" action="/tecnico/Consolidaciones/Enviar/Vehiculos/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="vehiculosON" name="vehiculosON" style="display: none;" readonly>
+
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>

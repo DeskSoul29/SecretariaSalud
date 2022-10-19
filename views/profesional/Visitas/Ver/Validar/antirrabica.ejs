@@ -3,21 +3,7 @@
 
 <head>
   <%- include('../../../../tools/head'); %>
-  <style>
-    .btn-upload {
-      padding: 10px 20px;
-      margin-left: 10px;
-    }
-
-    .upload-input-group {
-      margin-bottom: 10px;
-    }
-
-    .input-group>.custom-select:not(:last-child),
-    .input-group>.form-control:not(:last-child) {
-      height: 45px;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -72,6 +58,13 @@
                     </div>
 
                     <%- include('../../../../tools/Templates/antirrabicaTem'); %>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+                    </div>
 
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />

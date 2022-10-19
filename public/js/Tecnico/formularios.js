@@ -260,95 +260,75 @@ function establecimientosForm(e) {
     document.getElementById("tipoEsta").value ==
     "CEMENTERIOS (CON O SIN MORGUE)"
   ) {
-    cementerio(e);
+    if (document.getElementById("NecroMorg").value == "Seleccione") {
+      toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
+      e.preventDefault();
+    }
   } else if (
     document.getElementById("tipoEsta").value != "MORGUES" &&
     document.getElementById("tipoEsta").value !=
       "CEMENTERIOS (CON O SIN MORGUE)"
   ) {
     //Publicidad
-    publicidad(e);
+    if (document.getElementById("publicidadON").checked) {
+      if (
+        document.getElementById("permisoSanitario").value == 0 ||
+        document.getElementById("productoPublicidad").value == 0 ||
+        document.getElementById("marcaPublicidad").value == 0 ||
+        document.getElementById("medPubli").value == "Seleccione"
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Ingresar todos los Campos de IVC Publicidad"
+        );
+        e.preventDefault();
+      }
+    }
 
     //Rotulado
-    rotulado(e);
+    if (document.getElementById("rotuladoON").checked) {
+      if (document.getElementById("productoRotulado").value == 0) {
+        toast.toastInfo(
+          "Advertencia",
+          "Ingresar todos los Campos de IVC Rotulado"
+        );
+        e.preventDefault();
+      }
+    }
 
     //Medidas Sanitarias a Establecimientos
-    medSaniEstablecimientos(e);
+    if (document.getElementById("establecimientosON").checked) {
+      if (
+        document.getElementById("motivoApli").value == 0 ||
+        document.getElementById("medidaApliEstable").value == "Seleccione"
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Ingresar todos los Campos de Medidas Sanitarias a Establecimientos"
+        );
+        e.preventDefault();
+      }
+    }
 
     //Medidas Sanitarias a Productos
-    medSaniProductos(e);
-  }
-}
-
-function cementerio(e) {
-  if (document.getElementById("NecroMorg").value == "Seleccione") {
-    toast.toastInfo("Advertencia", "Seleccionar la respuesta de la Sala");
-    e.preventDefault();
-  }
-}
-
-function publicidad(e) {
-  if (document.getElementById("publicidadON").checked) {
-    if (
-      document.getElementById("permisoSanitario").value == 0 ||
-      document.getElementById("productoPublicidad").value == 0 ||
-      document.getElementById("marcaPublicidad").value == 0 ||
-      document.getElementById("medPubli").value == "Seleccione"
-    ) {
-      toast.toastInfo(
-        "Advertencia",
-        "Ingresar todos los Campos de IVC Publicidad"
-      );
-      e.preventDefault();
-    }
-  }
-}
-
-function rotulado(e) {
-  if (document.getElementById("rotuladoON").checked) {
-    if (document.getElementById("productoRotulado").value == 0) {
-      toast.toastInfo(
-        "Advertencia",
-        "Ingresar todos los Campos de IVC Rotulado"
-      );
-      e.preventDefault();
-    }
-  }
-}
-
-function medSaniEstablecimientos(e) {
-  if (document.getElementById("establecimientosON").checked) {
-    if (
-      document.getElementById("motivoApli").value == 0 ||
-      document.getElementById("medidaApliEstable").value == "Seleccione"
-    ) {
-      toast.toastInfo(
-        "Advertencia",
-        "Ingresar todos los Campos de Medidas Sanitarias a Establecimientos"
-      );
-      e.preventDefault();
-    }
-  }
-}
-
-function medSaniProductos(e) {
-  if (document.getElementById("productosON").checked) {
-    if (
-      document.getElementById("medidaApliProduc").value == "Seleccione" ||
-      document.getElementById("permisoProduco").value == 0 ||
-      document.getElementById("productoMed").value == 0 ||
-      document.getElementById("marcaProduct").value == 0 ||
-      document.getElementById("motivoProduct").value == 0 ||
-      document.getElementById("presentProduct").value == 0 ||
-      document.getElementById("cantProdu").value == 0 ||
-      document.getElementById("fabriProduc").value == 0 ||
-      document.getElementById("loteProduc").value == 0
-    ) {
-      toast.toastInfo(
-        "Advertencia",
-        "Ingresar todos los Campos de Medidas Sanitarias a Productos"
-      );
-      e.preventDefault();
+    if (document.getElementById("productosON").checked) {
+      if (
+        document.getElementById("medidaApliProduc").value == "Seleccione" ||
+        document.getElementById("permisoProduco").value == 0 ||
+        document.getElementById("productoMed").value == 0 ||
+        document.getElementById("marcaProduct").value == 0 ||
+        document.getElementById("motivoProduct").value == 0 ||
+        document.getElementById("presentProduct").value == 0 ||
+        document.getElementById("cantProdu").value == 0 ||
+        document.getElementById("fabriProduc").value == 0 ||
+        document.getElementById("loteProduc").value == 0
+      ) {
+        toast.toastInfo(
+          "Advertencia",
+          "Ingresar todos los Campos de Medidas Sanitarias a Productos"
+        );
+        e.preventDefault();
+      }
     }
   }
 }

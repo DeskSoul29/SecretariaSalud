@@ -21,18 +21,7 @@ var authTec = (function () {
     ]);
   };
 
-  var SendConsolidacion = async (
-    req,
-    next,
-    establecimientoON,
-    antirrabicaON,
-    eduSanitariaON,
-    EvenSaludPubliON,
-    lisCarnetsON,
-    vehiculosON,
-    tomaMuestraON,
-    quejasON
-  ) => {
+  var SendConsolidacion = async (req, next) => {
     try {
       const decodificada = await promisify(jwt.verify)(
         req.cookies.jwt,
@@ -59,6 +48,7 @@ var authTec = (function () {
         //Cementerio
         NecroMorg,
         //Establecimiento
+        establecimientoON,
         acta,
         actaLey,
         //Rotulado
@@ -89,6 +79,7 @@ var authTec = (function () {
         fechProduc,
         observacionMedProd,
         //Antirrabica
+        antirrabicaON,
         Pcanina,
         Pfelina,
         caninosUrbano,
@@ -97,6 +88,7 @@ var authTec = (function () {
         felinosRural,
         totalVacunados,
         //EduSanitaria
+        eduSanitariaON,
         temaCap,
         otrosCap,
         fechaCap,
@@ -105,6 +97,7 @@ var authTec = (function () {
         personalCap,
         totalPersCap,
         //EvenSalPublica
+        EvenSaludPubliON,
         mes,
         etasPresent,
         etasAtend,
@@ -121,7 +114,6 @@ var authTec = (function () {
         estableciCarnet,
         direcCarnet,
         //Quejas
-        municipioComuni,
         tipQueja,
         fechRece,
         perCausa,
@@ -144,6 +136,21 @@ var authTec = (function () {
         nInscrip,
         produTrans,
       } = req.body;
+
+      establecimientoON =
+        establecimientoON == undefined ? "" : establecimientoON;
+      rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
+      publicidadON = publicidadON == undefined ? "" : publicidadON;
+      productosON = productosON == undefined ? "" : productosON;
+      establecimientosON =
+        establecimientosON == undefined ? "" : establecimientosON;
+      antirrabicaON = antirrabicaON == undefined ? "" : antirrabicaON;
+      eduSanitariaON = eduSanitariaON == undefined ? "" : eduSanitariaON;
+      EvenSaludPubliON = EvenSaludPubliON == undefined ? "" : EvenSaludPubliON;
+      lisCarnetsON = lisCarnetsON == undefined ? "" : lisCarnetsON;
+      vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
+      tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
+      quejasON = quejasON == undefined ? "" : quejasON;
 
       new consolidaciones({
         provincia: provincia,
@@ -253,7 +260,6 @@ var authTec = (function () {
           direccionCarnet: direcCarnet,
         },
         ForQuejas: {
-          municipioComuni: municipioComuni,
           tipoQueja: tipQueja,
           frecep: fechRece,
           perCausaQueja: perCausa,
@@ -323,20 +329,25 @@ var authTec = (function () {
       //Cementerio
       NecroMorg,
       //Establecimiento
+      establecimientoON,
       acta,
       actaLey,
       //Rotulado
+      rotuladoON,
       productoRotulado,
       //Publicidad
+      publicidadON,
       medPubli,
       permisoSanitario,
       productoPublicidad,
       marcaPublicidad,
       //MEDEstablecimientos
+      establecimientosON,
       medidaApliEstable,
       motivoApli,
       observacionMedEsta,
       //MEDProductos
+      productosON,
       medidaApliProduc,
       permisoProduco,
       productoMed,
@@ -349,6 +360,7 @@ var authTec = (function () {
       fechProduc,
       observacionMedProd,
       //Antirrabica
+      antirrabicaON,
       Pcanina,
       Pfelina,
       caninosUrbano,
@@ -357,6 +369,7 @@ var authTec = (function () {
       felinosRural,
       totalVacunados,
       //EduSanitaria
+      eduSanitariaON,
       temaCap,
       otrosCap,
       fechaCap,
@@ -365,6 +378,7 @@ var authTec = (function () {
       personalCap,
       totalPersCap,
       //EvenSalPublica
+      EvenSaludPubliON,
       mes,
       etasPresent,
       etasAtend,
@@ -375,12 +389,14 @@ var authTec = (function () {
       trueFalse,
       fReunion,
       //Carnetizados
+      lisCarnetsON,
       expCarnet,
       idenCarnet,
       nameCarnet,
       estableciCarnet,
       direcCarnet,
       //Quejas
+      quejasON,
       tipQueja,
       fechRece,
       perCausa,
@@ -388,6 +404,7 @@ var authTec = (function () {
       descQueja,
       requeQueja,
       //Toma de Muestras
+      tomaMuestraON,
       tipMues,
       descripTip,
       tipAnali,
@@ -396,6 +413,7 @@ var authTec = (function () {
       acompananteEmp,
       observacion,
       //Vehiculos
+      vehiculosON,
       classVehi,
       otroV,
       placa,
@@ -403,118 +421,145 @@ var authTec = (function () {
       nInscrip,
       produTrans,
     } = req.body;
+    console.log(lisCarnetsON);
+
+    establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
+    rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
+    publicidadON = publicidadON == undefined ? "" : publicidadON;
+    productosON = productosON == undefined ? "" : productosON;
+    establecimientosON =
+      establecimientosON == undefined ? "" : establecimientosON;
+    antirrabicaON = antirrabicaON == undefined ? "" : antirrabicaON;
+    eduSanitariaON = eduSanitariaON == undefined ? "" : eduSanitariaON;
+    EvenSaludPubliON = EvenSaludPubliON == undefined ? "" : EvenSaludPubliON;
+    lisCarnetsON = lisCarnetsON == undefined ? "" : lisCarnetsON;
+    vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
+    tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
+    quejasON = quejasON == undefined ? "" : quejasON;
 
     await consolidaciones
-      .findByIdAndUpdate(
-        req.params._id,
-        {
-          $set: {
-            status: "Corregido",
-            fvisit: fVisit,
-            score: score,
-            concepto: concepto,
-            accion: accion,
+      .findByIdAndUpdate(req.params._id, {
+        $set: {
+          status: "Corregido",
+          fvisit: fVisit,
+          score: score,
+          concepto: concepto,
+          accion: accion,
 
-            acta: acta,
-            actaLey: actaLey,
+          acta: acta,
+          actaLey: actaLey,
 
-            salaNM: NecroMorg,
+          salaNM: NecroMorg,
 
-            ForRotulado: {
-              productoRotulado: productoRotulado,
-            },
-            ForPublicidad: {
-              medioPublicitario: medPubli,
-              registroSanitario: permisoSanitario,
-              productoPublicidad: productoPublicidad,
-              marcaPublicidad: marcaPublicidad,
-            },
-            ForMSEstablecimientos: {
-              medidaMSEstablecimientos: medidaApliEstable,
-              motivoMSEstablecimientos: motivoApli,
-              observacionMedEsta: observacionMedEsta,
-            },
-            ForMSProductos: {
-              medidaMSProductos: medidaApliProduc,
-              permisoMSProductos: permisoProduco,
-              productoMSProductos: productoMed,
-              marcaMSProductos: marcaProduct,
-              motivoMSProductos: motivoProduct,
-              presentacionMSProductos: presentProduct,
-              cantidadMSProductos: cantProdu,
-              fabricanteMSProductos: fabriProduc,
-              loteMSProductos: loteProduc,
-              vencimientoMSProductos: fechProduc,
-              observacionMedProd: observacionMedProd,
-            },
-            ForAntirrabica: {
-              Pcanina: Pcanina,
-              Pfelina: Pfelina,
-              canUrb: caninosUrbano,
-              canRur: caninosRural,
-              felUrb: felinosUrbano,
-              felRur: felinosRural,
-              totalVac: totalVacunados,
-            },
-            ForEduSanitaria: {
-              tema: temaCap,
-              otroTema: otrosCap,
-              fechaCap: fechaCap,
-              intensidad: intensidadCap,
-              lugarCapa: lugCap,
-              personalDiri: personalCap,
-              totalPersCap: totalPersCap,
-            },
-            ForEvenSPublica: {
-              mes: mes,
-              presentEtas: etasPresent,
-              atendEtas: etasAtend,
-              presentIntox: intoxPresent,
-              atendIntox: intoxAtend,
-              presentAgre: agrePresent,
-              atendAgre: agreAtend,
-              covePart: trueFalse,
-              coveFech: fReunion,
-            },
-            ForCarnets: {
-              expCarnet: expCarnet,
-              idenCarnet: idenCarnet,
-              nombreCarnet: nameCarnet,
-              establecimientoCarnet: estableciCarnet,
-              direccionCarnet: direcCarnet,
-            },
-            ForQuejas: {
-              tipoQueja: tipQueja,
-              frecep: fechRece,
-              perCausaQueja: perCausa,
-              perAfectQueja: perAfec,
-              descQueja: descQueja,
-              reqQueja: requeQueja,
-            },
-            ForTomaMuestras: {
-              tipMuestra: tipMues,
-              descMuestra: descripTip,
-              tipAnalisis: tipAnali,
-              zona: zona,
-              objAnalisis: objEst,
-              acompanante: acompananteEmp,
-            },
-            ForVehiculos: {
-              claseVehiculo: classVehi,
-              otraClase: otroV,
-              placa: placa,
-              refrigeracion: refriV,
-              nInscripcion: nInscrip,
-              productosVehiculo: produTrans,
-            },
-            evidencia: {
-              file: req.file.filename,
-            },
-            observaciones: observacion,
+          consolidacion: {
+            establecimiento: establecimientoON,
+            rotulado: rotuladoON,
+            publicidad: publicidadON,
+            MSProductos: productosON,
+            MSEstablecimientos: establecimientosON,
+            antirrabica: antirrabicaON,
+            eduSanitaria: eduSanitariaON,
+            EvenSaludPubli: EvenSaludPubliON,
+            lisCarnets: lisCarnetsON,
+            vehiculos: vehiculosON,
+            tomaMuestra: tomaMuestraON,
+            quejas: quejasON,
           },
+
+          ForRotulado: {
+            productoRotulado: productoRotulado,
+          },
+          ForPublicidad: {
+            medioPublicitario: medPubli,
+            registroSanitario: permisoSanitario,
+            productoPublicidad: productoPublicidad,
+            marcaPublicidad: marcaPublicidad,
+          },
+          ForMSEstablecimientos: {
+            medidaMSEstablecimientos: medidaApliEstable,
+            motivoMSEstablecimientos: motivoApli,
+            observacionMedEsta: observacionMedEsta,
+          },
+          ForMSProductos: {
+            medidaMSProductos: medidaApliProduc,
+            permisoMSProductos: permisoProduco,
+            productoMSProductos: productoMed,
+            marcaMSProductos: marcaProduct,
+            motivoMSProductos: motivoProduct,
+            presentacionMSProductos: presentProduct,
+            cantidadMSProductos: cantProdu,
+            fabricanteMSProductos: fabriProduc,
+            loteMSProductos: loteProduc,
+            vencimientoMSProductos: fechProduc,
+            observacionMedProd: observacionMedProd,
+          },
+          ForAntirrabica: {
+            Pcanina: Pcanina,
+            Pfelina: Pfelina,
+            canUrb: caninosUrbano,
+            canRur: caninosRural,
+            felUrb: felinosUrbano,
+            felRur: felinosRural,
+            totalVac: totalVacunados,
+          },
+          ForEduSanitaria: {
+            tema: temaCap,
+            otroTema: otrosCap,
+            fechaCap: fechaCap,
+            intensidad: intensidadCap,
+            lugarCapa: lugCap,
+            personalDiri: personalCap,
+            totalPersCap: totalPersCap,
+          },
+          ForEvenSPublica: {
+            mes: mes,
+            presentEtas: etasPresent,
+            atendEtas: etasAtend,
+            presentIntox: intoxPresent,
+            atendIntox: intoxAtend,
+            presentAgre: agrePresent,
+            atendAgre: agreAtend,
+            covePart: trueFalse,
+            coveFech: fReunion,
+          },
+          ForCarnets: {
+            expCarnet: expCarnet,
+            idenCarnet: idenCarnet,
+            nombreCarnet: nameCarnet,
+            establecimientoCarnet: estableciCarnet,
+            direccionCarnet: direcCarnet,
+          },
+          ForQuejas: {
+            tipoQueja: tipQueja,
+            frecep: fechRece,
+            perCausaQueja: perCausa,
+            perAfectQueja: perAfec,
+            descQueja: descQueja,
+            reqQueja: requeQueja,
+          },
+          ForTomaMuestras: {
+            tipMuestra: tipMues,
+            descMuestra: descripTip,
+            tipAnalisis: tipAnali,
+            zona: zona,
+            objAnalisis: objEst,
+            acompanante: acompananteEmp,
+          },
+          ForVehiculos: {
+            claseVehiculo: classVehi,
+            otraClase: otroV,
+            placa: placa,
+            refrigeracion: refriV,
+            nInscripcion: nInscrip,
+            productosVehiculo: produTrans,
+          },
+          evidencia: {
+            file: req.file.filename,
+          },
+          observaciones: observacion,
+          createdAt: new Date(),
         },
-        { new: true }
-      )
+      })
       .then((result) => {
         if (result != null) {
           authTec.EditReport(req, next, decodificada);
@@ -688,7 +733,7 @@ export const LisConsolidaRechazadas = async (req, res, next) => {
         },
         "respuesta.criterio": { $eq: "Rechazado" },
       })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .then((data) => {
         req.ListconsRech = data;
         return next();
@@ -1057,68 +1102,12 @@ export const SeeTomaMuestra = async (req, res, next) => {
 };
 
 //Consolidaciones - Enviar
-export const SendEstablecimiento = async (req, res, next) => {
+export const SendConsolidacion = async (req, res, next) => {
   await upload(req, res, function (err, res) {
     if (err) {
       return res.end("Error uploading file.");
     }
     authTec.SendConsolidacion(req, next, "on", "", "", "", "", "", "", "");
-  });
-};
-export const SendEventSaludPubli = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "on", "", "", "", "");
-  });
-};
-export const SendQuejas = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "", "on");
-  });
-};
-export const SendAntirrabica = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "on", "", "", "", "", "", "");
-  });
-};
-export const SendCarnetizados = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "on", "", "", "");
-  });
-};
-export const SendEduSanitaria = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "on", "", "", "", "", "");
-  });
-};
-export const SendVehiculos = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "on", "", "");
-  });
-};
-export const SendTomaMuestra = async (req, res, next) => {
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendConsolidacion(req, next, "", "", "", "", "", "", "on", "");
   });
 };
 

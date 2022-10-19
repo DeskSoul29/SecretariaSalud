@@ -411,27 +411,24 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
     return next();
   }
 };
-export const LisConsolidaProfRechazadas = async (req, res, next) => {
+export const SeeProfConsolidaciones = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    await reportes
+    const Estables = await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
-        "respuesta.criterio": { $eq: "Rechazado" },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
       })
-      .sort({ createdAt: 1 })
-      .then((data) => {
-        req.ListconsRech = data;
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      .sort({ createdAt: -1 });
+    req.allConso = Estables;
+    return next();
   } catch (error) {
     console.log(error);
     return next();
@@ -691,41 +688,22 @@ export const SendNovedad = async (req, res, next) => {
 };
 
 //Consolidaciones - Consultar
-export const SeeProfConsolidaciones = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Estables = await consolidaciones.find({
-      provincia: {
-        $eq: decodificada.provincia,
-      },
-      "consolidacion.noveadministrativa": {
-        $ne: "on",
-      },
-    });
-    req.allConso = Estables;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
 export const SeeProfNAdmin = async (req, res, next) => {
   try {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await consolidaciones.find({
-      provincia: {
-        $eq: decodificada.provincia,
-      },
-      "consolidacion.noveadministrativa": {
-        $eq: "on",
-      },
-    });
+    const Estables = await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        "consolidacion.noveadministrativa": {
+          $eq: "on",
+        },
+      })
+      .sort({ createdAt: -1 });
     req.allNAdmin = Estables;
     return next();
   } catch (error) {
@@ -747,7 +725,7 @@ export const SeeProfEstablecimiento = async (req, res, next) => {
         },
         "consolidacion.establecimiento": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultEstable = Estables;
     return next();
   } catch (error) {
@@ -769,7 +747,7 @@ export const SeeProfMorgues = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "MORGUES",
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.morgues = Morgues;
     return next();
   } catch (error) {
@@ -791,7 +769,7 @@ export const SeeProfCementerios = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         tipo: "CEMENTERIOS (CON O SIN MORGUE)",
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultCementerios = Cementerios;
     return next();
   } catch (error) {
@@ -813,7 +791,7 @@ export const SeeProfEstaRotulado = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.rotulado": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultRotulado = Rotulado;
     return next();
   } catch (error) {
@@ -835,7 +813,7 @@ export const SeeProfEstaPublicidad = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.publicidad": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultPublicidad = Publicidad;
     return next();
   } catch (error) {
@@ -857,7 +835,7 @@ export const SeeProfMedEstable = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSEstablecimientos": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultMedEstable = MedEstable;
     return next();
   } catch (error) {
@@ -879,7 +857,7 @@ export const SeeProfMedProduct = async (req, res, next) => {
         "consolidacion.establecimiento": { $eq: "on" },
         "consolidacion.MSProductos": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultMedProduct = MedProduct;
     return next();
   } catch (error) {
@@ -900,7 +878,7 @@ export const SeeProfEventSaludPubli = async (req, res, next) => {
         },
         "consolidacion.EvenSaludPubli": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultES = EventSalud;
     return next();
   } catch (error) {
@@ -921,7 +899,7 @@ export const SeeProfQuejas = async (req, res, next) => {
         },
         "consolidacion.quejas": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultQueja = Queja;
     return next();
   } catch (error) {
@@ -942,7 +920,7 @@ export const SeeProfAntirrabica = async (req, res, next) => {
         },
         "consolidacion.antirrabica": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultAntirrabi = AntiRa;
     return next();
   } catch (error) {
@@ -963,7 +941,7 @@ export const SeeProfCarnetizados = async (req, res, next) => {
         },
         "consolidacion.lisCarnets": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultCarnetiz = Carnets;
     return next();
   } catch (error) {
@@ -984,7 +962,7 @@ export const SeeProfEduSanitaria = async (req, res, next) => {
         },
         "consolidacion.eduSanitaria": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultEdusani = EduSani;
     return next();
   } catch (error) {
@@ -1005,7 +983,7 @@ export const SeeProfVehiculos = async (req, res, next) => {
         },
         "consolidacion.vehiculos": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultVehiculos = Vehicu;
     return next();
   } catch (error) {
@@ -1026,7 +1004,7 @@ export const SeeProfTomaMuestra = async (req, res, next) => {
         },
         "consolidacion.tomaMuestra": { $eq: "on" },
       })
-      .lean();
+      .sort({ createdAt: -1 });
     req.consultTomaM = TomaM;
     return next();
   } catch (error) {

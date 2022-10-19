@@ -17,6 +17,7 @@ import {
   CodigosEstablecimientos,
   consultUser,
   inscribirEstablecimiento,
+  DownloadFile,
   logout,
 } from "../helpers/auth.js";
 
@@ -211,6 +212,8 @@ router.post(
     });
   }
 );
+
+router.get("/evidencia/:id", isAuthenticatedCoordinacion, DownloadFile);
 
 router.get("/logout", logout);
 

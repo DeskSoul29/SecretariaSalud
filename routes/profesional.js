@@ -5,7 +5,6 @@ import {
   users,
   fillMunicipio,
   hojavidaConsultAllProf,
-  LisConsolidaProfRechazadas,
   changePass,
   addMuniApoyo,
   SeeProfConsolidaciones,
@@ -52,6 +51,7 @@ import {
   consultUser,
   inscribirEstablecimiento,
   ValConsolidaciones,
+  DownloadFile,
   logout,
 } from "../helpers/auth.js";
 
@@ -61,7 +61,7 @@ router.get(
   "/",
   isAuthenticatedProf,
   ConsolidaEstadosProf,
-  LisConsolidaProfRechazadas,
+  SeeProfConsolidaciones,
   (req, res) => {
     res.render("profesional/main", {
       user: req.user,
@@ -70,7 +70,7 @@ router.get(
       consCorre: req.consCorre,
       consAcep: req.consAcep,
       consRech: req.consRech,
-      ListRechazo: req.ListconsRech,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -588,11 +588,13 @@ router.post(
   "/Consolidaciones/Correccion/Establecimientos/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
+  ConsolidaRechazada,
   EditReportEstablecimiento,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/establecimientos", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       moment: moment,
       alert: req.alert,
     });
@@ -618,11 +620,13 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportVehiculos,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/vehiculos", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,
+      consRech: req.consRech,
       alert: req.alert,
     });
   }
@@ -647,10 +651,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportEventSaludPubli,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eventSaludPublic", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -676,10 +682,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportTomaMuestra,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/tomamuestras", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -705,10 +713,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportEduSanitaria,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/eduSanitaria", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -734,10 +744,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportCarnetzados,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/listCarnets", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -763,10 +775,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportAntirrabica,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/antirrabica", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -792,10 +806,12 @@ router.post(
   isAuthenticatedProf,
   ValConsolidaciones,
   EditReportQuejas,
+  ConsolidaRechazada,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/quejas", {
       user: req.user,
       consolidacion: req.consolidacion,
+      consRech: req.consRech,
       alert: req.alert,
       moment: moment,
     });
@@ -831,6 +847,8 @@ router.post(
     });
   }
 );
+
+router.get("/evidencia/:id", isAuthenticatedProf, DownloadFile);
 
 router.get("/logout", logout);
 

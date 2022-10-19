@@ -133,7 +133,6 @@ var EstablecimientosSchema = new Schema({
 
   //Quejas
   ForQuejas: {
-    municipioComuni: String,
     tipoQueja: String,
     frecep: Date,
     perCausaQueja: String,

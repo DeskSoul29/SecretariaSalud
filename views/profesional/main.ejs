@@ -3,7 +3,11 @@
 
 <head>
   <%- include('../tools/head'); %>
+  <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 </head>
 
 <body id="page-top">
@@ -141,57 +145,280 @@
           <div class="row">
             <div class="col">
               <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    Listado de Consolidaciones Rechazadas En Su Provincia
-                  </h6>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px; text-align: center !important">
-                      <thead>
-                        <tr>
-                          <th scope="col">Acción</th>
-                          <th scope="col">Fecha_Enviado</th>
-                          <th scope="col">Municipio</th>
-                          <th scope="col">Tipo Consolidación</th>
-                          <th scope="col">Tecnico Responsable</th>
-                          <th scope="col">Observación</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <% if(ListRechazo){ %>
-                        <% ListRechazo.forEach((ListRechazo)=> { %>
-                        <tr>
-                          <td>
-                            <a><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                          </td>
-                          <td>
-                            <%= moment(ListRechazo.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
-                          </td>
-                          <td>
-                            <%= ListRechazo.consolidacion.municipio %>
-                          </td>
-                          <td>
-                            <%= ListRechazo.tipo %>
-                          </td>
-                          <td>
-                            <%= ListRechazo.consolidacion.userTec %>
-                            <%= ListRechazo.consolidacion.nomTec %>
-                          </td>
-                          <td>
-                            <%= ListRechazo.respuesta.motivo %>
-                          </td>
-                        </tr>
-                        <% }); %>
-                        <% } %>
-                      </tbody>
-                    </table>
+
+                <div id="accordion">
+
+                  <div class="card">
+                    <div class="card-header" id="headingOne">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Consolidaciones Pendientes
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% if (allConso){ %>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if(allConso.status=="Pendiente" ){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/EduSanitaria/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/EventosSaludPublica/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/Vehiculos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                                </td>
+                                <td>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  Establecimientos
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  Antirrabica Animal
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  Educación Sanitaria
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  Eventos de Salud Publica
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  Listado de Carnetizados
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  Vehiculos
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  Toma de Muestras
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  Quejas
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %> -
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                              <% } %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+
+                  <div class="card">
+                    <div class="card-header" id="headingTwo">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                          Consolidaciones Corregidas
+                        </button>
+                      </h5>
+                    </div>
+                    <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover" id="dataTable2" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% if (allConso){ %>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if(allConso.status=="Corregido" ){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/EduSanitaria/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/EventosSaludPublica/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/Vehiculos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span> </a>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                                </td>
+                                <td>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  Establecimientos
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  Antirrabica Animal
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  Educación Sanitaria
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  Eventos de Salud Publica
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  Listado de Carnetizados
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  Vehiculos
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  Toma de Muestras
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  Quejas
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %><%= allConso.ForQuejas.municipioComuni %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %> -
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                              <% } %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="card">
+                    <div class="card-header" id="headingThree">
+                      <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                          Consolidaciones Rechazadas
+                        </button>
+                        </h2>
+                    </div>
+                    <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-hover" id="dataTable3" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Tipo Consolidación</th>
+                                <th>Municipio</th>
+                                <th>Tecnico Responsable</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% if (allConso){ %>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if(allConso.status=="Rechazado" ){ %>
+                              <tr>
+                                <td>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                                </td>
+                                <td>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  Establecimientos
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  Antirrabica Animal
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  Educación Sanitaria
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  Eventos de Salud Publica
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  Listado de Carnetizados
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  Vehiculos
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  Toma de Muestras
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  Quejas
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %><%= allConso.ForQuejas.municipioComuni %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %> -
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                              <% } %>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
           </div>
+
         </div>
         <!-- /.container-fluid -->
       </div>
@@ -258,7 +485,17 @@
     });
     $('#dataTable').DataTable({
       order: [
-        [1, 'desc']
+        [0, 'desc']
+      ],
+    });
+    $('#dataTable2').DataTable({
+      order: [
+        [0, 'desc']
+      ],
+    });
+    $('#dataTable3').DataTable({
+      order: [
+        [0, 'desc']
       ],
     });
   </script>

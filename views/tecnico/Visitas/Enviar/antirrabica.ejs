@@ -36,6 +36,8 @@
                   </div>
 
                   <form onsubmit="antirrabicalAnimalForm(event)" action="/tecnico/Consolidaciones/Enviar/AntirrabicaAnimal/<%= user.user %>" method="POST" enctype="multipart/form-data">
+                    <input type="text" value="on" id="antirrabicaON" name="antirrabicaON" style="display: none;" readonly>
+
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>

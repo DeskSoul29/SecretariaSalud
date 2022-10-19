@@ -54,7 +54,7 @@ if (grupEsta != null) {
     //Eliminar el listado de Codigos si hay mas de 1
     for (let i = tipoEsta.options.length; i >= 1; i--) {
       tipoEsta.remove(i);
-      codEsta.value = "Ninguno";
+      codEsta.value = 0;
       Nriesgo.value = "Ninguno";
     }
 

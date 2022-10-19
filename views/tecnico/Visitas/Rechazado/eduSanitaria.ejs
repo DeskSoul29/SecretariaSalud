@@ -45,6 +45,7 @@
                   </div>
 
                   <form onsubmit="eduSanitaria(event)" action="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="eduSanitariaON" name="eduSanitariaON" style="display: none;" readonly>
 
                     <div class="form-group row">
                       <div class="col-sm-3">

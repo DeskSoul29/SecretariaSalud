@@ -5,7 +5,7 @@
   </div>
   <div class="col my-1">
     <label class="mr-sm-2" for="muniSelect">Municipio</label>
-    <input id="municipio" name="municipio" type="text" class="form-control form-control-user" value="<%= consolidacion.municipio %><%= consolidacion.ForQuejas.municipioComuni %>" readonly>
+    <input id="municipio" name="municipio" type="text" class="form-control form-control-user" value="<%= consolidacion.municipio %>" readonly>
   </div>
 </div>
 
@@ -114,21 +114,5 @@
   <div class="col-sm-12">
     <label class="mr-sm-2" for="observacion">Observaciones</label>
     <textarea name="observacion" id="observacion" class="form-control form-control-user" readonly><%= consolidacion.observaciones %></textarea>
-  </div>
-</div>
-
-<div class="form-group row">
-  <div class="col-sm-12">
-    <label class="mr-sm-2" for="fields">Archivo(s) Adjuntos</label>
-    <div class="control-group" id="fields">
-      <div class="controls">
-        <div class="entry input-group upload-input-group">
-          <input class="form-control" name="myFiles" id="myfiles" type="file" />
-          <button class="btn btn-upload btn-success btn-add" type="button">
-            <i class="fa fa-plus"></i>
-          </button>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
