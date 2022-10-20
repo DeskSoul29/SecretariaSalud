@@ -80,61 +80,62 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                  <tbody>
-                    <% if (rotulado){ %>
-                    <% rotulado.forEach((rotulado)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.rotulado == "on"){ %>
                     <tr>
                       <td>
-                        <% if(rotulado.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= rotulado._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(rotulado.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= rotulado._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(rotulado.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(rotulado.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(rotulado.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(rotulado.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= rotulado.responsableuserResponsable %>
-                        <%= rotulado.responsable.nombreResponsable %>
+                        <%= allConso.responsableuserResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= rotulado.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= rotulado.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= rotulado.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= rotulado.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= rotulado.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= rotulado.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= rotulado.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(rotulado.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= rotulado.ForRotulado.productoRotulado %>
+                        <%= allConso.ForRotulado.productoRotulado %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= rotulado._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

@@ -90,74 +90,76 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Estable){ %>
-                    <% Estable.forEach((Estable)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Estable.status=="Pendiente" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(Estable.status=="Rechazado" ){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= Estable._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(Estable.status=="Corregido" ){ %>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(Estable.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Estable.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Estable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Estable.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Estable.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Estable.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= Estable.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= Estable.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= Estable.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= Estable.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(Estable.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= Estable.score %>
+                        <%= allConso.score %>
                       </td>
                       <td>
-                        <%= Estable.concepto %>
+                        <%= allConso.concepto %>
                       </td>
                       <td>
-                        <%= Estable.accion %>
+                        <%= allConso.accion %>
                       </td>
                       <td>
-                        <%= Estable.acta %>
+                        <%= allConso.acta %>
                       </td>
                       <td>
-                        <%= Estable.actaAnul %>
+                        <%= allConso.actaAnul %>
                       </td>
                       <td>
-                        <%= Estable.actaLey %>
+                        <%= allConso.actaLey %>
                       </td>
                       <td>
-                        <%= Estable.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= Estable._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

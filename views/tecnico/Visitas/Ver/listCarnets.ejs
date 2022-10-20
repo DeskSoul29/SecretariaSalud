@@ -76,53 +76,55 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Carnetiz){ %>
-                    <% Carnetiz.forEach((Carnetiz)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.lisCarnets == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Carnetiz.status == "Pendiente"){ %>
+                        <% if(allConso.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(Carnetiz.status == "Rechazado"){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= Carnetiz._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(Carnetiz.status=="Corregido" ){ %>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(Carnetiz.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Carnetiz.status == "Aceptado"){ %>
+                        <% }else if(allConso.status == "Aceptado"){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Carnetiz.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Carnetiz.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Carnetiz.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Carnetiz.ForCarnets.nombreCarnet %>
+                        <%= allConso.ForCarnets.nombreCarnet %>
                       </td>
                       <td>
-                        <%= Carnetiz.ForCarnets.idenCarnet %>
+                        <%= allConso.ForCarnets.idenCarnet %>
                       </td>
                       <td>
-                        <%= Carnetiz.ForCarnets.establecimientoCarnet %>
+                        <%= allConso.ForCarnets.establecimientoCarnet %>
                       </td>
                       <td>
-                        <%= Carnetiz.ForCarnets.direccionCarnet %>
+                        <%= allConso.ForCarnets.direccionCarnet %>
                       </td>
                       <td>
-                        <%= moment(Carnetiz.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= Carnetiz.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= Carnetiz._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

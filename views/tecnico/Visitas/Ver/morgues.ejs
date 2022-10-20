@@ -80,59 +80,61 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (morgues){ %>
-                    <% morgues.forEach((morgues)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.tipo == "MORGUES"){ %>
                     <tr>
                       <td>
-                        <% if(morgues.status == "Pendiente"){ %>
+                        <% if(allConso.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(morgues.status == "Rechazado"){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= morgues._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(morgues.status=="Corregido" ){ %>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(morgues.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(morgues.status == "Aceptado"){ %>
+                        <% }else if(allConso.status == "Aceptado"){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(morgues.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= morgues.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= morgues.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= morgues.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= morgues.telefono %>
+                        <%= allConso.telefono %>
                       </td>
                       <td>
-                        <%= morgues.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(morgues.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= morgues.score %>
+                        <%= allConso.score %>
                       </td>
                       <td>
-                        <%= morgues.concepto %>
+                        <%= allConso.concepto %>
                       </td>
                       <td>
-                        <%= morgues.accion %>
+                        <%= allConso.accion %>
                       </td>
                       <td>
-                        <%= morgues.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= morgues._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

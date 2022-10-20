@@ -94,63 +94,65 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Antirrabi){ %>
-                    <% Antirrabi.forEach((Antirrabi)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Antirrabi.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/AntirrabicaAnimal/<%= Antirrabi._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(Antirrabi.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/<%= Antirrabi._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(Antirrabi.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(Antirrabi.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Antirrabi.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Antirrabi.responsable.userResponsable %>
-                        <%= Antirrabi.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= Antirrabi.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Antirrabi.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.Pcanina %>
+                        <%= allConso.ForAntirrabica.Pcanina %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.Pfelina %>
+                        <%= allConso.ForAntirrabica.Pfelina %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.canUrb %>
+                        <%= allConso.ForAntirrabica.canUrb %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.canRur %>
+                        <%= allConso.ForAntirrabica.canRur %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.felUrb %>
+                        <%= allConso.ForAntirrabica.felUrb %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.felRur %>
+                        <%= allConso.ForAntirrabica.felRur %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.totalVac %>
+                        <%= allConso.ForAntirrabica.totalVac %>
                       </td>
                       <td>
-                        <%= Antirrabi.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= Antirrabi._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

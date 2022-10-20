@@ -91,79 +91,81 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Vehiculo){ %>
-                    <% Vehiculo.forEach((Vehiculo)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.vehiculos == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Vehiculo.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Vehiculos/<%= Vehiculo._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(Vehiculo.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/Vehiculos/<%= Vehiculo._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(Vehiculo.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/Vehiculos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Vehiculos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(Vehiculo.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Vehiculo.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Vehiculo.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Vehiculo.responsable.userResponsable %>
-                        <%= Vehiculo.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= Vehiculo.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Vehiculo.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Vehiculo.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= Vehiculo.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= Vehiculo.ForVehiculos.claseVehiculo %>
-                        <%= Vehiculo.ForVehiculos.otraClase %>
+                        <%= allConso.ForVehiculos.claseVehiculo %>
+                        <%= allConso.ForVehiculos.otraClase %>
                       </td>
                       <td>
-                        <%= Vehiculo.identificacion %>
+                        <%= allConso.identificacion %>
                       </td>
                       <td>
-                        <%= Vehiculo.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= Vehiculo.ForVehiculos.placa %>
+                        <%= allConso.ForVehiculos.placa %>
                       </td>
                       <td>
-                        <%= Vehiculo.ForVehiculos.nInscripcion %>
+                        <%= allConso.ForVehiculos.nInscripcion %>
                       </td>
                       <td>
-                        <%= Vehiculo.ForVehiculos.productosVehiculo %>
+                        <%= allConso.ForVehiculos.productosVehiculo %>
                       </td>
                       <td>
-                        <%= Vehiculo.ForVehiculos.refrigeracion %>
+                        <%= allConso.ForVehiculos.refrigeracion %>
                       </td>
                       <td>
-                        <%= moment(Vehiculo.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= Vehiculo.score %>
+                        <%= allConso.score %>
                       </td>
                       <td>
-                        <%= Vehiculo.concepto %>
+                        <%= allConso.concepto %>
                       </td>
                       <td>
-                        <%= Vehiculo.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= Vehiculo._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

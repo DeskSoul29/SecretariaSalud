@@ -86,66 +86,68 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (TomaM){ %>
-                    <% TomaM.forEach((TomaM)=>{ %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.tomaMuestra == "on"){ %>
                     <tr>
                       <td>
-                        <% if(TomaM.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(TomaM.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= TomaM._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(TomaM.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(TomaM.status=="Enviado" ){ %>
+                        <% }else if(allConso.status=="Enviado" ){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(TomaM.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(TomaM.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= TomaM.responsable.userResponsable %>
-                        <%= TomaM.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= TomaM.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= TomaM.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.tipMuestra %>
+                        <%= allConso.ForTomaMuestras.tipMuestra %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.descMuestra %>
+                        <%= allConso.ForTomaMuestras.descMuestra %>
                       </td>
                       <td>
-                        <%= TomaM.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.tipAnalisis %>
+                        <%= allConso.ForTomaMuestras.tipAnalisis %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.zona %>
+                        <%= allConso.ForTomaMuestras.zona %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.objAnalisis %>
+                        <%= allConso.ForTomaMuestras.objAnalisis %>
                       </td>
                       <td>
-                        <%= moment(TomaM.fvisit," YYYY/MM/DD").add(1, 'days' ).format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit," YYYY/MM/DD").add(1, 'days' ).format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= TomaM.ForTomaMuestras.acompanante %>
+                        <%= allConso.ForTomaMuestras.acompanante %>
                       </td>
                       <td>
-                        <%= TomaM.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= TomaM._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

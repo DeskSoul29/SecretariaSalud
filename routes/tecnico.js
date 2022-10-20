@@ -7,21 +7,8 @@ import {
   LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   EditConsolidacionRech,
+  ConsolidaRechazada,
   SendConsolidacion,
-  SeeEstablecimiento,
-  SeeMorgues,
-  SeeCementerios,
-  SeeEstaRotulado,
-  SeeEstaPublicidad,
-  SeeMedEstable,
-  SeeMedProduct,
-  SeeEventSaludPubli,
-  SeeQuejas,
-  SeeAntirrabica,
-  SeeCarnetizados,
-  SeeEduSanitaria,
-  SeeVehiculos,
-  SeeTomaMuestra,
 } from "../controllers/tecnicoController.js";
 
 import {
@@ -29,7 +16,6 @@ import {
   CodigosEstablecimientos,
   inscribirEstablecimiento,
   ValConsolidaciones,
-  ConsolidaRechazada,
   DownloadFile,
   logout,
 } from "../helpers/auth.js";
@@ -73,11 +59,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/Establecimientos",
   isAuthenticatedTecnic,
-  SeeEstablecimiento,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/establecimientos", {
       user: req.user,
-      Estable: req.consultEstable,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -85,11 +71,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/Morgues",
   isAuthenticatedTecnic,
-  SeeMorgues,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/morgues", {
       user: req.user,
-      morgues: req.morgues,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -97,11 +83,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/Cementerios",
   isAuthenticatedTecnic,
-  SeeCementerios,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/cementerios", {
       user: req.user,
-      cementerio: req.consultCementerios,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -109,11 +95,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/IVCRotulado",
   isAuthenticatedTecnic,
-  SeeEstaRotulado,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/rotulado", {
       user: req.user,
-      rotulado: req.consultRotulado,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -121,11 +107,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/IVCPublicidad",
   isAuthenticatedTecnic,
-  SeeEstaPublicidad,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/publicidad", {
       user: req.user,
-      publicidad: req.consultPublicidad,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -133,11 +119,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/MedSaniEstablecimientos",
   isAuthenticatedTecnic,
-  SeeMedEstable,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/medestablecimiento", {
       user: req.user,
-      medEstable: req.consultMedEstable,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -145,11 +131,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/MedSaniProductos",
   isAuthenticatedTecnic,
-  SeeMedProduct,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/medproducto", {
       user: req.user,
-      medProduc: req.consultMedProduct,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -157,11 +143,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/Vehiculos",
   isAuthenticatedTecnic,
-  SeeVehiculos,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/vehiculos", {
       user: req.user,
-      Vehiculo: req.consultVehiculos,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -169,11 +155,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/EventosSaludPublica",
   isAuthenticatedTecnic,
-  SeeEventSaludPubli,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/EventSalPubli", {
       user: req.user,
-      consultES: req.consultES,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -181,11 +167,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/TomaMuestras",
   isAuthenticatedTecnic,
-  SeeTomaMuestra,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/tomamuestras", {
       user: req.user,
-      TomaM: req.consultTomaM,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -193,11 +179,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/EduSanitaria",
   isAuthenticatedTecnic,
-  SeeEduSanitaria,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/eduSanitaria", {
       user: req.user,
-      EduSani: req.consultEdusani,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -205,11 +191,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/ListadoCarnetizados",
   isAuthenticatedTecnic,
-  SeeCarnetizados,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/listCarnets", {
       user: req.user,
-      Carnetiz: req.consultCarnetiz,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -217,11 +203,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/AntirrabicaAnimal",
   isAuthenticatedTecnic,
-  SeeAntirrabica,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/antirrabica", {
       user: req.user,
-      Antirrabi: req.consultAntirrabi,
+      allConso: req.allConso,
       moment: moment,
     });
   }
@@ -229,11 +215,11 @@ router.get(
 router.get(
   "/Consolidaciones/Ver/Quejas",
   isAuthenticatedTecnic,
-  SeeQuejas,
+  SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/quejas", {
       user: req.user,
-      Queja: req.consultQueja,
+      allConso: req.allConso,
       moment: moment,
     });
   }

@@ -45,6 +45,8 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                    <input type="text" value="Quejas" id="tipCon" name="tipCon" style="display: none;" readonly>
+
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2">Identificación Responsable</label>

@@ -233,71 +233,72 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <% if (allNAdmin){ %>
-                          <% allNAdmin.forEach((allNAdmin)=> { %>
+                          <% if (allConso){ %>
+                          <% allConso.forEach((allConso)=> { %>
+                          <% if (allConso.consolidacion.noveadministrativa == "on"){ %>
                           <tr>
                             <td>
-                              <% if(allNAdmin.status=="Pendiente" ){ %>
+                              <% if(allConso.status=="Pendiente" ){ %>
                               <span class="badge badge-warning text-uppercase">Pendiente</span>
-                              <% }else if(allNAdmin.status=="Rechazado" ){ %>
+                              <% }else if(allConso.status=="Rechazado" ){ %>
                               <span class="badge badge-danger text-uppercase">Rechazado</span>
-                              <% }else if(allNAdmin.status=="Corregido" ){ %>
+                              <% }else if(allConso.status=="Corregido" ){ %>
                               <span class="badge badge-primary text-uppercase">Corregido</span>
-                              <% }else if(allNAdmin.status=="Enviado" ){ %>
+                              <% }else if(allConso.status=="Enviado" ){ %>
                               <span class="badge badge-info text-uppercase">Enviado</span>
-                              <% }else if(allNAdmin.status=="Aceptado" ){ %>
+                              <% }else if(allConso.status=="Aceptado" ){ %>
                               <span class="badge badge-success text-uppercase">Aceptado</span>
                               <% } %>
                             </td>
                             <td>
-                              <%= moment(allNAdmin.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.mesNA %>
+                              <%= allConso.ForNAdmin.mesNA %>
                             </td>
                             <td>
-                              <%= allNAdmin.municipio %>
+                              <%= allConso.municipio %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.entreInfor %>
+                              <%= allConso.ForNAdmin.entreInfor %>
                             </td>
                             <td>
-                              <%= moment(allNAdmin.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                              <%= moment(allConso.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.entreCrono %>
+                              <%= allConso.ForNAdmin.entreCrono %>
                             </td>
                             <td>
-                              <%= moment(allNAdmin.ForNAdmin.fechCrono,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                              <%= moment(allConso.ForNAdmin.fechCrono,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.entreAsis %>
+                              <%= allConso.ForNAdmin.entreAsis %>
                             </td>
                             <td>
-                              <%= moment(allNAdmin.ForNAdmin.fechAsis,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                              <%= moment(allConso.ForNAdmin.fechAsis,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.entreCircu %>
+                              <%= allConso.ForNAdmin.entreCircu %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.NumCir %>
+                              <%= allConso.ForNAdmin.NumCir %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.numActas %>
+                              <%= allConso.ForNAdmin.numActas %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.nomActas %>
+                              <%= allConso.ForNAdmin.nomActas %>
                             </td>
                             <td>
-                              <%= allNAdmin.ForNAdmin.motDevol %>
+                              <%= allConso.ForNAdmin.motDevol %>
                             </td>
                             <td>
-                              <%= allNAdmin.Observaciones %>
+                              <%= allConso.Observaciones %>
                             </td>
                           </tr>
+                          <% } %>
                           <% }); %>
                           <% } %>
-                        </tbody>
                         </tbody>
                       </table>
                     </div>

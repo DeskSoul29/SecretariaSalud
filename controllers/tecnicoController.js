@@ -108,12 +108,14 @@ var authTec = (function () {
         trueFalse,
         fReunion,
         //Carnetizados
+        lisCarnetsON,
         expCarnet,
         idenCarnet,
         nameCarnet,
         estableciCarnet,
         direcCarnet,
         //Quejas
+        quejasON,
         tipQueja,
         fechRece,
         perCausa,
@@ -121,6 +123,7 @@ var authTec = (function () {
         descQueja,
         requeQueja,
         //Toma de Muestras
+        tomaMuestraON,
         tipMues,
         descripTip,
         tipAnali,
@@ -129,6 +132,7 @@ var authTec = (function () {
         acompananteEmp,
         observacion,
         //Vehiculos
+        vehiculosON,
         classVehi,
         otroV,
         placa,
@@ -136,21 +140,6 @@ var authTec = (function () {
         nInscrip,
         produTrans,
       } = req.body;
-
-      establecimientoON =
-        establecimientoON == undefined ? "" : establecimientoON;
-      rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
-      publicidadON = publicidadON == undefined ? "" : publicidadON;
-      productosON = productosON == undefined ? "" : productosON;
-      establecimientosON =
-        establecimientosON == undefined ? "" : establecimientosON;
-      antirrabicaON = antirrabicaON == undefined ? "" : antirrabicaON;
-      eduSanitariaON = eduSanitariaON == undefined ? "" : eduSanitariaON;
-      EvenSaludPubliON = EvenSaludPubliON == undefined ? "" : EvenSaludPubliON;
-      lisCarnetsON = lisCarnetsON == undefined ? "" : lisCarnetsON;
-      vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
-      tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
-      quejasON = quejasON == undefined ? "" : quejasON;
 
       new consolidaciones({
         provincia: provincia,
@@ -800,306 +789,6 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
     return next();
   }
 };
-export const SeeEstablecimiento = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Estables = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-      })
-      .lean();
-    req.consultEstable = Estables;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeMorgues = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Morgues = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        tipo: "MORGUES",
-      })
-      .lean();
-    req.morgues = Morgues;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeCementerios = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Cementerios = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
-      })
-      .lean();
-    req.consultCementerios = Cementerios;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeEstaRotulado = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Rotulado = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.rotulado": { $eq: "on" },
-      })
-      .lean();
-    req.consultRotulado = Rotulado;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeEstaPublicidad = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Publicidad = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.publicidad": { $eq: "on" },
-      })
-      .lean();
-    req.consultPublicidad = Publicidad;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeMedEstable = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const MedEstable = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.MSEstablecimientos": { $eq: "on" },
-      })
-      .lean();
-    req.consultMedEstable = MedEstable;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeMedProduct = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const MedProduct = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.establecimiento": { $eq: "on" },
-        "consolidacion.MSProductos": { $eq: "on" },
-      })
-      .lean();
-    req.consultMedProduct = MedProduct;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeEventSaludPubli = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const EventSalud = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.EvenSaludPubli": { $eq: "on" },
-      })
-      .lean();
-    req.consultES = EventSalud;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeQuejas = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Queja = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.quejas": { $eq: "on" },
-      })
-      .lean();
-    req.consultQueja = Queja;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeAntirrabica = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const AntiRa = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.antirrabica": { $eq: "on" },
-      })
-      .lean();
-    req.consultAntirrabi = AntiRa;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeCarnetizados = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Carnets = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.lisCarnets": { $eq: "on" },
-      })
-      .lean();
-    req.consultCarnetiz = Carnets;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeEduSanitaria = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const EduSani = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.eduSanitaria": { $eq: "on" },
-      })
-      .lean();
-    req.consultEdusani = EduSani;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeVehiculos = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const Vehicu = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.vehiculos": { $eq: "on" },
-      })
-      .lean();
-    req.consultVehiculos = Vehicu;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const SeeTomaMuestra = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const TomaM = await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        "consolidacion.tomaMuestra": { $eq: "on" },
-      })
-      .lean();
-    req.consultTomaM = TomaM;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
 
 //Consolidaciones - Enviar
 export const SendConsolidacion = async (req, res, next) => {
@@ -1124,4 +813,34 @@ export const EditConsolidacionRech = async (req, res, next) => {
     }
     authTec.SendCorreccion(req, res, next, decodificada);
   });
+};
+export const ConsolidaRechazada = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    await reportes
+      .findOne({
+        "consolidacion.consID": { $eq: req.params._id },
+        "consolidacion.userTec": {
+          $eq: decodificada.user,
+        },
+        "respuesta.criterio": { $eq: "Rechazado" },
+      })
+      .then((data) => {
+        if (data == null) {
+          res.redirect("/404");
+        } else {
+          req.consRech = data;
+        }
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };

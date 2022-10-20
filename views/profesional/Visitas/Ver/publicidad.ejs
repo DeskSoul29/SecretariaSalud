@@ -86,69 +86,71 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (publicidad){ %>
-                    <% publicidad.forEach((publicidad)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.publicidad == "on"){ %>
                     <tr>
                       <td>
-                        <% if(publicidad.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= publicidad._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(publicidad.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= publicidad._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(publicidad.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(publicidad.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(publicidad.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(publicidad.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= publicidad.responsable.userResponsable %>
-                        <%= publicidad.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= publicidad.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= publicidad.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= publicidad.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= publicidad.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= publicidad.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= publicidad.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= publicidad.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(publicidad.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= publicidad.ForPublicidad.medioPublicitario %>
+                        <%= allConso.ForPublicidad.medioPublicitario %>
                       </td>
                       <td>
-                        <%= publicidad.ForPublicidad.productoPublicidad %>
+                        <%= allConso.ForPublicidad.productoPublicidad %>
                       </td>
                       <td>
-                        <%= publicidad.ForPublicidad.marcaPublicidad %>
+                        <%= allConso.ForPublicidad.marcaPublicidad %>
                       </td>
                       <td>
-                        <%= publicidad.ForPublicidad.registroSanitario %>
+                        <%= allConso.ForPublicidad.registroSanitario %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= publicidad._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

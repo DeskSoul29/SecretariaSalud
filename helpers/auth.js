@@ -333,36 +333,6 @@ export const ValConsolidaciones = async (req, res, next) => {
   req.consolidacion = await consolidaciones.findById(req.params._id);
   return next();
 };
-export const ConsolidaRechazada = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    await reportes
-      .findOne({
-        "consolidacion.consID": { $eq: req.params._id },
-        "consolidacion.userTec": {
-          $eq: decodificada.user,
-        },
-        "respuesta.criterio": { $eq: "Rechazado" },
-      })
-      .then((data) => {
-        if (data == null) {
-          res.redirect("/404");
-        } else {
-          req.consRech = data;
-        }
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
 export const DownloadFile = async (req, res, next) => {
   await consolidaciones
     .findOne({ _id: req.params.id })

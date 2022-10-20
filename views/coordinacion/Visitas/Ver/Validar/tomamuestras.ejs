@@ -1,0 +1,183 @@
+<html lang="es">
+
+<head>
+  <%- include('../../../../tools/head'); %>
+  <link rel="stylesheet" href="/css/dropzone.css">
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../../../tools/sidebarProf'); %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include('../../../../tools/topbar'); %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg">
+              <div class="card-body p-0">
+                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/coordinacion/Consolidaciones/Ver">Consolidaciones</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="/coordinacion/Consolidaciones/Ver/TomaMuestras">Toma de Muestras</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Validar
+                    </li>
+                  </ol>
+                </nav>
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">TOMA DE MUESTRAS</h1>
+                  </div>
+
+                  <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/TomaMuestras/<%= consolidacion._id %>" method="POST" autocomplete="off">
+                    <input type="text" value="Toma de Muestra" id="tipCon" name="tipCon" style="display: none;" readonly>
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2">Identificación Responsable</label>
+                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2">Nombre Responsable</label>
+                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
+                      </div>
+                    </div>
+
+                    <%- include('../../../../tools/Templates/tomaMuestraTem'); %>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/coordinacion/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <select id="criterio" name="criterio" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="Enviado">Aceptable</option>
+                          <option value="Rechazado">Rechazar</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo" style="display: none">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Enviar Reporte
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../../../tools/footer'); %>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+
+  <!-- Validations -->
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
+  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+        title: '<%= alert[0].alertTitle %>',
+        text:'<%= alert[0].alertMessage %>',
+        icon:'<%= alert[0].alertIcon %>',
+        showConfirmButton: <%= alert[0].showConfirmButton %>,
+        timer: <%= alert[0].timer %>
+      }).then(()=>{
+        window.location = '<%= alert[0].ruta %>'
+      })
+    </script>
+  <% } %>
+
+  <script>
+    $(window).bind("load", function() {
+      var nav = document.getElementById("nav2");
+      $("#navlink1").removeClass("collapsed");
+      var nav3 = document.getElementById("collapseTwo");
+      var nav4 = document.getElementById("show1");
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+  </script>
+</body>
+
+</html>

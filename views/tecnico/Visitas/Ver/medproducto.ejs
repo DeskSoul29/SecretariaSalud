@@ -99,86 +99,88 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (medProduc){ %>
-                    <% medProduc.forEach((medProduc)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.MSProductos == "on"){ %>
                     <tr>
                       <td>
-                        <% if(medProduc.status == "Pendiente"){ %>
+                        <% if(allConso.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(medProduc.status == "Rechazado"){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= medProduc._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(medProduc.status=="Corregido" ){ %>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(medProduc.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(medProduc.status == "Aceptado"){ %>
+                        <% }else if(allConso.status == "Aceptado"){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(medProduc.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= medProduc.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= medProduc.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= medProduc.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= medProduc.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= medProduc.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= medProduc.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= medProduc.telefono %>
+                        <%= allConso.telefono %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.medidaMSProductos %>
+                        <%= allConso.ForMSProductos.medidaMSProductos %>
                       </td>
                       <td>
-                        <%= moment(medProduc.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.productoMSProductos %>
+                        <%= allConso.ForMSProductos.productoMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.marcaMSProductos %>
+                        <%= allConso.ForMSProductos.marcaMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.permisoMSProductos %>
+                        <%= allConso.ForMSProductos.permisoMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.presentacionMSProductos %>
+                        <%= allConso.ForMSProductos.presentacionMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.cantidadMSProductos %>
+                        <%= allConso.ForMSProductos.cantidadMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.fabricanteMSProductos %>
+                        <%= allConso.ForMSProductos.fabricanteMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.loteMSProductos %>
+                        <%= allConso.ForMSProductos.loteMSProductos %>
                       </td>
                       <td>
-                        <%= moment(medProduc.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.motivoMSProductos %>
+                        <%= allConso.ForMSProductos.motivoMSProductos %>
                       </td>
                       <td>
-                        <%= medProduc.ForMSProductos.observacionMedProd %>
+                        <%= allConso.ForMSProductos.observacionMedProd %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= medProduc._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

@@ -7,6 +7,7 @@ import {
   deleteUser,
   editUser,
   changePass,
+  SeeCoorConsolidaciones,
   hojavidaConsultAll,
   HVConsultOne,
   editHV,

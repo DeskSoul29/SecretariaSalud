@@ -84,66 +84,68 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Queja){ %>
-                    <% Queja.forEach((Queja)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.quejas == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Queja.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Quejas/<%= Queja._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(Queja.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= Queja._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(Queja.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(Queja.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Queja.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Queja.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Queja.responsable.userResponsable %>
-                        <%= Queja.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= Queja.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Queja.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.tipoQueja %>
+                        <%= allConso.ForQuejas.tipoQueja %>
                       </td>
                       <td>
-                        <%= Queja.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.descQueja %>
+                        <%= allConso.ForQuejas.descQueja %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.perCausaQueja %>
+                        <%= allConso.ForQuejas.perCausaQueja %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.perAfectQueja %>
+                        <%= allConso.ForQuejas.perAfectQueja %>
                       </td>
                       <td>
-                        <%= moment(Queja.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= moment(Queja.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= Queja.ForQuejas.reqQueja %>
+                        <%= allConso.ForQuejas.reqQueja %>
                       </td>
                       <td>
-                        <%= Queja.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/profesonal/evidencia/<%= Queja._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesonal/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

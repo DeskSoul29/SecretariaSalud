@@ -91,59 +91,61 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (Antirrabi){ %>
-                    <% Antirrabi.forEach((Antirrabi)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
                     <tr>
                       <td>
-                        <% if(Antirrabi.status == "Pendiente"){ %>
+                        <% if(allConso.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(Antirrabi.status == "Rechazado"){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= Antirrabi._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(Antirrabi.status=="Corregido" ){ %>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(Antirrabi.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(Antirrabi.status == "Aceptado"){ %>
+                        <% }else if(allConso.status == "Aceptado"){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(Antirrabi.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= Antirrabi.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= Antirrabi.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.Pcanina %>
+                        <%= allConso.ForAntirrabica.Pcanina %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.Pfelina %>
+                        <%= allConso.ForAntirrabica.Pfelina %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.canUrb %>
+                        <%= allConso.ForAntirrabica.canUrb %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.canRur %>
+                        <%= allConso.ForAntirrabica.canRur %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.felUrb %>
+                        <%= allConso.ForAntirrabica.felUrb %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.felRur %>
+                        <%= allConso.ForAntirrabica.felRur %>
                       </td>
                       <td>
-                        <%= Antirrabi.ForAntirrabica.totalVac %>
+                        <%= allConso.ForAntirrabica.totalVac %>
                       </td>
                       <td>
-                        <%= Antirrabi.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= Antirrabi._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

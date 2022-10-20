@@ -81,62 +81,64 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (cementerio){ %>
-                    <% cementerio.forEach((cementerio)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.tipo == "CEMENTERIOS (CON O SIN MORGUE)"){ %>
                     <tr>
                       <td>
-                        <% if(cementerio.status == "Pendiente"){ %>
+                        <% if(allConso.status == "Pendiente"){ %>
                         <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(cementerio.status == "Rechazado"){ %>
-                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= cementerio._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                        <% }else if(cementerio.status=="Corregido" ){ %>
-                          <span class="badge badge-primary text-uppercase">Corregido</span>
-                        <% }else if(cementerio.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(cementerio.status == "Aceptado"){ %>
+                        <% }else if(allConso.status == "Aceptado"){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(cementerio.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= cementerio.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= cementerio.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= cementerio.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= cementerio.telefono %>
+                        <%= allConso.telefono %>
                       </td>
                       <td>
-                        <%= cementerio.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= moment(cementerio.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= cementerio.score %>
+                        <%= allConso.score %>
                       </td>
                       <td>
-                        <%= cementerio.concepto %>
+                        <%= allConso.concepto %>
                       </td>
                       <td>
-                        <%= cementerio.accion %>
+                        <%= allConso.accion %>
                       </td>
                       <td>
-                        <%= cementerio.salaNM %>
+                        <%= allConso.salaNM %>
                       </td>
                       <td>
-                        <%= cementerio.observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
-                        <a href="/tecnico/evidencia/<%= cementerio._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>

@@ -87,69 +87,71 @@
                     </tr>
                   </tfoot>
                   <tbody>
-                    <% if (medEstable){ %>
-                    <% medEstable.forEach((medEstable)=> { %>
+                    <% if (allConso){ %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.MSEstablecimientos == "on"){ %>
                     <tr>
                       <td>
-                        <% if(medEstable.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= medEstable._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(medEstable.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= medEstable._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(medEstable.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Pendiente" ){ %>
+                        <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <a href="/profesional/Consolidaciones/Correccion/Establecimientos/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(medEstable.status == "Enviado"){ %>
+                        <% }else if(allConso.status == "Enviado"){ %>
                         <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(medEstable.status=="Aceptado" ){ %>
+                        <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(medEstable.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                       </td>
                       <td>
-                        <%= medEstable.responsable.userResponsable %>
-                        <%= medEstable.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>
+                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
-                        <%= medEstable.provincia %>
+                        <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= medEstable.municipio %>
+                        <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= medEstable.codigo %>
+                        <%= allConso.codigo %>
                       </td>
                       <td>
-                        <%= medEstable.tipo %>
+                        <%= allConso.tipo %>
                       </td>
                       <td>
-                        <%= medEstable.razonSocial %>
+                        <%= allConso.razonSocial %>
                       </td>
                       <td>
-                        <%= medEstable.direccion %>
+                        <%= allConso.direccion %>
                       </td>
                       <td>
-                        <%= medEstable.telefono %>
+                        <%= allConso.telefono %>
                       </td>
                       <td>
-                        <%= medEstable.repreLegal %>
+                        <%= allConso.repreLegal %>
                       </td>
                       <td>
-                        <%= medEstable.ForMSEstablecimientos.medidaMSEstablecimientos %>
+                        <%= allConso.ForMSEstablecimientos.medidaMSEstablecimientos %>
                       </td>
                       <td>
-                        <%= moment(medEstable.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
                       </td>
                       <td>
-                        <%= medEstable.ForMSEstablecimientos.motivoMSEstablecimientos %>
+                        <%= allConso.ForMSEstablecimientos.motivoMSEstablecimientos %>
                       </td>
                       <td>
-                        <%= medEstable.ForMSEstablecimientos.observacionMedEsta %>
+                        <%= allConso.ForMSEstablecimientos.observacionMedEsta %>
                       </td>
                       <td>
-                        <a href="/profesional/evidencia/<%= medEstable._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
+                    <% } %>
                     <% }); %>
                     <% } %>
                   </tbody>
