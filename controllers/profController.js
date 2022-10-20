@@ -584,7 +584,6 @@ export const SendNovedad = async (req, res, next) => {
     provincia,
     municipio,
     entreInfor,
-    fechInfor,
     entreCrono,
     fechCrono,
     entreAsis,
@@ -612,6 +611,7 @@ export const SendNovedad = async (req, res, next) => {
     );
   } else {
     new consolidaciones({
+      status: "Enviado",
       provincia: provincia,
       municipio: municipio,
       responsable: {
@@ -624,7 +624,6 @@ export const SendNovedad = async (req, res, next) => {
       ForNAdmin: {
         mesNA: mes,
         entreInfor: entreInfor,
-        fechInfor: fechInfor,
         entreCrono: entreCrono,
         fechCrono: fechCrono,
         entreAsis: entreAsis,

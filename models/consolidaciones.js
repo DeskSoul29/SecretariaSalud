@@ -165,7 +165,6 @@ var EstablecimientosSchema = new Schema({
   ForNAdmin: {
     mesNA: String,
     entreInfor: String,
-    fechInfor: Date,
     entreCrono: String,
     fechCrono: Date,
     entreAsis: String,

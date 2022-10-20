@@ -142,6 +142,7 @@ var authCoordi = (function () {
 
 //Dashboard
 export const ConsolidaEstadosCoor = async (req, res, next) => {
+  //Consoldiaciones Enviadas
   await consolidaciones
     .find({
       status: {
@@ -153,6 +154,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       req.consEnv = data;
     });
 
+  //Consolidaciones Aceptadas
   await consolidaciones
     .find({
       status: {
@@ -164,6 +166,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       req.consAcep = data;
     });
 
+  //Vacunas Antirrabica
   await consolidaciones
     .aggregate([
       { $match: { "consolidacion.antirrabica": "on", status: "Aceptado" } },
@@ -173,6 +176,22 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       req.vacunas = data;
     });
 
+  //Totas de Visitas
+  await consolidaciones
+    .find({
+      status: {
+        $eq: "Aceptado",
+      },
+      "consolidacion.establecimiento": {
+        $eq: "on",
+      },
+    })
+    .count()
+    .then((data) => {
+      req.visitAcep = data;
+    });
+
+  //Listado de Profesionales con sus consolidaciones
   await consolidaciones
     .aggregate([
       {

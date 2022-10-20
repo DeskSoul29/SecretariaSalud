@@ -3,6 +3,7 @@
 
 <head>
   <%- include('../../tools/head'); %>
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -68,17 +69,13 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-3">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="entreInfor">Si/No</label>
                         <select id="entreInfor" name="entreInfor" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
                           <option value="SI">Si</option>
                           <option value="NO">No</option>
                         </select>
-                      </div>
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="fechInfor">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="fechInfor" name="fechInfor" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="entreCrono">Si/No</label>
@@ -159,6 +156,20 @@
                       </div>
                     </div>
 
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s)</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
+                      </div>
+                    </div>
+
                     <button class=" btn btn-primary btn-user btn-block" type="submit">
                       Registrar Novedad
                     </button>
@@ -225,6 +236,8 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

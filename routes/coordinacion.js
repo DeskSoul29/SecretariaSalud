@@ -41,6 +41,7 @@ router.get(
       consAcep: req.consAcep,
       vacunas: req.vacunas,
       estCon: req.estCon,
+      visitAcep: req.visitAcep,
       users: req.users,
     });
   }

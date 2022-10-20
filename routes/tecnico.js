@@ -36,6 +36,14 @@ router.get(
       consEnv: req.consEnv,
       consAcep: req.consAcep,
       ListconsRech: req.ListconsRech,
+      visitAcep: req.visitAcep,
+      visitIVCPubli: req.visitIVCPubli,
+      visitRotu: req.visitRotu,
+      visitMSEstab: req.visitMSEstab,
+      visitMSProd: req.visitMSProd,
+      visitCemen: req.visitCemen,
+      visitMorg: req.visitMorg,
+      vacunas: req.vacunas,
       moment: moment,
     });
   }

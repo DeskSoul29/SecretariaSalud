@@ -148,16 +148,10 @@ function validConsolidacion(e) {
 function novAdminis(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
-    document.getElementById("entreInfor").value == "Seleccione" ||
     document.getElementById("entreCrono").value == "Seleccione" ||
     document.getElementById("entreAsis").value == "Seleccione" ||
-    document.getElementById("entreCircu").value == "Seleccione"
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  } else if (
-    document.getElementById("entreInfor").value == "SI" &&
-    document.getElementById("fechInfor").value == 0
+    document.getElementById("entreCircu").value == "Seleccione" ||
+    document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();

@@ -28,6 +28,9 @@
               Bienvenido, <%= user.nombre %>
               <%= user.apellido %>
             </h1>
+            <div id="btnCronograma" style="display: none;">
+              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class=" fas fa-download fa-sm text-white-50"></i> Subir Cronograma</a>
+            </div>
           </div>
 
           <!-- Content Row -->
@@ -141,7 +144,7 @@
           </div>
 
           <div class="row">
-            <div class="col">
+            <div class="col-xl-9">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
@@ -204,7 +207,46 @@
                 </div>
               </div>
             </div>
+
+            <div class="col-xl-3">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Vacunaciones
+                  <span class="badge badge-primary badge-pill"><%= vacunas[0].suma %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Total Visitas
+                  <span class="badge badge-primary badge-pill"><%= visitAcep %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  IVC Publicidad
+                  <span class="badge badge-primary badge-pill"><%= visitIVCPubli %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  IVC Rotulado
+                  <span class="badge badge-primary badge-pill"><%= visitRotu %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  M.S. Establecimientos
+                  <span class="badge badge-primary badge-pill"><%= visitMSEstab %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  M.S. Productos
+                  <span class="badge badge-primary badge-pill"><%= visitMSProd %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Cementerios
+                  <span class="badge badge-primary badge-pill"><%= visitCemen %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Morgues
+                  <span class="badge badge-primary badge-pill"><%= visitMorg %></span>
+                </li>
+              </ul>
+            </div>
+
           </div>
+
         </div>
         <!-- /.container-fluid -->
       </div>

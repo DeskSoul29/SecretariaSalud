@@ -651,6 +651,8 @@ export const ConsolidaEstados = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
+
+    //Consolidaciones Pendientes
     await consolidaciones
       .find({
         "responsable.userResponsable": {
@@ -664,6 +666,8 @@ export const ConsolidaEstados = async (req, res, next) => {
       .then((data) => {
         req.consPend = data;
       });
+
+    //Consolidaciones Corregidas
     await consolidaciones
       .find({
         "responsable.userResponsable": {
@@ -677,6 +681,8 @@ export const ConsolidaEstados = async (req, res, next) => {
       .then((data) => {
         req.consCorre = data;
       });
+
+    //Consolidaciones Enviadas
     await consolidaciones
       .find({
         "responsable.userResponsable": {
@@ -690,6 +696,8 @@ export const ConsolidaEstados = async (req, res, next) => {
       .then((data) => {
         req.consEnv = data;
       });
+
+    //Consolidaciones Aceptadas
     await consolidaciones
       .find({
         "responsable.userResponsable": {
@@ -703,6 +711,161 @@ export const ConsolidaEstados = async (req, res, next) => {
       .then((data) => {
         req.consAcep = data;
       });
+
+    //Totas de Visitas
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.visitAcep = data;
+      });
+
+    //Totas de Visitas - IVC Publicidad
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.publicidad": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitIVCPubli = data;
+      });
+
+    //Totas de Visitas -IVC Rotulado
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.rotulado": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitRotu = data;
+      });
+
+    //Totas de Visitas - MS Establecimientos
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.MSEstablecimientos": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitMSEstab = data;
+      });
+
+    //Totas de Visitas - MS Productos
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.MSProductos": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitMSProd = data;
+      });
+
+    //Totas de Visitas - Cementerios
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
+      })
+      .count()
+      .then((data) => {
+        req.visitCemen = data;
+      });
+
+    //Totas de Visitas - Morgues
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        tipo: "MORGUES",
+      })
+      .count()
+      .then((data) => {
+        req.visitMorg = data;
+      });
+
+    //Totas de Visitas - Vacunaciones
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            "consolidacion.antirrabica": "on",
+            status: "Aceptado",
+            municipio: decodificada.municipio,
+          },
+        },
+        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      ])
+      .then((data) => {
+        console.log(decodificada.user);
+        console.log(data);
+        if (data.length === 0) {
+          req.vacunas = 0;
+        } else {
+          req.vacunas = data;
+        }
+      });
+
     return next();
   } catch (error) {
     console.log(error);
