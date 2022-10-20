@@ -41,9 +41,10 @@ var authCoordi = (function () {
             { "consolidacion.consID": req.params._id },
             {
               $set: {
-                "consolidacion.userRes": decodificada.user,
-                "consolidacion.nombreRes":
+                "respuesta.userRes": decodificada.user,
+                "respuesta.nombreRes":
                   decodificada.nombres + " " + decodificada.apellidos,
+                "respuesta.rol": decodificada.rol,
                 "respuesta.criterio": criterio,
                 "respuesta.motivo": motivo,
                 createdAt: new Date(),
@@ -55,7 +56,7 @@ var authCoordi = (function () {
             if (nextCons.length === 0) {
               authCoordi.isUser(
                 req,
-                "Correcciones Terminadas",
+                "Reportes Terminadas",
                 "Ha Terminado El Listado",
                 "success",
                 true,
@@ -65,35 +66,39 @@ var authCoordi = (function () {
             } else {
               if (nextCons[0].consolidacion.establecimiento == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/Establecimientos/" +
+                  "/coordinacion/Consolidaciones/Validar/Establecimientos/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.antirrabica == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/AntirrabicaAnimal/" +
+                  "/coordinacion/Consolidaciones/Validar/AntirrabicaAnimal/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/EduSanitaria/" +
+                  "/coordinacion/Consolidaciones/Validar/EduSanitaria/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/EventosSaludPublica/" +
+                  "/coordinacion/Consolidaciones/Validar/EventosSaludPublica/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.lisCarnets == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/ListadoCarnetizados/" +
+                  "/coordinacion/Consolidaciones/Validar/ListadoCarnetizados/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.vehiculos == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/Vehiculos/" +
+                  "/coordinacion/Consolidaciones/Validar/Vehiculos/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/TomaMuestras/" +
+                  "/coordinacion/Consolidaciones/Validar/TomaMuestras/" +
                   nextCons[0]._id;
               } else if (nextCons[0].consolidacion.quejas == "on") {
                 var rutaValidar =
-                  "/coordinacion/Consolidaciones/Correccion/Quejas/" +
+                  "/coordinacion/Consolidaciones/Validar/Quejas/" +
+                  nextCons[0]._id;
+              } else if (nextCons[0].consolidacion.noveadministrativa == "on") {
+                var rutaValidar =
+                  "/coordinacion/Consolidaciones/Validar/NoveAdministrativas/" +
                   nextCons[0]._id;
               }
               authCoordi.isUser(
@@ -120,6 +125,9 @@ var authCoordi = (function () {
         _id: {
           $ne: req.params._id,
         },
+        "consolidacion.noveadministrativa": {
+          $ne: "on",
+        },
       })
       .sort({ createdAt: 1 })
       .limit(1);
@@ -133,6 +141,54 @@ var authCoordi = (function () {
 })();
 
 //Dashboard
+export const ConsolidaEstadosCoor = async (req, res, next) => {
+  await consolidaciones
+    .find({
+      status: {
+        $eq: "Enviado",
+      },
+    })
+    .count()
+    .then((data) => {
+      req.consEnv = data;
+    });
+
+  await consolidaciones
+    .find({
+      status: {
+        $eq: "Aceptado",
+      },
+    })
+    .count()
+    .then((data) => {
+      req.consAcep = data;
+    });
+
+  await consolidaciones
+    .aggregate([
+      { $match: { "consolidacion.antirrabica": "on", status: "Aceptado" } },
+      { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+    ])
+    .then((data) => {
+      req.vacunas = data;
+    });
+
+  await consolidaciones
+    .aggregate([
+      {
+        $group: {
+          _id: { provincia: "$provincia", status: "$status" },
+          suma: { $sum: 1 },
+        },
+      },
+      { $sort: { provincia: 1 } },
+    ])
+    .then((data) => {
+      req.estCon = data;
+    });
+
+  return next();
+};
 
 //Apartado: Cuentas
 // Cuentas: Register
@@ -301,6 +357,13 @@ export const changePass = async (req, res, next) => {
 export const SeeCoorConsolidaciones = async (req, res, next) => {
   req.allConso = await consolidaciones.find({
     $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
+  });
+  return next();
+};
+export const SeeCoorRechazados = async (req, res, next) => {
+  req.allRechazo = await reportes.find({
+    "respuesta.criterio": { $eq: "Rechazado" },
+    "respuesta.rol": { $eq: "coordinacion" },
   });
   return next();
 };

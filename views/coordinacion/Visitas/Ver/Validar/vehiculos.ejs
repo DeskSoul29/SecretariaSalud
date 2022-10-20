@@ -9,7 +9,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../../tools/sidebarProf'); %>
+    <%- include('../../../../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -45,7 +45,6 @@
                   </div>
 
                   <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/Vehiculos/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <input type="text" value="Vehiculos" id="tipCon" name="tipCon" style="display: none;" readonly>
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
@@ -75,7 +74,7 @@
                         <label class="mr-sm-2" for="criterio">Criterio</label>
                         <select id="criterio" name="criterio" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione</option>
-                          <option value="Enviado">Aceptable</option>
+                          <option value="Aceptado">Aceptable</option>
                           <option value="Rechazado">Rechazar</option>
                         </select>
                       </div>

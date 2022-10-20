@@ -169,8 +169,8 @@ var authProf = (function () {
             { "consolidacion.consID": req.params._id },
             {
               $set: {
-                "consolidacion.userRes": decodificada.user,
-                "consolidacion.nombreRes":
+                "respuesta.userRes": decodificada.user,
+                "respuesta.nombreRes":
                   decodificada.nombres + " " + decodificada.apellidos,
                 "respuesta.criterio": criterio,
                 "respuesta.motivo": motivo,

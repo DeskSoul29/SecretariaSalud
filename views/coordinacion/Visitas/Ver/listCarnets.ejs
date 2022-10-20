@@ -16,7 +16,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarProf'); %>
+    <%- include('../../../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -83,14 +83,8 @@
                     <% if (allConso.consolidacion.lisCarnets == "on"){ %>
                     <tr>
                       <td>
-                        <% if(allConso.status=="Pendiente" ){ %>
-                        <a href="/coordinacion/Consolidaciones/Validar/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(allConso.status=="Corregido" ){ %>
-                        <a href="/coordinacion/Consolidaciones/Correccion/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(allConso.status=="Rechazado" ){ %>
-                        <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(allConso.status == "Enviado"){ %>
-                        <span class="badge badge-info text-uppercase">Enviado</span>
+                        <% if(allConso.status=="Enviado" ){ %>
+                        <a href="/coordinacion/Consolidaciones/Validar/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                         <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>

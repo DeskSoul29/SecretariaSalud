@@ -1,4 +1,5 @@
 import { Router } from "express";
+import moment from "moment";
 
 import {
   fillFields,
@@ -8,6 +9,9 @@ import {
   editUser,
   changePass,
   SeeCoorConsolidaciones,
+  ConsolidaEstadosCoor,
+  SendReport,
+  SeeCoorRechazados,
   hojavidaConsultAll,
   HVConsultOne,
   editHV,
@@ -17,6 +21,7 @@ import {
   isAuthenticatedCoordinacion,
   CodigosEstablecimientos,
   consultUser,
+  ValConsolidaciones,
   inscribirEstablecimiento,
   DownloadFile,
   logout,
@@ -24,9 +29,22 @@ import {
 
 const router = Router();
 
-router.get("/", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("coordinacion/main", { user: req.user });
-});
+router.get(
+  "/",
+  isAuthenticatedCoordinacion,
+  ConsolidaEstadosCoor,
+  users,
+  (req, res) => {
+    res.render("coordinacion/main", {
+      user: req.user,
+      consEnv: req.consEnv,
+      consAcep: req.consAcep,
+      vacunas: req.vacunas,
+      estCon: req.estCon,
+      users: req.users,
+    });
+  }
+);
 
 // Apartado: Cuentas
 
@@ -127,20 +145,415 @@ router.post(
 
 // Apartado: Consolidaciones
 router.get(
-  "/Consolidaciones/ConsultarC",
+  "/Consolidaciones/Ver",
   isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  SeeCoorRechazados,
   (req, res) => {
-    res.render("coordinacion/Consolidaciones/Consultar", {
+    res.render("coordinacion/Visitas/mainVer", {
       user: req.user,
+      allConso: req.allConso,
+      allRechazo: req.allRechazo,
+      moment: moment,
     });
   }
 );
 router.get(
-  "/Consolidaciones/ReportesC",
+  "/Consolidaciones/Ver/NoveAdministrativas",
   isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
   (req, res) => {
-    res.render("coordinacion/Consolidaciones/Reportes", {
+    res.render("coordinacion/Visitas/Ver/nAdmin", {
       user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Establecimientos",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/establecimientos", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Morgues",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/morgues", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Cementerios",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/cementerios", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/IVCRotulado",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/rotulado", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/IVCPublicidad",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/publicidad", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/MedSaniEstablecimientos",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/medestablecimiento", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/MedSaniProductos",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/medproducto", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Vehiculos",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/vehiculos", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EventosSaludPublica",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/EventSalPubli", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/TomaMuestras",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/EduSanitaria",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/eduSanitaria", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/ListadoCarnetizados",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/listCarnets", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/AntirrabicaAnimal",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/antirrabica", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/Quejas",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/quejas", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+
+//Consoldaciones - Validar
+//Consolidaciones - Validar
+router.get(
+  "/Consolidaciones/Validar/Establecimientos/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/Establecimientos/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/Vehiculos/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/Vehiculos/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/EventosSaludPublica/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/EventosSaludPublica/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/TomaMuestras/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/TomaMuestras/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/EduSanitaria/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/EduSanitaria/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/ListadoCarnetizados/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/ListadoCarnetizados/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/AntirrabicaAnimal/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/AntirrabicaAnimal/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/Quejas/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/Quejas/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
     });
   }
 );
