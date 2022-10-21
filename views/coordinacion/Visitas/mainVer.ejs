@@ -95,7 +95,7 @@
                             <th>Tipo Consolidación</th>
                             <th>Provincia</th>
                             <th>Municipio</th>
-                            <th>Tecnico Responsable</th>
+                            <th>Responsable</th>
                           </tr>
                         </thead>
                         <tfoot>
@@ -105,7 +105,7 @@
                             <th>Tipo Consolidación</th>
                             <th>Provincia</th>
                             <th>Municipio</th>
-                            <th>Tecnico Responsable</th>
+                            <th>Responsable</th>
                           </tr>
                         </tfoot>
                         <tbody>
@@ -196,7 +196,7 @@
                             <th>Tipo Consolidación</th>
                             <th>Provincia</th>
                             <th>Municipio</th>
-                            <th>Tecnico Responsable</th>
+                            <th>Responsable</th>
                           </tr>
                         </thead>
                         <tfoot>
@@ -206,7 +206,7 @@
                             <th>Tipo Consolidación</th>
                             <th>Provincia</th>
                             <th>Municipio</th>
-                            <th>Tecnico Responsable</th>
+                            <th>Responsable</th>
                           </tr>
                         </tfoot>
                         <tbody>
@@ -306,6 +306,20 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/Coordinador/validaciones.js"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+      title: '<%= alert[0].alertTitle %>',
+      text:'<%= alert[0].alertMessage %>',
+      icon:'<%= alert[0].alertIcon %>',
+      showConfirmButton: <%= alert[0].showConfirmButton %>,
+      timer: <%= alert[0].timer %>
+    }).then(()=>{
+      window.location = '<%= alert[0].ruta %>'
+    })
+  </script>
+  <% } %>
 
   <script>
     $(window).bind('load', function() {

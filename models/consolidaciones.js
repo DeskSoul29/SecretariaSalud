@@ -181,6 +181,12 @@ var EstablecimientosSchema = new Schema({
     file: { type: String },
   },
 
+  //Reporte
+  reporte: {
+    motivo: String,
+    fechRepor: Date,
+  },
+
   observaciones: { type: String },
   createdAt: { type: Date },
 });

@@ -51,7 +51,7 @@
                     <tr>
                       <th>Estado</th>
                       <th>Fecha_Enviado</th>
-                      <th>Tecnico Responsable</th>
+                      <th>Responsable</th>
                       <th>Provincia</th>
                       <th>Municipio</th>
                       <th>Tipo de Muestra</th>
@@ -64,13 +64,14 @@
                       <th>Nombre Y Cargo del Acompañante</th>
                       <th>Observaciones</th>
                       <th>Archivos</th>
+                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>Estado</th>
                       <th>Fecha_Enviado</th>
-                      <th>Tecnico Responsable</th>
+                      <th>Responsable</th>
                       <th>Provincia</th>
                       <th>Municipio</th>
                       <th>Tipo de Muestra</th>
@@ -83,6 +84,7 @@
                       <th>Nombre Y Cargo del Acompañante</th>
                       <th>Observaciones</th>
                       <th>Archivos</th>
+                      <th>Acción</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -140,6 +142,11 @@
                       <td>
                         <a href="/coordinacion/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
+                      <td>
+                        <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
                     </tr>
                     <% } %>
                     <% }); %>
@@ -163,6 +170,34 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Esta seguro de eliminar esta consolidación?
+            <br>
+            <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <a id="formDeleteCons" class="btn btn-primary">
+              Eliminar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -182,6 +217,7 @@
         </div>
       </div>
     </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -194,6 +230,8 @@
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+    <!-- Validations -->
+    <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>

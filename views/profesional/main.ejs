@@ -143,7 +143,7 @@
           </div>
 
           <div class="row">
-            <div class="col">
+            <div class="col-xl-9">
               <div class="card shadow mb-4">
 
                 <div id="accordion">
@@ -166,7 +166,7 @@
                                 <th>Fecha_Enviado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </thead>
                             <tfoot>
@@ -175,7 +175,7 @@
                                 <th>Fecha_Enviado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </tfoot>
                             <tbody>
@@ -257,19 +257,19 @@
                             <thead>
                               <tr>
                                 <th>Estado</th>
-                                <th>Fecha_Enviado</th>
+                                <th>Fecha_Corregido</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </thead>
                             <tfoot>
                               <tr>
                                 <th>Estado</th>
-                                <th>Fecha_Enviado</th>
+                                <th>Fecha_Corregido</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </tfoot>
                             <tbody>
@@ -297,7 +297,7 @@
                                   <% } %>
                                 </td>
                                 <td>
-                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                                  <%= moment(allConso.reporte.fechRepor,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                                 </td>
                                 <td>
                                   <% if(allConso.consolidacion.establecimiento=="on" ){ %>
@@ -351,19 +351,19 @@
                             <thead>
                               <tr>
                                 <th>Estado</th>
-                                <th>Fecha_Enviado</th>
+                                <th>Fecha_Rechazado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </thead>
                             <tfoot>
                               <tr>
                                 <th>Estado</th>
-                                <th>Fecha_Enviado</th>
+                                <th>Fecha_Rechazado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Tecnico Responsable</th>
+                                <th>Responsable</th>
                               </tr>
                             </tfoot>
                             <tbody>
@@ -375,7 +375,7 @@
                                   <span class="badge badge-danger text-uppercase">Rechazado</span>
                                 </td>
                                 <td>
-                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                                  <%= moment(allConso.reporte.fechRepor,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                                 </td>
                                 <td>
                                   <% if(allConso.consolidacion.establecimiento=="on" ){ %>
@@ -416,6 +416,43 @@
 
                 </div>
               </div>
+            </div>
+
+            <div class="col-xl-3">
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Vacunaciones
+                  <span class="badge badge-primary badge-pill"><%= vacunas %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Total Visitas
+                  <span class="badge badge-primary badge-pill"><%= visitAcep %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  IVC Publicidad
+                  <span class="badge badge-primary badge-pill"><%= visitIVCPubli %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  IVC Rotulado
+                  <span class="badge badge-primary badge-pill"><%= visitRotu %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  M.S. Establecimientos
+                  <span class="badge badge-primary badge-pill"><%= visitMSEstab %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  M.S. Productos
+                  <span class="badge badge-primary badge-pill"><%= visitMSProd %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Cementerios
+                  <span class="badge badge-primary badge-pill"><%= visitCemen %></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Morgues
+                  <span class="badge badge-primary badge-pill"><%= visitMorg %></span>
+                </li>
+              </ul>
             </div>
           </div>
 

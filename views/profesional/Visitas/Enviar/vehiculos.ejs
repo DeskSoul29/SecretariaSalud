@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -9,7 +10,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -23,111 +24,110 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <div class="container">
-            <div class="card o-hidden border-0 shadow-lg">
+            <div class="card o-hidden border-0 shadow-lg my-5">
               <div class="card-body p-0">
-                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver/Vehiculos">Vehiculos</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Corregir
-                    </li>
-                  </ol>
-                </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">VEHICULOS</h1>
                   </div>
-
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Vehiculos/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="vehiculosForm(event)" action="/profesional/Consolidaciones/Enviar/Vehiculos/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="vehiculosON" name="vehiculosON" style="display: none;" readonly>
-
-                    <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterio">Criterio</label>
-                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
-                      </div>
-                      <div class="col-sm-9" id="divMotivo">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
-                      </div>
-                    </div>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly />
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                        <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione el Municipio
+                          </option>
+                          <option value="<%= user.municipio %>">
+                            <%= user.municipio %>
+                          </option>
+                          <% if(fields){ %>
+                          <% fields.forEach((fields)=> { %>
+                          <option value="<%= fields.municipio %>">
+                            <%= fields.municipio %>
+                          </option>
+                          <% }); %>
+                          <% } %>
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-8 mb-3 mb-sm-0">
-                        <label class="mr-sm-2" for="grupEsta">Grupo Del
-                          Establecimiento</label>
-                        <input type="text" value="<%= consolidacion.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
+                        <label class="mr-sm-2" for="grupEsta">Grupo Del Establecimiento</label>
+                        <select id="grupEsta" name="grupEsta" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione el Grupo
+                          </option>
+                          <option value="VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS">
+                            VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS
+                          </option>
+                          <option value="LOS DEMAS QUE NO SE ENCUENTRAN">
+                            LOS DEMAS QUE NO SE ENCUENTRAN
+                          </option>
+                        </select>
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="codEsta">Codigo</label>
-                        <input type="text" value="<%= consolidacion.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
+                        <input type="text" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
-                        <input type="text" value="<%= consolidacion.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
+                        <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
                       </div>
-
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-12">
-                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
-                          Establecimiento</label>
-                        <input type="text" value="<%= consolidacion.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
+                        <label class="mr-sm-2" for="tipoEsta">Tipo Del Establecimiento</label>
+                        <select id="tipoEsta" name="tipoEsta" class="custom-select mr-sm-2">
+                          <option selected>Seleccione el Tipo</option>
+                        </select>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-5">
                         <label class="mr-sm-2" for="rSocial">Razón Social</label>
-                        <input type="text" value="<%= consolidacion.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
+                        <select id="rSocial" name="rSocial" data-live-search="true" data-show-subtext="true" class="custom-select mr-sm-2 selectpicker">
+                          <option selected disabled>
+                            Seleccione El Establecimiento
+                          </option>
+                        </select>
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-3" for="tIden">Tipo </label>
-                        <input type="text" value="<%= consolidacion.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
+                        <input type="text" id="tIden" name="tIden" class="form-control form-control-user" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="inputIden">Identificación</label>
-                        <input type="number" value="<%= consolidacion.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
+                        <input type="number" id="inputIden" name="inputIden" class="form-control form-control-user" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="phone">Telefono</label>
-                        <input type="number" value="<%= consolidacion.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
+                        <input type="number" id="phone" name="phone" class="form-control form-control-user" readonly />
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6">
                         <label class="mr-sm-2" for="rLegal">Representante Legal</label>
-                        <input type="text" value="<%= consolidacion.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
+                        <input type="text" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="direccion">Dirección</label>
-                        <input type="text" value="<%= consolidacion.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
+                        <input type="text" class="form-control form-control-user" id="direccion" name="direccion" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="estado">Estado</label>
-                        <input type="text" value="<%= consolidacion.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
+                        <input type="text" class="form-control form-control-user" id="estado" name="estado" readonly />
                       </div>
                     </div>
 
@@ -152,7 +152,7 @@
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="placa">Placa</label>
-                        <input type="text" class="form-control form-control-user" id="placa" name="placa" value="<%= consolidacion.ForVehiculos.placa %>" onkeyup="mayus(this);" />
+                        <input type="text" class="form-control form-control-user" id="placa" name="placa" onkeyup="mayus(this);" />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="refriV">Refrigeración</label>
@@ -164,15 +164,19 @@
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="nInscrip">N° de Inscripción</label>
-                        <input type="text" class="form-control form-control-user" id="nInscrip" name="nInscrip" onkeyup="mayus(this);" value="<%= consolidacion.ForVehiculos.nInscripcion %>" />
+                        <input type="text" class="form-control form-control-user" id="nInscrip" name="nInscrip" onkeyup="mayus(this);" list="defaultNInscrip" />
                       </div>
                     </div>
+
+                    <datalist id="defaultNInscrip">
+                      <option value="NO REPORTA"></option>
+                    </datalist>
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="produTrans">Productos Y/O Mercancia Que Transporta
                         </label>
-                        <input type="text" class="form-control form-control-user" id="produTrans" name="produTrans" onkeyup="mayus(this);" value="<%= consolidacion.ForVehiculos.productosVehiculo %>" />
+                        <input type="text" class="form-control form-control-user" id="produTrans" name="produTrans" onkeyup="mayus(this);" list="defaultProdu" />
                       </div>
                     </div>
 
@@ -183,11 +187,11 @@
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
-                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                        <input type="date" placeholder="Ninguna" class="form-control form-control-user" id="fVisit" name="fVisit" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="score">Puntaje</label>
-                        <input type="number" min="0" max="100" value="<%= consolidacion.score %>" class="form-control form-control-user" step="0.1" id="score" name="score" onkeyup="AlimentosConcepto(this);" />
+                        <input type="number" placeholder="1.0" min="0" max="100" class="form-control form-control-user" step="0.1" id="score" name="score" onkeyup="AlimentosConcepto(this);" />
                       </div>
                       <div class="col-sm-6">
                         <label class="mr-sm-2" for="concepto">Concepto</label>
@@ -197,23 +201,18 @@
 
                     <div class="form-group row">
                       <div class="col-sm-12">
-                        <label class="mr-sm-2" for="observacion">Observaciones
-                          (Opcional)</label>
-                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                        <label class="mr-sm-2" for="observacion">Observaciones (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
-                      </div>
-                    </div>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="fields">Adjuntar
-                          Archivo(s) Nuevos</label>
+                          Archivo(s)</label>
                         <div class="drop-zone">
                           <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
                           <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
@@ -222,8 +221,11 @@
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Corrección
+                      Registrar Consolidación
                     </button>
+                    <a href="/profesional/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                      Cancelar
+                    </a>
                   </form>
                 </div>
               </div>
@@ -265,7 +267,7 @@
           <button class="btn btn-secondary" type="button" data-dismiss="modal">
             Cancelar
           </button>
-          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -282,8 +284,10 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/codigoEsta.js"></script>
+  <script type="text/JavaScript" src="/js/tools/consolidaciones.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -302,31 +306,40 @@
     </script>
   <% } %>
 
+  <script type="text/JavaScript">
+    <% if(codigos){ %>
+          var arrayCod = []
+          <% codigos.forEach((codigos)=> { %>
+              arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+          <% }) %>
+      <% } %>
+
+      <% if(hojavida){ %>
+          var arrayEsta = []
+          <% hojavida.forEach((hojavida)=> { %>
+              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
+          <% }) %>
+      <% } %>
+
+      $("#classVehi").change(function () {
+          if (document.getElementById("classVehi").value == "OTRO") {
+              $("#otroV").attr("readonly", false);
+          } else {
+            document.getElementById("otroV").value = ""
+              $("#otroV").attr("readonly", true);
+          }
+      });
+    </script>
+
   <script>
-    $(window).bind('load', function() {
-      var nav = document.getElementById('nav2');
-      $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
-      var nav4 = document.getElementById('show1');
+    $(window).bind("load", function() {
+      var nav = document.getElementById("nav2");
+      $("#navlink1").removeClass("collapsed");
+      var nav3 = document.getElementById("collapseTwo");
+      var nav4 = document.getElementById("show2");
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
-    });
-    document.getElementById("classVehi").value = "<%= consolidacion.ForVehiculos.claseVehiculo %>"
-    if ("<%= consolidacion.ForVehiculos.claseVehiculo %>" == "OTRO") {
-      document.getElementById("otroV").value = "<%= consolidacion.ForVehiculos.otraClase %>"
-      $("#otroV").attr("readonly", false);
-    }
-    document.getElementById("refriV").value = "<%= consolidacion.ForVehiculos.refrigeracion %>"
-
-
-    $("#classVehi").change(function() {
-      if (document.getElementById("classVehi").value == "OTRO") {
-        $("#otroV").attr("readonly", false);
-      } else {
-        document.getElementById("otroV").value = ""
-        $("#otroV").attr("readonly", true);
-      }
     });
   </script>
 </body>

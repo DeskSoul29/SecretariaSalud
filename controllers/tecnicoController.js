@@ -1,5 +1,4 @@
 import consolidaciones from "../models/consolidaciones.js";
-import reportes from "../models/reportes.js";
 import hojavida from "../models/hojavida.js";
 
 import jwt from "jsonwebtoken";
@@ -275,6 +274,9 @@ var authTec = (function () {
         evidencia: {
           file: req.file.filename,
         },
+        reporte: {
+          motivo: "",
+        },
         createdAt: new Date(),
         observaciones: observacion,
       })
@@ -311,6 +313,7 @@ var authTec = (function () {
 
   var SendCorreccion = async (req, res, next, decodificada) => {
     var {
+      motivo,
       fVisit,
       score,
       concepto,
@@ -410,7 +413,6 @@ var authTec = (function () {
       nInscrip,
       produTrans,
     } = req.body;
-    console.log(lisCarnetsON);
 
     establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
     rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
@@ -425,6 +427,8 @@ var authTec = (function () {
     vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
     tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
     quejasON = quejasON == undefined ? "" : quejasON;
+
+    var Ruta = await authTec.NextReport(req, decodificada);
 
     await consolidaciones
       .findByIdAndUpdate(req.params._id, {
@@ -545,13 +549,55 @@ var authTec = (function () {
           evidencia: {
             file: req.file.filename,
           },
+          reporte: {
+            motivo: motivo,
+            fechRepor: new Date(),
+          },
           observaciones: observacion,
-          createdAt: new Date(),
         },
       })
       .then((result) => {
         if (result != null) {
-          authTec.EditReport(req, next, decodificada);
+          if (Ruta.length === 0) {
+            authTec.isUser(
+              req,
+              "Reportes Terminados",
+              "Ha Terminado El Listado",
+              "success",
+              true,
+              false,
+              "/tecnico"
+            );
+            return next();
+          } else {
+            if (Ruta[0].consolidacion.establecimiento == "on") {
+              var tipoRuta = "Establecimientos/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.quejas == "on") {
+              var tipoRuta = "Quejas/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.tomaMuestra == "on") {
+              var tipoRuta = "TomaMuestras/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.eduSanitaria == "on") {
+              var tipoRuta = "EduSanitaria/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.vehiculos == "on") {
+              var tipoRuta = "Vehiculos/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.lisCarnets == "on") {
+              var tipoRuta = "ListadoCarnetizados/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.EvenSaludPubli == "on") {
+              var tipoRuta = "EventosSaludPublica/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.antirrabica == "on") {
+              var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
+            }
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/tecnico/Consolidaciones/Rechazado/" + tipoRuta
+            );
+            return next();
+          }
         } else {
           authTec.isUser(
             req,
@@ -567,67 +613,14 @@ var authTec = (function () {
       });
   };
 
-  var EditReport = async (req, next, decodificada) => {
-    var Ruta = await authTec.NextReport(req, decodificada);
-    var tipoRuta = "";
-    await reportes
-      .findOneAndUpdate(
-        { "consolidacion.consID": req.params._id },
-        { $set: { "respuesta.criterio": "Corregido" } },
-        { new: true }
-      )
-      .then((result) => {
-        if (Ruta.length === 0) {
-          authTec.isUser(
-            req,
-            "Reportes Terminados",
-            "Ha Terminado El Listado",
-            "success",
-            true,
-            false,
-            "/tecnico"
-          );
-          return next();
-        } else {
-          if (Ruta[0].tipo == "Establecimiento") {
-            tipoRuta = "Establecimientos/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Quejas") {
-            tipoRuta = "Quejas/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Toma de Muestra") {
-            tipoRuta = "TomaMuestras/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Edu. Sanitaria") {
-            tipoRuta = "EduSanitaria/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Vehiculos") {
-            tipoRuta = "Vehiculos/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Carnetizados") {
-            tipoRuta = "ListadoCarnetizados/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Eventos Salud Publica") {
-            tipoRuta = "EventosSaludPublica/" + Ruta[0].consolidacion.consID;
-          } else if (Ruta[0].tipo == "Antirrabica") {
-            tipoRuta = "AntirrabicaAnimal/" + Ruta[0].consolidacion.consID;
-          }
-          authTec.isUser(
-            req,
-            "Conexión exitosa",
-            "Consolidación Enviada",
-            "success",
-            false,
-            800,
-            "/tecnico/Consolidaciones/Rechazado/" + tipoRuta
-          );
-          return next();
-        }
-      });
-  };
-
   var NextReport = async (req, decodificada) => {
-    return await reportes
+    return await consolidaciones
       .find({
-        "consolidacion.userTec": {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        "respuesta.criterio": { $eq: "Rechazado" },
-        "consolidacion.consID": {
+        status: { $eq: "Rechazado" },
+        _id: {
           $ne: req.params._id,
         },
       })
@@ -639,7 +632,6 @@ var authTec = (function () {
     isUser: isUser,
     SendConsolidacion: SendConsolidacion,
     SendCorreccion: SendCorreccion,
-    EditReport: EditReport,
     NextReport: NextReport,
   };
 })();
@@ -849,20 +841,18 @@ export const ConsolidaEstados = async (req, res, next) => {
       .aggregate([
         {
           $match: {
+            municipio: decodificada.municipio,
             "consolidacion.antirrabica": "on",
             status: "Aceptado",
-            municipio: decodificada.municipio,
           },
         },
         { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
       ])
       .then((data) => {
-        console.log(decodificada.user);
-        console.log(data);
-        if (data.length === 0) {
+        if (data.length == 0) {
           req.vacunas = 0;
         } else {
-          req.vacunas = data;
+          req.vacunas = data[0].suma;
         }
       });
 
@@ -878,12 +868,12 @@ export const LisConsolidaRechazadas = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    await reportes
+    await consolidaciones
       .find({
-        "consolidacion.userTec": {
+        "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        "respuesta.criterio": { $eq: "Rechazado" },
+        status: { $eq: "Rechazado" },
       })
       .sort({ createdAt: -1 })
       .then((data) => {
@@ -929,7 +919,6 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
 };
 
 //Apartado: Consolidaciones
-
 //Consolidaciones - Ver
 export const SeeTecConsolidaciones = async (req, res, next) => {
   try {
@@ -952,58 +941,40 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
     return next();
   }
 };
-
 //Consolidaciones - Enviar
 export const SendConsolidacion = async (req, res, next) => {
   await upload(req, res, function (err, res) {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.SendConsolidacion(req, next, "on", "", "", "", "", "", "", "");
+    authTec.SendConsolidacion(req, next);
   });
 };
-
 //Consolidaciones - Rechazos
 export const EditConsolidacionRech = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-  req.params.user = decodificada.user;
-  await upload(req, res, function (err) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendCorreccion(req, res, next, decodificada);
-  });
-};
-export const ConsolidaRechazada = async (req, res, next) => {
-  try {
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Rechazado") {
     const decodificada = await promisify(jwt.verify)(
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    await reportes
-      .findOne({
-        "consolidacion.consID": { $eq: req.params._id },
-        "consolidacion.userTec": {
-          $eq: decodificada.user,
-        },
-        "respuesta.criterio": { $eq: "Rechazado" },
-      })
-      .then((data) => {
-        if (data == null) {
-          res.redirect("/404");
-        } else {
-          req.consRech = data;
-        }
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
+    req.params.user = decodificada.user;
+    await upload(req, res, function (err) {
+      if (err) {
+        return res.end("Error uploading file.");
+      }
+      authTec.SendCorreccion(req, res, next, decodificada);
+    });
+  } else {
+    authTec.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Rechazado",
+      "error",
+      true,
+      false,
+      "/tecnico/Consolidaciones/Ver"
+    );
     return next();
   }
 };

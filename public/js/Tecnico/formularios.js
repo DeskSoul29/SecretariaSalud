@@ -256,6 +256,13 @@ function establecimientosForm(e) {
     e.preventDefault();
   }
 
+  if (document.getElementById("actaAnul") != null) {
+    if (document.getElementById("actaAnul").value == "Seleccione") {
+      toast.toastInfo("Advertencia", "Seleccione si el acta esta anulada");
+      e.preventDefault();
+    }
+  }
+
   if (
     document.getElementById("tipoEsta").value ==
     "CEMENTERIOS (CON O SIN MORGUE)"

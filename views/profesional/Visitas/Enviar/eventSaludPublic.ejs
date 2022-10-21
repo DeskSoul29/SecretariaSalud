@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -8,63 +9,39 @@
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
+
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
+
         <!-- Topbar -->
         <%- include('../../../tools/topbar'); %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
           <div class="container">
-            <div class="card o-hidden border-0 shadow-lg">
+            <div class="card o-hidden border-0 shadow-lg my-5">
               <div class="card-body p-0">
-                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver/EventosSaludPublica">Eventos En Salud Publica</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Corregir
-                    </li>
-                  </ol>
-                </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">EVENTOS EN SALUD PUBLICA</h1>
                   </div>
 
-                  <form onsubmit="eventSalud(event)" action="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="eventSalud(event)" action="/profesional/Consolidaciones/Enviar/EventosSaludPublica/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="EvenSaludPubliON" name="EvenSaludPubliON" style="display: none;" readonly>
-
-                    <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterio">Criterio</label>
-                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
-                      </div>
-                      <div class="col-sm-9" id="divMotivo">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
-                      </div>
-                    </div>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="mes">Mes</label>
-                        <input type="text" class="form-control form-control-user" id="mes" name="mes" value="<%= consolidacion.ForEvenSPublica.mes %>" readonly>
+                        <input type="text" class="form-control form-control-user" id="mes" name="mes" onkeyup="mayus(this);" readonly>
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>
@@ -72,7 +49,17 @@
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                        <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione el Municipio
+                          </option>
+                          <% if(fields){ %>
+                          <% fields.forEach((fields)=> { %>
+                          <option value="<%= fields.municipio %>">
+                            <%= fields.municipio %>
+                          </option>
+                          <% }); %>
+                          <% } %>
+                        </select>
                       </div>
                     </div>
 
@@ -89,19 +76,19 @@
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="etasPresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentEtas %>" min="0" class="form-control form-control-user" id="etasPresent" name="etasPresent" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="etasPresent" name="etasPresent" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="etasAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendEtas %>" min="0" class="form-control form-control-user" id="etasAtend" name="etasAtend" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="etasAtend" name="etasAtend" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="intoxPresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentIntox %>" min="0" class="form-control form-control-user" id="intoxPresent" name="intoxPresent" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="intoxPresent" name="intoxPresent" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="intoxAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendIntox %>" min="0" class="form-control form-control-user" id="intoxAtend" name="intoxAtend" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="intoxAtend" name="intoxAtend" />
                       </div>
                     </div>
 
@@ -118,11 +105,11 @@
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="agrePresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentAgre %>" min="0" class="form-control form-control-user" id="agrePresent" name="agrePresent" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="agrePresent" name="agrePresent" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="agreAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendAgre %>" min="0" class="form-control form-control-user" id="agreAtend" name="agreAtend" />
+                        <input type="number" value="0" min="0" class="form-control form-control-user" id="agreAtend" name="agreAtend" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="trueFalse">Si o No</label>
@@ -136,29 +123,26 @@
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fReunion">Fecha de Reunion</label>
-                        <input type="date" class="form-control form-control-user" id="fReunion" name="fReunion" value="<%= moment(consolidacion.ForEvenSPublica.coveFech).add(1, 'days').format('YYYY-MM-DD'); %>" readonly />
+                        <input type="date" class="form-control form-control-user" id="fReunion" name="fReunion" readonly />
                       </div>
                     </div>
+
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones
                           (Opcional)</label>
-                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
-                      </div>
-                    </div>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="fields">Adjuntar
-                          Archivo(s) Nuevos</label>
+                          Archivo(s)</label>
                         <div class="drop-zone">
                           <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
                           <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
@@ -167,23 +151,31 @@
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Corrección
+                      Registrar Consolidación
                     </button>
+                    <a href="/profesional/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                      Cancelar
+                    </a>
+
                   </form>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
         <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <%- include('../../../tools/footer'); %>
       <!-- End of Footer -->
+
     </div>
     <!-- End of Content Wrapper -->
+
   </div>
   <!-- End of Page Wrapper -->
 
@@ -202,14 +194,11 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
-          Seleccione "Cerrar sesión" a continuación si está listo para
-          finalizar su sesión actual.
-        </div>
+        <div class="modal-body">Seleccione "Cerrar
+          sesión" a continuación si está listo para
+          finalizar su sesión actual.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancelar
-          </button>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
           <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
         </div>
       </div>
@@ -227,8 +216,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -236,34 +225,27 @@
   <% if(typeof alert !="undefined" ) { %>
   <script type="text/JavaScript">
     Swal.fire({
-        title: '<%= alert[0].alertTitle %>',
-        text:'<%= alert[0].alertMessage %>',
-        icon:'<%= alert[0].alertIcon %>',
-        showConfirmButton: <%= alert[0].showConfirmButton %>,
-        timer: <%= alert[0].timer %>
-      }).then(()=>{
-        window.location = '<%= alert[0].ruta %>'
-      })
-    </script>
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+          }).then(()=>{
+            window.location = '<%= alert[0].ruta %>'
+          })
+        </script>
   <% } %>
 
   <script>
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
-      var nav4 = document.getElementById('show1');
+      var nav3 = document.getElementById('collapseTwo');
+      var nav4 = document.getElementById('show2');
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
     });
-
-    if ("<%= consolidacion.ForEvenSPublica.covePart %>" == "SI") {
-      document.getElementById("trueFalse").value = "<%= consolidacion.ForEvenSPublica.covePart %>"
-      $("#fReunion").attr("readonly", true);
-    } else {
-      document.getElementById("trueFalse").value = "<%= consolidacion.ForEvenSPublica.covePart %>"
-    }
 
     $("#trueFalse").change(function() {
       if (document.getElementById("trueFalse").value == "SI") {
@@ -274,7 +256,6 @@
       }
     });
   </script>
-
 </body>
 
 </html>

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -8,58 +9,34 @@
 <body id="page-top">
   <!-- Page Wrapper -->
   <div id="wrapper">
+
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
       <div id="content">
+
         <!-- Topbar -->
         <%- include('../../../tools/topbar'); %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+
           <div class="container">
-            <div class="card o-hidden border-0 shadow-lg">
+            <div class="card o-hidden border-0 shadow-lg my-5">
               <div class="card-body p-0">
-                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver/EduSanitaria">Educación Sanitaria</a>
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                      Corregir
-                    </li>
-                  </ol>
-                </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">EDUCACIÓN SANITARIA</h1>
                   </div>
 
-                  <form onsubmit="eduSanitaria(event)" action="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="eduSanitaria(event)" action="/profesional/Consolidaciones/Enviar/EduSanitaria/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="eduSanitariaON" name="eduSanitariaON" style="display: none;" readonly>
-
-                    <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterio">Criterio</label>
-                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
-                      </div>
-                      <div class="col-sm-9" id="divMotivo">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo%></textarea>
-                      </div>
-                    </div>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
@@ -68,7 +45,17 @@
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                        <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione el Municipio
+                          </option>
+                          <% if(fields){ %>
+                          <% fields.forEach((fields)=> { %>
+                          <option value="<%= fields.municipio %>">
+                            <%= fields.municipio %>
+                          </option>
+                          <% }); %>
+                          <% } %>
+                        </select>
                       </div>
                     </div>
 
@@ -97,15 +84,15 @@
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="otrosCap">Otros</label>
-                        <input type="text" placeholder="¿Cual?" class="form-control form-control-user" value="<%= consolidacion.ForEduSanitaria.otroTema %>" id="otrosCap" name="otrosCap" onkeyup="mayus(this);" readonly />
+                        <input type="text" placeholder="¿Cual?" class="form-control form-control-user" id="otrosCap" name="otrosCap" onkeyup="mayus(this);" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fechaCap">Fecha</label>
-                        <input type="date" class="form-control form-control-user" id="fechaCap" name="fechaCap" value="<%= moment(consolidacion.ForEduSanitaria.fechaCap).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                        <input type="date" class="form-control form-control-user" id="fechaCap" name="fechaCap" />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="intensidadCap">Intensidad(Horas)</label>
-                        <input type="number" placeholder="1.0" min="0.5" value="<%= consolidacion.ForEduSanitaria.intensidad %>" class="form-control form-control-user" step="0.5" id="intensidadCap" name="intensidadCap" />
+                        <input type="number" placeholder="1.0" min="0.5" class="form-control form-control-user" step="0.5" id="intensidadCap" name="intensidadCap" />
                       </div>
                     </div>
 
@@ -113,7 +100,7 @@
                       <div class="col my-1">
                         <label class="mr-sm-2" for="lugCap">Lugar de
                           Capacitación</label>
-                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForEduSanitaria.lugarCapa %>" id="lugCap" name="lugCap" onkeyup="mayus(this);" />
+                        <input type="text" class="form-control form-control-user" id="lugCap" name="lugCap" onkeyup="mayus(this);" />
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="personalCap">Personal
@@ -133,29 +120,26 @@
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="totalPersCap">Total Personal
                           Capacitado</label>
-                        <input type="number" value="<%= consolidacion.ForEduSanitaria.totalPersCap %>" min="1" class="form-control form-control-user" id="totalPersCap" name="totalPersCap" />
+                        <input type="number" value="1" min="1" class="form-control form-control-user" id="totalPersCap" name="totalPersCap" />
                       </div>
                     </div>
+
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones
                           (Opcional)</label>
-                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
-                    <div class="form-group row">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
-                      </div>
-                    </div>
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="fields">Adjuntar
-                          Archivo(s) Nuevos</label>
+                          Archivo(s)</label>
                         <div class="drop-zone">
                           <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
                           <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
@@ -163,24 +147,33 @@
                       </div>
                     </div>
 
+
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Corrección
+                      Registrar Consolidación
                     </button>
+                    <a href="/profesional/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                      Cancelar
+                    </a>
+
                   </form>
                 </div>
               </div>
             </div>
           </div>
+
         </div>
         <!-- /.container-fluid -->
+
       </div>
       <!-- End of Main Content -->
 
       <!-- Footer -->
       <%- include('../../../tools/footer'); %>
       <!-- End of Footer -->
+
     </div>
     <!-- End of Content Wrapper -->
+
   </div>
   <!-- End of Page Wrapper -->
 
@@ -199,15 +192,12 @@
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">
-          Seleccione "Cerrar sesión" a continuación si está listo para
-          finalizar su sesión actual.
-        </div>
+        <div class="modal-body">Seleccione "Cerrar
+          sesión" a continuación si está listo para
+          finalizar su sesión actual.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">
-            Cancelar
-          </button>
-          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -224,9 +214,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Tecnico/validaciones.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -234,37 +223,32 @@
   <% if(typeof alert !="undefined" ) { %>
   <script type="text/JavaScript">
     Swal.fire({
-        title: '<%= alert[0].alertTitle %>',
-        text:'<%= alert[0].alertMessage %>',
-        icon:'<%= alert[0].alertIcon %>',
-        showConfirmButton: <%= alert[0].showConfirmButton %>,
-        timer: <%= alert[0].timer %>
-      }).then(()=>{
-        window.location = '<%= alert[0].ruta %>'
-      })
-    </script>
+            title: '<%= alert[0].alertTitle %>',
+            text:'<%= alert[0].alertMessage %>',
+            icon:'<%= alert[0].alertIcon %>',
+            showConfirmButton: <%= alert[0].showConfirmButton %>,
+            timer: <%= alert[0].timer %>
+          }).then(()=>{
+            window.location = '<%= alert[0].ruta %>'
+          })
+        </script>
   <% } %>
 
   <script>
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
-      var nav4 = document.getElementById('show1');
+      var nav3 = document.getElementById('collapseTwo');
+      var nav4 = document.getElementById('show2');
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
-      document.getElementById("temaCap").value = "<%= consolidacion.ForEduSanitaria.tema %>"
-      document.getElementById("personalCap").value = "<%= consolidacion.ForEduSanitaria.personalDiri %>"
     });
-    if ("<%= consolidacion.ForEduSanitaria.tema %>" == "OTROS") {
-      $("#otrosCap").attr("readonly", false);
-    }
+
     $("#temaCap").change(function() {
       if (document.getElementById("temaCap").value == "OTROS") {
         $("#otrosCap").attr("readonly", false);
       } else {
-        document.getElementById("otrosCap").value = ""
         $("#otrosCap").attr("readonly", true);
       }
     });

@@ -2,11 +2,11 @@ import login from "../models/user.js";
 import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
-import reportes from "../models/reportes.js";
 
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
+import upload from "../middleware/upload.js";
 
 var authProf = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -23,134 +23,375 @@ var authProf = (function () {
     ]);
   };
 
-  var UpdateConsoli = async (req, next, decodificada, nextCons) => {
-    var { userTec, nameTec, municipio, criterio, motivo, tipCon } = req.body;
+  var SendConsolidacion = async (req, next) => {
+    try {
+      const decodificada = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRETO
+      );
+      var {
+        provincia,
+        municipio,
+        grupEsta,
+        codEsta,
+        tipoEsta,
+        Nriesgo,
+        tIden,
+        phone,
+        inputIden,
+        rSocial,
+        direccion,
+        rLegal,
+        estado,
+        fVisit,
+        score,
+        concepto,
+        accion,
+        //Cementerio
+        NecroMorg,
+        //Establecimiento
+        establecimientoON,
+        acta,
+        actaLey,
+        actaAnul,
+        //Rotulado
+        rotuladoON,
+        productoRotulado,
+        //Publicidad
+        publicidadON,
+        medPubli,
+        permisoSanitario,
+        productoPublicidad,
+        marcaPublicidad,
+        //MEDEstablecimientos
+        establecimientosON,
+        medidaApliEstable,
+        motivoApli,
+        observacionMedEsta,
+        //MEDProductos
+        productosON,
+        medidaApliProduc,
+        permisoProduco,
+        productoMed,
+        marcaProduct,
+        motivoProduct,
+        presentProduct,
+        cantProdu,
+        fabriProduc,
+        loteProduc,
+        fechProduc,
+        observacionMedProd,
+        //Antirrabica
+        antirrabicaON,
+        Pcanina,
+        Pfelina,
+        caninosUrbano,
+        caninosRural,
+        felinosUrbano,
+        felinosRural,
+        totalVacunados,
+        //EduSanitaria
+        eduSanitariaON,
+        temaCap,
+        otrosCap,
+        fechaCap,
+        intensidadCap,
+        lugCap,
+        personalCap,
+        totalPersCap,
+        //EvenSalPublica
+        EvenSaludPubliON,
+        mes,
+        etasPresent,
+        etasAtend,
+        intoxPresent,
+        intoxAtend,
+        agrePresent,
+        agreAtend,
+        trueFalse,
+        fReunion,
+        //Carnetizados
+        lisCarnetsON,
+        expCarnet,
+        idenCarnet,
+        nameCarnet,
+        estableciCarnet,
+        direcCarnet,
+        //Quejas
+        quejasON,
+        tipQueja,
+        fechRece,
+        perCausa,
+        perAfec,
+        descQueja,
+        requeQueja,
+        //Toma de Muestras
+        tomaMuestraON,
+        tipMues,
+        descripTip,
+        tipAnali,
+        zona,
+        objEst,
+        acompananteEmp,
+        observacion,
+        //Vehiculos
+        vehiculosON,
+        classVehi,
+        otroV,
+        placa,
+        refriV,
+        nInscrip,
+        produTrans,
+      } = req.body;
 
-    var report = new reportes({
-      tipo: tipCon,
-
-      consolidacion: {
-        userTec: userTec,
-        nomTec: nameTec,
-        provincia: decodificada.provincia,
+      new consolidaciones({
+        status: "Enviado",
+        provincia: provincia,
         municipio: municipio,
-        consID: req.params._id,
-      },
-      respuesta: {
-        userRes: decodificada.user,
-        nombreRes: decodificada.nombres + " " + decodificada.apellidos,
-        rol: decodificada.rol,
-        criterio: criterio,
-        motivo: motivo,
-      },
-      createdAt: new Date(),
-    });
-    return await report
-      .save()
-      .then((data) => {
-        consolidaciones
-          .findByIdAndUpdate(
-            req.params._id,
-            {
-              $set: {
-                status: criterio,
-              },
-            },
-            { new: true }
-          )
-          .then((result) => {
-            if (tipCon == "Establecimiento") {
-              authProf.UpdateActa(req);
-            }
-            if (nextCons.length === 0) {
-              authProf.isUser(
-                req,
-                "Reportes Terminados",
-                "Ha Terminado El Listado",
-                "success",
-                true,
-                false,
-                "/profesional/Consolidaciones/Ver"
-              );
-            } else {
-              if (nextCons[0].consolidacion.establecimiento == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/Establecimientos/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.antirrabica == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/AntirrabicaAnimal/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/EduSanitaria/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/EventosSaludPublica/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.lisCarnets == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/ListadoCarnetizados/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.vehiculos == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/Vehiculos/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/TomaMuestras/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.quejas == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Validar/Quejas/" +
-                  nextCons[0]._id;
-              }
-              authProf.isUser(
-                req,
-                "Conexión exitosa",
-                "Consolidación Enviada",
-                "success",
-                false,
-                800,
-                rutaValidar
-              );
-            }
-            return next();
-          });
+        responsable: {
+          userResponsable: decodificada.user,
+          nombreResponsable:
+            decodificada.nombres + " " + decodificada.apellidos,
+        },
+        consolidacion: {
+          establecimiento: establecimientoON,
+          rotulado: rotuladoON,
+          publicidad: publicidadON,
+          MSProductos: productosON,
+          MSEstablecimientos: establecimientosON,
+          antirrabica: antirrabicaON,
+          eduSanitaria: eduSanitariaON,
+          EvenSaludPubli: EvenSaludPubliON,
+          lisCarnets: lisCarnetsON,
+          vehiculos: vehiculosON,
+          tomaMuestra: tomaMuestraON,
+          quejas: quejasON,
+        },
+        grupo: grupEsta,
+        codigo: codEsta,
+        tipo: tipoEsta,
+        nivelRiesgo: Nriesgo,
+        tipoIdentificacion: tIden,
+        telefono: phone,
+        identificacion: inputIden,
+        razonSocial: rSocial,
+        direccion: direccion,
+        repreLegal: rLegal,
+        estado: estado,
+        fvisit: fVisit,
+        score: score,
+        concepto: concepto,
+        accion: accion,
+
+        acta: acta,
+        actaLey: actaLey,
+        actaAnul: actaAnul,
+
+        salaNM: NecroMorg,
+
+        ForRotulado: {
+          productoRotulado: productoRotulado,
+        },
+        ForPublicidad: {
+          medioPublicitario: medPubli,
+          registroSanitario: permisoSanitario,
+          productoPublicidad: productoPublicidad,
+          marcaPublicidad: marcaPublicidad,
+        },
+        ForMSEstablecimientos: {
+          medidaMSEstablecimientos: medidaApliEstable,
+          motivoMSEstablecimientos: motivoApli,
+          observacionMedEsta: observacionMedEsta,
+        },
+        ForMSProductos: {
+          medidaMSProductos: medidaApliProduc,
+          permisoMSProductos: permisoProduco,
+          productoMSProductos: productoMed,
+          marcaMSProductos: marcaProduct,
+          motivoMSProductos: motivoProduct,
+          presentacionMSProductos: presentProduct,
+          cantidadMSProductos: cantProdu,
+          fabricanteMSProductos: fabriProduc,
+          loteMSProductos: loteProduc,
+          vencimientoMSProductos: fechProduc,
+          observacionMedProd: observacionMedProd,
+        },
+        ForAntirrabica: {
+          Pcanina: Pcanina,
+          Pfelina: Pfelina,
+          canUrb: caninosUrbano,
+          canRur: caninosRural,
+          felUrb: felinosUrbano,
+          felRur: felinosRural,
+          totalVac: totalVacunados,
+        },
+        ForEduSanitaria: {
+          tema: temaCap,
+          otroTema: otrosCap,
+          fechaCap: fechaCap,
+          intensidad: intensidadCap,
+          lugarCapa: lugCap,
+          personalDiri: personalCap,
+          totalPersCap: totalPersCap,
+        },
+        ForEvenSPublica: {
+          mes: mes,
+          presentEtas: etasPresent,
+          atendEtas: etasAtend,
+          presentIntox: intoxPresent,
+          atendIntox: intoxAtend,
+          presentAgre: agrePresent,
+          atendAgre: agreAtend,
+          covePart: trueFalse,
+          coveFech: fReunion,
+        },
+        ForCarnets: {
+          expCarnet: expCarnet,
+          idenCarnet: idenCarnet,
+          nombreCarnet: nameCarnet,
+          establecimientoCarnet: estableciCarnet,
+          direccionCarnet: direcCarnet,
+        },
+        ForQuejas: {
+          tipoQueja: tipQueja,
+          frecep: fechRece,
+          perCausaQueja: perCausa,
+          perAfectQueja: perAfec,
+          descQueja: descQueja,
+          reqQueja: requeQueja,
+        },
+        ForTomaMuestras: {
+          tipMuestra: tipMues,
+          descMuestra: descripTip,
+          tipAnalisis: tipAnali,
+          zona: zona,
+          objAnalisis: objEst,
+          acompanante: acompananteEmp,
+        },
+        ForVehiculos: {
+          claseVehiculo: classVehi,
+          otraClase: otroV,
+          placa: placa,
+          refrigeracion: refriV,
+          nInscripcion: nInscrip,
+          productosVehiculo: produTrans,
+        },
+        evidencia: {
+          file: req.file.filename,
+        },
+        reporte: {
+          motivo: "",
+          fechRepor: new Date(),
+        },
+        createdAt: new Date(),
+        observaciones: observacion,
       })
-      .catch((error) => {
+        .save()
+        .then((result) => {
+          if (result) {
+            authProf.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/profesional/Consolidaciones/Enviar"
+            );
+          } else {
+            authProf.isUser(
+              req,
+              "Error en la Base de Datos",
+              "Envio Cancelado",
+              "error",
+              false,
+              false,
+              "/profesional/Consolidaciones/Enviar"
+            );
+          }
+          return next();
+        });
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  };
+
+  var UpdateConsoli = async (req, next, nextCons) => {
+    var { criterio, motivo, tipCon } = req.body;
+
+    await consolidaciones
+      .findByIdAndUpdate(req.params._id, {
+        $set: {
+          status: criterio,
+          reporte: {
+            motivo: motivo,
+            fechRepor: new Date(),
+          },
+        },
+      })
+      .then((result) => {
         if (tipCon == "Establecimiento") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/Establecimientos";
-        } else if (tipCon == "Eventos Salud Publica") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/EventosSaludPublica";
-        } else if (tipCon == "Quejas") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/Quejas";
-        } else if (tipCon == "Antirrabica") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/AntirrabicaAnimal";
-        } else if (tipCon == "Carnetizados") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/ListadoCarnetizados";
-        } else if (tipCon == "Edu. Sanitaria") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/EduSanitaria";
-        } else if (tipCon == "Vehiculos") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/Vehiculos";
-        } else if (tipCon == "Toma de Muestra") {
-          var rutaVer = "/profesional/Consolidaciones/Ver/TomaMuestras";
+          authProf.UpdateActa(req);
         }
-        authProf.isUser(
-          req,
-          "Reporte Cancelado",
-          "Ya se encuentra un reporte en la Base de Datos",
-          "error",
-          true,
-          false,
-          rutaVer
-        );
+        if (nextCons.length === 0) {
+          authProf.isUser(
+            req,
+            "Reportes Terminados",
+            "Ha Terminado El Listado",
+            "success",
+            true,
+            false,
+            "/profesional/Consolidaciones/Ver"
+          );
+        } else {
+          if (nextCons[0].consolidacion.establecimiento == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/Establecimientos/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.antirrabica == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/AntirrabicaAnimal/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/EduSanitaria/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/EventosSaludPublica/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.lisCarnets == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/ListadoCarnetizados/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.vehiculos == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/Vehiculos/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/TomaMuestras/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.quejas == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/Quejas/" + nextCons[0]._id;
+          }
+          authProf.isUser(
+            req,
+            "Conexión exitosa",
+            "Consolidación Enviada",
+            "success",
+            false,
+            800,
+            rutaValidar
+          );
+        }
         return next();
       });
   };
 
-  var UpdateCorreccion = async (req, next, decodificada, nextCons) => {
+  var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
 
     await consolidaciones
@@ -159,86 +400,70 @@ var authProf = (function () {
         {
           $set: {
             status: criterio,
+            "reporte.motivo": motivo,
           },
         },
         { new: true }
       )
       .then((result) => {
-        reportes
-          .findOneAndUpdate(
-            { "consolidacion.consID": req.params._id },
-            {
-              $set: {
-                "respuesta.userRes": decodificada.user,
-                "respuesta.nombreRes":
-                  decodificada.nombres + " " + decodificada.apellidos,
-                "respuesta.criterio": criterio,
-                "respuesta.motivo": motivo,
-                createdAt: new Date(),
-              },
-            },
-            { new: true }
-          )
-          .then((result) => {
-            if (tipCon == "Establecimiento") {
-              authProf.UpdateActa(req);
-            }
-            if (nextCons.length === 0) {
-              authProf.isUser(
-                req,
-                "Correcciones Terminadas",
-                "Ha Terminado El Listado",
-                "success",
-                true,
-                false,
-                "/profesional/Consolidaciones/Ver"
-              );
-            } else {
-              if (nextCons[0].consolidacion.establecimiento == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/Establecimientos/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.antirrabica == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/EduSanitaria/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/EventosSaludPublica/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.lisCarnets == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/ListadoCarnetizados/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.vehiculos == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/Vehiculos/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/TomaMuestras/" +
-                  nextCons[0]._id;
-              } else if (nextCons[0].consolidacion.quejas == "on") {
-                var rutaValidar =
-                  "/profesional/Consolidaciones/Correccion/Quejas/" +
-                  nextCons[0]._id;
-              }
-              authProf.isUser(
-                req,
-                "Conexión exitosa",
-                "Consolidación Enviada",
-                "success",
-                false,
-                800,
-                rutaValidar
-              );
-            }
-            return next();
-          });
+        if (tipCon == "Establecimiento") {
+          authProf.UpdateActa(req);
+        }
+        if (nextCons.length === 0) {
+          authProf.isUser(
+            req,
+            "Correcciones Terminadas",
+            "Ha Terminado El Listado",
+            "success",
+            true,
+            false,
+            "/profesional/Consolidaciones/Ver"
+          );
+        } else {
+          if (nextCons[0].consolidacion.establecimiento == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/Establecimientos/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.antirrabica == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/AntirrabicaAnimal/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.eduSanitaria == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/EduSanitaria/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.EvenSaludPubli == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/EventosSaludPublica/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.lisCarnets == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/ListadoCarnetizados/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.vehiculos == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/Vehiculos/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/TomaMuestras/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.quejas == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/Quejas/" +
+              nextCons[0]._id;
+          }
+          authProf.isUser(
+            req,
+            "Conexión exitosa",
+            "Consolidación Enviada",
+            "success",
+            false,
+            800,
+            rutaValidar
+          );
+        }
+        return next();
       });
   };
 
@@ -254,7 +479,7 @@ var authProf = (function () {
     );
   };
 
-  var SearchNextConsolidacion = async (req, provincia) => {
+  var SearchNextPendien = async (req, provincia) => {
     return await consolidaciones
       .find({
         provincia: {
@@ -271,7 +496,7 @@ var authProf = (function () {
       .limit(1);
   };
 
-  var SearchNextCorrec = async (req, provincia) => {
+  var SearchNextCorreg = async (req, provincia) => {
     return await consolidaciones
       .find({
         provincia: {
@@ -307,11 +532,12 @@ var authProf = (function () {
 
   return {
     isUser: isUser,
+    SendConsolidacion: SendConsolidacion,
     UpdateConsoli: UpdateConsoli,
     UpdateCorreccion: UpdateCorreccion,
     UpdateActa: UpdateActa,
-    SearchNextConsolidacion: SearchNextConsolidacion,
-    SearchNextCorrec: SearchNextCorrec,
+    SearchNextPendien: SearchNextPendien,
+    SearchNextCorreg: SearchNextCorreg,
     ValidaMunicipio: ValidaMunicipio,
   };
 })();
@@ -405,6 +631,158 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       .count()
       .then((data) => {
         req.consAcep = data;
+      });
+
+    //Totas de Visitas
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+      })
+      .count()
+      .then((data) => {
+        req.visitAcep = data;
+      });
+
+    //Totas de Visitas - IVC Publicidad
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.publicidad": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitIVCPubli = data;
+      });
+
+    //Totas de Visitas -IVC Rotulado
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.rotulado": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitRotu = data;
+      });
+
+    //Totas de Visitas - MS Establecimientos
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.MSEstablecimientos": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitMSEstab = data;
+      });
+
+    //Totas de Visitas - MS Productos
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        "consolidacion.MSProductos": { $eq: "on" },
+      })
+      .count()
+      .then((data) => {
+        req.visitMSProd = data;
+      });
+
+    //Totas de Visitas - Cementerios
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
+      })
+      .count()
+      .then((data) => {
+        req.visitCemen = data;
+      });
+
+    //Totas de Visitas - Morgues
+    await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: {
+          $eq: "Aceptado",
+        },
+        "consolidacion.establecimiento": {
+          $eq: "on",
+        },
+        tipo: "MORGUES",
+      })
+      .count()
+      .then((data) => {
+        req.visitMorg = data;
+      });
+
+    //Totas de Visitas - Vacunaciones
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            provincia: decodificada.provincia,
+            "consolidacion.antirrabica": "on",
+            status: "Aceptado",
+          },
+        },
+        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      ])
+      .then((data) => {
+        if (data.length === 0) {
+          req.vacunas = 0;
+        } else {
+          req.vacunas = data[0].suma;
+        }
       });
 
     return next();
@@ -543,6 +921,14 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
 };
 
 //Apartado: Consolidaciones
+export const SendConsolidacion = async (req, res, next) => {
+  await upload(req, res, function (err, res) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authProf.SendConsolidacion(req, next);
+  });
+};
 //Consolidaciones - Novedades Administrativas
 export const CountActas = async (req, res, next) => {
   try {
@@ -664,7 +1050,6 @@ export const SendNovedad = async (req, res, next) => {
   }
   return next();
 };
-
 //Consolidaciones - Consultar
 export const SeeProfConsolidaciones = async (req, res, next) => {
   try {
@@ -686,7 +1071,6 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
     return next();
   }
 };
-
 //Consolidaciones - Validar
 export const SendReport = async (req, res, next) => {
   var validar = await consolidaciones.findById(req.params._id);
@@ -697,12 +1081,12 @@ export const SendReport = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
 
-    var nextCons = await authProf.SearchNextConsolidacion(
+    var nextCons = await authProf.SearchNextPendien(
       req,
       decodificada.provincia
     );
 
-    authProf.UpdateConsoli(req, next, decodificada, nextCons);
+    authProf.UpdateConsoli(req, next, nextCons);
   } else {
     authProf.isUser(
       req,
@@ -716,35 +1100,7 @@ export const SendReport = async (req, res, next) => {
     return next();
   }
 };
-
 //Consolidaciones - Correccion
-export const SearchConsolidaRechazada = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    await reportes
-      .findOne({
-        "consolidacion.provincia": { $eq: decodificada.provincia },
-        "consolidacion.consID": { $eq: req.params._id },
-      })
-      .then((data) => {
-        if (data == null) {
-          res.redirect("/404");
-        } else {
-          req.consRech = data;
-        }
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
 export const EditReport = async (req, res, next) => {
   var validar = await consolidaciones.findById(req.params._id);
   if (validar.status == "Corregido") {
@@ -753,8 +1109,8 @@ export const EditReport = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
 
-    var nextCons = await authProf.SearchNextCorrec(req, decodificada.provincia);
-    authProf.UpdateCorreccion(req, next, decodificada, nextCons);
+    var nextCons = await authProf.SearchNextCorreg(req, decodificada.provincia);
+    authProf.UpdateCorreccion(req, next, nextCons);
   } else {
     authProf.isUser(
       req,

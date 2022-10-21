@@ -1,0 +1,53 @@
+<!-- Divider -->
+<hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+<div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">IVC Publicidad</h1>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-4">
+        <label class="mr-sm-2" for="medPubli">Medio Publicitario</label>
+        <select id="medPubli" name="medPubli" class="custom-select mr-sm-2">
+            <option selected disabled>
+                Seleccione
+            </option>
+            <option value="REVISTA">REVISTA</option>
+            <option value="PERIODICO">PERIODICO</option>
+            <option value="FOLLETO">FOLLETO</option>
+            <option value="VALLA">VALLA</option>
+            <option value="VOLANTE">VOLANTE</option>
+            <option value="RADIO">RADIO</option>
+            <option value="TELEVISION">TELEVISION</option>
+            <option value="VEHICULO">VEHICULO</option>
+        </select>
+    </div>
+    <div class="col-sm-8">
+        <label class="mr-sm-2" for="permisoSanitario">N° Registro/Permiso/Notificación Sanitario</label>
+        <input type="text" placeholder="N. Sanitario" class="form-control form-control-user" id="permisoSanitario"
+            name="permisoSanitario" onkeyup="mayus(this);" />
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-6">
+        <label class="mr-sm-2" for="productoPublicidad">Producto</label>
+        <input type="text" placeholder="Producto" class="form-control form-control-user" id="productoPublicidad"
+            name="productoPublicidad" onkeyup="mayus(this);" />
+    </div>
+    <div class="col-sm-6">
+        <label class="mr-sm-2" for="marcaPublicidad">Marca</label>
+        <input type="text" placeholder="Marca" class="form-control form-control-user" id="marcaPublicidad"
+            name="marcaPublicidad" onkeyup="mayus(this);" />
+    </div>
+</div>
+
+<!-- <div class="form-group row">
+    <div class="col-sm-12">
+        <label class="mr-sm-2" for="observacionIVCPubli">Observaciones de IVC Publicidad
+            (Opcional)</label>
+        <textarea name="observacionIVCPubli" id="observacionIVCPubli" maxlength="270" rows="2"
+            class="form-control form-control-user"
+            placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+    </div>
+</div> -->

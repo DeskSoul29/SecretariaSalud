@@ -51,16 +51,16 @@
                       <th rowspan="2">Fecha_Enviado</th>
                       <th rowspan="2">Mes</th>
                       <th rowspan="2">Municipio</th>
-                      <th colspan="2">Entrega Informe Mensual</th>
+                      <th colspan="1">Entrega Informe_Mensual</th>
                       <th colspan="2">Entrega de Cronograma de Actividades</th>
                       <th colspan="2">Control de Asistencia Al Municipio</th>
                       <th colspan="2">Cumplimiento de Circulares</th>
                       <th colspan="3">Devolución de Actas</th>
                       <th rowspan="2">Observaciones_Recomendaciones</th>
+                      <th rowspan="2">Acción</th>
                     </tr>
                     <tr>
                       <th>Si/No</th>
-                      <th>Fecha_Entrega</th>
                       <th>Si/No</th>
                       <th>Fecha_Entrega</th>
                       <th>Si/No</th>
@@ -72,6 +72,33 @@
                       <th>Motivo de Devolución</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                      <th rowspan="2">Estado</th>
+                      <th rowspan="2">Fecha_Enviado</th>
+                      <th rowspan="2">Mes</th>
+                      <th rowspan="2">Municipio</th>
+                      <th>Si/No</th>
+                      <th>Si/No</th>
+                      <th>Fecha_Entrega</th>
+                      <th>Si/No</th>
+                      <th>Fecha_Entrega</th>
+                      <th>Si/No</th>
+                      <th>N° Circular</th>
+                      <th>N° de Actas</th>
+                      <th>Nombre_Acta</th>
+                      <th>Motivo de Devolución</th>
+                      <th rowspan="2">Observaciones_Recomendaciones</th>
+                      <th rowspan="2">Acción</th>
+                    </tr>
+                    <tr>
+                      <th colspan="1">Entrega Informe_Mensual</th>
+                      <th colspan="2">Entrega de Cronograma de Actividades</th>
+                      <th colspan="2">Control de Asistencia Al Municipio</th>
+                      <th colspan="2">Cumplimiento de Circulares</th>
+                      <th colspan="3">Devolución de Actas</th>
+                    </tr>
+                  </tfoot>
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
@@ -129,6 +156,11 @@
                       <td>
                         <%= allConso.Observaciones %>
                       </td>
+                      <td>
+                        <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
                     </tr>
                     <% } %>
                     <% }); %>
@@ -158,6 +190,33 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Esta seguro de eliminar esta consolidación?
+            <br>
+            <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <a id="formDeleteCons" class="btn btn-primary">
+              Eliminar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -196,6 +255,9 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+
+    <!-- Validations -->
+    <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
 
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>

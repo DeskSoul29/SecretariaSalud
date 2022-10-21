@@ -1,5 +1,4 @@
 import login from "../models/user.js";
-import reportes from "../models/reportes.js";
 import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";

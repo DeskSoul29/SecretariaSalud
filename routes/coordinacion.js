@@ -8,6 +8,7 @@ import {
   deleteUser,
   editUser,
   changePass,
+  deleteCons,
   SeeCoorConsolidaciones,
   ConsolidaEstadosCoor,
   SendReport,
@@ -146,6 +147,19 @@ router.post(
 
 // Apartado: Consolidaciones
 router.get(
+  "/Consolidaciones/Delete/:id",
+  isAuthenticatedCoordinacion,
+  deleteCons,
+  (req, res) => {
+    res.render("coordinacion/Visitas/mainVer", {
+      user: req.user,
+      allConso: undefined,
+      allRechazo: undefined,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Ver",
   isAuthenticatedCoordinacion,
   SeeCoorConsolidaciones,
@@ -155,6 +169,7 @@ router.get(
       user: req.user,
       allConso: req.allConso,
       allRechazo: req.allRechazo,
+      alert: undefined,
       moment: moment,
     });
   }

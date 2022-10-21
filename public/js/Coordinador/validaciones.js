@@ -66,6 +66,12 @@ const modalsUsuarios = (function () {
     tipoEsta.value = tipo;
   };
 
+  var eliminar_cons = function (id) {
+    document
+      .getElementById("formDeleteCons")
+      .setAttribute("href", "/coordinacion/Consolidaciones/Delete/" + id);
+  };
+
   var eliminar_modal = function (id, user, nombre) {
     document.getElementById("formDeleteUser").action =
       "/coordinacion/Cuentas/Usuarios/Delete/" + id;
@@ -136,6 +142,7 @@ const modalsUsuarios = (function () {
 
   return {
     eliminar_modal: eliminar_modal,
+    eliminar_cons: eliminar_cons,
     changePass_modal: changePass_modal,
     llenadoMunicipios: llenadoMunicipios,
     llenadoCodigosEditHV: llenadoCodigosEditHV,

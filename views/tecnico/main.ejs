@@ -168,35 +168,51 @@
                         <% ListconsRech.forEach((ListconsRech)=> { %>
                         <tr>
                           <td>
-                            <% if(ListconsRech.tipo == "Establecimiento" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Antirrabica" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Edu. Sanitaria" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Eventos Salud Publica" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Carnetizados" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Vehiculos" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/Vehiculos/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Toma de Muestra" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                            <% } else if(ListconsRech.tipo == "Quejas" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech.consolidacion.consID %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% if(ListconsRech.consolidacion.establecimiento=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.antirrabica=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.eduSanitaria=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/EduSanitaria/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.EvenSaludPubli=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.lisCarnets=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/ListadoCarnetizados/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.vehiculos=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Vehiculos/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.tomaMuestra=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.quejas=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
                           <td>
-                            <%= moment(ListconsRech.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                            <%= moment(ListconsRech.reporte.fechRepor,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
                           </td>
                           <td>
-                            <%= ListconsRech.consolidacion.municipio %>
+                            <%= ListconsRech.municipio %>
                           </td>
                           <td>
-                            <%= ListconsRech.tipo %>
+                            <% if(ListconsRech.consolidacion.establecimiento=="on" ){ %>
+                            Establecimientos
+                            <% } else if(ListconsRech.consolidacion.antirrabica=="on" ){ %>
+                            Antirrabica Animal
+                            <% } else if(ListconsRech.consolidacion.eduSanitaria=="on" ){ %>
+                            Educación Sanitraria
+                            <% } else if(ListconsRech.consolidacion.EvenSaludPubli=="on" ){ %>
+                            Eventos de Salud Publica
+                            <% } else if(ListconsRech.consolidacion.lisCarnets=="on" ){ %>
+                            Listado de Carnetizados
+                            <% } else if(ListconsRech.consolidacion.vehiculos=="on" ){ %>
+                            Vehiculos
+                            <% } else if(ListconsRech.consolidacion.tomaMuestra=="on" ){ %>
+                            Toma de Muestras
+                            <% } else if(ListconsRech.consolidacion.quejas=="on" ){ %>
+                            Quejas
+                            <% } %>
                           </td>
                           <td>
-                            <%= ListconsRech.respuesta.motivo %>
+                            <%= ListconsRech.reporte.motivo %>
                           </td>
                         </tr>
                         <% }); %>
@@ -212,7 +228,7 @@
               <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Vacunaciones
-                  <span class="badge badge-primary badge-pill"><%= vacunas[0].suma %></span>
+                  <span class="badge badge-primary badge-pill"><%= vacunas %></span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Total Visitas

@@ -49,7 +49,7 @@
                     <tr>
                       <th rowspan="3">Estado</th>
                       <th rowspan="3">Fecha_Enviado</th>
-                      <th rowspan="3">Tecnico Responsable</th>
+                      <th rowspan="3">Responsable</th>
                       <th rowspan="3">Provincia</th>
                       <th rowspan="3">Municipio</th>
                       <th rowspan="3">Población Canina</th>
@@ -57,6 +57,7 @@
                       <th colspan="5">Animales Vacunados</th>
                       <th rowspan="3">Observaciones</th>
                       <th rowspan="3">Archivos</th>
+                      <th rowspan="3">Acción</th>
                     </tr>
                     <tr>
                       <th colspan="2">Caninos</th>
@@ -75,7 +76,7 @@
                     <tr>
                       <th rowspan="2">Estado</th>
                       <th rowspan="2">Fecha_Enviado</th>
-                      <th rowspan="2">Tecnico Responsable</th>
+                      <th rowspan="2">Responsable</th>
                       <th rowspan="2">Provincia</th>
                       <th rowspan="2">Municipio</th>
                       <th rowspan="2">Población Canina</th>
@@ -87,6 +88,7 @@
                       <th rowspan="2">Total</th>
                       <th rowspan="2">Observaciones</th>
                       <th rowspan="2">Archivos</th>
+                      <th rowspan="2">Acción</th>
                     </tr>
                     <tr>
                       <th colspan="2">Caninos</th>
@@ -145,6 +147,11 @@
                       <td>
                         <a href="/coordinacion/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
+                      <td>
+                        <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
                     </tr>
                     <% } %>
                     <% }); %>
@@ -173,6 +180,33 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Esta seguro de eliminar esta consolidación?
+            <br>
+            <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <a id="formDeleteCons" class="btn btn-primary">
+              Eliminar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -212,13 +246,16 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
 
+    <!-- Validations -->
+    <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
+
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
     <script>
-      $(window).bind('load', function() {
+      $(window).bind(' load', function() {
         var nav = document.getElementById('nav2');
         $('#navlink1').removeClass('collapsed');
         var nav3 = document.getElementById('collapseTwo');

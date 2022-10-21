@@ -44,6 +44,38 @@ const modalsUsuarios = (function () {
   };
 })();
 const modalsEstablecimientos = (function () {
+  var consolidacion = function (consolidacion) {
+    if (consolidacion.value == "Eventos en Salud Pública") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/EventosSaludPublica",
+        "_self"
+      );
+    } else if (consolidacion.value == "Vehiculos") {
+      window.open("/profesional/Consolidaciones/Enviar/Vehiculos", "_self");
+    } else if (consolidacion.value == "Establecimientos") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/Establecimientos",
+        "_self"
+      );
+    } else if (consolidacion.value == "Toma de Muestras") {
+      window.open("/profesional/Consolidaciones/Enviar/TomaMuestras", "_self");
+    } else if (consolidacion.value == "Educación Sanitaria") {
+      window.open("/profesional/Consolidaciones/Enviar/EduSanitaria", "_self");
+    } else if (consolidacion.value == "Listado De Carnetizados") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/ListadoCarnetizados",
+        "_self"
+      );
+    } else if (consolidacion.value == "Antirrabica Animal") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/AntirrabicaAnimal",
+        "_self"
+      );
+    } else if (consolidacion.value == "Quejas") {
+      window.open("/profesional/Consolidaciones/Enviar/Quejas", "_self");
+    }
+  };
+
   var consolidacionVer = function (consolidacion) {
     if (consolidacion.value == "Eventos en Salud Pública") {
       window.open(
@@ -85,13 +117,29 @@ const modalsEstablecimientos = (function () {
         "/profesional/Consolidaciones/Ver/AntirrabicaAnimal",
         "_self"
       );
+    } else if (consolidacion.value == "Novedad Administrativa") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/NoveAdministrativa",
+        "_self"
+      );
     }
   };
 
   return {
     consolidacionVer: consolidacionVer,
+    consolidacion: consolidacion,
   };
 })();
+
+$("#btnConsolidacion").click(function () {
+  if (
+    document.getElementById("consoID").value == "Seleccione la Consolidación"
+  ) {
+    toast.toastInfo("Advertencia", "Seleccione un Formato");
+  } else {
+    modalsEstablecimientos.consolidacion(document.getElementById("consoID"));
+  }
+});
 
 $("#btnConsolidacionVer").click(function () {
   if (
