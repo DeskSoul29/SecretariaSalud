@@ -50,6 +50,7 @@
                         <select id="consoID" name="consolidacion" class="custom-select mr-sm-2" required>
                           <option selected disabled>Seleccione la Consolidación
                           </option>
+                          <option>Novedades Administrativas</option>
                           <option>Eventos en Salud Pública</option>
                           <option>Establecimientos</option>
                           <option>Morgues</option>
@@ -193,160 +194,24 @@
                 </div>
               </div>
 
-              <div class="card">
-                <div class="card-header" id="headingThree">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                      Listado de Novedades Administrativas
-                    </button>
-                    </h2>
-                </div>
-                <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table table-bordered table-hover" id="dataTable2" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
-                        <thead>
-                          <tr>
-                            <th rowspan="2">Estado</th>
-                            <th rowspan="2">Fecha_Enviado</th>
-                            <th rowspan="2">Mes</th>
-                            <th rowspan="2">Municipio</th>
-                            <th colspan="1">Entrega Informe_Mensual</th>
-                            <th colspan="2">Entrega de Cronograma de Actividades</th>
-                            <th colspan="2">Control de Asistencia Al Municipio</th>
-                            <th colspan="2">Cumplimiento de Circulares</th>
-                            <th colspan="3">Devolución de Actas</th>
-                            <th rowspan="2">Observaciones_Recomendaciones</th>
-                          </tr>
-                          <tr>
-                            <th>Si/No</th>
-                            <th>Si/No</th>
-                            <th>Fecha_Entrega</th>
-                            <th>Si/No</th>
-                            <th>Fecha_Entrega</th>
-                            <th>Si/No</th>
-                            <th>N° Circular</th>
-                            <th>N° de Actas</th>
-                            <th>Nombre_Acta</th>
-                            <th>Motivo de Devolución</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th rowspan="2">Estado</th>
-                            <th rowspan="2">Fecha_Enviado</th>
-                            <th rowspan="2">Mes</th>
-                            <th rowspan="2">Municipio</th>
-                            <th>Si/No</th>
-                            <th>Si/No</th>
-                            <th>Fecha_Entrega</th>
-                            <th>Si/No</th>
-                            <th>Fecha_Entrega</th>
-                            <th>Si/No</th>
-                            <th>N° Circular</th>
-                            <th>N° de Actas</th>
-                            <th>Nombre_Acta</th>
-                            <th>Motivo de Devolución</th>
-                            <th rowspan="2">Observaciones_Recomendaciones</th>
-                            <th rowspan="2">Acción</th>
-                          </tr>
-                          <tr>
-                            <th colspan="1">Entrega Informe_Mensual</th>
-                            <th colspan="2">Entrega de Cronograma de Actividades</th>
-                            <th colspan="2">Control de Asistencia Al Municipio</th>
-                            <th colspan="2">Cumplimiento de Circulares</th>
-                            <th colspan="3">Devolución de Actas</th>
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          <% if (allConso){ %>
-                          <% allConso.forEach((allConso)=> { %>
-                          <% if (allConso.consolidacion.noveadministrativa == "on"){ %>
-                          <tr>
-                            <td>
-                              <% if(allConso.status=="Pendiente" ){ %>
-                              <span class="badge badge-warning text-uppercase">Pendiente</span>
-                              <% }else if(allConso.status=="Rechazado" ){ %>
-                              <span class="badge badge-danger text-uppercase">Rechazado</span>
-                              <% }else if(allConso.status=="Corregido" ){ %>
-                              <span class="badge badge-primary text-uppercase">Corregido</span>
-                              <% }else if(allConso.status=="Enviado" ){ %>
-                              <span class="badge badge-info text-uppercase">Enviado</span>
-                              <% }else if(allConso.status=="Aceptado" ){ %>
-                              <span class="badge badge-success text-uppercase">Aceptado</span>
-                              <% } %>
-                            </td>
-                            <td>
-                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.mesNA %>
-                            </td>
-                            <td>
-                              <%= allConso.municipio %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.entreInfor %>
-                            </td>
-                            <td>
-                              <%= moment(allConso.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.entreCrono %>
-                            </td>
-                            <td>
-                              <%= moment(allConso.ForNAdmin.fechCrono,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.entreAsis %>
-                            </td>
-                            <td>
-                              <%= moment(allConso.ForNAdmin.fechAsis,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.entreCircu %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.NumCir %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.numActas %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.nomActas %>
-                            </td>
-                            <td>
-                              <%= allConso.ForNAdmin.motDevol %>
-                            </td>
-                            <td>
-                              <%= allConso.Observaciones %>
-                            </td>
-                          </tr>
-                          <% } %>
-                          <% }); %>
-                          <% } %>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
 
         </div>
-        <!-- /.container-fluid -->
-
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <%- include('../../tools/footer'); %>
-      <!-- End of Footer -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- /.container-fluid -->
+
+  </div>
+  <!-- End of Main Content -->
+
+  <!-- Footer -->
+  <%- include('../../tools/footer'); %>
+  <!-- End of Footer -->
+
+  </div>
+  <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
@@ -408,11 +273,6 @@
       nav4.className += "  active";
     });
     $('#dataTable').DataTable({
-      order: [
-        [1, 'desc']
-      ],
-    });
-    $('#dataTable2').DataTable({
       order: [
         [1, 'desc']
       ],

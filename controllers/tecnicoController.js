@@ -1,6 +1,8 @@
 import consolidaciones from "../models/consolidaciones.js";
 import hojavida from "../models/hojavida.js";
+import cronograma from "../models/cronograma.js";
 
+import fs from "fs";
 import jwt from "jsonwebtoken";
 import upload from "../middleware/upload.js";
 import { promisify } from "util";
@@ -18,6 +20,15 @@ var authTec = (function () {
         ruta: ruta,
       },
     ]);
+  };
+
+  var DeleteFile = async (nameFile) => {
+    try {
+      fs.unlinkSync("./upload/" + nameFile);
+      console.log("File removed");
+    } catch (err) {
+      console.error("Something wrong happened removing the file", err);
+    }
   };
 
   var SendConsolidacion = async (req, next) => {
@@ -311,7 +322,7 @@ var authTec = (function () {
     }
   };
 
-  var SendCorreccion = async (req, res, next, decodificada) => {
+  var SendCorreccion = async (req, res, next, decodificada, nameFile) => {
     var {
       motivo,
       fVisit,
@@ -558,6 +569,7 @@ var authTec = (function () {
       })
       .then((result) => {
         if (result != null) {
+          authTec.DeleteFile(nameFile);
           if (Ruta.length === 0) {
             authTec.isUser(
               req,
@@ -604,12 +616,25 @@ var authTec = (function () {
             "Error en la Base de Datos",
             "Envio Cancelado",
             "error",
-            false,
+            true,
             false,
             "/tecnico"
           );
           return next();
         }
+      })
+      .catch((error) => {
+        console.log(error);
+        authTec.isUser(
+          req,
+          "Envio Cancelado",
+          "No se encontro en la base de datos",
+          "error",
+          true,
+          false,
+          "/tecnico"
+        );
+        return next();
       });
   };
 
@@ -628,11 +653,77 @@ var authTec = (function () {
       .limit(1);
   };
 
+  var SendCronograma = async (req, next, decodificada) => {
+    new cronograma({
+      user: req.params.user,
+      nameTec: decodificada.nombres + " " + decodificada.apellidos,
+      provincia: decodificada.provincia,
+      mes: req.body.mesCron,
+      nameFile: req.file.filename,
+      createdAt: new Date(),
+    })
+      .save()
+      .then((result) => {
+        if (result) {
+          authTec.isUser(
+            req,
+            "Conexión exitosa",
+            "Cronograma Enviado",
+            "success",
+            false,
+            800,
+            "/tecnico"
+          );
+        } else {
+          authTec.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            false,
+            false,
+            "/tecnico"
+          );
+        }
+        return next();
+      });
+  };
+
+  var ValidarCronograma = async (req, next) => {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+
+    var validar = await cronograma.find({
+      user: req.params.user,
+      mes: req.body.mesCron,
+    });
+    if (validar.length === 0) {
+      authTec.SendCronograma(req, next, decodificada);
+    } else {
+      authTec.DeleteFile(req.file.filename);
+      authTec.isUser(
+        req,
+        "Cronograma Cancelado",
+        "Se encontro un cronograma por este mes",
+        "error",
+        true,
+        false,
+        "/tecnico"
+      );
+      return next();
+    }
+  };
+
   return {
     isUser: isUser,
+    DeleteFile: DeleteFile,
     SendConsolidacion: SendConsolidacion,
     SendCorreccion: SendCorreccion,
+    SendCronograma: SendCronograma,
     NextReport: NextReport,
+    ValidarCronograma: ValidarCronograma,
   };
 })();
 
@@ -722,120 +813,6 @@ export const ConsolidaEstados = async (req, res, next) => {
         req.visitAcep = data;
       });
 
-    //Totas de Visitas - IVC Publicidad
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.publicidad": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitIVCPubli = data;
-      });
-
-    //Totas de Visitas -IVC Rotulado
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.rotulado": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitRotu = data;
-      });
-
-    //Totas de Visitas - MS Establecimientos
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.MSEstablecimientos": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitMSEstab = data;
-      });
-
-    //Totas de Visitas - MS Productos
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.MSProductos": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitMSProd = data;
-      });
-
-    //Totas de Visitas - Cementerios
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
-      })
-      .count()
-      .then((data) => {
-        req.visitCemen = data;
-      });
-
-    //Totas de Visitas - Morgues
-    await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        tipo: "MORGUES",
-      })
-      .count()
-      .then((data) => {
-        req.visitMorg = data;
-      });
-
     //Totas de Visitas - Vacunaciones
     await consolidaciones
       .aggregate([
@@ -853,6 +830,66 @@ export const ConsolidaEstados = async (req, res, next) => {
           req.vacunas = 0;
         } else {
           req.vacunas = data[0].suma;
+        }
+      });
+
+    //Totas de Visitas - Vacunaciones
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            municipio: decodificada.municipioExtra1,
+            "consolidacion.antirrabica": "on",
+            status: "Aceptado",
+          },
+        },
+        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      ])
+      .then((data) => {
+        if (data.length == 0) {
+          req.vacunasExtra1 = 0;
+        } else {
+          req.vacunasExtra1 = data[0].suma;
+        }
+      });
+
+    //Totas de Visitas - Vacunaciones
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            municipio: decodificada.municipioExtra2,
+            "consolidacion.antirrabica": "on",
+            status: "Aceptado",
+          },
+        },
+        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      ])
+      .then((data) => {
+        if (data.length == 0) {
+          req.vacunasExtra2 = 0;
+        } else {
+          req.vacunasExtra2 = data[0].suma;
+        }
+      });
+
+    //Totas de Visitas - Vacunaciones
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            municipio: decodificada.municipioExtra3,
+            "consolidacion.antirrabica": "on",
+            status: "Aceptado",
+          },
+        },
+        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      ])
+      .then((data) => {
+        if (data.length == 0) {
+          req.vacunasExtra3 = 0;
+        } else {
+          req.vacunasExtra3 = data[0].suma;
         }
       });
 
@@ -887,6 +924,14 @@ export const LisConsolidaRechazadas = async (req, res, next) => {
     console.log(error);
     return next();
   }
+};
+export const UploadCronograma = async (req, res, next) => {
+  await upload(req, res, function (err, res) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authTec.ValidarCronograma(req, next);
+  });
 };
 
 //Apartado: Hojas de Vida
@@ -963,7 +1008,13 @@ export const EditConsolidacionRech = async (req, res, next) => {
       if (err) {
         return res.end("Error uploading file.");
       }
-      authTec.SendCorreccion(req, res, next, decodificada);
+      authTec.SendCorreccion(
+        req,
+        res,
+        next,
+        decodificada,
+        validar.evidencia.file
+      );
     });
   } else {
     authTec.isUser(

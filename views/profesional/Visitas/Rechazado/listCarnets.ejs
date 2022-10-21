@@ -1,0 +1,225 @@
+<html lang="es">
+
+<head>
+  <%- include('../../../tools/head'); %>
+  <link rel="stylesheet" href="/css/dropzone.css">
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../../tools/sidebarProf'); %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include('../../../tools/topbar'); %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg">
+              <div class="card-body p-0">
+                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver/ListadoCarnetizados">Listado de Carnetizados</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Corregir
+                    </li>
+                  </ol>
+                </nav>
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">LISTADO DE CARNETIZADOS</h1>
+                  </div>
+
+                  <form onsubmit="listCarnetsForm(event)" action="/profesional/Consolidaciones/Rechazado/ListadoCarnetizados/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="lisCarnetsON" name="lisCarnetsON" style="display: none;" readonly>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="expCarnet">Expedición del
+                          Carnet</label>
+                        <input type="date" class="form-control form-control-user" id="expCarnet" name="expCarnet" value="<%= moment(consolidacion.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('YYYY-MM-DD'); %>" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="idenCarnet">Identificación</label>
+                        <input type="number" class="form-control form-control-user" id="idenCarnet" name="idenCarnet" value="<%= consolidacion.ForCarnets.idenCarnet %>" />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="nameCarnet">Nombre Completo</label>
+                        <input type="text" class="form-control form-control-user" id="nameCarnet" name="nameCarnet" value="<%= consolidacion.ForCarnets.nombreCarnet %>" onkeyup="mayus(this);" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-7">
+                        <label class="mr-sm-2" for="estableciCarnet">Establecimiento
+                          Donde
+                          Labora</label>
+                        <input type="text" class="form-control form-control-user" id="estableciCarnet" name="estableciCarnet" value="<%= consolidacion.ForCarnets.establecimientoCarnet %>" onkeyup="mayus(this);" />
+                      </div>
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="direcCarnet">Dirección del
+                          Establecimiento</label>
+                        <input type="text" class="form-control form-control-user" id="direcCarnet" name="direcCarnet" value="<%= consolidacion.ForCarnets.direccionCarnet %>" onkeyup="mayus(this);" />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s) Nuevos</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Enviar Corrección
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../../tools/footer'); %>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+
+  <!-- Validations -->
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+        title: '<%= alert[0].alertTitle %>',
+        text:'<%= alert[0].alertMessage %>',
+        icon:'<%= alert[0].alertIcon %>',
+        showConfirmButton: <%= alert[0].showConfirmButton %>,
+        timer: <%= alert[0].timer %>
+      }).then(()=>{
+        window.location = '<%= alert[0].ruta %>'
+      })
+    </script>
+  <% } %>
+
+  <script>
+    $(window).bind('load', function() {
+      var nav = document.getElementById('nav2');
+      $('#navlink1').removeClass('collapsed');
+      var nav3 = document.getElementById('collapseOne');
+      var nav4 = document.getElementById('show1');
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+  </script>
+</body>
+
+</html>

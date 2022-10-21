@@ -64,6 +64,21 @@ var time = (function () {
     }
   };
 
+  var min2 = function (date) {
+    return date.getFullYear() + "-" + time.pad(date.getMonth()) + "-01";
+  };
+
+  var max2 = function (date) {
+    return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-01";
+  };
+
+  var pad2 = function (number) {
+    if (number < 10) {
+      return "0" + number;
+    }
+    return number;
+  };
+
   var pad = function (number) {
     if (number < 10) {
       return "0" + number;
@@ -76,6 +91,9 @@ var time = (function () {
     pad: pad,
     min: min,
     max: max,
+    min2: min2,
+    max2: max2,
+    pad2: pad2,
   };
 })();
 
@@ -103,11 +121,30 @@ if (document.getElementById("mes") != null) {
     document.getElementById("mes").value = MESES[date.getMonth()];
   }
 }
-if (document.getElementById("fVisit") != null) {
-  document.getElementById("fVisit").setAttribute("min", time.min(date));
-  document.getElementById("fVisit").setAttribute("max", time.max(date));
-  document.getElementById("fVisit").value = time.formatDate(date);
-}
+
+// if (document.getElementById("fVisit") != null) {
+//   document
+//     .getElementById("fVisit")
+//     .setAttribute(
+//       "min",
+//       new Date(new Date().getFullYear(), new Date().getMonth() - 1)
+//     );
+//   // document.getElementById("fVisit").setAttribute("max", time.max2(date));
+//   document.getElementById("fVisit").value = new Date()
+//     .toJSON()
+//     .substring(0, 10);
+// }
+
+// if (document.getElementById("fVisit") != null) {
+//   document.getElementById("fVisit").setAttribute("min", time.min(date));
+//   document.getElementById("fVisit").setAttribute("max", time.max(date));
+//   document.getElementById("fVisit").value = time.formatDate(date);
+// }
+
+// value={new Date().toJSON().substring(0,10)}
+//    min={new Date(new Date().getFullYear(), new Date().getMonth()-1, new
+//    Date().getDate()).toJSON().substring(0,10)}
+
 function eventSalud(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
@@ -420,6 +457,13 @@ function validConsolidacion(e) {
 
   if (document.getElementById("actaAnul").value == "Seleccione") {
     toast.toastInfo("Advertencia", "Seleccione si el Acta fue anulada");
+    e.preventDefault();
+  }
+}
+
+function UploadCronograma(e) {
+  if (document.getElementById("mesCron").value == "" || document.getElementById("myFile").files.length == 0) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
   }
 }

@@ -87,6 +87,9 @@
                     <button class="btn btn-primary btn-user btn-block" type="submit">
                       Enviar Reporte
                     </button>
+                    <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= consolidacion._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-user btn-block">
+                      Eliminar Reporte
+                    </a>
                   </form>
                 </div>
               </div>
@@ -109,6 +112,33 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+
+  <!-- Delete Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Esta seguro de eliminar esta consolidación?
+          <br>
+          <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a id="formDeleteCons" class="btn btn-primary">
+            Eliminar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,7 +176,7 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
+  <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
   <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
 
   <!-- Alert -->

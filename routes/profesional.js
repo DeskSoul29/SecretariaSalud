@@ -40,15 +40,9 @@ router.get(
       consEnv: req.consEnv,
       consCorre: req.consCorre,
       consAcep: req.consAcep,
-      consRech: req.consRech,
+      consRechProf: req.consRechProf,
       allConso: req.allConso,
       visitAcep: req.visitAcep,
-      visitIVCPubli: req.visitIVCPubli,
-      visitRotu: req.visitRotu,
-      visitMSEstab: req.visitMSEstab,
-      visitMSProd: req.visitMSProd,
-      visitCemen: req.visitCemen,
-      visitMorg: req.visitMorg,
       vacunas: req.vacunas,
       moment: moment,
     });
@@ -157,7 +151,7 @@ router.get(
   fillMunicipio,
   CountActas,
   (req, res) => {
-    res.render("profesional/Visitas/Envia/nAdmin", {
+    res.render("profesional/Visitas/Enviar/nAdmin", {
       user: req.user,
       fields: req.localidades,
       actaAnul: req.actaAnul,
@@ -169,7 +163,7 @@ router.post(
   isAuthenticatedProf,
   SendNovedad,
   (req, res) => {
-    res.render("profesional/Visitas/Envia/nAdmin", {
+    res.render("profesional/Visitas/Enviar/nAdmin", {
       user: req.user,
       fields: false,
       actaAnul: false,
@@ -568,6 +562,18 @@ router.get(
   SeeProfConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/quejas", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/NoveAdministrativa",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/nAdmin", {
       user: req.user,
       allConso: req.allConso,
       moment: moment,

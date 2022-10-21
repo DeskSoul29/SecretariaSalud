@@ -3,6 +3,7 @@ import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import fs from "fs";
 import consolidaciones from "../models/consolidaciones.js";
 import { promisify } from "util";
 
@@ -19,6 +20,33 @@ var authCoordi = (function () {
         ruta: ruta,
       },
     ]);
+  };
+
+  var DeleteFile = async (nameFile) => {
+    try {
+      fs.unlinkSync("./upload/" + nameFile);
+    } catch (err) {
+      console.error("Something wrong happened removing the file", err);
+    }
+  };
+
+  var DeleteConsolidacion = async (req, fileName, next) => {
+    await consolidaciones
+      .findByIdAndDelete(req.params.id)
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Eliminado Correctamente",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver"
+        );
+        authCoordi.DeleteFile(fileName);
+      })
+      .catch((error) => console.error(error));
+    return next();
   };
 
   var UpdateCorreccion = async (req, next, nextCons) => {
@@ -117,6 +145,8 @@ var authCoordi = (function () {
 
   return {
     isUser: isUser,
+    DeleteFile: DeleteFile,
+    DeleteConsolidacion: DeleteConsolidacion,
     UpdateCorreccion: UpdateCorreccion,
     SearchNextConsolidacion: SearchNextConsolidacion,
   };
@@ -359,20 +389,24 @@ export const changePass = async (req, res, next) => {
 //Apartado: Consolidaciones
 export const deleteCons = async (req, res, next) => {
   await consolidaciones
-    .findByIdAndDelete(req.params.id)
+    .findById(req.params.id)
     .then((result) => {
-      authCoordi.isUser(
-        req,
-        "Conexión exitosa",
-        "Eliminado Correctamente",
-        "success",
-        false,
-        800,
-        "/coordinacion/Consolidaciones/Ver"
-      );
+      if (result == null) {
+        authCoordi.isUser(
+          req,
+          "Reporte Cancelado",
+          "No se encontro la consolidacion",
+          "error",
+          true,
+          false,
+          "/coordinacion/Consolidaciones/Ver"
+        );
+        return next();
+      } else {
+        authCoordi.DeleteConsolidacion(req, result.evidencia.file, next);
+      }
     })
     .catch((error) => console.error(error));
-  return next();
 };
 //Consolidaciones - Consultar
 export const SeeCoorConsolidaciones = async (req, res, next) => {

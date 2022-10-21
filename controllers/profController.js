@@ -550,13 +550,11 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
 
+    //Consolidaciones Pendientes
     await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
         },
         status: { $eq: "Pendiente" },
       })
@@ -565,13 +563,11 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         req.consPend = data;
       });
 
+    //Consolidaciones Corregidas
     await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
         },
         status: {
           $eq: "Corregido",
@@ -582,13 +578,11 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         req.consCorre = data;
       });
 
+    //Consolidaciones Enviadas
     await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
         },
         status: {
           $eq: "Enviado",
@@ -599,13 +593,14 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         req.consEnv = data;
       });
 
+    //Consolidaciones Rechazadas Del Profesional
     await consolidaciones
       .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
         provincia: {
           $eq: decodificada.provincia,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
         },
         status: {
           $eq: "Rechazado",
@@ -613,9 +608,10 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       })
       .count()
       .then((data) => {
-        req.consRech = data;
+        req.consRechProf = data;
       });
 
+    //Consolidaciones Aceptadas
     await consolidaciones
       .find({
         provincia: {
@@ -651,121 +647,7 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         req.visitAcep = data;
       });
 
-    //Totas de Visitas - IVC Publicidad
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.publicidad": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitIVCPubli = data;
-      });
-
-    //Totas de Visitas -IVC Rotulado
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.rotulado": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitRotu = data;
-      });
-
-    //Totas de Visitas - MS Establecimientos
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.MSEstablecimientos": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitMSEstab = data;
-      });
-
-    //Totas de Visitas - MS Productos
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        "consolidacion.MSProductos": { $eq: "on" },
-      })
-      .count()
-      .then((data) => {
-        req.visitMSProd = data;
-      });
-
-    //Totas de Visitas - Cementerios
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        tipo: "CEMENTERIOS (CON O SIN MORGUE)",
-      })
-      .count()
-      .then((data) => {
-        req.visitCemen = data;
-      });
-
-    //Totas de Visitas - Morgues
-    await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
-        },
-        status: {
-          $eq: "Aceptado",
-        },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        tipo: "MORGUES",
-      })
-      .count()
-      .then((data) => {
-        req.visitMorg = data;
-      });
-
-    //Totas de Visitas - Vacunaciones
+    //Total de Visitas - Vacunaciones
     await consolidaciones
       .aggregate([
         {

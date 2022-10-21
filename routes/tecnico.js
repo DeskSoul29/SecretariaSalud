@@ -7,6 +7,7 @@ import {
   LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   EditConsolidacionRech,
+  UploadCronograma,
   SendConsolidacion,
 } from "../controllers/tecnicoController.js";
 
@@ -36,14 +37,35 @@ router.get(
       consAcep: req.consAcep,
       ListconsRech: req.ListconsRech,
       visitAcep: req.visitAcep,
-      visitIVCPubli: req.visitIVCPubli,
-      visitRotu: req.visitRotu,
-      visitMSEstab: req.visitMSEstab,
-      visitMSProd: req.visitMSProd,
-      visitCemen: req.visitCemen,
-      visitMorg: req.visitMorg,
+      vacunasExtra1: req.vacunasExtra1,
+      vacunasExtra2: req.vacunasExtra2,
+      vacunasExtra3: req.vacunasExtra3,
       vacunas: req.vacunas,
       moment: moment,
+      alert: undefined,
+    });
+  }
+);
+// Dashboad - Cronograma
+router.post(
+  "/Consolidaciones/Cronograma/:user",
+  isAuthenticatedTecnic,
+  UploadCronograma,
+  (req, res) => {
+    res.render("tecnico/main", {
+      user: req.user,
+      consPend: false,
+      consCorre: false,
+      consEnv: false,
+      consAcep: false,
+      ListconsRech: false,
+      visitAcep: false,
+      vacunasExtra1: false,
+      vacunasExtra2: false,
+      vacunasExtra3: false,
+      vacunas: false,
+      moment: false,
+      alert: req.alert,
     });
   }
 );

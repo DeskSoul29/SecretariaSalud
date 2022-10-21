@@ -57,11 +57,11 @@ if (document.getElementById("mes") != null) {
     document.getElementById("mes").value = MESES[date.getMonth()];
   }
 }
-
-document.getElementById("fVisit").setAttribute("min", time.min(date));
-document.getElementById("fVisit").setAttribute("max", time.max(date));
-document.getElementById("fVisit").value = time.formatDate(date);
-
+if (document.getElementById("fVisit") != null) {
+  document.getElementById("fVisit").setAttribute("min", time.min(date));
+  document.getElementById("fVisit").setAttribute("max", time.max(date));
+  document.getElementById("fVisit").value = time.formatDate(date);
+}
 function formChangePass(e) {
   if (
     document.getElementById("pass").value == 0 ||

@@ -73,6 +73,11 @@ const modalsEstablecimientos = (function () {
       );
     } else if (consolidacion.value == "Quejas") {
       window.open("/profesional/Consolidaciones/Enviar/Quejas", "_self");
+    } else if (consolidacion.value == "Novedad Administrativa") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/NoveAdministrativa",
+        "_self"
+      );
     }
   };
 
@@ -117,9 +122,9 @@ const modalsEstablecimientos = (function () {
         "/profesional/Consolidaciones/Ver/AntirrabicaAnimal",
         "_self"
       );
-    } else if (consolidacion.value == "Novedad Administrativa") {
+    } else if (consolidacion.value == "Novedades Administrativas") {
       window.open(
-        "/profesional/Consolidaciones/Enviar/NoveAdministrativa",
+        "/profesional/Consolidaciones/Ver/NoveAdministrativa",
         "_self"
       );
     }

@@ -4,6 +4,7 @@
 <head>
   <%- include('../tools/head'); %>
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -29,7 +30,7 @@
               <%= user.apellido %>
             </h1>
             <div id="btnCronograma" style="display: none;">
-              <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class=" fas fa-download fa-sm text-white-50"></i> Subir Cronograma</a>
+              <a href="#" type="button" data-target="#cronoModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class=" fas fa-download fa-sm text-white-50"></i> Subir Cronograma</a>
             </div>
           </div>
 
@@ -144,6 +145,8 @@
           </div>
 
           <div class="row">
+
+            <!-- Listado Consolidaciones Rechazadas -->
             <div class="col-xl-9">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -224,40 +227,35 @@
               </div>
             </div>
 
+            <!-- Listado de Herramientas Extras -->
             <div class="col-xl-3">
               <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Vacunaciones
-                  <span class="badge badge-primary badge-pill"><%= vacunas %></span>
-                </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Total Visitas
                   <span class="badge badge-primary badge-pill"><%= visitAcep %></span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  IVC Publicidad
-                  <span class="badge badge-primary badge-pill"><%= visitIVCPubli %></span>
+                  Vacunación - <%= user.municipio %>
+                  <span class="badge badge-primary badge-pill"><%= vacunas %></span>
                 </li>
+                <% if(user.municipioExtra1 != null){ %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  IVC Rotulado
-                  <span class="badge badge-primary badge-pill"><%= visitRotu %></span>
+                  Vacunación - <%= user.municipioExtra1 %>
+                  <span class="badge badge-primary badge-pill"><%= vacunasExtra1 %></span>
                 </li>
+                <% } %>
+                <% if(user.municipioExtra2 != null){ %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  M.S. Establecimientos
-                  <span class="badge badge-primary badge-pill"><%= visitMSEstab %></span>
+                  Vacunación - <%= user.municipioExtra2 %>
+                  <span class="badge badge-primary badge-pill"><%= vacunasExtra2 %></span>
                 </li>
+                <% } %>
+                <% if(user.municipioExtra3 != null){ %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                  M.S. Productos
-                  <span class="badge badge-primary badge-pill"><%= visitMSProd %></span>
+                  Vacunación - <%= user.municipioExtra3 %>
+                  <span class="badge badge-primary badge-pill"><%= vacunasExtra3 %></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Cementerios
-                  <span class="badge badge-primary badge-pill"><%= visitCemen %></span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  Morgues
-                  <span class="badge badge-primary badge-pill"><%= visitMorg %></span>
-                </li>
+                <% } %>
               </ul>
             </div>
 
@@ -281,12 +279,51 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Cronograma Modal-->
+  <div class="modal fade" id="cronoModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <h5 class="modal-title">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form onsubmit="UploadCronograma(event)" method="POST" action="/tecnico/Consolidaciones/Cronograma/<%= user.user %>" enctype="multipart/form-data">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="mesCron" class="form-label">MES:</label>
+              <input type="text" class="form-control" name="mesCron" id="mesCron">
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="fields">Adjuntar
+                Archivo(s)</label>
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+              </div>
+            </div>
+            <b>*RECUERDE QUE ESTA ACCIÓN ES UNICA EN EL MES*</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Salida</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
@@ -319,15 +356,56 @@
   <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
+
+  <!-- Validations -->
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <script>
     $(window).bind("load", function() {
       var nav = document.getElementById("nav1");
       nav.className += "  active";
+      var date = new Date()
+
+      if (date.getDate() >= 1 && date.getDate() < 4) {
+        let MESES = [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre",
+        ];
+        document.getElementById("btnCronograma").removeAttribute("style");
+        document.getElementById("mesCron").value = MESES[date.getMonth()];
+      }
     });
   </script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+        title: '<%= alert[0].alertTitle %>',
+        text:'<%= alert[0].alertMessage %>',
+        icon:'<%= alert[0].alertIcon %>',
+        showConfirmButton: <%= alert[0].showConfirmButton %>,
+        timer: <%= alert[0].timer %>
+      }).then(()=>{
+        window.location = '<%= alert[0].ruta %>'
+      })
+    </script>
+  <% } %>
 </body>
 
 </html>

@@ -1,0 +1,667 @@
+<html lang="es">
+
+<head>
+  <%- include('../../../tools/head'); %>
+  <link rel="stylesheet" href="/css/dropzone.css">
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <%- include('../../../tools/sidebarProf'); %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <%- include('../../../tools/topbar'); %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg">
+              <div class="card-body p-0">
+                <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                      <a href="/profesional/Consolidaciones/Ver/Establecimientos">Establecimientos</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                      Corregir
+                    </li>
+                  </ol>
+                </nav>
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">ESTABLECIMIENTOS</h1>
+                  </div>
+
+                  <form onsubmit="establecimientosForm(event)" action="/profesional/Consolidaciones/Rechazado/Establecimientos/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="establecimientoON" name="establecimientoON" style="display: none;" readonly>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-8 mb-3 mb-sm-0">
+                        <label class="mr-sm-2" for="grupEsta">Grupo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="codEsta">Codigo</label>
+                        <input type="text" value="<%= consolidacion.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                        <input type="text" value="<%= consolidacion.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                          Establecimiento</label>
+                        <input type="text" value="<%= consolidacion.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                        <input type="text" value="<%= consolidacion.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-3" for="tIden">Tipo </label>
+                        <input type="text" value="<%= consolidacion.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="inputIden">Identificación</label>
+                        <input type="number" value="<%= consolidacion.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="phone">Telefono</label>
+                        <input type="number" value="<%= consolidacion.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                        <input type="text" value="<%= consolidacion.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                        <input type="text" value="<%= consolidacion.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="estado">Estado</label>
+                        <input type="text" value="<%= consolidacion.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
+                        <input type="date" id="fVisit" name="fVisit" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="score">Puntaje</label>
+                        <input type="number" type="number" placeholder="1.0" min="0" max="100" step="0.1" id="score" name="score" class="form-control form-control-user" value="<%= consolidacion.score %>" />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="concepto">Concepto</label>
+                        <input type="text" class="form-control form-control-user" id="concepto" name="concepto" readonly value="<%= consolidacion.concepto %>" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="accion">Acción Realizada</label>
+                        <select id="accion" name="accion" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione La Acción
+                          </option>
+                          <option value="INSPECCIÓN">INSPECCIÓN</option>
+                          <option value="CONTROL">CONTROL</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-8">
+                        <label class="mr-sm-2" for="acta">Tipo de Acta
+                          Utilizada</label>
+                        <select id="acta" name="acta" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - PREPARARACIÓN DE ALIMENTOS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE CARNE">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE CARNE
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE ALIMENTOS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - GRANDES SUPERFICIES">
+                            ENFOQUE DE RIESGO - GRANDES SUPERFICIES
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - ALMACENAMIENTO">
+                            ENFOQUE DE RIESGO - ALMACENAMIENTO
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA">
+                            ENFOQUE DE RIESGO - VENTA EN VÍA PÚBLICA
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS">
+                            ENFOQUE DE RIESGO - EXPENDIOS DE BEBIDAS ALCOHÓLICAS
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - PLAZAS DE MERCADO">
+                            ENFOQUE DE RIESGO - PLAZAS DE MERCADO
+                          </option>
+                          <option value="ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS">
+                            ENFOQUE DE RIESGO - ENSAMBLES DE ALIMENTOS
+                          </option>
+                          <option value="PGIRHS">PGIRHS</option>
+                          <option value="CEMENTERIOS">CEMENTERIOS</option>
+                          <option value="ACUEDUCTOS">ACUEDUCTOS</option>
+                          <option value="PISCINAS">PISCINAS</option>
+                          <option value="PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE PLAGUICIDAS">
+                            PARA DEPOSITOS, ALMACENES Y EXPENDIOS COMERCIALES DE
+                            PLAGUICIDAS
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row" id="extraEstablecimiento">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="actaLey">¿Aplico Acta De La Ley 1335?</label>
+                        <select id="actaLey" name="actaLey" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="SI">SI</option>
+                          <option value="NO">NO</option>
+                        </select>
+                      </div>
+
+                      <div id="templeCementerios" class="col-sm-8" style="display: none;">
+                        <label class="mr-sm-3" for="NecroMorg">¿El Cementerio Cuenta con
+                          Sala de Necropsia o
+                          Morgue?</label>
+                        <select id="NecroMorg" name="NecroMorg" class="custom-select mr-sm-2">
+                          <option selected disabled>
+                            Seleccione
+                          </option>
+                          <option value="SI">SI</option>
+                          <option value="NO">NO</option>
+                        </select>
+                      </div>
+
+                      <div class="col-sm-4" id="extraEstablecimientoIVC" style="display: none">
+                        <label class="mr-sm-2">Acciones IVC Adicional</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="rotuladoON" name="rotuladoON" />
+                          <label class="form-check-label" for="rotuladoON">ROTULADO</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="publicidadON" name="publicidadON" />
+                          <label class="form-check-label" for="publicidadON">PUBLICIDAD</label>
+                        </div>
+                      </div>
+                      <div class="col-sm-4" id="extraEstablecimientoMD" style="display: none">
+                        <label class="mr-sm-2">Medidas Sanitarias</label>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="establecimientosON" name="establecimientosON" />
+                          <label class="form-check-label" for="establecimientosON">ESTABLECIMIENTOS</label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="productosON" name="productosON" />
+                          <label class="form-check-label" for="productosON">PRODUCTOS</label>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Rotulado -->
+                    <div id="rotuladoTemplate" style="display: none;">
+
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">IVC Rotulado</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="productoRotulado">Producto</label>
+                          <input type="text" id="productoRotulado" name="productoRotulado" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Publicidad -->
+                    <div id="publicidadTemplate" style="display: none;">
+
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">IVC Publicidad</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="medPubli">Medio Publicitario</label>
+                          <select id="medPubli" name="medPubli" class="custom-select mr-sm-2">
+                            <option selected disabled>
+                              Seleccione
+                            </option>
+                            <option value="REVISTA">REVISTA</option>
+                            <option value="PERIODICO">PERIODICO</option>
+                            <option value="FOLLETO">FOLLETO</option>
+                            <option value="VALLA">VALLA</option>
+                            <option value="VOLANTE">VOLANTE</option>
+                            <option value="RADIO">RADIO</option>
+                            <option value="TELEVISION">TELEVISION</option>
+                            <option value="VEHICULO">VEHICULO</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-8">
+                          <label class="mr-sm-2" for="permisoSanitario">N° Registro/Permiso/Notificación Sanitario</label>
+                          <input type="text" id="permisoSanitario" name="permisoSanitario" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="productoPublicidad">Producto</label>
+                          <input type="text" id="productoPublicidad" name="productoPublicidad" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="marcaPublicidad">Marca</label>
+                          <input type="text" id="marcaPublicidad" name="marcaPublicidad" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Medidas Sanitarias a Establecimientos -->
+                    <div id="MedEstablecimientosTemplate" style="display: none;">
+
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Establecimientos</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="medidaApliEstable">Medida Aplicada</label>
+                          <select id="medidaApliEstable" name="medidaApliEstable" class="custom-select mr-sm-2">
+                            <option selected disabled>Seleccione</option>
+                            <option value="CLAUSURA TEMPORAL TOTAL">CLAUSURA TEMPORAL TOTAL</option>
+                            <option value="CLAUSURA TEMPORAL PARCIAL">
+                              CLAUSURA TEMPORAL PARCIAL
+                            </option>
+                            <option value="SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS">
+                              SUSPENSIÓN TOTAL DE TRABAJOS O SERVICIOS
+                            </option>
+                            <option value="SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS">
+                              SUSPENSIÓN PARCIAL DE TRABAJOS O SERVICIOS
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="motivoApli">Motivo de Aplicación de la Medida</label>
+                          <input type="text" id="motivoApli" name="motivoApli" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="observacionMedEsta">Observaciones de Medidas Sanitarias a Establecimientos (Opcional)</label>
+                          <textarea id="observacionMedEsta" name="observacionMedEsta" class="form-control form-control-user" onkeyup="mayus(this);"><%= consolidacion.ForMSEstablecimientos.observacionMedEsta %></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Medidas Sanitarias a Productos -->
+                    <div id="MedProductosTemplate" style="display: none;">
+                      <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                      <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Medidas Sanitarias a Productos</h1>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="medidaApliProduc">Medida Aplicada</label>
+                          <select id="medidaApliProduc" name="medidaApliProduc" class="custom-select mr-sm-2">
+                            <option selected disabled>Seleccione</option>
+                            <option value="CONGELAMIENTO">CONGELAMIENTO</option>
+                            <option value="DECOMISO">DECOMISO</option>
+                            <option value="DESTRUCCIÓN">DESTRUCCIÓN</option>
+                          </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="permisoProduco">Permiso o Notificación</label>
+                          <input type="text" id="permisoProduco" name="permisoProduco" class="form-control form-control-user" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="productoMed">Producto</label>
+                          <input type="text" id="productoMed" name="productoMed" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                        <div class="col-sm-6">
+                          <label class="mr-sm-2" for="marcaProduct">Marca</label>
+                          <input type="text" id="marcaProduct" name="marcaProduct" onkeyup="mayus(this);" class="form-control form-control-user" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="motivoProduct">Motivo de Aplicación de la Medida</label>
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="motivoProduct" name="motivoProduct" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="presentProduct">Presentación</label>
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="presentProduct" name="presentProduct" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="cantProdu">Cantidad</label>
+                          <input type="number" min="0" class="form-control form-control-user monto" id="cantProdu" name="cantProdu" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="fabriProduc">Fabricante</label>
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="fabriProduc" name="fabriProduc" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="loteProduc">Lote</label>
+                          <input type="text" onkeyup="mayus(this);" class="form-control form-control-user" id="loteProduc" name="loteProduc" />
+                        </div>
+                        <div class="col-sm-4">
+                          <label class="mr-sm-2" for="fechProduc">Fecha de Vencimiento</label>
+                          <input type="date" class="form-control form-control-user" id="fechProduc" name="fechProduc" />
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
+                        <div class="col-sm-12">
+                          <label class="mr-sm-2" for="observacionMedProd">Observaciones de Medidas Sanitarias a Productos
+                            (Opcional)</label>
+                          <textarea name="observacionMedProd" id="observacionMedProd" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s) Nuevos</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Enviar Corrección
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../../tools/footer'); %>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Seleccione "Cerrar sesión" a continuación si está listo para
+          finalizar su sesión actual.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+
+  <!-- Validations -->
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+
+  <!-- Dropzone -->
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+        title: '<%= alert[0].alertTitle %>',
+        text:'<%= alert[0].alertMessage %>',
+        icon:'<%= alert[0].alertIcon %>',
+        showConfirmButton: <%= alert[0].showConfirmButton %>,
+        timer: <%= alert[0].timer %>
+      }).then(()=>{
+        window.location = '<%= alert[0].ruta %>'
+      })
+    </script>
+  <% } %>
+
+  <script>
+    $(window).bind('load', function() {
+      var nav = document.getElementById('nav2');
+      $('#navlink1').removeClass('collapsed');
+      var nav3 = document.getElementById('collapseOne');
+      var nav4 = document.getElementById('show1');
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+  </script>
+
+  <script>
+    if (document.getElementById("tipoEsta").value != "MORGUES" && document.getElementById("tipoEsta").value != "CEMENTERIOS (CON O SIN MORGUE)") {
+      document.getElementById("extraEstablecimientoIVC").removeAttribute("style");
+      document.getElementById("extraEstablecimientoMD").removeAttribute("style");
+    }
+    if (document.getElementById("publicidadON").checked) {
+      alert("hola")
+    }
+
+    $("#rotuladoON").change(function() {
+      if ($("#rotuladoON").is(":checked")) {
+        document.getElementById("rotuladoTemplate").removeAttribute("style");
+      } else {
+        document.getElementById("rotuladoTemplate").style = "display:none";
+      }
+    });
+
+    $("#publicidadON").change(function() {
+      if ($("#publicidadON").is(":checked")) {
+        document.getElementById("publicidadTemplate").removeAttribute("style");
+      } else {
+        document.getElementById("publicidadTemplate").style = "display:none";
+      }
+    });
+
+    $("#productosON").change(function() {
+      if ($("#productosON").is(":checked")) {
+        document.getElementById("MedProductosTemplate").removeAttribute("style");
+      } else {
+        document.getElementById("MedProductosTemplate").style = "display:none";
+      }
+    });
+
+    $("#establecimientosON").change(function() {
+      if ($("#establecimientosON").is(":checked")) {
+        document.getElementById("MedEstablecimientosTemplate").removeAttribute("style");
+      } else {
+        document.getElementById("MedEstablecimientosTemplate").style = "display:none";
+      }
+    });
+  </script>
+
+  <script>
+    var rotulado = "<%= consolidacion.consolidacion.rotulado %>";
+    var publicidad = "<%= consolidacion.consolidacion.publicidad %>";
+    var MSEstable = "<%= consolidacion.consolidacion.MSEstablecimientos %>";
+    var MSProduct = "<%= consolidacion.consolidacion.MSProductos %>";
+    var Cementerio = "<%= consolidacion.salaNM %>";
+
+    if (document.getElementById("grupEsta").value == "ACUEDUCTO") {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "AcueductoConcepto(this);");
+    } else if (
+      document.getElementById("codEsta").value >= 1 &&
+      document.getElementById("codEsta").value < 11
+    ) {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "AlimentosConcepto(this);");
+    } else if (document.getElementById("codEsta").value >= 12) {
+      document
+        .getElementById("score")
+        .setAttribute("onkeyup", "EstablecimientosConcepto(this);");
+    }
+
+    document.getElementById("accion").value = "<%= consolidacion.accion %>"
+    document.getElementById("acta").value = "<%= consolidacion.acta %>"
+    document.getElementById("actaLey").value = "<%= consolidacion.actaLey %>"
+
+    if (rotulado === "on") {
+      document.getElementById("rotuladoON").setAttribute("checked", "checked")
+      document.getElementById("rotuladoTemplate").removeAttribute("style");
+      document.getElementById("productoRotulado").value = "<%= consolidacion.ForRotulado.productoRotulado %>"
+    }
+    if (publicidad === "on") {
+      document.getElementById("publicidadON").setAttribute("checked", "checked")
+      document.getElementById("publicidadTemplate").removeAttribute("style");
+      document.getElementById("medPubli").value = "<%= consolidacion.ForPublicidad.medioPublicitario %>"
+      document.getElementById("permisoSanitario").value = "<%= consolidacion.ForPublicidad.registroSanitario %>"
+      document.getElementById("productoPublicidad").value = "<%= consolidacion.ForPublicidad.productoPublicidad %>"
+      document.getElementById("marcaPublicidad").value = "<%= consolidacion.ForPublicidad.marcaPublicidad %>"
+    }
+    if (MSEstable === "on") {
+      document.getElementById("establecimientosON").setAttribute("checked", "checked")
+      document.getElementById("MedEstablecimientosTemplate").removeAttribute("style");
+      document.getElementById("medidaApliEstable").value = "<%= consolidacion.ForMSEstablecimientos.medidaMSEstablecimientos %>"
+      document.getElementById("motivoApli").value = "<%= consolidacion.ForMSEstablecimientos.motivoMSEstablecimientos %>"
+      // document.getElementById("observacionMedEsta").value = "<%= consolidacion.ForMSEstablecimientos.medidaMSEstablecimientos %>"
+    }
+    if (MSProduct === "on") {
+      document.getElementById("productosON").setAttribute("checked", "checked")
+      document.getElementById("MedProductosTemplate").removeAttribute("style");
+      document.getElementById("medidaApliProduc").value = "<%= consolidacion.ForMSProductos.medidaMSProductos %>"
+      document.getElementById("permisoProduco").value = "<%= consolidacion.ForMSProductos.permisoMSProductos %>"
+      document.getElementById("productoMed").value = "<%= consolidacion.ForMSProductos.productoMSProductos %>"
+      document.getElementById("marcaProduct").value = "<%= consolidacion.ForMSProductos.marcaMSProductos %>"
+      document.getElementById("motivoProduct").value = "<%= consolidacion.ForMSProductos.motivoMSProductos %>"
+      document.getElementById("presentProduct").value = "<%= consolidacion.ForMSProductos.presentacionMSProductos %>"
+      document.getElementById("cantProdu").value = "<%= consolidacion.ForMSProductos.cantidadMSProductos %>"
+      document.getElementById("fabriProduc").value = "<%= consolidacion.ForMSProductos.fabricanteMSProductos %>"
+      document.getElementById("loteProduc").value = "<%= consolidacion.ForMSProductos.loteMSProductos %>"
+      document.getElementById("fechProduc").value = "<%= moment(consolidacion.ForMSProductos.vencimientoMSProductos).format('YYYY-MM-DD'); %>"
+      // $('observacionMedProd').val(<%= consolidacion.ForMSProductos.observacionMedProd %>)
+      $('#observacionMedProd').val('<%= consolidacion.ForMSProductos.observacionMedProd %>');
+    }
+    console.log(document.getElementById("observacionMedProd").value)
+    if (Cementerio != "") {
+      document.getElementById("templeCementerios").removeAttribute("style");
+      document.getElementById("NecroMorg").value = "<%= consolidacion.salaNM %>"
+    }
+  </script>
+</body>
+
+</html>
