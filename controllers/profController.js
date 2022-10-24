@@ -6,6 +6,7 @@ import consolidaciones from "../models/consolidaciones.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import { promisify } from "util";
+import fs from "fs";
 import upload from "../middleware/upload.js";
 
 var authProf = (function () {
@@ -317,6 +318,348 @@ var authProf = (function () {
     }
   };
 
+  var SendCorreccion = async (req, res, next, decodificada, nameFile) => {
+    var {
+      motivo,
+      fVisit,
+      score,
+      concepto,
+      accion,
+      //Cementerio
+      NecroMorg,
+      //Establecimiento
+      establecimientoON,
+      acta,
+      actaLey,
+      actaAnul,
+      //Rotulado
+      rotuladoON,
+      productoRotulado,
+      //Publicidad
+      publicidadON,
+      medPubli,
+      permisoSanitario,
+      productoPublicidad,
+      marcaPublicidad,
+      //MEDEstablecimientos
+      establecimientosON,
+      medidaApliEstable,
+      motivoApli,
+      observacionMedEsta,
+      //MEDProductos
+      productosON,
+      medidaApliProduc,
+      permisoProduco,
+      productoMed,
+      marcaProduct,
+      motivoProduct,
+      presentProduct,
+      cantProdu,
+      fabriProduc,
+      loteProduc,
+      fechProduc,
+      observacionMedProd,
+      //Antirrabica
+      antirrabicaON,
+      Pcanina,
+      Pfelina,
+      caninosUrbano,
+      caninosRural,
+      felinosUrbano,
+      felinosRural,
+      totalVacunados,
+      //EduSanitaria
+      eduSanitariaON,
+      temaCap,
+      otrosCap,
+      fechaCap,
+      intensidadCap,
+      lugCap,
+      personalCap,
+      totalPersCap,
+      //EvenSalPublica
+      EvenSaludPubliON,
+      mes,
+      etasPresent,
+      etasAtend,
+      intoxPresent,
+      intoxAtend,
+      agrePresent,
+      agreAtend,
+      trueFalse,
+      fReunion,
+      //Carnetizados
+      lisCarnetsON,
+      expCarnet,
+      idenCarnet,
+      nameCarnet,
+      estableciCarnet,
+      direcCarnet,
+      //Quejas
+      quejasON,
+      tipQueja,
+      fechRece,
+      perCausa,
+      perAfec,
+      descQueja,
+      requeQueja,
+      //Toma de Muestras
+      tomaMuestraON,
+      tipMues,
+      descripTip,
+      tipAnali,
+      zona,
+      objEst,
+      acompananteEmp,
+      observacion,
+      //Vehiculos
+      vehiculosON,
+      classVehi,
+      otroV,
+      placa,
+      refriV,
+      nInscrip,
+      produTrans,
+    } = req.body;
+
+    establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
+    rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
+    publicidadON = publicidadON == undefined ? "" : publicidadON;
+    productosON = productosON == undefined ? "" : productosON;
+    establecimientosON =
+      establecimientosON == undefined ? "" : establecimientosON;
+    antirrabicaON = antirrabicaON == undefined ? "" : antirrabicaON;
+    eduSanitariaON = eduSanitariaON == undefined ? "" : eduSanitariaON;
+    EvenSaludPubliON = EvenSaludPubliON == undefined ? "" : EvenSaludPubliON;
+    lisCarnetsON = lisCarnetsON == undefined ? "" : lisCarnetsON;
+    vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
+    tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
+    quejasON = quejasON == undefined ? "" : quejasON;
+
+    var Ruta = await authProf.NextReport(req, decodificada);
+
+    await consolidaciones
+      .findByIdAndUpdate(req.params._id, {
+        $set: {
+          status: "Enviado",
+          fvisit: fVisit,
+          score: score,
+          concepto: concepto,
+          accion: accion,
+
+          acta: acta,
+          actaLey: actaLey,
+          actaAnul: actaAnul,
+
+          salaNM: NecroMorg,
+
+          consolidacion: {
+            establecimiento: establecimientoON,
+            rotulado: rotuladoON,
+            publicidad: publicidadON,
+            MSProductos: productosON,
+            MSEstablecimientos: establecimientosON,
+            antirrabica: antirrabicaON,
+            eduSanitaria: eduSanitariaON,
+            EvenSaludPubli: EvenSaludPubliON,
+            lisCarnets: lisCarnetsON,
+            vehiculos: vehiculosON,
+            tomaMuestra: tomaMuestraON,
+            quejas: quejasON,
+          },
+
+          ForRotulado: {
+            productoRotulado: productoRotulado,
+          },
+          ForPublicidad: {
+            medioPublicitario: medPubli,
+            registroSanitario: permisoSanitario,
+            productoPublicidad: productoPublicidad,
+            marcaPublicidad: marcaPublicidad,
+          },
+          ForMSEstablecimientos: {
+            medidaMSEstablecimientos: medidaApliEstable,
+            motivoMSEstablecimientos: motivoApli,
+            observacionMedEsta: observacionMedEsta,
+          },
+          ForMSProductos: {
+            medidaMSProductos: medidaApliProduc,
+            permisoMSProductos: permisoProduco,
+            productoMSProductos: productoMed,
+            marcaMSProductos: marcaProduct,
+            motivoMSProductos: motivoProduct,
+            presentacionMSProductos: presentProduct,
+            cantidadMSProductos: cantProdu,
+            fabricanteMSProductos: fabriProduc,
+            loteMSProductos: loteProduc,
+            vencimientoMSProductos: fechProduc,
+            observacionMedProd: observacionMedProd,
+          },
+          ForAntirrabica: {
+            Pcanina: Pcanina,
+            Pfelina: Pfelina,
+            canUrb: caninosUrbano,
+            canRur: caninosRural,
+            felUrb: felinosUrbano,
+            felRur: felinosRural,
+            totalVac: totalVacunados,
+          },
+          ForEduSanitaria: {
+            tema: temaCap,
+            otroTema: otrosCap,
+            fechaCap: fechaCap,
+            intensidad: intensidadCap,
+            lugarCapa: lugCap,
+            personalDiri: personalCap,
+            totalPersCap: totalPersCap,
+          },
+          ForEvenSPublica: {
+            mes: mes,
+            presentEtas: etasPresent,
+            atendEtas: etasAtend,
+            presentIntox: intoxPresent,
+            atendIntox: intoxAtend,
+            presentAgre: agrePresent,
+            atendAgre: agreAtend,
+            covePart: trueFalse,
+            coveFech: fReunion,
+          },
+          ForCarnets: {
+            expCarnet: expCarnet,
+            idenCarnet: idenCarnet,
+            nombreCarnet: nameCarnet,
+            establecimientoCarnet: estableciCarnet,
+            direccionCarnet: direcCarnet,
+          },
+          ForQuejas: {
+            tipoQueja: tipQueja,
+            frecep: fechRece,
+            perCausaQueja: perCausa,
+            perAfectQueja: perAfec,
+            descQueja: descQueja,
+            reqQueja: requeQueja,
+          },
+          ForTomaMuestras: {
+            tipMuestra: tipMues,
+            descMuestra: descripTip,
+            tipAnalisis: tipAnali,
+            zona: zona,
+            objAnalisis: objEst,
+            acompanante: acompananteEmp,
+          },
+          ForVehiculos: {
+            claseVehiculo: classVehi,
+            otraClase: otroV,
+            placa: placa,
+            refrigeracion: refriV,
+            nInscripcion: nInscrip,
+            productosVehiculo: produTrans,
+          },
+          evidencia: {
+            file: req.file.filename,
+          },
+          reporte: {
+            motivo: motivo,
+            fechRepor: new Date(),
+          },
+          observaciones: observacion,
+        },
+      })
+      .then((result) => {
+        if (result != null) {
+          authProf.DeleteFile(nameFile);
+          if (Ruta.length === 0) {
+            authProf.isUser(
+              req,
+              "Reportes Terminados",
+              "Ha Terminado El Listado",
+              "success",
+              true,
+              false,
+              "/profesional"
+            );
+            return next();
+          } else {
+            if (Ruta[0].consolidacion.establecimiento == "on") {
+              var tipoRuta = "Establecimientos/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.quejas == "on") {
+              var tipoRuta = "Quejas/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.tomaMuestra == "on") {
+              var tipoRuta = "TomaMuestras/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.eduSanitaria == "on") {
+              var tipoRuta = "EduSanitaria/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.vehiculos == "on") {
+              var tipoRuta = "Vehiculos/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.lisCarnets == "on") {
+              var tipoRuta = "ListadoCarnetizados/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.EvenSaludPubli == "on") {
+              var tipoRuta = "EventosSaludPublica/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.antirrabica == "on") {
+              var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
+            }
+            authProf.isUser(
+              req,
+              "Conexión exitosa",
+              "Consolidación Enviada",
+              "success",
+              false,
+              800,
+              "/profesional/Consolidaciones/Rechazado/" + tipoRuta
+            );
+            return next();
+          }
+        } else {
+          authProf.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            true,
+            false,
+            "/profesional"
+          );
+          return next();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        authProf.isUser(
+          req,
+          "Envio Cancelado",
+          "No se encontro en la base de datos",
+          "error",
+          true,
+          false,
+          "/profesional"
+        );
+        return next();
+      });
+  };
+
+  var NextReport = async (req, decodificada) => {
+    return await consolidaciones
+      .find({
+        provincia: {
+          $eq: decodificada.provincia,
+        },
+        status: { $eq: "Rechazado" },
+        _id: {
+          $ne: req.params._id,
+        },
+      })
+      .sort({ createdAt: -1 })
+      .limit(1);
+  };
+
+  var DeleteFile = async (nameFile) => {
+    try {
+      fs.unlinkSync("./upload/" + nameFile);
+      console.log("File removed");
+    } catch (err) {
+      console.error("Something wrong happened removing the file", err);
+    }
+  };
+
   var UpdateConsoli = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
 
@@ -492,7 +835,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(1);
   };
 
@@ -509,7 +852,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(1);
   };
 
@@ -533,6 +876,9 @@ var authProf = (function () {
   return {
     isUser: isUser,
     SendConsolidacion: SendConsolidacion,
+    DeleteFile: DeleteFile,
+    SendCorreccion: SendCorreccion,
+    NextReport: NextReport,
     UpdateConsoli: UpdateConsoli,
     UpdateCorreccion: UpdateCorreccion,
     UpdateActa: UpdateActa,
@@ -998,6 +1344,40 @@ export const EditReport = async (req, res, next) => {
       req,
       "Reporte Cancelado",
       "No se encuentra en estado Corregido",
+      "error",
+      true,
+      false,
+      "/profesional/Consolidaciones/Ver"
+    );
+    return next();
+  }
+};
+//Consolidaciones - Rechazos
+export const EditConsolidacionRech = async (req, res, next) => {
+  var validar = await consolidaciones.findById(req.params._id);
+  if (validar.status == "Rechazado") {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    req.params.user = decodificada.user;
+    await upload(req, res, function (err) {
+      if (err) {
+        return res.end("Error uploading file.");
+      }
+      authProf.SendCorreccion(
+        req,
+        res,
+        next,
+        decodificada,
+        validar.evidencia.file
+      );
+    });
+  } else {
+    authProf.isUser(
+      req,
+      "Reporte Cancelado",
+      "No se encuentra en estado Rechazado",
       "error",
       true,
       false,

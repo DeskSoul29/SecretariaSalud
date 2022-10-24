@@ -11,6 +11,7 @@ import {
   ConsolidaEstadosProf,
   SendNovedad,
   SendConsolidacion,
+  EditConsolidacionRech,
   CountActas,
   SendReport,
   EditReport,
@@ -383,6 +384,223 @@ router.post(
       fields: false,
       codigos: null,
       hojavida: null,
+      alert: req.alert,
+    });
+  }
+);
+//Consolidaciones - Rechazos
+router.get(
+  "/Consolidaciones/Rechazado/Establecimientos/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Establecimientos/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/ListadoCarnetizados/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/listCarnets", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/EduSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/EduSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/eduSanitaria", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/TomaMuestras/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/TomaMuestras/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/tomamuestras", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/EventosSaludPublica/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/eventSaludPublic", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/Vehiculos/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Vehiculos/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/Quejas/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Quejas/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
       alert: req.alert,
     });
   }

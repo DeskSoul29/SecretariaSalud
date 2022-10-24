@@ -7,50 +7,46 @@
 
 <!-- Custom fonts for this template-->
 <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-<link
-    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <!-- Toast -->
 <link href="https://unpkg.com/izitoast/dist/css/iziToast.min.css" rel="stylesheet">
 <script src="https://unpkg.com/izitoast/dist/js/iziToast.min.js"></script>
 
-<!-- Custom styles for this template-->
 <link href="/css/sb-admin-2.min.css" rel="stylesheet">
 
 <script>
-    function mayus(e) {
-        e.value = e.value.toUpperCase();
+  function mayus(e) {
+    e.value = e.value.toUpperCase();
+  }
+  //Codigos del 1 al 10
+  function AlimentosConcepto(puntaje) {
+    if (puntaje.value >= 90) {
+      document.getElementById("concepto").value = "FAVORABLE"
+    } else if (puntaje.value >= 60 && puntaje.value < 90) {
+      document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+    } else if (puntaje.value <= 59.9) {
+      document.getElementById("concepto").value = "DESFAVORABLE"
     }
-    //Codigos del 1 al 10
-    function AlimentosConcepto(puntaje) {
-        if (puntaje.value >= 90) {
-            document.getElementById("concepto").value = "FAVORABLE"
-        } else if (puntaje.value >= 60 && puntaje.value < 90) {
-            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
-        } else if (puntaje.value <= 59.9) {
-            document.getElementById("concepto").value = "DESFAVORABLE"
-        }
+  }
+  //Codigo 11
+  function AcueductoConcepto(puntaje) {
+    if (puntaje.value >= 0 && puntaje.value < 10.1) {
+      document.getElementById("concepto").value = "FAVORABLE"
+    } else if (puntaje.value >= 10.1 && puntaje.value < 41) {
+      document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+    } else if (puntaje.value >= 40.1 && puntaje.value < 101) {
+      document.getElementById("concepto").value = "DESFAVORABLE"
     }
-    //Codigo 11
-    function AcueductoConcepto(puntaje) {
-        if (puntaje.value >= 0 && puntaje.value < 10.1) {
-            document.getElementById("concepto").value = "FAVORABLE"
-        } else if (puntaje.value >= 10.1 && puntaje.value < 41) {
-            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
-        } else if (puntaje.value >= 40.1 && puntaje.value < 101) {
-            document.getElementById("concepto").value = "DESFAVORABLE"
-        }
+  }
+  //Los demas Codigos
+  function EstablecimientosConcepto(puntaje) {
+    if (puntaje.value >= 95) {
+      document.getElementById("concepto").value = "FAVORABLE"
+    } else if (puntaje.value >= 50 && puntaje.value < 95) {
+      document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
+    } else if (puntaje.value <= 49.9) {
+      document.getElementById("concepto").value = "DESFAVORABLE"
     }
-    //Los demas Codigos
-    function EstablecimientosConcepto(puntaje) {
-        if (puntaje.value >= 95) {
-            document.getElementById("concepto").value = "FAVORABLE"
-        } else if (puntaje.value >= 50 && puntaje.value < 95) {
-            document.getElementById("concepto").value = "FAVORABLE CON REQUERIMIENTOS"
-        } else if (puntaje.value <= 49.9) {
-            document.getElementById("concepto").value = "DESFAVORABLE"
-        }
-    }
-
+  }
 </script>

@@ -213,7 +213,17 @@
                         </select>
                       </div>
 
-                      <div id="templeCementerios" class="col-sm-8" style="display: none;">
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="actaAnul">¿Acta Anulada?</label>
+                        <select id="actaAnul" name="actaAnul" class="custom-select mr-sm-2" required>
+                          <option selected disabled>Seleccione
+                          </option>
+                          <option value="SI">Si</option>
+                          <option value="NO">No</option>
+                        </select>
+                      </div>
+
+                      <div id="templeCementerios" class="col-sm-6" style="display: none;">
                         <label class="mr-sm-3" for="NecroMorg">¿El Cementerio Cuenta con
                           Sala de Necropsia o
                           Morgue?</label>
@@ -226,7 +236,7 @@
                         </select>
                       </div>
 
-                      <div class="col-sm-4" id="extraEstablecimientoIVC" style="display: none">
+                      <div class="col-sm-3" id="extraEstablecimientoIVC" style="display: none">
                         <label class="mr-sm-2">Acciones IVC Adicional</label>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="rotuladoON" name="rotuladoON" />
@@ -237,7 +247,7 @@
                           <label class="form-check-label" for="publicidadON">PUBLICIDAD</label>
                         </div>
                       </div>
-                      <div class="col-sm-4" id="extraEstablecimientoMD" style="display: none">
+                      <div class="col-sm-3" id="extraEstablecimientoMD" style="display: none">
                         <label class="mr-sm-2">Medidas Sanitarias</label>
                         <div class="form-check">
                           <input class="form-check-input" type="checkbox" id="establecimientosON" name="establecimientosON" />
@@ -555,9 +565,6 @@
       document.getElementById("extraEstablecimientoIVC").removeAttribute("style");
       document.getElementById("extraEstablecimientoMD").removeAttribute("style");
     }
-    if (document.getElementById("publicidadON").checked) {
-      alert("hola")
-    }
 
     $("#rotuladoON").change(function() {
       if ($("#rotuladoON").is(":checked")) {
@@ -619,6 +626,7 @@
     document.getElementById("accion").value = "<%= consolidacion.accion %>"
     document.getElementById("acta").value = "<%= consolidacion.acta %>"
     document.getElementById("actaLey").value = "<%= consolidacion.actaLey %>"
+    document.getElementById("actaAnul").value = "<%= consolidacion.actaAnul %>"
 
     if (rotulado === "on") {
       document.getElementById("rotuladoON").setAttribute("checked", "checked")

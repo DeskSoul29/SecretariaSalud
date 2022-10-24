@@ -169,30 +169,28 @@
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
-                    Estado de las Consolidaciones
+                    Estado En Las Provincias
                   </h6>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                    <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                       <thead>
                         <tr>
                           <th>Estado</th>
+                          <th>Mes</th>
                           <th>Profesional</th>
                           <th>Provincia</th>
-                          <th>Reportes Enviados</th>
-                          <th>Reportes Pendientes</th>
-                          <th>Reportes Rechazadas</th>
+                          <th>Fecha Enviado</th>
                         </tr>
                       </thead>
                       <tfoot>
                         <tr>
                           <th>Estado</th>
+                          <th>Mes</th>
                           <th>Profesional</th>
                           <th>Provincia</th>
-                          <th>Reportes Enviados</th>
-                          <th>Reportes Pendientes</th>
-                          <th>Reportes Rechazadas</th>
+                          <th>Fecha Enviado</th>
                         </tr>
                       </tfoot>
                       <tbody>
@@ -234,15 +232,6 @@
                             <% estCon.forEach((estCon)=> { %>
                             <% if(users.provincia == estCon._id.provincia){ %>
                             <% if(estCon._id.status == "Pendiente"){ %>
-                            <%= estCon.suma %>
-                            <% } %>
-                            <% } %>
-                            <% }); %>
-                          </td>
-                          <td>
-                            <% estCon.forEach((estCon)=> { %>
-                            <% if(users.provincia == estCon._id.provincia){ %>
-                            <% if(estCon._id.status == "Rechazado"){ %>
                             <%= estCon.suma %>
                             <% } %>
                             <% } %>
@@ -331,7 +320,7 @@
       });
       $('#dataTable').DataTable({
         order: [
-          [2, 'desc']
+          [4, 'desc']
         ],
       });
     </script>

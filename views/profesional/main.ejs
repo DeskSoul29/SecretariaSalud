@@ -159,7 +159,7 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                       <div class="card-body">
                         <div class="table-responsive">
-                          <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                             <thead>
                               <tr>
                                 <th>Estado</th>
@@ -253,7 +253,7 @@
                     <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
                       <div class="card-body">
                         <div class="table-responsive">
-                          <table class="table table-bordered table-hover" id="dataTable2" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable2" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                             <thead>
                               <tr>
                                 <th>Estado</th>
@@ -347,7 +347,7 @@
                     <div id="collapse3" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                       <div class="card-body">
                         <div class="table-responsive">
-                          <table class="table table-bordered table-hover" id="dataTable3" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable3" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                             <thead>
                               <tr>
                                 <th>Estado</th>
@@ -372,7 +372,23 @@
                               <% if(allConso.status=="Rechazado" ){ %>
                               <tr>
                                 <td>
-                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.eduSanitaria=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/EduSanitaria/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.EvenSaludPubli=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/EventosSaludPublica/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.lisCarnets=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.vehiculos=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/Vehiculos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.tomaMuestra=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/TomaMuestras/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.quejas=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } %>
                                 </td>
                                 <td>
                                   <%= moment(allConso.reporte.fechRepor,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>

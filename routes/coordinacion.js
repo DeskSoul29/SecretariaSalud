@@ -12,7 +12,7 @@ import {
   SeeCoorConsolidaciones,
   ConsolidaEstadosCoor,
   SendReport,
-  SeeCoorRechazados,
+  SendManyAcept,
   hojavidaConsultAll,
   HVConsultOne,
   editHV,
@@ -163,12 +163,10 @@ router.get(
   "/Consolidaciones/Ver",
   isAuthenticatedCoordinacion,
   SeeCoorConsolidaciones,
-  SeeCoorRechazados,
   (req, res) => {
     res.render("coordinacion/Visitas/mainVer", {
       user: req.user,
       allConso: req.allConso,
-      allRechazo: req.allRechazo,
       alert: undefined,
       moment: moment,
     });
@@ -355,8 +353,47 @@ router.get(
   }
 );
 
-//Consoldaciones - Validar
 //Consolidaciones - Validar
+router.get(
+  "/Consolidaciones/UpdateAcept/:tipCons",
+  isAuthenticatedCoordinacion,
+  SendManyAcept,
+  (req, res) => {
+    res.render("coordinacion/Visitas/mainVer", {
+      user: req.user,
+      allConso: false,
+      moment: false,
+      alert: req.alert,
+      allConso: req.allConso,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/NoveAdministrativas/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/nAdmin", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/NoveAdministrativas/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/nAdmin", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
 router.get(
   "/Consolidaciones/Validar/Establecimientos/:_id",
   isAuthenticatedCoordinacion,

@@ -139,8 +139,39 @@ var authCoordi = (function () {
           $ne: "on",
         },
       })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(1);
+  };
+
+  var UpdateAllCemenMorg = async (req, tipos, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.establecimiento": "on",
+          status: "Enviado",
+          tipo: tipos,
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/Establecimientos"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return {
@@ -149,6 +180,7 @@ var authCoordi = (function () {
     DeleteConsolidacion: DeleteConsolidacion,
     UpdateCorreccion: UpdateCorreccion,
     SearchNextConsolidacion: SearchNextConsolidacion,
+    UpdateAllCemenMorg: UpdateAllCemenMorg,
   };
 })();
 
@@ -335,7 +367,7 @@ export const editUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -410,16 +442,11 @@ export const deleteCons = async (req, res, next) => {
 };
 //Consolidaciones - Consultar
 export const SeeCoorConsolidaciones = async (req, res, next) => {
-  req.allConso = await consolidaciones.find({
-    $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
-  });
-  return next();
-};
-export const SeeCoorRechazados = async (req, res, next) => {
-  req.allRechazo = await consolidaciones.find({
-    status: { $eq: "Rechazado" },
-    // "respuesta.rol": { $eq: "coordinacion" },
-  });
+  req.allConso = await consolidaciones
+    .find({
+      $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
+    })
+    .sort({ createdAt: -1 });
   return next();
 };
 //Consolidaciones - Validar
@@ -440,6 +467,69 @@ export const ConsolidaEnviada = async (req, res, next) => {
     .catch((error) => {
       console.log(error);
     });
+};
+export const SendManyAcept = async (req, res, next) => {
+  if (req.params.tipCons == "establecimiento_cementerios") {
+    var tipos = "CEMENTERIOS (CON O SIN MORGUE)";
+    authCoordi.UpdateAllCemenMorg(req, tipos, next);
+  } else if (req.params.tipCons == "establecimiento_morgues") {
+    var tipos = "MORGUES";
+    authCoordi.UpdateAllCemenMorg(req, tipos, next);
+  } else {
+    var tipCon = "consolidacion." + req.params.tipCons;
+    await consolidaciones
+      .updateMany(
+        { tipCon: "on", status: "Enviado" },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+        if (req.params.tipCons == "antirrabica") {
+          tipCon = "AntirrabicaAnimal";
+        } else if (req.params.tipCons == "establecimiento") {
+          tipCon = "Establecimientos";
+        } else if (req.params.tipCons == "publicidad") {
+          tipCon = "IVCPublicidad";
+        } else if (req.params.tipCons == "rotulado") {
+          tipCon = "IVCRotulado";
+        } else if (req.params.tipCons == "MSEstablecimientos") {
+          tipCon = "MedSaniEstablecimientos";
+        } else if (req.params.tipCons == "MSProductos") {
+          tipCon = "MedSaniProductos";
+        } else if (req.params.tipCons == "eduSanitaria") {
+          tipCon = "EduSanitaria";
+        } else if (req.params.tipCons == "EvenSaludPubli") {
+          tipCon = "EventosSaludPublica";
+        } else if (req.params.tipCons == "lisCarnets") {
+          tipCon = "ListadoCarnetizados";
+        } else if (req.params.tipCons == "vehiculos") {
+          tipCon = "Vehiculos";
+        } else if (req.params.tipCons == "tomaMuestra") {
+          tipCon = "TomaMuestras";
+        } else if (req.params.tipCons == "quejas") {
+          tipCon = "Quejas";
+        } else if (req.params.tipCons == "noveadministrativa") {
+          tipCon = "NoveAdministrativas";
+        }
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/" + tipCon
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 };
 export const SendReport = async (req, res, next) => {
   var validar = await consolidaciones.findById(req.params._id);
@@ -470,7 +560,7 @@ export const SendReport = async (req, res, next) => {
 
 // Hojas de Vidas
 export const hojavidaConsultAll = async (req, res, next) => {
-  const hv = await hojavida.find({}).lean();
+  const hv = await hojavida.find({}).sort({ createdAt: -1 });
   req.hojavida = hv;
   return next();
 };
