@@ -5,7 +5,7 @@
   <%- include('../../../tools/head'); %>
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
-  </script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
@@ -43,6 +43,22 @@
 
             <div class="card-body">
               <div class="table-responsive">
+                <div class="col">
+                  <div class="row">
+                    <table border="0" cellspacing="5" cellpadding="5">
+                      <tbody>
+                        <tr>
+                          <td>Fecha Inicial:</td>
+                          <td><input type="text" id="min" name="min"></td>
+                        </tr>
+                        <tr>
+                          <td>Fecha Final:</td>
+                          <td><input type="text" id="max" name="max"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
                 <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
@@ -71,18 +87,18 @@
                   </thead>
                   <tfoot>
                     <tr>
-                      <th rowspan="2">Estado</th>
-                      <th rowspan="2">Fecha_Enviado</th>
-                      <th rowspan="2">Provincia</th>
-                      <th rowspan="2">Municipio</th>
-                      <th rowspan="2">Población Canina</th>
-                      <th rowspan="2">Población Felina</th>
-                      <th>Urbano</th>
-                      <th>Rural</th>
-                      <th>Urbano</th>
-                      <th>Rural</th>
-                      <th rowspan="2">Total</th>
-                      <th rowspan="2">Observaciones</th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Estado" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Provincia" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Municipio" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Población Canina" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Población Felina" /></th>
+                      <th><input type="text" placeholder="Busca por Urbano" /></th>
+                      <th><input type="text" placeholder="Busca por Rural" /></th>
+                      <th><input type="text" placeholder="Busca por Urbano" /></th>
+                      <th><input type="text" placeholder="Busca por Rural" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Total" /></th>
+                      <th rowspan="2"><input type="text" placeholder="Busca por Observaciones" /></th>
                       <th rowspan="2">Archivos</th>
                     </tr>
                     <tr>
@@ -109,7 +125,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                       </td>
                       <td>
                         <%= allConso.provincia %>
@@ -216,6 +232,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
+    <!-- Search Advanced -->
+    <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
     <script>
       $(window).bind('load', function() {
         var nav = document.getElementById('nav2');
@@ -226,16 +247,73 @@
         nav3.className += "  show";
         nav4.className += "  active";
       });
-      $('#dataTable').DataTable({
+
+      var table = $('#dataTable').DataTable({
         order: [
           [1, 'desc']
         ],
-        dom: 'Bfrtip',
+        scrollY: true,
+        scrollX: true,
+        scrollCollapse: true,
+        language: {
+          search: "Buscar:",
+          info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+          zeroRecords: "Sin Datos en esta Tabla",
+          infoFiltered: " - filtrado desde _MAX_ entradas",
+          lengthMenu: "Mostrando _MENU_ entradas",
+          paginate: {
+            previous: "Anterior",
+            next: "Siguiente",
+          },
+        },
+        dom: 'Bfrtlip',
         buttons: [{
-          extend: 'excelHtml5',
+          extend: 'excel',
+          filename: 'ANTIRRABICA_' + new Date().toJSON().substring(0, 10),
           autoFilter: true,
           sheetName: 'ANTIRRABICA ANIMAL',
-        }]
+        }],
+      });
+      table.columns().every(function() {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function() {
+          that
+            .search(this.value)
+            .draw();
+        });
+      });
+
+      var minDate, maxDate;
+
+      $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+          var min = minDate.val();
+          var max = maxDate.val();
+          var date = new Date(data[1]);
+
+          if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+          ) {
+            return true;
+          }
+          return false;
+        }
+      );
+
+      $(document).ready(function() {
+        minDate = new DateTime($('#min'), {
+          format: 'YYYY-MM-DD'
+        });
+        maxDate = new DateTime($('#max'), {
+          format: 'YYYY-MM-DD'
+        });
+
+        $('#min, #max').on('change', function() {
+          table.draw();
+        });
       });
     </script>
 </body>

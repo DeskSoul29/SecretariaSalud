@@ -5,9 +5,6 @@
   <%- include('../../tools/head'); %>
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 </head>
 
 <body id="page-top">
@@ -198,20 +195,17 @@
           </div>
 
         </div>
+        <!-- /.container-fluid -->
+
       </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../tools/footer'); %>
+      <!-- End of Footer -->
 
     </div>
-    <!-- /.container-fluid -->
-
-  </div>
-  <!-- End of Main Content -->
-
-  <!-- Footer -->
-  <%- include('../../tools/footer'); %>
-  <!-- End of Footer -->
-
-  </div>
-  <!-- End of Content Wrapper -->
+    <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
@@ -272,10 +266,22 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    $('#dataTable').DataTable({
+
+    var table = $('#dataTable').DataTable({
       order: [
         [1, 'desc']
       ],
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      }
     });
   </script>
 

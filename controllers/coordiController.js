@@ -174,6 +174,396 @@ var authCoordi = (function () {
       });
   };
 
+  var UpdateAllAntirrabica = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.antirrabica": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/AntirrabicaAnimal"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllEstablecimiento = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.establecimiento": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/Establecimientos"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllIVCPublicidad = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.publicidad": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/IVCPublicidad"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllIVCRotulado = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.rotulado": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/IVCRotulado"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllMSEstablecimientos = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.MSEstablecimientos": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/MedSaniEstablecimientos"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllMSProductos = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.MSProductos": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/MedSaniProductos"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllEduSanitaria = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.eduSanitaria": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/EduSanitaria"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllEventosSaludPublica = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.EvenSaludPubli": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/EventosSaludPublica"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllListadoCarnetizados = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.lisCarnets": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/ListadoCarnetizados"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllVehiculos = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.vehiculos": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/Vehiculos"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllTomaMuestras = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.tomaMuestra": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/TomaMuestras"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllQuejas = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.quejas": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/Quejas"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllNoveAdministrativas = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.noveadministrativa": "on",
+          status: "Enviado",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/NoveAdministrativas"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return {
     isUser: isUser,
     DeleteFile: DeleteFile,
@@ -181,6 +571,19 @@ var authCoordi = (function () {
     UpdateCorreccion: UpdateCorreccion,
     SearchNextConsolidacion: SearchNextConsolidacion,
     UpdateAllCemenMorg: UpdateAllCemenMorg,
+    UpdateAllAntirrabica: UpdateAllAntirrabica,
+    UpdateAllEstablecimiento: UpdateAllEstablecimiento,
+    UpdateAllIVCPublicidad: UpdateAllIVCPublicidad,
+    UpdateAllIVCRotulado: UpdateAllIVCRotulado,
+    UpdateAllMSEstablecimientos: UpdateAllMSEstablecimientos,
+    UpdateAllMSProductos: UpdateAllMSProductos,
+    UpdateAllEduSanitaria: UpdateAllEduSanitaria,
+    UpdateAllEventosSaludPublica: UpdateAllEventosSaludPublica,
+    UpdateAllListadoCarnetizados: UpdateAllListadoCarnetizados,
+    UpdateAllVehiculos: UpdateAllVehiculos,
+    UpdateAllTomaMuestras: UpdateAllTomaMuestras,
+    UpdateAllQuejas: UpdateAllQuejas,
+    UpdateAllNoveAdministrativas: UpdateAllNoveAdministrativas,
   };
 })();
 
@@ -476,59 +879,33 @@ export const SendManyAcept = async (req, res, next) => {
     var tipos = "MORGUES";
     authCoordi.UpdateAllCemenMorg(req, tipos, next);
   } else {
-    var tipCon = "consolidacion." + req.params.tipCons;
-    await consolidaciones
-      .updateMany(
-        { tipCon: "on", status: "Enviado" },
-        {
-          $set: {
-            status: "Aceptado",
-          },
-        }
-      )
-      .then((result) => {
-        console.log(result);
-        if (req.params.tipCons == "antirrabica") {
-          tipCon = "AntirrabicaAnimal";
-        } else if (req.params.tipCons == "establecimiento") {
-          tipCon = "Establecimientos";
-        } else if (req.params.tipCons == "publicidad") {
-          tipCon = "IVCPublicidad";
-        } else if (req.params.tipCons == "rotulado") {
-          tipCon = "IVCRotulado";
-        } else if (req.params.tipCons == "MSEstablecimientos") {
-          tipCon = "MedSaniEstablecimientos";
-        } else if (req.params.tipCons == "MSProductos") {
-          tipCon = "MedSaniProductos";
-        } else if (req.params.tipCons == "eduSanitaria") {
-          tipCon = "EduSanitaria";
-        } else if (req.params.tipCons == "EvenSaludPubli") {
-          tipCon = "EventosSaludPublica";
-        } else if (req.params.tipCons == "lisCarnets") {
-          tipCon = "ListadoCarnetizados";
-        } else if (req.params.tipCons == "vehiculos") {
-          tipCon = "Vehiculos";
-        } else if (req.params.tipCons == "tomaMuestra") {
-          tipCon = "TomaMuestras";
-        } else if (req.params.tipCons == "quejas") {
-          tipCon = "Quejas";
-        } else if (req.params.tipCons == "noveadministrativa") {
-          tipCon = "NoveAdministrativas";
-        }
-        authCoordi.isUser(
-          req,
-          "Reportes Enviados",
-          "Consolidaciones Enviadas",
-          "success",
-          false,
-          800,
-          "/coordinacion/Consolidaciones/Ver/" + tipCon
-        );
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (req.params.tipCons == "antirrabica") {
+      authCoordi.UpdateAllAntirrabica(req, next);
+    } else if (req.params.tipCons == "establecimiento") {
+      authCoordi.UpdateAllEstablecimiento(req, next);
+    } else if (req.params.tipCons == "publicidad") {
+      authCoordi.UpdateAllIVCPublicidad(req, next);
+    } else if (req.params.tipCons == "rotulado") {
+      authCoordi.UpdateAllIVCRotulado(req, next);
+    } else if (req.params.tipCons == "MSEstablecimientos") {
+      authCoordi.UpdateAllMSEstablecimientos(req, next);
+    } else if (req.params.tipCons == "MSProductos") {
+      authCoordi.UpdateAllMSProductos(req, next);
+    } else if (req.params.tipCons == "eduSanitaria") {
+      authCoordi.UpdateAllEduSanitaria(req, next);
+    } else if (req.params.tipCons == "EvenSaludPubli") {
+      authCoordi.UpdateAll(req, next);
+    } else if (req.params.tipCons == "lisCarnets") {
+      authCoordi.UpdateAllListadoCarnetizados(req, next);
+    } else if (req.params.tipCons == "vehiculos") {
+      authCoordi.UpdateAllVehiculos(req, next);
+    } else if (req.params.tipCons == "tomaMuestra") {
+      authCoordi.UpdateAllTomaMuestras(req, next);
+    } else if (req.params.tipCons == "quejas") {
+      authCoordi.UpdateAllQuejas(req, next);
+    } else if (req.params.tipCons == "noveadministrativa") {
+      authCoordi.UpdateAllNoveAdministrativas(req, next);
+    }
   }
 };
 export const SendReport = async (req, res, next) => {

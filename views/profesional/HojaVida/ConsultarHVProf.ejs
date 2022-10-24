@@ -187,6 +187,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 
+  <!-- Search Advanced -->
+  <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+  <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
   <script>
     $(window).bind('load', function() {
       var nav = document.getElementById('nav3');
@@ -197,16 +202,44 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    $('#dataTable').DataTable({
+    $('#dataTable tfoot th').each(function() {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+    var table = $("#dataTable").DataTable({
       order: [
         [0, 'desc']
       ],
-      dom: 'Bfrtip',
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
+      dom: 'Bfrtlip',
       buttons: [{
-        extend: 'excelHtml5',
+        extend: 'excel',
+        filename: 'HOJAVIDA_<%= user.provincia%>_' + new Date().toJSON().substring(0, 10),
         autoFilter: true,
-        sheetName: 'HOJAS DE VIDA',
-      }]
+        sheetName: "HOJAS DE VIDA - <%= user.provincia%>",
+      }],
+    });
+
+    table.columns().every(function() {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function() {
+        that
+          .search(this.value)
+          .draw();
+      });
     });
   </script>
 

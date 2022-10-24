@@ -27,36 +27,72 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
+//Meses
+var dates = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
+// Visitas
+var Visitas = [
+  4215, 3212, 5312, 2121, 8392, 8382, 2182, 2839, 6251, 7841, 9821, 14984,
+];
+//Favorables
+var Favorables = [
+  1215, 1212, 1312, 1121, 3292, 382, 1182, 1839, 4251, 4841, 5821, 2984,
+];
+//Desfavorables
+var Desfavorables = [
+  2215, 2212, 2312, 1121, 3292, 5382, 1182, 1839, 4251, 4841, 5821, 2984,
+];
+//Favorables Con Requerimientos
+var FavReque = [
+  215, 212, 312, 1121, 3292, 5382, 1182, 1839, 4251, 4841, 5821, 2984,
+];
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: "bar",
   data: {
-    labels: [
-      "Enero",
-      "Febrero",
-      "Marzo",
-      "Abril",
-      "Mayo",
-      "Junio",
-      "Julio",
-      "Agosto",
-      "Septiembre",
-      "Octubre",
-      "Noviembre",
-      "Diciembre",
-    ],
+    labels: dates,
     datasets: [
       {
         label: "Visitas",
         backgroundColor: "#4e73df",
         hoverBackgroundColor: "#2e59d9",
         borderColor: "#4e73df",
-        data: [
-          4215, 3212, 5312, 2121, 8392, 8382, 2182, 2839, 6251, 7841, 9821,
-          14984,
-        ],
+        data: Visitas,
+      },
+      {
+        label: "Favorables",
+        backgroundColor: "#36C123",
+        hoverBackgroundColor: "#25E10B",
+        borderColor: "#36C123",
+        data: Favorables,
+      },
+      {
+        label: "Favorables Con Requerimientos",
+        backgroundColor: "#E3DB24",
+        hoverBackgroundColor: "#F1E70D",
+        borderColor: "#E3DB24",
+        data: FavReque,
+      },
+      {
+        label: "Desfavorables",
+        backgroundColor: "#CA3A3A",
+        hoverBackgroundColor: "#F10A0A",
+        borderColor: "#CA3A3A",
+        data: Desfavorables,
       },
     ],
   },
@@ -90,20 +126,13 @@ var myBarChart = new Chart(ctx, {
         {
           ticks: {
             min: 0,
-            max: 20000,
+            max: 16000,
             maxTicksLimit: 10,
             padding: 10,
             // Include a dollar sign in the ticks
             callback: function (value, index, values) {
               return "" + number_format(value);
             },
-          },
-          gridLines: {
-            color: "rgb(234, 236, 244)",
-            zeroLineColor: "rgb(234, 236, 244)",
-            drawBorder: false,
-            borderDash: [2],
-            zeroLineBorderDash: [2],
           },
         },
       ],
@@ -112,6 +141,7 @@ var myBarChart = new Chart(ctx, {
       display: false,
     },
     tooltips: {
+      mode: "label",
       titleMarginBottom: 10,
       titleFontColor: "#6e707e",
       titleFontSize: 14,
@@ -121,7 +151,6 @@ var myBarChart = new Chart(ctx, {
       borderWidth: 1,
       xPadding: 15,
       yPadding: 15,
-      displayColors: false,
       caretPadding: 10,
       callbacks: {
         label: function (tooltipItem, chart) {

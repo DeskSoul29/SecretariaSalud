@@ -235,10 +235,21 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-    $('#dataTable').DataTable({
+    var table = $('#dataTable').DataTable({
       order: [
         [1, 'desc']
       ],
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      }
     });
   </script>
 

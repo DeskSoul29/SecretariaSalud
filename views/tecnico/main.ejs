@@ -251,7 +251,6 @@
                 </li>
                 <% } %>
                 <% if(user.municipioExtra3 != undefined && user.municipioExtra3 != ""){ %>
-                <input type="text" value="<%= user.municipioExtra3 %>">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Vacunación - <%= user.municipioExtra3 %>
                   <span class="badge badge-primary badge-pill"><%= vacunasExtra3 %></span>
@@ -391,6 +390,26 @@
         document.getElementById("btnCronograma").removeAttribute("style");
         document.getElementById("mesCron").value = MESES[date.getMonth()];
       }
+    });
+
+    $('#dataTable').DataTable({
+      order: [
+        [0, 'desc']
+      ],
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
     });
   </script>
 
