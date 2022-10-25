@@ -173,6 +173,30 @@ router.get(
   }
 );
 router.get(
+  "/Consolidaciones/Pendiente",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/pendientes", {
+      user: req.user,
+      allConso: req.allConso,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Configuracion",
+  isAuthenticatedCoordinacion,
+  (req, res) => {
+    res.render("coordinacion/Visitas/configuracion", {
+      user: req.user,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Ver/NoveAdministrativas",
   isAuthenticatedCoordinacion,
   SeeCoorConsolidaciones,
