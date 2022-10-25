@@ -109,6 +109,7 @@
                         <tbody>
                           <% if (allConso){ %>
                           <% allConso.forEach((allConso)=> { %>
+                          <% if(allConso.SendNovAd=="on" ){ %>
                           <tr>
                             <td>
                               <% if(allConso.status=="Enviado" ){ %>
@@ -128,8 +129,10 @@
                               <a href="/coordinacion/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/NoveAdministrativa/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } %>
-                              <% }else if(allConso.status=="Aceptado" ){ %>
+                              <% }else if(allConso.status=="Aceptado"){ %>
                               <span class="badge badge-success text-uppercase">Aceptado</span>
                               <% } %>
                             </td>
@@ -153,6 +156,8 @@
                               Toma de Muestras
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
+                              <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                              Novedad Administrativa
                               <% } %>
                             </td>
                             <td>
@@ -166,6 +171,7 @@
                               <%= allConso.responsable.nombreResponsable %>
                             </td>
                           </tr>
+                          <% } %>
                           <% }); %>
                           <% } %>
                         </tbody>

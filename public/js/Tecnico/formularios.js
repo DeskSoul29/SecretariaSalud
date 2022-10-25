@@ -44,14 +44,6 @@ var time = (function () {
     );
   };
 
-  var min = function (date) {
-    if (date.getDate() <= 5) {
-      return date.getFullYear() + "-" + time.pad(date.getMonth()) + "-06";
-    } else {
-      return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-06";
-    }
-  };
-
   var max = function (date) {
     if (date.getDate() <= 5) {
       return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-05";
@@ -64,19 +56,18 @@ var time = (function () {
     }
   };
 
-  var min2 = function (date) {
+  var min = function (date) {
     return date.getFullYear() + "-" + time.pad(date.getMonth()) + "-01";
   };
 
-  var max2 = function (date) {
-    return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-01";
-  };
-
-  var pad2 = function (number) {
-    if (number < 10) {
+  var padMin = function (number) {
+    if (number == 0) {
+      return "12";
+    } else if (number >= 1 && number < 10) {
       return "0" + number;
+    } else {
+      return number;
     }
-    return number;
   };
 
   var pad = function (number) {
@@ -88,12 +79,10 @@ var time = (function () {
 
   return {
     formatDate: formatDate,
+    padMin: padMin,
     pad: pad,
     min: min,
     max: max,
-    min2: min2,
-    max2: max2,
-    pad2: pad2,
   };
 })();
 
@@ -122,6 +111,26 @@ if (document.getElementById("mes") != null) {
   }
 }
 
+if (document.getElementById("fVisit") != null) {
+  document.getElementById("fVisit").value = time.formatDate(date);
+  document.getElementById("fVisit").setAttribute("max", time.formatDate(date));
+
+  if (date.getDate() > 5) {
+    document
+      .getElementById("fVisit")
+      .setAttribute(
+        "min",
+        date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-01"
+      );
+  } else {
+    if (date.getMonth() == 0) {
+      date.setMonth(date.getMonth() - 12);
+      document.getElementById("fVisit").setAttribute("min", time.min(date));
+    } else {
+      document.getElementById("fVisit").setAttribute("min", time.min(date));
+    }
+  }
+}
 // if (document.getElementById("fVisit") != null) {
 //   document
 //     .getElementById("fVisit")
@@ -135,6 +144,7 @@ if (document.getElementById("mes") != null) {
 //     .substring(0, 10);
 // }
 
+//Original
 // if (document.getElementById("fVisit") != null) {
 //   document.getElementById("fVisit").setAttribute("min", time.min(date));
 //   document.getElementById("fVisit").setAttribute("max", time.max(date));
@@ -377,6 +387,25 @@ function establecimientosForm(e) {
   }
 }
 
+function quejasFormRech(e) {
+  if (
+    document.getElementById("tipQueja").value == "Seleccione" ||
+    document.getElementById("fechRece").value == 0 ||
+    document.getElementById("fVisit").value == 0 ||
+    document.getElementById("perCausa").value == 0 ||
+    document.getElementById("perAfec").value == 0 ||
+    document.getElementById("descQueja").value == 0 ||
+    document.getElementById("requeQueja").value == 0 ||
+    document.getElementById("myFile").files.length == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
+  }
+}
+
 function quejasForm(e) {
   if (document.getElementById("comuniQuejas").checked) {
     if (
@@ -462,7 +491,10 @@ function validConsolidacion(e) {
 }
 
 function UploadCronograma(e) {
-  if (document.getElementById("mesCron").value == "" || document.getElementById("myFile").files.length == 0) {
+  if (
+    document.getElementById("mesCron").value == "" ||
+    document.getElementById("myFile").files.length == 0
+  ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
   }

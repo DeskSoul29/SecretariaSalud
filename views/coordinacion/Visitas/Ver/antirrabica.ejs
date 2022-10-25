@@ -118,7 +118,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
+                    <% if (allConso.consolidacion.antirrabica == "on" && allConso.SendNovAd=="on"){ %>
                     <tr>
                       <td>
                         <% if(allConso.status=="Enviado" ){ %>

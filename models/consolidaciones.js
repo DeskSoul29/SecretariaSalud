@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var EstablecimientosSchema = new Schema({
   status: { type: String, default: "Pendiente" },
+  SendNovAd: { type: String, default: "off" },
 
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, max: 100 },

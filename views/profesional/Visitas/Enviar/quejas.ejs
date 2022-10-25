@@ -276,6 +276,10 @@
       nav4.className += "  active";
     });
 
+    document
+      .getElementById("fechRece")
+      .setAttribute("max", new Date().toJSON().substring(0, 10));
+
     $("#estableQueja").change(function() {
       if ($("#estableQueja").is(":checked")) {
         document.getElementById("muniSelect2").selectedIndex = "Seleccione el Municipio";

@@ -92,6 +92,8 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Ver/ListadoCarnetizados", "_self");
     } else if (consolidacion.value == "Antirrabica Animal") {
       window.open("/tecnico/Consolidaciones/Ver/AntirrabicaAnimal", "_self");
+    } else if (consolidacion.value == "Cronograma de Actividades") {
+      window.open("/tecnico/Consolidaciones/Ver/", "_self");
     }
   };
 

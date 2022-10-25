@@ -108,7 +108,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.quejas == "on"){ %>
+                    <% if (allConso.consolidacion.quejas == "on" && allConso.SendNovAd=="on"){ %>
                     <tr>
                       <td>
                         <% if(allConso.status=="Enviado" ){ %>

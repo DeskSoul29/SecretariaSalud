@@ -52,12 +52,19 @@ var authCoordi = (function () {
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo } = req.body;
 
+    if (criterio == "Aceptado") {
+      var SendNovAd = "on";
+    } else {
+      var SendNovAd = "off";
+    }
+
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
         {
           $set: {
             status: criterio,
+            SendNovAd: SendNovAd,
             "reporte.motivo": motivo,
             "reporte.fechRepor": new Date(),
           },
@@ -595,6 +602,9 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       status: {
         $eq: "Enviado",
       },
+      SendNovAd: {
+        $eq: "on",
+      },
     })
     .count()
     .then((data) => {
@@ -607,6 +617,9 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       status: {
         $eq: "Aceptado",
       },
+      SendNovAd: {
+        $eq: "on",
+      },
     })
     .count()
     .then((data) => {
@@ -616,7 +629,13 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
   //Vacunas Antirrabica
   await consolidaciones
     .aggregate([
-      { $match: { "consolidacion.antirrabica": "on", status: "Aceptado" } },
+      {
+        $match: {
+          "consolidacion.antirrabica": "on",
+          status: "Aceptado",
+          SendNovAd: "on",
+        },
+      },
       { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
     ])
     .then((data) => {
@@ -632,6 +651,9 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
     .find({
       status: {
         $eq: "Aceptado",
+      },
+      SendNovAd: {
+        $eq: "on",
       },
       "consolidacion.establecimiento": {
         $eq: "on",

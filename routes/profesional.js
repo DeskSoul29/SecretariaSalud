@@ -9,7 +9,6 @@ import {
   addMuniApoyo,
   SeeProfConsolidaciones,
   ConsolidaEstadosProf,
-  SendNovedad,
   SendConsolidacion,
   EditConsolidacionRech,
   CountActas,
@@ -160,9 +159,9 @@ router.get(
   }
 );
 router.post(
-  "/Consolidaciones/Enviar/NoveAdministrativa",
+  "/Consolidaciones/Enviar/NoveAdministrativa/:user",
   isAuthenticatedProf,
-  SendNovedad,
+  SendConsolidacion,
   (req, res) => {
     res.render("profesional/Visitas/Enviar/nAdmin", {
       user: req.user,
@@ -598,6 +597,33 @@ router.post(
   EditConsolidacionRech,
   (req, res) => {
     res.render("profesional/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/NoveAdministrativa/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/nAdmin", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/NoveAdministrativa/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/nAdmin", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,

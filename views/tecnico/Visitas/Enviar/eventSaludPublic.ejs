@@ -236,15 +236,15 @@
   <% if(typeof alert !="undefined" ) { %>
   <script type="text/JavaScript">
     Swal.fire({
-            title: '<%= alert[0].alertTitle %>',
-            text:'<%= alert[0].alertMessage %>',
-            icon:'<%= alert[0].alertIcon %>',
-            showConfirmButton: <%= alert[0].showConfirmButton %>,
-            timer: <%= alert[0].timer %>
-          }).then(()=>{
-            window.location = '<%= alert[0].ruta %>'
-          })
-        </script>
+      title: '<%= alert[0].alertTitle %>',
+      text:'<%= alert[0].alertMessage %>',
+      icon:'<%= alert[0].alertIcon %>',
+      showConfirmButton: <%= alert[0].showConfirmButton %>,
+      timer: <%= alert[0].timer %>
+    }).then(()=>{
+      window.location = '<%= alert[0].ruta %>'
+    })
+  </script>
   <% } %>
 
   <script>
@@ -261,6 +261,9 @@
     $("#trueFalse").change(function() {
       if (document.getElementById("trueFalse").value == "SI") {
         $("#fReunion").attr("readonly", false);
+        document
+          .getElementById("fReunion")
+          .setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         document.getElementById("fReunion").value = "dd/mm/aaaa"
         $("#fReunion").attr("readonly", true);

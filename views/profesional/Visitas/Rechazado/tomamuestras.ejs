@@ -197,7 +197,7 @@
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fVisit">Fecha_Visita</label>
-                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" />
+                        <input type="date" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" readonly />
                       </div>
                     </div>
 
@@ -320,7 +320,7 @@
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
+      var nav3 = document.getElementById('collapseTwo');
       var nav4 = document.getElementById('show1');
       nav.className += "  active";
       nav3.className += "  show";

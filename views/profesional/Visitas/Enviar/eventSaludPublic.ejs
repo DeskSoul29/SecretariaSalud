@@ -250,6 +250,9 @@
     $("#trueFalse").change(function() {
       if (document.getElementById("trueFalse").value == "SI") {
         $("#fReunion").attr("readonly", false);
+        document
+          .getElementById("fReunion")
+          .setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         document.getElementById("fReunion").value = "dd/mm/aaaa"
         $("#fReunion").attr("readonly", true);

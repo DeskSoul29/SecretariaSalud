@@ -69,7 +69,7 @@
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="municipio" name="municipio" value="<%= consolidacion.municipio %>" readonly>
+                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
                       </div>
                     </div>
 
@@ -234,7 +234,7 @@
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
+      var nav3 = document.getElementById('collapseTwo');
       var nav4 = document.getElementById('show1');
       nav.className += "  active";
       nav3.className += "  show";

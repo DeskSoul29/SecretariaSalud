@@ -151,9 +151,6 @@
                         <%= allConso.ForNAdmin.entreInfor %>
                       </td>
                       <td>
-                        <%= moment(allConso.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
-                      </td>
-                      <td>
                         <%= allConso.ForNAdmin.entreCrono %>
                       </td>
                       <td>
@@ -181,7 +178,7 @@
                         <%= allConso.ForNAdmin.motDevol %>
                       </td>
                       <td>
-                        <%= allConso.Observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
                         <a href="/coordinacion/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>

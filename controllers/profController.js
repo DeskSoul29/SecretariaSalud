@@ -134,7 +134,6 @@ var authProf = (function () {
         zona,
         objEst,
         acompananteEmp,
-        observacion,
         //Vehiculos
         vehiculosON,
         classVehi,
@@ -143,6 +142,21 @@ var authProf = (function () {
         refriV,
         nInscrip,
         produTrans,
+        //Novedad Administrativa
+        noveadministrativa,
+        mesNA,
+        entreInfor,
+        entreCrono,
+        fechCrono,
+        entreAsis,
+        fechAsis,
+        entreCircu,
+        NumCir,
+        numActas,
+        nomActas,
+        motDevol,
+        //Extra
+        observacion,
       } = req.body;
 
       new consolidaciones({
@@ -167,6 +181,7 @@ var authProf = (function () {
           vehiculos: vehiculosON,
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
+          noveadministrativa: noveadministrativa,
         },
         grupo: grupEsta,
         codigo: codEsta,
@@ -277,6 +292,19 @@ var authProf = (function () {
           nInscripcion: nInscrip,
           productosVehiculo: produTrans,
         },
+        ForNAdmin: {
+          mesNA: mesNA,
+          entreInfor: entreInfor,
+          entreCrono: entreCrono,
+          fechCrono: fechCrono,
+          entreAsis: entreAsis,
+          fechAsis: fechAsis,
+          entreCircu: entreCircu,
+          NumCir: NumCir,
+          numActas: numActas,
+          nomActas: nomActas,
+          motDevol: motDevol,
+        },
         evidencia: {
           file: req.file.filename,
         },
@@ -290,6 +318,9 @@ var authProf = (function () {
         .save()
         .then((result) => {
           if (result) {
+            if (noveadministrativa == "on") {
+              authProf.UpdateAceptAll(req, provincia, municipio);
+            }
             authProf.isUser(
               req,
               "Conexión exitosa",
@@ -316,6 +347,25 @@ var authProf = (function () {
       console.log(error);
       return error;
     }
+  };
+
+  var UpdateAceptAll = async (req, provincia, municipio) => {
+    return await consolidaciones
+      .updateMany(
+        {
+          provincia: provincia,
+          municipio: municipio,
+          status: "Enviado",
+          SendNovAd: "off",
+        },
+        { $set: { SendNovAd: "on" } }
+      )
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   var SendCorreccion = async (req, res, next, decodificada, nameFile) => {
@@ -642,6 +692,9 @@ var authProf = (function () {
         provincia: {
           $eq: decodificada.provincia,
         },
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
         status: { $eq: "Rechazado" },
         _id: {
           $ne: req.params._id,
@@ -662,7 +715,6 @@ var authProf = (function () {
 
   var UpdateConsoli = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
-
     await consolidaciones
       .findByIdAndUpdate(req.params._id, {
         $set: {
@@ -736,7 +788,6 @@ var authProf = (function () {
 
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
-
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
@@ -879,6 +930,7 @@ var authProf = (function () {
     DeleteFile: DeleteFile,
     SendCorreccion: SendCorreccion,
     NextReport: NextReport,
+    UpdateAceptAll: UpdateAceptAll,
     UpdateConsoli: UpdateConsoli,
     UpdateCorreccion: UpdateCorreccion,
     UpdateActa: UpdateActa,
@@ -1169,6 +1221,9 @@ export const CountActas = async (req, res, next) => {
         provincia: {
           $eq: decodificada.provincia,
         },
+        SendNovAd: {
+          $eq: "off",
+        },
         "consolidacion.establecimiento": {
           $eq: "on",
         },
@@ -1187,97 +1242,25 @@ export const CountActas = async (req, res, next) => {
     return next();
   }
 };
-export const SendNovedad = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
+// export const SendNovedad = async (req, res, next) => {
+// var validaMuni = await authProf.ValidaMunicipio(municipio, mes);
+// console.log(validaMuni);
+// console.log(validaMuni.length === 0);
+// if (validaMuni.length === 0) {
+//   authProf.isUser(
+//     req,
+//     "Advertencia",
+//     "Ya se envio un reporte en el mes actual",
+//     "error",
+//     true,
+//     false,
+//     "/profesional/Consolidaciones/EnviarNA"
+//   );
+// return next();
+// } else {
 
-  var {
-    mes,
-    provincia,
-    municipio,
-    entreInfor,
-    entreCrono,
-    fechCrono,
-    entreAsis,
-    fechAsis,
-    entreCircu,
-    NumCir,
-    numActas,
-    nomActas,
-    motDevol,
-    observacion,
-  } = req.body;
-
-  var validaMuni = await authProf.ValidaMunicipio(municipio, mes);
-  console.log(validaMuni);
-  console.log(validaMuni.length === 0);
-  if (validaMuni.length === 0) {
-    authProf.isUser(
-      req,
-      "Advertencia",
-      "Ya se envio un reporte en el mes actual",
-      "error",
-      true,
-      false,
-      "/profesional/Consolidaciones/EnviarNA"
-    );
-  } else {
-    new consolidaciones({
-      status: "Enviado",
-      provincia: provincia,
-      municipio: municipio,
-      responsable: {
-        userResponsable: decodificada.user,
-        nombreResponsable: decodificada.nombres + " " + decodificada.apellidos,
-      },
-      consolidacion: {
-        noveadministrativa: "on",
-      },
-      ForNAdmin: {
-        mesNA: mes,
-        entreInfor: entreInfor,
-        entreCrono: entreCrono,
-        fechCrono: fechCrono,
-        entreAsis: entreAsis,
-        fechAsis: fechAsis,
-        entreCircu: entreCircu,
-        NumCir: NumCir,
-        numActas: numActas,
-        nomActas: nomActas,
-        motDevol: motDevol,
-      },
-      createdAt: new Date(),
-      observaciones: observacion,
-    })
-      .save()
-      .then((result) => {
-        if (result) {
-          authProf.isUser(
-            req,
-            "Conexión exitosa",
-            "Consolidación Enviada",
-            "success",
-            false,
-            800,
-            "/profesional/Consolidaciones/EnviarNA"
-          );
-        } else {
-          authProf.isUser(
-            req,
-            "Error en la Base de Datos",
-            "Envio Cancelado",
-            "error",
-            false,
-            false,
-            "/profesional/Consolidaciones/EnviarNA"
-          );
-        }
-      });
-  }
-  return next();
-};
+// }
+// };
 //Consolidaciones - Consultar
 export const SeeProfConsolidaciones = async (req, res, next) => {
   try {

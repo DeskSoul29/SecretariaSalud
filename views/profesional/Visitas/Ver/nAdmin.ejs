@@ -16,7 +16,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -64,8 +64,8 @@
                     <tr>
                       <th rowspan="2">Estado</th>
                       <th rowspan="2">Fecha_Enviado</th>
-                      <th rowspan="2">Provincia</th>
                       <th rowspan="2">Mes</th>
+                      <th rowspan="2">Provincia</th>
                       <th rowspan="2">Municipio</th>
                       <th colspan="1">Entrega Informe_Mensual</th>
                       <th colspan="2">Entrega de Cronograma de Actividades</th>
@@ -122,9 +122,7 @@
                     <% if (allConso.consolidacion.noveadministrativa == "on"){ %>
                     <tr>
                       <td>
-                        <% if(allConso.status=="Pendiente" ){ %>
-                        <span class="badge badge-warning text-uppercase">Pendiente</span>
-                        <% }else if(allConso.status=="Rechazado" ){ %>
+                        <% if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(allConso.status=="Corregido" ){ %>
                         <span class="badge badge-primary text-uppercase">Corregido</span>
@@ -150,19 +148,16 @@
                         <%= allConso.ForNAdmin.entreInfor %>
                       </td>
                       <td>
-                        <%= moment(allConso.ForNAdmin.fechInfor,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
-                      </td>
-                      <td>
                         <%= allConso.ForNAdmin.entreCrono %>
                       </td>
                       <td>
-                        <%= moment(allConso.ForNAdmin.fechCrono,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.ForNAdmin.fechCrono,"YYYY/MM/DD").format('YYYY/MM/DD'); %>
                       </td>
                       <td>
                         <%= allConso.ForNAdmin.entreAsis %>
                       </td>
                       <td>
-                        <%= moment(allConso.ForNAdmin.fechAsis,"YYYY/MM/DD").format('DD-MM-YYYY'); %>
+                        <%= moment(allConso.ForNAdmin.fechAsis,"YYYY/MM/DD").format('YYYY/MM/DD'); %>
                       </td>
                       <td>
                         <%= allConso.ForNAdmin.entreCircu %>
@@ -180,7 +175,7 @@
                         <%= allConso.ForNAdmin.motDevol %>
                       </td>
                       <td>
-                        <%= allConso.Observaciones %>
+                        <%= allConso.observaciones %>
                       </td>
                       <td>
                         <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>

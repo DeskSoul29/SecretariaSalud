@@ -34,11 +34,13 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Inscribir Novedad Administrativa</h1>
                   </div>
-                  <form onsubmit="novAdminis(event)" action="/profesional/Consolidaciones/EnviarNA" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="novAdminis(event)" action="/profesional/Consolidaciones/Enviar/NoveAdministrativa/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                    <input type="text" value="on" id="noveadministrativa" name="noveadministrativa" style="display: none;" readonly>
+
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="mes">Mes</label>
-                        <input type="text" class="form-control form-control-user" id="mes" name="mes" onkeyup="mayus(this);" readonly>
+                        <input type="text" class="form-control form-control-user" id="mesNA" name="mesNA" onkeyup="mayus(this);" readonly>
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>
@@ -140,11 +142,11 @@
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-4" for="nomActas">Nombre del Acta</label>
-                        <textarea type="text" class="form-control form-control-user" id="nomActas" name="nomActas" placeholder="Escriba los nombres segun la cantidad de actas" readonly></textarea>
+                        <textarea type="text" class="form-control form-control-user" onkeyup="mayus(this);" id="nomActas" name="nomActas" placeholder="Escriba los nombres segun la cantidad de actas" readonly></textarea>
                       </div>
                       <div class="col-sm-6">
                         <label class="mr-sm-4" for="motDevol">Motivo de Devolucion</label>
-                        <textarea type="text" class="form-control form-control-user" id="motDevol" name="motDevol" placeholder="Escriba el motivo de haber devuelto el acta" readonly></textarea>
+                        <textarea type="text" class="form-control form-control-user" onkeyup="mayus(this);" id="motDevol" name="motDevol" placeholder="Escriba el motivo de haber devuelto el acta" readonly></textarea>
                       </div>
                     </div>
 
@@ -152,7 +154,7 @@
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones Y Comentarios
                           (Opcional)</label>
-                        <textarea name="observacion" id="observacion" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
                       </div>
                     </div>
 
@@ -179,10 +181,6 @@
               </div>
             </div>
           </div>
-
-          <script type="text/JavaScript">
-
-          </script>
 
         </div>
         <!-- /.container-fluid -->
@@ -256,16 +254,10 @@
       nav4.className += "  active";
     });
 
-    $("#entreInfor").change(function() {
-      if (document.getElementById("entreInfor").value == "SI") {
-        $("#fechInfor").attr("readonly", false);
-      } else {
-        $("#fechInfor").attr("readonly", true);
-      }
-    });
     $("#entreCrono").change(function() {
       if (document.getElementById("entreCrono").value == "SI") {
         $("#fechCrono").attr("readonly", false);
+        document.getElementById("fechCrono").setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         $("#fechCrono").attr("readonly", true);
       }
@@ -273,6 +265,7 @@
     $("#entreAsis").change(function() {
       if (document.getElementById("entreAsis").value == "SI") {
         $("#fechAsis").attr("readonly", false);
+        document.getElementById("fechAsis").setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         $("#fechAsis").attr("readonly", true);
       }

@@ -44,7 +44,7 @@
                     <h1 class="h4 text-gray-900 mb-4">QUEJAS</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/tecnico/Consolidaciones/Rechazado/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="quejasForm(event)" action="/tecnico/Consolidaciones/Rechazado/Quejas/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="quejasON" name="quejasON" style="display: none;" readonly>
 
                     <div class="form-group row">

@@ -57,6 +57,13 @@ if (document.getElementById("mes") != null) {
     document.getElementById("mes").value = MESES[date.getMonth()];
   }
 }
+if (document.getElementById("mesNA") != null) {
+  if (date.getDate() < 5) {
+    document.getElementById("mesNA").value = MESES[date.getMonth() - 1];
+  } else {
+    document.getElementById("mesNA").value = MESES[date.getMonth()];
+  }
+}
 if (document.getElementById("fVisit") != null) {
   document.getElementById("fVisit").setAttribute("min", time.min(date));
   document.getElementById("fVisit").setAttribute("max", time.max(date));

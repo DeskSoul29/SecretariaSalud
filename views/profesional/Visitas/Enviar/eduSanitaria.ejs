@@ -245,6 +245,10 @@
       nav4.className += "  active";
     });
 
+    document
+      .getElementById("fechaCap")
+      .setAttribute("max", new Date().toJSON().substring(0, 10));
+
     $("#temaCap").change(function() {
       if (document.getElementById("temaCap").value == "OTROS") {
         $("#otrosCap").attr("readonly", false);

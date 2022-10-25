@@ -340,7 +340,7 @@
                     <div class="card-header" id="headingThree">
                       <h5 class="mb-0">
                         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-                          Consolidaciones Rechazadas
+                          Consolidaciones Rechazadas Propias
                         </button>
                         </h2>
                     </div>
@@ -369,7 +369,7 @@
                             <tbody>
                               <% if (allConso){ %>
                               <% allConso.forEach((allConso)=> { %>
-                              <% if(allConso.status=="Rechazado" ){ %>
+                              <% if(allConso.status=="Rechazado" && allConso.responsable.userResponsable == user.user){ %>
                               <tr>
                                 <td>
                                   <% if(allConso.consolidacion.establecimiento=="on" ){ %>

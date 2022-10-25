@@ -116,7 +116,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.establecimiento == "on"){ %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.SendNovAd=="on"){ %>
                     <tr>
                       <td>
                         <% if(allConso.status=="Enviado" ){ %>
