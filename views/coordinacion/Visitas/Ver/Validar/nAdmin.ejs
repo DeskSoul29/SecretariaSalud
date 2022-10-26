@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-  <%- include('../../../tools/head'); %>
+  <%- include('../../../../tools/head'); %>
   <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
@@ -10,7 +10,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarProf'); %>
+    <%- include('../../../../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -18,7 +18,7 @@
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <%- include('../../../tools/topbar'); %>
+        <%- include('../../../../tools/topbar'); %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -32,7 +32,7 @@
                       <a href="/coordinacion/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/coordinacion/Consolidaciones/Ver/NoveAdministrativa">Novedades Administrativas</a>
+                      <a href="/coordinacion/Consolidaciones/Ver/NoveAdministrativas">Novedades Administrativas</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Corregir
@@ -45,22 +45,7 @@
                     <h1 class="h4 text-gray-900 mb-4">NOVEDADES ADMINISTRATIVAS</h1>
                   </div>
 
-                  <form onsubmit="novAdminis(event)" action="/coordinacion/Consolidaciones/Rechazado/EnviarNA/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
-                    <input type="text" value="on" id="noveadministrativa" name="noveadministrativa" style="display: none;" readonly>
-
-                    <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterio">Criterio</label>
-                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
-                      </div>
-                      <div class="col-sm-9" id="divMotivo">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
-                      </div>
-                    </div>
-
-                    <!-- Divider -->
-                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+                  <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/NoveAdministrativas/<%= consolidacion._id %>" method="POST">
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
@@ -89,23 +74,15 @@
                     <div class="form-group row">
                       <div class="col-sm-6">
                         <label class="mr-sm-2" for="entreInfor">Si/No</label>
-                        <select id="entreInfor" name="entreInfor" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="SI">Si</option>
-                          <option value="NO">No</option>
-                        </select>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreInfor %>" readonly>
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="entreCrono">Si/No</label>
-                        <select id="entreCrono" name="entreCrono" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="SI">Si</option>
-                          <option value="NO">No</option>
-                        </select>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreCrono %>" readonly>
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fechCrono">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="fechCrono" name="fechCrono" readonly />
+                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.ForNAdmin.fechCrono,'YYYY/MM/DD').add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
                       </div>
                     </div>
 
@@ -121,27 +98,19 @@
                     <div class="form-group row">
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="entreAsis">Si/No</label>
-                        <select id="entreAsis" name="entreAsis" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="SI">Si</option>
-                          <option value="NO">No</option>
-                        </select>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreAsis %>" readonly>
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="fechAsis">Fecha de Entrega</label>
-                        <input type="date" class="form-control form-control-user" id="fechAsis" name="fechAsis" readonly />
+                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.ForNAdmin.fechAsis,'YYYY/MM/DD').add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="entreCircu">Si/No</label>
-                        <select id="entreCircu" name="entreCircu" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="SI">Si</option>
-                          <option value="NO">No</option>
-                        </select>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreCircu %>" readonly>
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="NumCir">N° de Circular</label>
-                        <input type="text" class="form-control form-control-user" id="NumCir" name="NumCir" readonly />
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.NumCir %>" readonly>
                       </div>
                     </div>
 
@@ -154,15 +123,15 @@
                     <div class="form-group row">
                       <div class="col-sm-2">
                         <label class="mr-sm-6" for="numActas">N° de Actas</label>
-                        <input type="number" class="form-control form-control-user" value="<%= actaAnul %>" min="0" id="numActas" name="numActas" readonly />
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.numActas %>" readonly>
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-4" for="nomActas">Nombre del Acta</label>
-                        <textarea type="text" class="form-control form-control-user" id="nomActas" name="nomActas" placeholder="Escriba los nombres segun la cantidad de actas" readonly></textarea>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.nomActas %>" readonly>
                       </div>
                       <div class="col-sm-6">
                         <label class="mr-sm-4" for="motDevol">Motivo de Devolucion</label>
-                        <textarea type="text" class="form-control form-control-user" id="motDevol" name="motDevol" placeholder="Escriba el motivo de haber devuelto el acta" readonly></textarea>
+                        <textarea type="text" class="form-control form-control-user" readonly><%= consolidacion.ForNAdmin.motDevol %></textarea>
                       </div>
                     </div>
 
@@ -171,31 +140,41 @@
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="observacion">Observaciones
                           (Opcional)</label>
-                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+                        <textarea name="observacion" rows="2" class="form-control form-control-user" readonly><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                        <a href="/coordinacion/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
                       </div>
                     </div>
 
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
+
                     <div class="form-group row">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-2" for="fields">Adjuntar
-                          Archivo(s) Nuevos</label>
-                        <div class="drop-zone">
-                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
-                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
-                        </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <select id="criterio" name="criterio" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione</option>
+                          <option value="Aceptado">Aceptable</option>
+                          <option value="Rechazado">Rechazar</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo" style="display: none">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
                       </div>
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Corrección
+                      Enviar Reporte
                     </button>
+                    <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= consolidacion._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-user btn-block">
+                      Eliminar Reporte
+                    </a>
                   </form>
                 </div>
               </div>
@@ -207,7 +186,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include('../../../tools/footer'); %>
+      <%- include('../../../../tools/footer'); %>
       <!-- End of Footer -->
     </div>
     <!-- End of Content Wrapper -->
@@ -218,6 +197,33 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+
+  <!-- Delete Modal-->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ¿Esta seguro de eliminar esta consolidación?
+          <br>
+          <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancelar
+          </button>
+          <a id="formDeleteCons" class="btn btn-primary">
+            Eliminar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -254,8 +260,9 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
+  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -275,87 +282,16 @@
   <% } %>
 
   <script>
-    $(window).bind('load', function() {
-      var nav = document.getElementById('nav2');
-      $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
-      var nav4 = document.getElementById('show1');
+    $(window).bind("load", function() {
+      var nav = document.getElementById("nav2");
+      $("#navlink1").removeClass("collapsed");
+      var nav3 = document.getElementById("collapseTwo");
+      var nav4 = document.getElementById("show1");
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
     });
-
-    $("#entreInfor").change(function() {
-      if (document.getElementById("entreInfor").value == "SI") {
-        $("#fechInfor").attr("readonly", false);
-      } else {
-        $("#fechInfor").attr("readonly", true);
-      }
-    });
-    $("#entreCrono").change(function() {
-      if (document.getElementById("entreCrono").value == "SI") {
-        $("#fechCrono").attr("readonly", false);
-      } else {
-        $("#fechCrono").attr("readonly", true);
-      }
-    });
-    $("#entreAsis").change(function() {
-      if (document.getElementById("entreAsis").value == "SI") {
-        $("#fechAsis").attr("readonly", false);
-      } else {
-        $("#fechAsis").attr("readonly", true);
-      }
-    });
-    $("#entreCircu").change(function() {
-      if (document.getElementById("entreCircu").value == "SI") {
-        $("#NumCir").attr("readonly", false);
-      } else {
-        $("#NumCir").attr("readonly", true);
-      }
-    });
-
-    // if (<%= actaAnul %> != 0) {
-    //   $("#nomActas").attr("readonly", false);
-    //   $("#motDevol").attr("readonly", false);
-    // } else {
-    //   $("#nomActas").attr("readonly", true);
-    //   $("#motDevol").attr("readonly", true);
-    // }
   </script>
 </body>
 
 </html>
-
-<form method="POST" autocomplete="off">
-  <div class="form-row align-items-center mb-sm-2">
-    <div class="col my-1">
-      <label class="mr-sm-2" for="mes">Mes</label>
-      <input type="text" class="form-control form-control-user" id="mes" name="mes" onkeyup="mayus(this);" readonly>
-    </div>
-    <div class="col my-1">
-      <label class="mr-sm-2" for="provinciaID">Provincia</label>
-      <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
-    </div>
-    <div class="col my-1">
-      <label class="mr-sm-2" for="muniSelect">Municipio</label>
-      <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
-        <option selected disabled>Seleccione el Municipio</option>
-        <% if(fields){ %>
-        <% fields.forEach((fields)=> { %>
-        <option value="<%= fields.municipio %>">
-          <%= fields.municipio %>
-        </option>
-        <% }); %>
-        <% } %>
-      </select>
-    </div>
-  </div>
-
-
-  <div class="form-group row">
-    <div class="col-sm-12">
-      <label class="mr-sm-2" for="observacion">Observaciones Y Comentarios
-        (Opcional)</label>
-      <textarea name="observacion" id="observacion" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-    </div>
-  </div>

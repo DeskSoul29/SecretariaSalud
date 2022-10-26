@@ -27,6 +27,7 @@ var EstablecimientosSchema = new Schema({
     tomaMuestra: String,
     quejas: String,
     noveadministrativa: String,
+    cronograma: String,
   },
 
   grupo: String,

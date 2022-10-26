@@ -140,7 +140,6 @@ var authTec = (function () {
         zona,
         objEst,
         acompananteEmp,
-        observacion,
         //Vehiculos
         vehiculosON,
         classVehi,
@@ -149,6 +148,9 @@ var authTec = (function () {
         refriV,
         nInscrip,
         produTrans,
+        //Extra
+        observacion,
+        cronograma,
       } = req.body;
 
       new consolidaciones({
@@ -172,6 +174,7 @@ var authTec = (function () {
           vehiculos: vehiculosON,
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
+          cronograma: cronograma,
         },
         grupo: grupEsta,
         codigo: codEsta,
@@ -695,12 +698,12 @@ var authTec = (function () {
       process.env.JWT_SECRETO
     );
 
-    var validar = await cronograma.find({
+    var validar = await consolidaciones.find({
       user: req.params.user,
       mes: req.body.mesCron,
     });
     if (validar.length === 0) {
-      authTec.SendCronograma(req, next, decodificada);
+      authTec.SendConsolidacion(req, next);
     } else {
       authTec.DeleteFile(req.file.filename);
       authTec.isUser(
@@ -734,6 +737,11 @@ export const ConsolidaEstados = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
+
+    var fecha = await cronograma.find({
+      $and: [{ $year: new Date("2022-10-21") }, { $year: new Date("2021-10-21") }],
+    });
+    console.log(fecha);
 
     //Consolidaciones Pendientes
     await consolidaciones

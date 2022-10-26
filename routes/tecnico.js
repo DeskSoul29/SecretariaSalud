@@ -194,6 +194,18 @@ router.get(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/CronogramaMensual",
+  isAuthenticatedTecnic,
+  SeeTecConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/cronogramas", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Ver/TomaMuestras",
   isAuthenticatedTecnic,
   SeeTecConsolidaciones,

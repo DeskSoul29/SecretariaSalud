@@ -16,7 +16,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarProf'); %>
+    <%- include('../../../tools/sidebarTec'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -35,8 +35,8 @@
           <div class="card shadow mb-4">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/profesional/Consolidaciones/Ver">Consolidaciones</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Listado de Carnetizados
+                <li class="breadcrumb-item"><a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cronogramas Mensual
                 </li>
               </ol>
             </nav>
@@ -62,62 +62,27 @@
                 <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
-                      <th>Estado</th>
                       <th>Fecha_Enviado</th>
-                      <th>Responsable</th>
                       <th>Provincia</th>
                       <th>Municipio</th>
-                      <th>Nombre Completo</th>
-                      <th>Nº de Identificación</th>
-                      <th>Nombre del Establecimiento Que Labora</th>
-                      <th>Dirección del Establecimiento</th>
-                      <th>Fecha de Expedición del Carnet</th>
-                      <th>Observaciones</th>
                       <th>Archivos</th>
-                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Estado</th>
-                      <th>Fecha_Enviado</th>
-                      <th>Responsable</th>
-                      <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Nombre Completo</th>
-                      <th>Nº de Identificación</th>
-                      <th>Nombre del Establecimiento Que Labora</th>
-                      <th>Dirección del Establecimiento</th>
-                      <th>Fecha de Expedición del Carnet</th>
-                      <th>Observaciones</th>
+                      <th><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
+                      <th><input type="text" placeholder="Busca por Provincia" /></th>
+                      <th><input type="text" placeholder="Busca por Municipio" /></th>
                       <th>Archivos</th>
-                      <th>Acción</th>
                     </tr>
                   </tfoot>
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.lisCarnets == "on"){ %>
+                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
                     <tr>
                       <td>
-                        <% if(allConso.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(allConso.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/ListadoCarnetizados/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(allConso.status=="Rechazado" ){ %>
-                        <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(allConso.status == "Enviado"){ %>
-                        <span class="badge badge-info text-uppercase">Enviado</span>
-                        <% }else if(allConso.status=="Aceptado" ){ %>
-                        <span class="badge badge-success text-uppercase">Aceptado</span>
-                        <% } %>
-                      </td>
-                      <td>
                         <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
-                      </td>
-                      <td>
-                        <%= allConso.responsable.userResponsable %>
-                        <%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
                         <%= allConso.provincia %>
@@ -126,32 +91,7 @@
                         <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= allConso.ForCarnets.nombreCarnet %>
-                      </td>
-                      <td>
-                        <%= allConso.ForCarnets.idenCarnet %>
-                      </td>
-                      <td>
-                        <%= allConso.ForCarnets.establecimientoCarnet %>
-                      </td>
-                      <td>
-                        <%= allConso.ForCarnets.direccionCarnet %>
-                      </td>
-                      <td>
-                        <%= moment(allConso.ForCarnets.expCarnet,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
-                      </td>
-                      <td>
-                        <%= allConso.observaciones %>
-                      </td>
-                      <td>
-                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
-                      </td>
-                      <td>
-                        <% if(allConso.SendNovAd == "off"){ %>
-                        <a type="button" onclick='modalsEstablecimientos.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                        <% } %>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                     </tr>
                     <% } %>
@@ -182,33 +122,6 @@
       <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Delete Modal-->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ¿Esta seguro de eliminar esta consolidación?
-            <br>
-            <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">
-              Cancelar
-            </button>
-            <a id="formDeleteCons" class="btn btn-primary">
-              Eliminar
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -224,7 +137,7 @@
             finalizar su sesión actual.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
           </div>
         </div>
       </div>
@@ -247,12 +160,6 @@
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
 
-    <!-- Download Files -->
-    <script type="module" src="/js/tools/downloadFiles.js"></script>
-
-    <!-- Validation -->
-    <script src="/js/Profesional/validaciones.js"></script>
-
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
@@ -264,19 +171,16 @@
     <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
     <script>
-      $(window).bind(' load', function() {
+      $(window).bind('load', function() {
         var nav = document.getElementById('nav2');
         $('#navlink1').removeClass('collapsed');
-        var nav3 = document.getElementById('collapseTwo');
+        var nav3 = document.getElementById('collapseOne');
         var nav4 = document.getElementById('show1');
         nav.className += "  active";
         nav3.className += "  show";
         nav4.className += "  active";
       });
-      $('#dataTable tfoot th').each(function() {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-      });
+
       var table = $('#dataTable').DataTable({
         order: [
           [1, 'desc']
@@ -298,10 +202,10 @@
         dom: 'Bfrtlip',
         buttons: [{
           extend: 'excel',
-          filename: 'CARNETIZADOS_' + new Date().toJSON().substring(0, 10),
+          filename: 'ANTIRRABICA_' + new Date().toJSON().substring(0, 10),
           autoFilter: true,
-          sheetName: 'LISTADO DE CARNETIZADOS',
-        }]
+          sheetName: 'ANTIRRABICA ANIMAL',
+        }],
       });
       table.columns().every(function() {
         var that = this;

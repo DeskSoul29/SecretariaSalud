@@ -45,7 +45,7 @@
                     <h1 class="h4 text-gray-900 mb-4">NOVEDADES ADMINISTRATIVAS</h1>
                   </div>
 
-                  <form onsubmit="novAdminis(event)" action="/profesional/Consolidaciones/Rechazado/EnviarNA/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
+                  <form onsubmit="novAdminis(event)" action="/profesional/Consolidaciones/Rechazado/NoveAdministrativa/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
                     <input type="text" value="on" id="noveadministrativa" name="noveadministrativa" style="display: none;" readonly>
 
                     <div class="form-group row">
@@ -65,7 +65,7 @@
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
                         <label class="mr-sm-2" for="mes">Mes</label>
-                        <input type="text" class="form-control form-control-user" id="mes" name="mes" value="<%= user.mes %>" readonly>
+                        <input type="text" class="form-control form-control-user" id="mesNA" name="mesNA" value="<%= consolidacion.ForNAdmin.mesNA %>" readonly>
                       </div>
                       <div class="col my-1">
                         <label class="mr-sm-2" for="provinciaID">Provincia</label>
@@ -154,15 +154,15 @@
                     <div class="form-group row">
                       <div class="col-sm-2">
                         <label class="mr-sm-6" for="numActas">N° de Actas</label>
-                        <input type="number" class="form-control form-control-user" value="<%= actaAnul %>" min="0" id="numActas" name="numActas" readonly />
+                        <input type="number" class="form-control form-control-user" min="0" id="numActas" value="<%= consolidacion.ForNAdmin.numActas %>" name="numActas" readonly />
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-4" for="nomActas">Nombre del Acta</label>
-                        <textarea type="text" class="form-control form-control-user" id="nomActas" name="nomActas" placeholder="Escriba los nombres segun la cantidad de actas" readonly></textarea>
+                        <textarea type="text" class="form-control form-control-user" id="nomActas" name="nomActas" placeholder="Escriba los nombres segun la cantidad de actas" readonly><%= consolidacion.ForNAdmin.nomActas %></textarea>
                       </div>
                       <div class="col-sm-6">
                         <label class="mr-sm-4" for="motDevol">Motivo de Devolucion</label>
-                        <textarea type="text" class="form-control form-control-user" id="motDevol" name="motDevol" placeholder="Escriba el motivo de haber devuelto el acta" readonly></textarea>
+                        <textarea type="text" class="form-control form-control-user" id="motDevol" name="motDevol" placeholder="Escriba el motivo de haber devuelto el acta" readonly><%= consolidacion.ForNAdmin.motDevol %></textarea>
                       </div>
                     </div>
 
@@ -285,25 +285,46 @@
       nav4.className += "  active";
     });
 
-    $("#entreInfor").change(function() {
-      if (document.getElementById("entreInfor").value == "SI") {
-        $("#fechInfor").attr("readonly", false);
-      } else {
-        $("#fechInfor").attr("readonly", true);
-      }
-    });
+    document.getElementById("entreInfor").value = "<%= consolidacion.ForNAdmin.entreInfor %>"
+    document.getElementById("entreCrono").value = "<%= consolidacion.ForNAdmin.entreCrono %>"
+    document.getElementById("entreAsis").value = "<%= consolidacion.ForNAdmin.entreAsis %>"
+    document.getElementById("entreCircu").value = "<%= consolidacion.ForNAdmin.entreCircu %>"
+
+    if ("<%= consolidacion.ForNAdmin.entreCrono %>" == "SI") {
+      $("#fechCrono").attr("readonly", false);
+      document.getElementById("fechCrono").value = "<%= moment(consolidacion.ForNAdmin.fechCrono,'YYYY/MM/DD').add(1, 'days').format('YYYY-MM-DD'); %>"
+    } else {
+      $("#fechCrono").attr("readonly", true);
+    }
+    if ("<%= consolidacion.ForNAdmin.entreAsis %>" == "SI") {
+      $("#fechAsis").attr("readonly", false);
+      document.getElementById("fechAsis").value = "<%= moment(consolidacion.ForNAdmin.fechAsis,'YYYY/MM/DD').add(1, 'days').format('YYYY-MM-DD'); %>"
+    } else {
+      $("#fechAsis").attr("readonly", true);
+    }
+    if ("<%= consolidacion.ForNAdmin.entreCircu %>" == "SI") {
+      $("#NumCir").attr("readonly", false);
+      document.getElementById("NumCir").value = "<%= consolidacion.ForNAdmin.NumCir %>"
+    } else {
+      $("#NumCir").attr("readonly", true);
+    }
+
     $("#entreCrono").change(function() {
       if (document.getElementById("entreCrono").value == "SI") {
         $("#fechCrono").attr("readonly", false);
+        document.getElementById("fechCrono").setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         $("#fechCrono").attr("readonly", true);
+        document.getElementById("fechCrono").value = ""
       }
     });
     $("#entreAsis").change(function() {
       if (document.getElementById("entreAsis").value == "SI") {
         $("#fechAsis").attr("readonly", false);
+        document.getElementById("fechAsis").setAttribute("max", new Date().toJSON().substring(0, 10));
       } else {
         $("#fechAsis").attr("readonly", true);
+        document.getElementById("fechAsis").value = ""
       }
     });
     $("#entreCircu").change(function() {
@@ -311,51 +332,18 @@
         $("#NumCir").attr("readonly", false);
       } else {
         $("#NumCir").attr("readonly", true);
+        document.getElementById("NumCir").value = ""
       }
     });
 
-    // if (<%= actaAnul %> != 0) {
-    //   $("#nomActas").attr("readonly", false);
-    //   $("#motDevol").attr("readonly", false);
-    // } else {
-    //   $("#nomActas").attr("readonly", true);
-    //   $("#motDevol").attr("readonly", true);
-    // }
+    if ("<%= consolidacion.ForNAdmin.numActas %>" != 0) {
+      $("#nomActas").attr("readonly", false);
+      $("#motDevol").attr("readonly", false);
+    } else {
+      $("#nomActas").attr("readonly", true);
+      $("#motDevol").attr("readonly", true);
+    }
   </script>
 </body>
 
 </html>
-
-<form method="POST" autocomplete="off">
-  <div class="form-row align-items-center mb-sm-2">
-    <div class="col my-1">
-      <label class="mr-sm-2" for="mes">Mes</label>
-      <input type="text" class="form-control form-control-user" id="mes" name="mes" onkeyup="mayus(this);" readonly>
-    </div>
-    <div class="col my-1">
-      <label class="mr-sm-2" for="provinciaID">Provincia</label>
-      <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
-    </div>
-    <div class="col my-1">
-      <label class="mr-sm-2" for="muniSelect">Municipio</label>
-      <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
-        <option selected disabled>Seleccione el Municipio</option>
-        <% if(fields){ %>
-        <% fields.forEach((fields)=> { %>
-        <option value="<%= fields.municipio %>">
-          <%= fields.municipio %>
-        </option>
-        <% }); %>
-        <% } %>
-      </select>
-    </div>
-  </div>
-
-
-  <div class="form-group row">
-    <div class="col-sm-12">
-      <label class="mr-sm-2" for="observacion">Observaciones Y Comentarios
-        (Opcional)</label>
-      <textarea name="observacion" id="observacion" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
-    </div>
-  </div>

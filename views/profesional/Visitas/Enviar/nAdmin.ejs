@@ -138,7 +138,7 @@
                     <div class="form-group row">
                       <div class="col-sm-2">
                         <label class="mr-sm-6" for="numActas">N° de Actas</label>
-                        <input type="number" class="form-control form-control-user" value="<%= actaAnul %>" min="0" id="numActas" name="numActas" readonly />
+                        <input type="number" class="form-control form-control-user" min="0" id="numActas" name="numActas" readonly />
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-4" for="nomActas">Nombre del Acta</label>
@@ -243,7 +243,7 @@
     <% if(actaAnul){ %>
       var arrayActa = []
       <% actaAnul.forEach((actaAnul)=> { %>
-        arrayActa.push(["<%= actaAnul._id.municipio %>"], ["<%= actaAnul.count %>"])
+        arrayActa.push(["<%= actaAnul._id.municipio %>"], [<%= actaAnul.count %>])
       <% }) %>
     <% } %>
   </script>
@@ -286,22 +286,19 @@
     var muni = document.getElementById("muniSelect")
     muni.addEventListener("change", function () {
       for (var i = 0; i < arrayActa.length; i++) {
-        console.log(arrayActa[i])
-        console.log(arrayActa[i+1])
-        if (arrayActa[i].includes(muni.value) && arrayActa[i] == muni.value) { 
-          document.getElementById("numActas").value = arrayActa[i+1]
-            $("#nomActas").attr("readonly", false);
-            $("#motDevol").attr("readonly", false);
-        }else {
-          document.getElementById("numActas").value = 0
+        if (arrayActa[i] == muni.value) {
+          $("#nomActas").attr("readonly", false);
+          $("#motDevol").attr("readonly", false);
+          document.getElementById("numActas").value = arrayActa[i + 1]
+          return;
+        }
+        if(!arrayActa[i].includes(muni.value)){
             $("#nomActas").attr("readonly", true);
             $("#motDevol").attr("readonly", true);
+            document.getElementById("numActas").value = 0
         }
-
       }
     });
-
-    
   </script>
 
   <% if(typeof alert !="undefined" ) { %>

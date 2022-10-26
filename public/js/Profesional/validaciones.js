@@ -132,9 +132,16 @@ const modalsEstablecimientos = (function () {
     }
   };
 
+  var eliminar_cons = function (id) {
+    document
+      .getElementById("formDeleteCons")
+      .setAttribute("href", "/profesional/Consolidaciones/Delete/" + id);
+  };
+
   return {
     consolidacionVer: consolidacionVer,
     consolidacion: consolidacion,
+    eliminar_cons: eliminar_cons,
   };
 })();
 

@@ -246,6 +246,8 @@
                               <a href="/profesional/Consolidaciones/Rechazado/TomaMuestras/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Rechazado/NoveAdministrativa/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } %>
                             </td>
                             <td>
@@ -268,6 +270,8 @@
                               Toma de Muestras
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
+                              <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                              Novedad Administrativa
                               <% } %>
                             </td>
                             <td>
@@ -352,6 +356,23 @@
 
   <!-- Validations -->
   <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+          title: '<%= alert[0].alertTitle %>',
+          text:'<%= alert[0].alertMessage %>',
+          icon:'<%= alert[0].alertIcon %>',
+          showConfirmButton: <%= alert[0].showConfirmButton %>,
+          timer: <%= alert[0].timer %>
+        }).then(()=>{
+          window.location = '<%= alert[0].ruta %>'
+        })
+      </script>
+  <% } %>
 
   <script>
     $(window).bind('load', function() {

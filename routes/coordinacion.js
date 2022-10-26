@@ -410,6 +410,7 @@ router.post(
   "/Consolidaciones/Validar/NoveAdministrativas/:_id",
   isAuthenticatedCoordinacion,
   ValConsolidaciones,
+  SendReport,
   (req, res) => {
     res.render("coordinacion/Visitas/Ver/Validar/nAdmin", {
       user: req.user,

@@ -1,0 +1,24 @@
+PENDIENTES
+? Arreglar la validacion de numero de actas invalidadas - profesional (validar q NovAdmin == "off" y municipio)
+X Arreglar rechazos en todos los roles (se encontro error(arreglado) en rechazos/quejas)
+Arreglar consolidaciones y añadir cronograma, borrar la consolidacion de cronograma
+Novedad administrativa - Validar (admin)
+X Arreglar q no suceda nada con las consolidaciones q se rechacen y se haya enviado ya la novadmin con ella
+
+X Boton aceptar todas
+X Restriccion en rango de 2 meses (Anterior y actual)
+X Total de visitas ESTABLECIMIENTOS
+? Boton eliminar a consolidaciones - EN Admin y Provincia
+Barras: Añadir requerimientos por mes
+X Poner documento: NAdministrativas
+X Entrega Informe Mensual -> Consolidado Informe Mensual
+X Quitar fecha
+? Subir cronograma - del 1 hasta el 3 de cada mes
+Mostrar Cronograma en profesional y tecnico
+? novedad administrativa: 5 del siguiente mes
+arreglar q no se pueda subir nadmin sino desde el 1 de cada mes (prevension de errores por si sube antes y falta gente)
+arreglar las inserciones, consultas, etc por el AÑO ACTUAL o MES (sea el caso)
+X Arreglar rechazos (provincia) y novedades administrativas
+X Arreglar tablas las todas
+Modal Al inciar pagina de provincia (1 a 5 de cada mes por novedad administrativa), y técnico (1 a 3 de cada mes por cronograma)
+Cambiar foto de portada para coordinacion

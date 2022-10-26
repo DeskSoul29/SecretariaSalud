@@ -132,6 +132,9 @@ var authCoordi = (function () {
         status: {
           $eq: "Enviado",
         },
+        SendNovAd: {
+          $eq: "on",
+        },
         _id: {
           $ne: req.params._id,
         },
@@ -846,7 +849,18 @@ export const deleteCons = async (req, res, next) => {
   await consolidaciones
     .findById(req.params.id)
     .then((result) => {
-      if (result == null) {
+      if (result.SendNovAd == "off") {
+        authCoordi.isUser(
+          req,
+          "Reporte Cancelado",
+          "No se a enviado aun esta consolidacion",
+          "error",
+          true,
+          false,
+          "/coordinacion/Consolidaciones/Ver"
+        );
+        return next();
+      } else if (result == null) {
         authCoordi.isUser(
           req,
           "Reporte Cancelado",
@@ -861,7 +875,19 @@ export const deleteCons = async (req, res, next) => {
         authCoordi.DeleteConsolidacion(req, result.evidencia.file, next);
       }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.error(error);
+      authCoordi.isUser(
+        req,
+        "Reporte Cancelado",
+        "No Se Encontro la Consolidacion",
+        "error",
+        true,
+        false,
+        "/profesional/Consolidaciones/Ver"
+      );
+      return next();
+    });
 };
 //Consolidaciones - Consultar
 export const SeeCoorConsolidaciones = async (req, res, next) => {

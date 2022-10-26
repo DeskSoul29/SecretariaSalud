@@ -7,6 +7,7 @@ import {
   hojavidaConsultAllProf,
   changePass,
   addMuniApoyo,
+  deleteCons,
   SeeProfConsolidaciones,
   ConsolidaEstadosProf,
   SendConsolidacion,
@@ -641,6 +642,20 @@ router.get(
       user: req.user,
       allConso: req.allConso,
       moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Delete/:id",
+  isAuthenticatedProf,
+  deleteCons,
+  (req, res) => {
+    res.render("profesional/Visitas/mainVer", {
+      user: req.user,
+      allConso: undefined,
+      moment: moment,
+      alert: req.alert,
     });
   }
 );
@@ -758,6 +773,18 @@ router.get(
   SeeProfConsolidaciones,
   (req, res) => {
     res.render("profesional/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/CronogramaMensual",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/cronogramas", {
       user: req.user,
       allConso: req.allConso,
       moment: moment,

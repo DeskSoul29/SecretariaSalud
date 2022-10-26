@@ -388,6 +388,8 @@
                                   <a href="/profesional/Consolidaciones/Rechazado/TomaMuestras/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   <a href="/profesional/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/NoveAdministrativa/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                                   <% } %>
                                 </td>
                                 <td>
@@ -410,6 +412,8 @@
                                   Toma de Muestras
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   Quejas
+                                  <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
+                                  Novedad Administrativa
                                   <% } %>
                                 </td>
                                 <td>

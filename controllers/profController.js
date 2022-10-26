@@ -348,6 +348,25 @@ var authProf = (function () {
     }
   };
 
+  var DeleteConsolidacion = async (req, fileName, next) => {
+    await consolidaciones
+      .findByIdAndDelete(req.params.id)
+      .then((result) => {
+        authProf.isUser(
+          req,
+          "Conexión exitosa",
+          "Eliminado Correctamente",
+          "success",
+          false,
+          800,
+          "/profesional/Consolidaciones/Ver"
+        );
+        authProf.DeleteFile(fileName);
+      })
+      .catch((error) => console.error(error));
+    return next();
+  };
+
   var UpdateAceptAll = async (req, provincia, municipio) => {
     return await consolidaciones
       .updateMany(
@@ -359,9 +378,6 @@ var authProf = (function () {
         },
         { $set: { SendNovAd: "on" } }
       )
-      .then((result) => {
-        console.log(result);
-      })
       .catch((error) => {
         console.log(error);
       });
@@ -460,7 +476,6 @@ var authProf = (function () {
       zona,
       objEst,
       acompananteEmp,
-      observacion,
       //Vehiculos
       vehiculosON,
       classVehi,
@@ -469,6 +484,21 @@ var authProf = (function () {
       refriV,
       nInscrip,
       produTrans,
+      //Novedad Administrativa
+      noveadministrativa,
+      mesNA,
+      entreInfor,
+      entreCrono,
+      fechCrono,
+      entreAsis,
+      fechAsis,
+      entreCircu,
+      NumCir,
+      numActas,
+      nomActas,
+      motDevol,
+      //Extra
+      observacion,
     } = req.body;
 
     establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
@@ -484,6 +514,8 @@ var authProf = (function () {
     vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
     tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
     quejasON = quejasON == undefined ? "" : quejasON;
+    noveadministrativa =
+      noveadministrativa == undefined ? "" : noveadministrativa;
 
     var Ruta = await authProf.NextReport(req, decodificada);
 
@@ -515,6 +547,7 @@ var authProf = (function () {
             vehiculos: vehiculosON,
             tomaMuestra: tomaMuestraON,
             quejas: quejasON,
+            noveadministrativa: noveadministrativa,
           },
 
           ForRotulado: {
@@ -604,6 +637,19 @@ var authProf = (function () {
             nInscripcion: nInscrip,
             productosVehiculo: produTrans,
           },
+          ForNAdmin: {
+            mesNA: mesNA,
+            entreInfor: entreInfor,
+            entreCrono: entreCrono,
+            fechCrono: fechCrono,
+            entreAsis: entreAsis,
+            fechAsis: fechAsis,
+            entreCircu: entreCircu,
+            NumCir: NumCir,
+            numActas: numActas,
+            nomActas: nomActas,
+            motDevol: motDevol,
+          },
           evidencia: {
             file: req.file.filename,
           },
@@ -645,6 +691,8 @@ var authProf = (function () {
               var tipoRuta = "EventosSaludPublica/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.antirrabica == "on") {
               var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.noveadministrativa == "on") {
+              var tipoRuta = "NoveAdministrativas/" + Ruta[0]._id;
             }
             authProf.isUser(
               req,
@@ -926,6 +974,7 @@ var authProf = (function () {
   return {
     isUser: isUser,
     SendConsolidacion: SendConsolidacion,
+    DeleteConsolidacion: DeleteConsolidacion,
     DeleteFile: DeleteFile,
     SendCorreccion: SendCorreccion,
     NextReport: NextReport,
@@ -1207,6 +1256,50 @@ export const SendConsolidacion = async (req, res, next) => {
     }
     authProf.SendConsolidacion(req, next);
   });
+};
+export const deleteCons = async (req, res, next) => {
+  await consolidaciones
+    .findById(req.params.id)
+    .then((result) => {
+      if (result.SendNovAd == "on") {
+        authProf.isUser(
+          req,
+          "Reporte Cancelado",
+          "Ya se envio la Novedad Administrativa de Esta Consolidacion",
+          "error",
+          true,
+          false,
+          "/profesional/Consolidaciones/Ver"
+        );
+        return next();
+      } else if (result == null) {
+        authProf.isUser(
+          req,
+          "Reporte Cancelado",
+          "No se encontro la consolidacion",
+          "error",
+          true,
+          false,
+          "/profesional/Consolidaciones/Ver"
+        );
+        return next();
+      } else {
+        authProf.DeleteConsolidacion(req, result.evidencia.file, next);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      authProf.isUser(
+        req,
+        "Reporte Cancelado",
+        "No Se Encontro la Consolidacion",
+        "error",
+        true,
+        false,
+        "/profesional/Consolidaciones/Ver"
+      );
+      return next();
+    });
 };
 //Consolidaciones - Novedades Administrativas
 export const CountActas = async (req, res, next) => {
