@@ -127,7 +127,6 @@
           <!-- End Content Row -->
 
           <div class="row">
-
             <div class="col-xl-12 col-lg-7">
 
               <!-- Bar Chart -->
@@ -139,11 +138,10 @@
                   <div class="chart-bar">
                     <canvas id="myBarChart"></canvas>
                   </div>
-
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
 
 
@@ -160,27 +158,28 @@
                     <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;  text-align: center !important;">
                       <thead>
                         <tr>
-                          <th>Estado</th>
+                          <!-- <th>Estado</th> -->
                           <th>Mes</th>
                           <th>Profesional</th>
                           <th>Provincia</th>
+                          <th>Municipio</th>
                           <th>Fecha Enviado</th>
                         </tr>
                       </thead>
                       <tfoot>
                         <tr>
-                          <th>Estado</th>
+                          <!-- <th>Estado</th> -->
                           <th>Mes</th>
                           <th>Profesional</th>
                           <th>Provincia</th>
+                          <th>Municipio</th>
                           <th>Fecha Enviado</th>
                         </tr>
                       </tfoot>
                       <tbody>
-                        <% users.forEach((users)=> { %>
-                        <% if(users.rol == "profesional"){ %>
+                        <% estCon.forEach((estCon)=> { %>
                         <tr>
-                          <td>
+                          <!-- <td>
                             <a class="btn-success btn-circle btn-sm">
                               <span class="icon">
                                 <i class="fas fa-check"></i>
@@ -191,37 +190,23 @@
                                 <i class="fas fa-exclamation-triangle"></i>
                               </span>
                             </a>
+                          </td> -->
+                          <td>
+                            <%= estCon.ForNAdmin.mesNA %>
                           </td>
                           <td>
-                            <%= users.nombre %>
+                            <%= estCon.responsable.nombreResponsable %>
                           </td>
                           <td>
-                            <% estCon.forEach((estCon)=> { %>
-                            <% if(users.provincia == estCon._id.provincia){ %>
-                            <%= estCon._id.provincia %>
-                            <% } %>
-                            <% }); %>
+                            <%= estCon.provincia %>
                           </td>
                           <td>
-                            <% estCon.forEach((estCon)=> { %>
-                            <% if(users.provincia == estCon._id.provincia){ %>
-                            <% if(estCon._id.status == "Enviado"){ %>
-                            <%= estCon.suma %>
-                            <% } %>
-                            <% } %>
-                            <% }); %>
+                            <%= estCon.municipio %>
                           </td>
                           <td>
-                            <% estCon.forEach((estCon)=> { %>
-                            <% if(users.provincia == estCon._id.provincia){ %>
-                            <% if(estCon._id.status == "Pendiente"){ %>
-                            <%= estCon.suma %>
-                            <% } %>
-                            <% } %>
-                            <% }); %>
+                            <%= moment(estCon.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                           </td>
                         </tr>
-                        <% } %>
                         <% }); %>
                       </tbody>
                     </table>

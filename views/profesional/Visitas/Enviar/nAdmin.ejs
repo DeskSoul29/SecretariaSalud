@@ -239,8 +239,13 @@
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-
+  <script type="Text/JavaScript">
+    <% if(actaAnul){ %>
+      var arrayActa = []
+      <% actaAnul.forEach((actaAnul)=> { %>
+        arrayActa.push(["<%= actaAnul._id.municipio %>"], ["<%= actaAnul.count %>"])
+      <% }) %>
+    <% } %>
   </script>
 
   <script type="Text/JavaScript">
@@ -278,13 +283,25 @@
       }
     });
 
-    if (<%= actaAnul %> != 0) {
-      $("#nomActas").attr("readonly", false);
-      $("#motDevol").attr("readonly", false);
-    } else {
-      $("#nomActas").attr("readonly", true);
-      $("#motDevol").attr("readonly", true);
-    }
+    var muni = document.getElementById("muniSelect")
+    muni.addEventListener("change", function () {
+      for (var i = 0; i < arrayActa.length; i++) {
+        console.log(arrayActa[i])
+        console.log(arrayActa[i+1])
+        if (arrayActa[i].includes(muni.value) && arrayActa[i] == muni.value) { 
+          document.getElementById("numActas").value = arrayActa[i+1]
+            $("#nomActas").attr("readonly", false);
+            $("#motDevol").attr("readonly", false);
+        }else {
+          document.getElementById("numActas").value = 0
+            $("#nomActas").attr("readonly", true);
+            $("#motDevol").attr("readonly", true);
+        }
+
+      }
+    });
+
+    
   </script>
 
   <% if(typeof alert !="undefined" ) { %>

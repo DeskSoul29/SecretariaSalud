@@ -165,8 +165,7 @@ var authProf = (function () {
         municipio: municipio,
         responsable: {
           userResponsable: decodificada.user,
-          nombreResponsable:
-            decodificada.nombres + " " + decodificada.apellidos,
+          nombreResponsable: decodificada.nombres + "" + decodificada.apellidos,
         },
         consolidacion: {
           establecimiento: establecimientoON,
@@ -1217,50 +1216,34 @@ export const CountActas = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
     await consolidaciones
-      .find({
-        provincia: {
-          $eq: decodificada.provincia,
+      .aggregate([
+        {
+          $match: {
+            actaAnul: "SI",
+            SendNovAd: "off",
+          },
         },
-        SendNovAd: {
-          $eq: "off",
+        {
+          $group: {
+            _id: {
+              provincia: decodificada.provincia,
+              municipio: "$municipio",
+              status: "Enviado",
+              consolidaciones: { establecimiento: "on" },
+            },
+            count: { $sum: 1 },
+          },
         },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-        actaAnul: {
-          $eq: "SI",
-        },
-      })
-      .count()
+      ])
       .then((data) => {
         req.actaAnul = data;
+        return next();
       });
-
-    return next();
   } catch (error) {
     console.log(error);
     return next();
   }
 };
-// export const SendNovedad = async (req, res, next) => {
-// var validaMuni = await authProf.ValidaMunicipio(municipio, mes);
-// console.log(validaMuni);
-// console.log(validaMuni.length === 0);
-// if (validaMuni.length === 0) {
-//   authProf.isUser(
-//     req,
-//     "Advertencia",
-//     "Ya se envio un reporte en el mes actual",
-//     "error",
-//     true,
-//     false,
-//     "/profesional/Consolidaciones/EnviarNA"
-//   );
-// return next();
-// } else {
-
-// }
-// };
 //Consolidaciones - Consultar
 export const SeeProfConsolidaciones = async (req, res, next) => {
   try {

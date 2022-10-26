@@ -52,19 +52,12 @@ var authCoordi = (function () {
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo } = req.body;
 
-    if (criterio == "Aceptado") {
-      var SendNovAd = "on";
-    } else {
-      var SendNovAd = "off";
-    }
-
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
         {
           $set: {
             status: criterio,
-            SendNovAd: SendNovAd,
             "reporte.motivo": motivo,
             "reporte.fechRepor": new Date(),
           },
@@ -157,6 +150,7 @@ var authCoordi = (function () {
           "consolidacion.establecimiento": "on",
           status: "Enviado",
           tipo: tipos,
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -187,6 +181,7 @@ var authCoordi = (function () {
         {
           "consolidacion.antirrabica": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -217,6 +212,7 @@ var authCoordi = (function () {
         {
           "consolidacion.establecimiento": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -247,6 +243,7 @@ var authCoordi = (function () {
         {
           "consolidacion.publicidad": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -277,6 +274,7 @@ var authCoordi = (function () {
         {
           "consolidacion.rotulado": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -307,6 +305,7 @@ var authCoordi = (function () {
         {
           "consolidacion.MSEstablecimientos": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -337,6 +336,7 @@ var authCoordi = (function () {
         {
           "consolidacion.MSProductos": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -367,6 +367,7 @@ var authCoordi = (function () {
         {
           "consolidacion.eduSanitaria": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -397,6 +398,7 @@ var authCoordi = (function () {
         {
           "consolidacion.EvenSaludPubli": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -427,6 +429,7 @@ var authCoordi = (function () {
         {
           "consolidacion.lisCarnets": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -457,6 +460,7 @@ var authCoordi = (function () {
         {
           "consolidacion.vehiculos": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -487,6 +491,7 @@ var authCoordi = (function () {
         {
           "consolidacion.tomaMuestra": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -517,6 +522,7 @@ var authCoordi = (function () {
         {
           "consolidacion.quejas": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -547,6 +553,7 @@ var authCoordi = (function () {
         {
           "consolidacion.noveadministrativa": "on",
           status: "Enviado",
+          SendNovAd: "on",
         },
         {
           $set: {
@@ -664,17 +671,8 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       req.visitAcep = data;
     });
 
-  //Listado de Profesionales con sus consolidaciones
   await consolidaciones
-    .aggregate([
-      {
-        $group: {
-          _id: { provincia: "$provincia", status: "$status" },
-          suma: { $sum: 1 },
-        },
-      },
-      { $sort: { provincia: 1 } },
-    ])
+    .find({ "consolidacion.noveadministrativa": "on" })
     .then((data) => {
       req.estCon = data;
     });
@@ -916,7 +914,7 @@ export const SendManyAcept = async (req, res, next) => {
     } else if (req.params.tipCons == "eduSanitaria") {
       authCoordi.UpdateAllEduSanitaria(req, next);
     } else if (req.params.tipCons == "EvenSaludPubli") {
-      authCoordi.UpdateAll(req, next);
+      authCoordi.UpdateAllEventosSaludPublica(req, next);
     } else if (req.params.tipCons == "lisCarnets") {
       authCoordi.UpdateAllListadoCarnetizados(req, next);
     } else if (req.params.tipCons == "vehiculos") {

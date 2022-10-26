@@ -44,6 +44,7 @@ router.get(
       estCon: req.estCon,
       visitAcep: req.visitAcep,
       users: req.users,
+      moment: moment,
     });
   }
 );
