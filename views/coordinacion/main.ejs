@@ -5,9 +5,7 @@
   <%- include('../tools/head'); %>
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
 <body id="page-top">
@@ -33,6 +31,10 @@
             <h1 class="h3 mb-0 text-gray-800">Bienvenido, <%= user.nombre %>
               <%= user.apellido %>
             </h1>
+            <div id="btnCronograma">
+              <a type="button" data-target="#changeIMGModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class=" fas fa-download fa-sm text-white-50"></i> Cambiar Imagen Login</ahref=>
+              </a>
+            </div>
           </div>
 
           <!-- Content Row -->
@@ -146,7 +148,7 @@
 
 
           <div class="row">
-            <div class="col-xl-8 col-md-6 mb-4">
+            <div class="col-xl-12 col-md-6 mb-4">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">
@@ -176,6 +178,7 @@
                           <th>Fecha Enviado</th>
                         </tr>
                       </tfoot>
+                      <% if(estCon){ %>
                       <tbody>
                         <% estCon.forEach((estCon)=> { %>
                         <tr>
@@ -209,6 +212,7 @@
                         </tr>
                         <% }); %>
                       </tbody>
+                      <% } %>
                     </table>
                   </div>
                 </div>
@@ -233,6 +237,43 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+
+  <!-- Change Image Login Modal-->
+  <div class="modal fade" id="changeIMGModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cambio de Imagen</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form onsubmit="changeImgFrom(event)" method="POST" action="/coordinacion/changeIMG" enctype="multipart/form-data">
+          <div class="modal-body">
+            <div class="mb-3">
+              <label for="mesCron" class="form-label">Recuerde que solo puede añadir imagenes con extensión: ".jpg"</label>
+            </div>
+            <div class="mb-3">
+              <label class="mr-sm-2" for="fields">Adjuntar
+                Imagen</label>
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">Arrastra la imagen o da click para buscar</span>
+                <input type="file" name="myFile" id="myFile" class="drop-zone__input" accept=".jpg" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <!-- Logout Modal-->
   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -281,6 +322,27 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/chart-pie-demo.js"></script>
   <script src="js/demo/chart-bar-demo.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Validations -->
+  <script type="text/javascript" src="/js/Coordinador/formularios.js"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+          title: '<%= alert[0].alertTitle %>',
+          text:'<%= alert[0].alertMessage %>',
+          icon:'<%= alert[0].alertIcon %>',
+          showConfirmButton: <%= alert[0].showConfirmButton %>,
+          timer: <%= alert[0].timer %>
+        }).then(()=>{
+          window.location = '<%= alert[0].ruta %>'
+        })
+      </script>
+  <% } %>
 
   <script>
     $(window).bind("load", function() {

@@ -45,13 +45,13 @@ var time = (function () {
   };
 
   var max = function (date) {
-    if (date.getDate() <= 5) {
-      return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-05";
+    if (date.getDate() < 5) {
+      return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-04";
     } else {
       if (date.getMonth() + 2 != 13) {
-        return date.getFullYear() + "-" + time.pad(date.getMonth() + 2) + "-05";
+        return date.getFullYear() + "-" + time.pad(date.getMonth() + 2) + "-04";
       } else {
-        return date.getFullYear() + 1 + "-01-05";
+        return date.getFullYear() + 1 + "-01-04";
       }
     }
   };
@@ -115,7 +115,7 @@ if (document.getElementById("fVisit") != null) {
   document.getElementById("fVisit").value = time.formatDate(date);
   document.getElementById("fVisit").setAttribute("max", time.formatDate(date));
 
-  if (date.getDate() > 5) {
+  if (date.getDate() > 4) {
     document
       .getElementById("fVisit")
       .setAttribute(

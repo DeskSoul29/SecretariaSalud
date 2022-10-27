@@ -167,3 +167,10 @@ function formChangePass(e) {
     e.preventDefault();
   }
 }
+
+function changeImgFrom(e) {
+  if (document.getElementById("myFile").files.length == 0) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  }
+}

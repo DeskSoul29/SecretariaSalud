@@ -79,7 +79,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
+                    <% if (allConso.consolidacion.cronograma == "on"){ %>
                     <tr>
                       <td>
                         <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
@@ -171,10 +171,10 @@
     <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
     <script>
-      $(window).bind('load', function() {
+      $(window).bind(' load', function() {
         var nav = document.getElementById('nav2');
         $('#navlink1').removeClass('collapsed');
-        var nav3 = document.getElementById('collapseOne');
+        var nav3 = document.getElementById('collapseTwo');
         var nav4 = document.getElementById('show1');
         nav.className += "  active";
         nav3.className += "  show";

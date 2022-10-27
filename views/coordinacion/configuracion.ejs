@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-  <%- include('../../tools/head'); %>
+  <%- include('../tools/head'); %>
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
 </head>
@@ -12,7 +12,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../tools/sidebarAdmin'); %>
+    <%- include('../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -21,7 +21,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <%- include('../../tools/topbar'); %>
+        <%- include('../tools/topbar'); %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -51,7 +51,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include('../../tools/footer'); %>
+      <%- include('../tools/footer'); %>
       <!-- End of Footer -->
 
     </div>
@@ -121,14 +121,9 @@
   <% } %>
 
   <script>
-    $(window).bind('load', function() {
-      var nav = document.getElementById('nav2');
-      $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseTwo');
-      var nav4 = document.getElementById('show5');
+    $(window).bind("load", function() {
+      var nav = document.getElementById("nav5");
       nav.className += "  active";
-      nav3.className += "  show";
-      nav4.className += "  active";
     });
   </script>
 

@@ -739,7 +739,10 @@ export const ConsolidaEstados = async (req, res, next) => {
     );
 
     var fecha = await cronograma.find({
-      $and: [{ $year: new Date("2022-10-21") }, { $year: new Date("2021-10-21") }],
+      $and: [
+        { $year: new Date("2022-10-21") },
+        { $year: new Date("2021-10-21") },
+      ],
     });
     console.log(fecha);
 

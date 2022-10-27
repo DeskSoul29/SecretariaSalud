@@ -79,7 +79,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.antirrabica == "on"){ %>
+                    <% if (allConso.consolidacion.cronograma == "on"){ %>
                     <tr>
                       <td>
                         <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>

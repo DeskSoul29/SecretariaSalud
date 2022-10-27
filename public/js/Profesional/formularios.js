@@ -33,6 +33,59 @@ var toast = (function () {
   };
 })();
 
+var time = (function () {
+  var formatDate = function (date) {
+    return (
+      date.getFullYear() +
+      "-" +
+      time.pad(date.getMonth() + 1) +
+      "-" +
+      time.pad(date.getDate())
+    );
+  };
+
+  var max = function (date) {
+    if (date.getDate() < 5) {
+      return date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-04";
+    } else {
+      if (date.getMonth() + 2 != 13) {
+        return date.getFullYear() + "-" + time.pad(date.getMonth() + 2) + "-04";
+      } else {
+        return date.getFullYear() + 1 + "-01-04";
+      }
+    }
+  };
+
+  var min = function (date) {
+    return date.getFullYear() + "-" + time.pad(date.getMonth()) + "-01";
+  };
+
+  var padMin = function (number) {
+    if (number == 0) {
+      return "12";
+    } else if (number >= 1 && number < 10) {
+      return "0" + number;
+    } else {
+      return number;
+    }
+  };
+
+  var pad = function (number) {
+    if (number < 10) {
+      return "0" + number;
+    }
+    return number;
+  };
+
+  return {
+    formatDate: formatDate,
+    padMin: padMin,
+    pad: pad,
+    min: min,
+    max: max,
+  };
+})();
+
 let MESES = [
   "Enero",
   "Febrero",
@@ -57,6 +110,7 @@ if (document.getElementById("mes") != null) {
     document.getElementById("mes").value = MESES[date.getMonth()];
   }
 }
+
 if (document.getElementById("mesNA") != null) {
   if (date.getDate() < 5) {
     document.getElementById("mesNA").value = MESES[date.getMonth() - 1];
@@ -64,10 +118,26 @@ if (document.getElementById("mesNA") != null) {
     document.getElementById("mesNA").value = MESES[date.getMonth()];
   }
 }
+
 if (document.getElementById("fVisit") != null) {
-  document.getElementById("fVisit").setAttribute("min", time.min(date));
-  document.getElementById("fVisit").setAttribute("max", time.max(date));
   document.getElementById("fVisit").value = time.formatDate(date);
+  document.getElementById("fVisit").setAttribute("max", time.formatDate(date));
+
+  if (date.getDate() > 4) {
+    document
+      .getElementById("fVisit")
+      .setAttribute(
+        "min",
+        date.getFullYear() + "-" + time.pad(date.getMonth() + 1) + "-01"
+      );
+  } else {
+    if (date.getMonth() == 0) {
+      date.setMonth(date.getMonth() - 12);
+      document.getElementById("fVisit").setAttribute("min", time.min(date));
+    } else {
+      document.getElementById("fVisit").setAttribute("min", time.min(date));
+    }
+  }
 }
 function formChangePass(e) {
   if (
@@ -153,39 +223,45 @@ function validConsolidacion(e) {
 }
 
 function novAdminis(e) {
-  if (
-    document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
-    document.getElementById("entreCrono").value == "Seleccione" ||
-    document.getElementById("entreAsis").value == "Seleccione" ||
-    document.getElementById("entreCircu").value == "Seleccione" ||
-    document.getElementById("myFile").files.length == 0
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+  if (date.getDate() >= 1 && date.getDate() < 6) {
+    toast.toastError("Advertencia", "Debe esperar hasta inicio de mes");
     e.preventDefault();
-  } else if (
-    document.getElementById("entreCrono").value == "SI" &&
-    document.getElementById("fechCrono").value == 0
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  } else if (
-    document.getElementById("entreAsis").value == "SI" &&
-    document.getElementById("fechAsis").value == 0
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  } else if (
-    document.getElementById("entreCircu").value == "SI" &&
-    document.getElementById("NumCir").value == ""
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
-  } else if (
-    document.getElementById("numActas").value != 0 &&
-    (document.getElementById("nomActas").value == "" ||
-      document.getElementById("motDevol").value == "")
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
-    e.preventDefault();
+  } else {
+    if (
+      document.getElementById("muniSelect").value ==
+        "Seleccione el Municipio" ||
+      document.getElementById("entreCrono").value == "Seleccione" ||
+      document.getElementById("entreAsis").value == "Seleccione" ||
+      document.getElementById("entreCircu").value == "Seleccione" ||
+      document.getElementById("myFile").files.length == 0
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    } else if (
+      document.getElementById("entreCrono").value == "SI" &&
+      document.getElementById("fechCrono").value == 0
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    } else if (
+      document.getElementById("entreAsis").value == "SI" &&
+      document.getElementById("fechAsis").value == 0
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    } else if (
+      document.getElementById("entreCircu").value == "SI" &&
+      document.getElementById("NumCir").value == ""
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    } else if (
+      document.getElementById("numActas").value != 0 &&
+      (document.getElementById("nomActas").value == "" ||
+        document.getElementById("motDevol").value == "")
+    ) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    }
   }
 }

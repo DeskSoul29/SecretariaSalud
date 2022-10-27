@@ -335,7 +335,7 @@ var authProf = (function () {
               "Error en la Base de Datos",
               "Envio Cancelado",
               "error",
-              false,
+              true,
               false,
               "/profesional/Consolidaciones/Enviar"
             );

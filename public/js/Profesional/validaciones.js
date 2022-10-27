@@ -128,7 +128,10 @@ const modalsEstablecimientos = (function () {
         "_self"
       );
     } else if (consolidacion.value == "Cronograma de Actividades") {
-      window.open("/profesional/Consolidaciones/Ver/", "_self");
+      window.open(
+        "/profesional/Consolidaciones/Ver/CronogramaMensual",
+        "_self"
+      );
     }
   };
 

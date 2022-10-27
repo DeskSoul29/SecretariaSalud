@@ -7,6 +7,7 @@ import {
   users,
   deleteUser,
   editUser,
+  ChangeImg,
   changePass,
   deleteCons,
   SeeCoorConsolidaciones,
@@ -43,11 +44,36 @@ router.get(
       vacunas: req.vacunas,
       estCon: req.estCon,
       visitAcep: req.visitAcep,
-      users: req.users,
+      alert: undefined,
       moment: moment,
     });
   }
 );
+router.post(
+  "/changeIMG",
+  isAuthenticatedCoordinacion,
+  ChangeImg,
+  (req, res) => {
+    res.render("coordinacion/main", {
+      user: req.user,
+      consEnv: false,
+      consAcep: false,
+      vacunas: false,
+      estCon: false,
+      visitAcep: false,
+      alert: req.alert,
+    });
+  }
+);
+
+//Apartado: Configuracion
+router.get("/Configuracion", isAuthenticatedCoordinacion, (req, res) => {
+  res.render("coordinacion/configuracion", {
+    user: req.user,
+    alert: undefined,
+    moment: moment,
+  });
+});
 
 // Apartado: Cuentas
 
@@ -181,17 +207,6 @@ router.get(
     res.render("coordinacion/Visitas/pendientes", {
       user: req.user,
       allConso: req.allConso,
-      alert: undefined,
-      moment: moment,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Configuracion",
-  isAuthenticatedCoordinacion,
-  (req, res) => {
-    res.render("coordinacion/Visitas/configuracion", {
-      user: req.user,
       alert: undefined,
       moment: moment,
     });

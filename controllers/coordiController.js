@@ -6,6 +6,7 @@ import bcryptjs from "bcryptjs";
 import fs from "fs";
 import consolidaciones from "../models/consolidaciones.js";
 import { promisify } from "util";
+import uploadImg from "../middleware/uploadImg.js";
 
 var authCoordi = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -674,13 +675,56 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       req.visitAcep = data;
     });
 
+  //Listado de Profesionales con Nov Administrativa
   await consolidaciones
     .find({ "consolidacion.noveadministrativa": "on" })
     .then((data) => {
       req.estCon = data;
     });
 
+  //Bar Chart
+  await consolidaciones
+    .find({
+      "consolidacion.establecimiento": { $eq: "on" },
+      status: {
+        $eq: "Aceptado",
+      },
+      SendNovAd: {
+        $eq: "on",
+      },
+    })
+    .then((data) => {
+      req.estCon = data;
+    });
+
   return next();
+};
+export const ChangeImg = async (req, res, next) => {
+  await uploadImg(req, res, function (err, res) {
+    if (err) {
+      authCoordi.isUser(
+        req,
+        "Error en la Subida",
+        "Envio Cancelado",
+        "error",
+        true,
+        false,
+        "/coordinacion"
+      );
+    } else {
+      authCoordi.isUser(
+        req,
+        "Conexión exitosa",
+        "Imagen Cambiada",
+        "success",
+        false,
+        800,
+        "/coordinacion"
+      );
+      console.log(req.alert);
+    }
+    return next();
+  });
 };
 
 //Apartado: Cuentas
@@ -698,7 +742,7 @@ export const register = async (req, res, next) => {
         "error",
         true,
         false,
-        "coordinacion/Cuentas/Register"
+        "/coordinacion/Cuentas/Register"
       );
     } else {
       var userNew = new login({
@@ -793,7 +837,7 @@ export const editUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "coordinacion/Cuentas/Usuarios"
+        "/coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
