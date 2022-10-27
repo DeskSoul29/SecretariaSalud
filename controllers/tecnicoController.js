@@ -150,6 +150,7 @@ var authTec = (function () {
         produTrans,
         //Extra
         observacion,
+        mesCron,
         cronograma,
       } = req.body;
 
@@ -197,6 +198,8 @@ var authTec = (function () {
         actaAnul: "",
 
         salaNM: NecroMorg,
+
+        mesCron: mesCron,
 
         ForRotulado: {
           productoRotulado: productoRotulado,
@@ -698,10 +701,18 @@ var authTec = (function () {
       process.env.JWT_SECRETO
     );
 
-    var validar = await consolidaciones.find({
-      user: req.params.user,
-      mes: req.body.mesCron,
-    });
+    var validar = await consolidaciones.aggregate([
+      {
+        $match: {
+          consolidacion: { cronograma: "on" },
+          responsable: { userResponsable: decodificada.user },
+          mesCron: req.body.mesCron,
+        },
+      },
+      {
+        $group: { _id: { anno: { $year: "$createdAt" } }, count: { $sum: 1 } },
+      },
+    ]);
     if (validar.length === 0) {
       authTec.SendConsolidacion(req, next);
     } else {

@@ -28,7 +28,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 //Meses
-var dates = [
+let MESES = [
   "Enero",
   "Febrero",
   "Marzo",
@@ -42,24 +42,65 @@ var dates = [
   "Noviembre",
   "Diciembre",
 ];
-// Visitas
-var Visitas = [
-  4215, 3212, 5312, 2121, 8392, 8382, 2182, 2839, 6251, 7841, 9821, 14984,
-];
-//Favorables
-var Favorables = [
-  1215, 1212, 1312, 1121, 3292, 382, 1182, 1839, 4251, 4841, 5821, 2984,
-];
-//Desfavorables
-var Desfavorables = [
-  2215, 2212, 2312, 1121, 3292, 5382, 1182, 1839, 4251, 4841, 5821, 2984,
-];
-//Favorables Con Requerimientos
-var FavReque = [
-  215, 212, 312, 1121, 3292, 5382, 1182, 1839, 4251, 4841, 5821, 2984,
-];
 
-// Bar Chart Example
+var dates = [];
+var Visitas = [];
+var Favorables = [];
+var Desfavorables = [];
+var FavReque = [];
+
+for (var i = 0; i < barChaVisit.length; i++) {
+  if (barChaVisit[i] == new Date().getFullYear()) {
+    dates.push(MESES[barChaVisit[i + 1] - 1]);
+    Visitas.push(barChaVisit[i + 2]);
+
+    if (barChaFav.includes(barChaVisit[i + 1])) {
+      for (var k = 0; k < barChaFav.length; k++) {
+        if (
+          barChaFav[k] == new Date().getFullYear() &&
+          barChaFav[k + 1] == barChaVisit[i + 1]
+        ) {
+          Favorables.push(barChaFav[k + 2]);
+        }
+      }
+    } else {
+      Favorables.push("0");
+    }
+
+    if (barChaDes.includes(barChaVisit[i + 1])) {
+      for (var j = 0; j < barChaDes.length; j++) {
+        if (
+          barChaDes[j] == new Date().getFullYear() &&
+          barChaDes[j + 1] == barChaVisit[i + 1]
+        ) {
+          Desfavorables.push(barChaDes[i + 2]);
+        }
+      }
+    } else {
+      Desfavorables.push("0");
+    }
+
+    if (barChaFavRe.includes(barChaVisit[i + 1])) {
+      for (var x = 0; x < barChaFavRe.length; x++) {
+        if (
+          barChaFavRe[x] == new Date().getFullYear() &&
+          barChaFavRe[x + 1] == barChaVisit[i + 1]
+        ) {
+          FavReque.push(barChaFavRe[x + 2]);
+        }
+      }
+    } else {
+      FavReque.push("0");
+    }
+  }
+}
+
+console.log(dates);
+console.log(Visitas);
+console.log(Favorables);
+console.log(Desfavorables);
+console.log(FavReque);
+
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
   type: "bar",
@@ -126,7 +167,7 @@ var myBarChart = new Chart(ctx, {
         {
           ticks: {
             min: 0,
-            max: 16000,
+            max: visitAcep * 2,
             maxTicksLimit: 10,
             padding: 10,
             // Include a dollar sign in the ticks

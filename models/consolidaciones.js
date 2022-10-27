@@ -54,6 +54,9 @@ var EstablecimientosSchema = new Schema({
   //Cementerios
   salaNM: String,
 
+  //Cronograma
+  mesCron: String,
+
   //Establecimientos - Rotulado
   ForRotulado: {
     productoRotulado: String,

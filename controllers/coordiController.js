@@ -659,18 +659,18 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
 
   //Totas de Visitas
   await consolidaciones
-    .find({
-      status: {
-        $eq: "Aceptado",
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          consolidacion: { establecimiento: "on" },
+        },
       },
-      SendNovAd: {
-        $eq: "on",
+      {
+        $group: { _id: { anno: { $year: "$createdAt" } }, count: { $sum: 1 } },
       },
-      "consolidacion.establecimiento": {
-        $eq: "on",
-      },
-    })
-    .count()
+      { $sort: { "_id.mes": 1 } },
+    ])
     .then((data) => {
       req.visitAcep = data;
     });
@@ -684,17 +684,101 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
 
   //Bar Chart
   await consolidaciones
-    .find({
-      "consolidacion.establecimiento": { $eq: "on" },
-      status: {
-        $eq: "Aceptado",
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          consolidacion: { establecimiento: "on" },
+        },
       },
-      SendNovAd: {
-        $eq: "on",
+      {
+        $group: {
+          _id: {
+            anno: { $year: "$createdAt" },
+            mes: { $month: "$createdAt" },
+          },
+          count: { $sum: 1 },
+        },
       },
-    })
+      { $sort: { "_id.mes": 1 } },
+    ])
     .then((data) => {
-      req.estCon = data;
+      req.barChaVisit = data;
+    });
+
+  // Bar Chart - Favorable
+  await consolidaciones
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          consolidacion: { establecimiento: "on" },
+          concepto: "FAVORABLE",
+        },
+      },
+      {
+        $group: {
+          _id: {
+            anno: { $year: "$createdAt" },
+            mes: { $month: "$createdAt" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id.mes": 1 } },
+    ])
+    .then((data) => {
+      req.barChaFav = data;
+    });
+
+  // Bar Chart - Desfavorable
+  await consolidaciones
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          consolidacion: { establecimiento: "on" },
+          concepto: "DESFAVORABLE",
+        },
+      },
+      {
+        $group: {
+          _id: {
+            anno: { $year: "$createdAt" },
+            mes: { $month: "$createdAt" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id.mes": 1 } },
+    ])
+    .then((data) => {
+      req.barChaDes = data;
+    });
+
+  // Bar Chart - Favorable Con Requerimientos
+  await consolidaciones
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          consolidacion: { establecimiento: "on" },
+          concepto: "FAVORABLE CON REQUERIMIENTOS",
+        },
+      },
+      {
+        $group: {
+          _id: {
+            anno: { $year: "$createdAt" },
+            mes: { $month: "$createdAt" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { "_id.mes": 1 } },
+    ])
+    .then((data) => {
+      req.barChaFavRe = data;
     });
 
   return next();

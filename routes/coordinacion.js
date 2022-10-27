@@ -44,6 +44,10 @@ router.get(
       vacunas: req.vacunas,
       estCon: req.estCon,
       visitAcep: req.visitAcep,
+      barChaVisit: req.barChaVisit,
+      barChaFav: req.barChaFav,
+      barChaDes: req.barChaDes,
+      barChaFavRe: req.barChaFavRe,
       alert: undefined,
       moment: moment,
     });
@@ -61,6 +65,10 @@ router.post(
       vacunas: false,
       estCon: false,
       visitAcep: false,
+      barChaVisit: false,
+      barChaFav: false,
+      barChaDes: false,
+      barChaFavRe: false,
       alert: req.alert,
     });
   }
