@@ -64,7 +64,7 @@
                     <tr>
                       <th>Fecha_Enviado</th>
                       <th>Provincia</th>
-                      <th>Municipio</th>
+                      <th>Mes</th>
                       <th>Archivos</th>
                     </tr>
                   </thead>
@@ -72,7 +72,7 @@
                     <tr>
                       <th><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
                       <th><input type="text" placeholder="Busca por Provincia" /></th>
-                      <th><input type="text" placeholder="Busca por Municipio" /></th>
+                      <th><input type="text" placeholder="Busca por Mes" /></th>
                       <th>Archivos</th>
                     </tr>
                   </tfoot>
@@ -88,7 +88,7 @@
                         <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= allConso.municipio %>
+                        <%= allConso.mesCron %>
                       </td>
                       <td>
                         <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
@@ -183,7 +183,7 @@
 
       var table = $('#dataTable').DataTable({
         order: [
-          [1, 'desc']
+          [0, 'desc']
         ],
         scrollY: true,
         scrollX: true,
@@ -202,9 +202,9 @@
         dom: 'Bfrtlip',
         buttons: [{
           extend: 'excel',
-          filename: 'ANTIRRABICA_' + new Date().toJSON().substring(0, 10),
+          filename: 'CRONOGRAMA_' + new Date().toJSON().substring(0, 10),
           autoFilter: true,
-          sheetName: 'ANTIRRABICA ANIMAL',
+          sheetName: 'CRONOGRAMA ACTIVIDADES',
         }],
       });
       table.columns().every(function() {

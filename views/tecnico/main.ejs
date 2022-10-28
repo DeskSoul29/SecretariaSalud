@@ -426,7 +426,7 @@
       nav.className += "  active";
 
       var date = new Date()
-      if (date.getDate() >= 1 && date.getDate() < 4) {
+      if (date.getDate() <= 3) {
         $(document).ready(function() {
           $('#AdcronoModal').modal('toggle')
         });

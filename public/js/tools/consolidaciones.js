@@ -70,6 +70,7 @@ tipEsta.addEventListener("change", function () {
       arrayEsta[i + 3] == selectedOption.value &&
       arrayEsta[i + 2] == municipio.value
     ) {
+      console.log("entre");
       const option = document.createElement("option");
       const valor = arrayEsta[i + 4];
       option.value = valor;

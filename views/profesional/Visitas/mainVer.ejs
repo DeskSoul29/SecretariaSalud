@@ -48,7 +48,6 @@
                           <option selected disabled>Seleccione la Consolidación
                           </option>
                           <option>Novedades Administrativas</option>
-                          <option>Cronograma de Actividades</option>
                           <option>Eventos en Salud Pública</option>
                           <option>Establecimientos</option>
                           <option>Morgues</option>
@@ -63,6 +62,7 @@
                           <option>Educación Sanitaria</option>
                           <option>Listado De Carnetizados</option>
                           <option>Antirrabica Animal</option>
+                          <option>Cronograma de Actividades</option>
                         </select>
                       </div>
                       <div class="card-footer text-muted">
@@ -107,9 +107,10 @@
                         <tbody>
                           <% if (allConso){ %>
                           <% allConso.forEach((allConso)=> { %>
+                          <% if(allConso.consolidacion.cronograma!="on"){ %>
                           <tr>
                             <td>
-                              <% if(allConso.status=="Pendiente" ){ %>
+                              <% if(allConso.status=="Pendiente" && allConso.consolidacion.cronograma!="on"){ %>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
@@ -185,6 +186,7 @@
                               <%= allConso.responsable.nombreResponsable %>
                             </td>
                           </tr>
+                          <% } %>
                           <% }); %>
                           <% } %>
                         </tbody>

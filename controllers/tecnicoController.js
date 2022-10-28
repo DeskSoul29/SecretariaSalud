@@ -1,6 +1,5 @@
 import consolidaciones from "../models/consolidaciones.js";
 import hojavida from "../models/hojavida.js";
-import cronograma from "../models/cronograma.js";
 
 import fs from "fs";
 import jwt from "jsonwebtoken";
@@ -150,8 +149,6 @@ var authTec = (function () {
         produTrans,
         //Extra
         observacion,
-        mesCron,
-        cronograma,
       } = req.body;
 
       new consolidaciones({
@@ -175,7 +172,6 @@ var authTec = (function () {
           vehiculos: vehiculosON,
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
-          cronograma: cronograma,
         },
         grupo: grupEsta,
         codigo: codEsta,
@@ -198,8 +194,6 @@ var authTec = (function () {
         actaAnul: "",
 
         salaNM: NecroMorg,
-
-        mesCron: mesCron,
 
         ForRotulado: {
           productoRotulado: productoRotulado,
@@ -660,12 +654,19 @@ var authTec = (function () {
   };
 
   var SendCronograma = async (req, next, decodificada) => {
-    new cronograma({
-      user: req.params.user,
-      nameTec: decodificada.nombres + " " + decodificada.apellidos,
+    new consolidaciones({
       provincia: decodificada.provincia,
-      mes: req.body.mesCron,
-      nameFile: req.file.filename,
+      mesCron: req.body.mesCron,
+      responsable: {
+        userResponsable: decodificada.user,
+        nombreResponsable: decodificada.nombres + " " + decodificada.apellidos,
+      },
+      consolidacion: {
+        cronograma: req.body.cronograma,
+      },
+      evidencia: {
+        file: req.file.filename,
+      },
       createdAt: new Date(),
     })
       .save()
@@ -692,42 +693,21 @@ var authTec = (function () {
           );
         }
         return next();
+      })
+      .catch((error) => {
+        console.log(error);
+        authTec.DeleteFile(req.file.filename);
+        authTec.isUser(
+          req,
+          "Cronograma Cancelado",
+          "Se encontro un cronograma por este mes",
+          "error",
+          true,
+          false,
+          "/tecnico"
+        );
+        return next();
       });
-  };
-
-  var ValidarCronograma = async (req, next) => {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-
-    var validar = await consolidaciones.aggregate([
-      {
-        $match: {
-          consolidacion: { cronograma: "on" },
-          responsable: { userResponsable: decodificada.user },
-          mesCron: req.body.mesCron,
-        },
-      },
-      {
-        $group: { _id: { anno: { $year: "$createdAt" } }, count: { $sum: 1 } },
-      },
-    ]);
-    if (validar.length === 0) {
-      authTec.SendConsolidacion(req, next);
-    } else {
-      authTec.DeleteFile(req.file.filename);
-      authTec.isUser(
-        req,
-        "Cronograma Cancelado",
-        "Se encontro un cronograma por este mes",
-        "error",
-        true,
-        false,
-        "/tecnico"
-      );
-      return next();
-    }
   };
 
   return {
@@ -737,7 +717,6 @@ var authTec = (function () {
     SendCorreccion: SendCorreccion,
     SendCronograma: SendCronograma,
     NextReport: NextReport,
-    ValidarCronograma: ValidarCronograma,
   };
 })();
 
@@ -749,14 +728,6 @@ export const ConsolidaEstados = async (req, res, next) => {
       process.env.JWT_SECRETO
     );
 
-    var fecha = await cronograma.find({
-      $and: [
-        { $year: new Date("2022-10-21") },
-        { $year: new Date("2021-10-21") },
-      ],
-    });
-    console.log(fecha);
-
     //Consolidaciones Pendientes
     await consolidaciones
       .find({
@@ -765,6 +736,9 @@ export const ConsolidaEstados = async (req, res, next) => {
         },
         status: {
           $eq: "Pendiente",
+        },
+        "consolidacion.cronograma": {
+          $ne: "on",
         },
       })
       .count()
@@ -948,11 +922,15 @@ export const LisConsolidaRechazadas = async (req, res, next) => {
   }
 };
 export const UploadCronograma = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
   await upload(req, res, function (err, res) {
     if (err) {
       return res.end("Error uploading file.");
     }
-    authTec.ValidarCronograma(req, next);
+    authTec.SendCronograma(req, next, decodificada);
   });
 };
 

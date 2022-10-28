@@ -669,7 +669,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $group: { _id: { anno: { $year: "$createdAt" } }, count: { $sum: 1 } },
       },
-      { $sort: { "_id.mes": 1 } },
+      { $sort: { "_id.anno": -1 } },
     ])
     .then((data) => {
       req.visitAcep = data;
