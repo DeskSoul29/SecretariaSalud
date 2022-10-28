@@ -33,6 +33,7 @@ var Visitas = [];
 var Favorables = [];
 var Desfavorables = [];
 var FavReque = [];
+var mayor = 0;
 
 for (var i = 0; i < barChaVisit.length; i++) {
   if (barChaVisit[i] == new Date().getFullYear()) {
@@ -77,7 +78,17 @@ for (var i = 0; i < barChaVisit.length; i++) {
     } else {
       FavReque.push("0");
     }
+
+    if (mayor < barChaVisit[i + 2]) {
+      mayor = barChaVisit[i + 2];
+    }
   }
+}
+
+if (parseInt(mayor, 10) % 2 == 0) {
+  mayor = parseInt(mayor, 10) + 20;
+} else {
+  mayor = parseInt(mayor, 10) + 21;
 }
 
 var ctx = document.getElementById("myBarChart");
@@ -146,7 +157,7 @@ var myBarChart = new Chart(ctx, {
         {
           ticks: {
             min: 0,
-            max: 20,
+            max: mayor,
             maxTicksLimit: 10,
             padding: 10,
             // Include a dollar sign in the ticks

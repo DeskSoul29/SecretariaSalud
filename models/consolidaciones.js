@@ -8,6 +8,8 @@ var EstablecimientosSchema = new Schema({
   provincia: { type: String, required: true, max: 100 },
   municipio: { type: String, max: 100 },
 
+  hojavida: { type: Schema.ObjectId, ref: "hojavidas" },
+
   responsable: {
     userResponsable: { type: Number, required: true },
     nombreResponsable: { type: String, required: true, max: 200 },

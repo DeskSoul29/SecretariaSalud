@@ -778,35 +778,53 @@ export const ConsolidaEstados = async (req, res, next) => {
 
     //Consolidaciones Aceptadas
     await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "responsable.userResponsable": parseInt(decodificada.user, 10),
+          },
         },
-        status: {
-          $eq: "Aceptado",
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: 1 },
+          },
         },
-      })
-      .count()
+        { $sort: { "_id.anno": -1 } },
+      ])
       .then((data) => {
-        req.consAcep = data;
+        if (data.length == 0) {
+          req.consAcep = 0;
+        } else {
+          req.consAcep = data[0].count;
+        }
       });
 
     //Totas de Visitas
     await consolidaciones
-      .find({
-        "responsable.userResponsable": {
-          $eq: decodificada.user,
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            "responsable.userResponsable": parseInt(decodificada.user, 10),
+          },
         },
-        status: {
-          $eq: "Aceptado",
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: 1 },
+          },
         },
-        "consolidacion.establecimiento": {
-          $eq: "on",
-        },
-      })
-      .count()
+        { $sort: { "_id.anno": -1 } },
+      ])
       .then((data) => {
-        req.visitAcep = data;
+        if (data.length == 0) {
+          req.visitAcep = 0;
+        } else {
+          req.visitAcep = data[0].count;
+        }
       });
 
     //Totas de Visitas - Vacunaciones
@@ -819,13 +837,19 @@ export const ConsolidaEstados = async (req, res, next) => {
             status: "Aceptado",
           },
         },
-        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: "$ForAntirrabica.totalVac" },
+          },
+        },
+        { $sort: { "_id.anno": -1 } },
       ])
       .then((data) => {
         if (data.length == 0) {
           req.vacunas = 0;
         } else {
-          req.vacunas = data[0].suma;
+          req.vacunas = data[0].count;
         }
       });
 
@@ -839,13 +863,19 @@ export const ConsolidaEstados = async (req, res, next) => {
             status: "Aceptado",
           },
         },
-        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: "$ForAntirrabica.totalVac" },
+          },
+        },
+        { $sort: { "_id.anno": -1 } },
       ])
       .then((data) => {
         if (data.length == 0) {
           req.vacunasExtra1 = 0;
         } else {
-          req.vacunasExtra1 = data[0].suma;
+          req.vacunasExtra1 = data[0].count;
         }
       });
 
@@ -859,13 +889,19 @@ export const ConsolidaEstados = async (req, res, next) => {
             status: "Aceptado",
           },
         },
-        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: "$ForAntirrabica.totalVac" },
+          },
+        },
+        { $sort: { "_id.anno": -1 } },
       ])
       .then((data) => {
         if (data.length == 0) {
           req.vacunasExtra2 = 0;
         } else {
-          req.vacunasExtra2 = data[0].suma;
+          req.vacunasExtra2 = data[0].count;
         }
       });
 
@@ -879,13 +915,19 @@ export const ConsolidaEstados = async (req, res, next) => {
             status: "Aceptado",
           },
         },
-        { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+        {
+          $group: {
+            _id: { anno: { $year: "$createdAt" } },
+            count: { $sum: "$ForAntirrabica.totalVac" },
+          },
+        },
+        { $sort: { "_id.anno": -1 } },
       ])
       .then((data) => {
         if (data.length == 0) {
           req.vacunasExtra3 = 0;
         } else {
-          req.vacunasExtra3 = data[0].suma;
+          req.vacunasExtra3 = data[0].count;
         }
       });
 

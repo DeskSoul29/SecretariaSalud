@@ -539,7 +539,7 @@
       nav.className += "  active";
 
       var date = new Date()
-      if (date.getDate() >= 1 && date.getDate() < 6) {
+      if (date.getDate() <= 5) {
         $(document).ready(function() {
           $('#NovAdModal').modal('toggle')
         });

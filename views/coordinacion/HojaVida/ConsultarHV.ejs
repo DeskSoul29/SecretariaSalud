@@ -45,32 +45,43 @@
                 <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
-                      <th>Acción</th>
-                      <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Codigo</th>
-                      <th>Tipo</th>
-                      <th>Riesgo</th>
-                      <th>Identificiación</th>
-                      <th>Razón Social</th>
-                      <th>Dirección</th>
-                      <th>Representante Legal</th>
-                      <th>Estado</th>
+                      <th rowspan="2">Acción</th>
+                      <th rowspan="2">Provincia</th>
+                      <th rowspan="2">Municipio</th>
+                      <th rowspan="2">Codigo</th>
+                      <th rowspan="2">Tipo</th>
+                      <th rowspan="2">Identificiación</th>
+                      <th rowspan="2">Razón Social</th>
+                      <th rowspan="2">Dirección</th>
+                      <th rowspan="2">Representante Legal</th>
+                      <th rowspan="2">Nivel de Riesgo</th>
+                      <th rowspan="2">Estado</th>
+                      <th colspan="3">Ultima Visita Realizada</th>
+                      <th rowspan="2">Proxima Visita</th>
+                    </tr>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Rango</th>
+                      <th>Concepto</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
                       <th>Acción</th>
-                      <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Codigo</th>
-                      <th>Tipo</th>
-                      <th>Riesgo</th>
-                      <th>Identificación</th>
-                      <th>Razón Social</th>
-                      <th>Dirección</th>
-                      <th>Representante Legal</th>
-                      <th>Estado</th>
+                      <th><input type="text" placeholder="Busca por Provincia" /></th>
+                      <th><input type="text" placeholder="Busca por Municipio" /></th>
+                      <th><input type="text" placeholder="Busca por Codigo" /></th>
+                      <th><input type="text" placeholder="Busca por Tipo" /></th>
+                      <th><input type="text" placeholder="Busca por Identificiación" /></th>
+                      <th><input type="text" placeholder="Busca por Rezón Social" /></th>
+                      <th><input type="text" placeholder="Busca por Dirección" /></th>
+                      <th><input type="text" placeholder="Busca por Representante Legal" /></th>
+                      <th><input type="text" placeholder="Busca por Nivel de Riesgo" /></th>
+                      <th><input type="text" placeholder="Busca por Estado" /></th>
+                      <th><input type="text" placeholder="Busca por Fecha" /></th>
+                      <th><input type="text" placeholder="Busca por Rango" /></th>
+                      <th><input type="text" placeholder="Busca por Concepto" /></th>
+                      <th><input type="text" placeholder="Busca por Proxima Visita" /></th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -98,9 +109,6 @@
                         <%= hojavida.tipo %>
                       </td>
                       <td>
-                        <%= hojavida.nivelRiesgo %>
-                      </td>
-                      <td>
                         <%= hojavida.tipoIdentificacion %> - <%= hojavida.identificacion %>
                       </td>
                       <td>
@@ -113,8 +121,15 @@
                         <%= hojavida.repreLegal %>
                       </td>
                       <td>
+                        <%= hojavida.nivelRiesgo %>
+                      </td>
+                      <td>
                         <%= hojavida.estado %>
                       </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
                     </tr>
                     <% }); %>
                     <% } %>
@@ -202,10 +217,6 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
-    });
-    $('#dataTable tfoot th').each(function() {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
     var table = $("#dataTable").DataTable({
       order: [

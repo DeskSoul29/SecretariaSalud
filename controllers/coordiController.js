@@ -624,17 +624,27 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
 
   //Consolidaciones Aceptadas
   await consolidaciones
-    .find({
-      status: {
-        $eq: "Aceptado",
+    .aggregate([
+      {
+        $match: {
+          status: "Aceptado",
+          SendNovAd: "on",
+        },
       },
-      SendNovAd: {
-        $eq: "on",
+      {
+        $group: {
+          _id: { anno: { $year: "$createdAt" } },
+          count: { $sum: 1 },
+        },
       },
-    })
-    .count()
+      { $sort: { "_id.anno": -1 } },
+    ])
     .then((data) => {
-      req.consAcep = data;
+      if (data.length == 0) {
+        req.consAcep = 0;
+      } else {
+        req.consAcep = data[0].count;
+      }
     });
 
   //Vacunas Antirrabica
@@ -647,13 +657,19 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
           SendNovAd: "on",
         },
       },
-      { $group: { _id: null, suma: { $sum: "$ForAntirrabica.totalVac" } } },
+      {
+        $group: {
+          _id: { anno: { $year: "$createdAt" } },
+          count: { $sum: "$ForAntirrabica.totalVac" },
+        },
+      },
+      { $sort: { "_id.anno": -1 } },
     ])
     .then((data) => {
       if (data.length === 0) {
         req.vacunas = 0;
       } else {
-        req.vacunas = data[0].suma;
+        req.vacunas = data[0].count;
       }
     });
 
@@ -672,7 +688,11 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       { $sort: { "_id.anno": -1 } },
     ])
     .then((data) => {
-      req.visitAcep = data;
+      if (data.length === 0) {
+        req.visitAcep = 0;
+      } else {
+        req.visitAcep = data[0].count;
+      }
     });
 
   //Listado de Profesionales con Nov Administrativa
