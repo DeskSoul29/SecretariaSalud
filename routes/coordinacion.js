@@ -74,15 +74,6 @@ router.post(
   }
 );
 
-//Apartado: Configuracion
-router.get("/Configuracion", isAuthenticatedCoordinacion, (req, res) => {
-  res.render("coordinacion/configuracion", {
-    user: req.user,
-    alert: undefined,
-    moment: moment,
-  });
-});
-
 // Apartado: Cuentas
 
 //Register

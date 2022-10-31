@@ -846,7 +846,7 @@ export const register = async (req, res, next) => {
         "error",
         true,
         false,
-        "/coordinacion/Cuentas/Register"
+        "coordinacion/Cuentas/Register"
       );
     } else {
       var userNew = new login({
@@ -868,7 +868,7 @@ export const register = async (req, res, next) => {
           "success",
           false,
           800,
-          "/coordinacion/Cuentas/Register"
+          "coordinacion/Cuentas/Register"
         );
       });
     }

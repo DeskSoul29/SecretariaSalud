@@ -46,7 +46,7 @@ function registerForm(e) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
   } else if (
-    document.getElementById("user").value.length < 8 ||
+    document.getElementById("user").value.length < 7 ||
     document.getElementById("user").value.length >= 11
   ) {
     toast.toastInfo("Advertencia", "Escribe una Identificación Correcta");
