@@ -895,6 +895,20 @@ export const users = async (req, res, next) => {
     return next();
   }
 };
+export const users2 = async (req, res, next) => {
+  try {
+    const decodificada = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRETO
+    );
+    const users = await login.find({});
+    req.users2 = users;
+    return next();
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 export const editUser = async (req, res, next) => {
   var {
     name,
@@ -941,7 +955,7 @@ export const editUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -958,7 +972,7 @@ export const deleteUser = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -985,7 +999,7 @@ export const changePass = async (req, res, next) => {
         "success",
         false,
         800,
-        "/coordinacion/Cuentas/Usuarios"
+        "coordinacion/Cuentas/Usuarios"
       );
     })
     .catch((error) => console.error(error));
@@ -1005,7 +1019,7 @@ export const deleteCons = async (req, res, next) => {
           "error",
           true,
           false,
-          "/coordinacion/Consolidaciones/Ver"
+          "coordinacion/Consolidaciones/Ver"
         );
         return next();
       } else if (result == null) {
