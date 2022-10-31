@@ -143,7 +143,7 @@ var authCoordi = (function () {
           $ne: "on",
         },
       })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -679,7 +679,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $match: {
           status: "Aceptado",
-          consolidacion: { establecimiento: "on" },
+          "consolidacion.establecimiento": "on",
         },
       },
       {
@@ -708,7 +708,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $match: {
           status: "Aceptado",
-          consolidacion: { establecimiento: "on" },
+          "consolidacion.establecimiento": "on",
         },
       },
       {
@@ -732,7 +732,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $match: {
           status: "Aceptado",
-          consolidacion: { establecimiento: "on" },
+          "consolidacion.establecimiento": "on",
           concepto: "FAVORABLE",
         },
       },
@@ -757,7 +757,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $match: {
           status: "Aceptado",
-          consolidacion: { establecimiento: "on" },
+          "consolidacion.establecimiento": "on",
           concepto: "DESFAVORABLE",
         },
       },
@@ -782,7 +782,7 @@ export const ConsolidaEstadosCoor = async (req, res, next) => {
       {
         $match: {
           status: "Aceptado",
-          consolidacion: { establecimiento: "on" },
+          "consolidacion.establecimiento": "on",
           concepto: "FAVORABLE CON REQUERIMIENTOS",
         },
       },

@@ -62,6 +62,7 @@
                 <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
+                      <th>Estado</th>
                       <th>Fecha_Enviado</th>
                       <th>Provincia</th>
                       <th>Mes</th>
@@ -70,6 +71,7 @@
                   </thead>
                   <tfoot>
                     <tr>
+                      <th>Estado</th>
                       <th><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
                       <th><input type="text" placeholder="Busca por Provincia" /></th>
                       <th><input type="text" placeholder="Busca por Mes" /></th>
@@ -81,6 +83,19 @@
                     <% allConso.forEach((allConso)=> { %>
                     <% if (allConso.consolidacion.cronograma == "on"){ %>
                     <tr>
+                      <td>
+                        <% if(allConso.status == "Pendiente"){ %>
+                        <span class="badge badge-warning text-uppercase">Pendiente</span>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
+                        <% }else if(allConso.status == "Enviado"){ %>
+                        <span class="badge badge-info text-uppercase">Enviado</span>
+                        <% }else if(allConso.status == "Aceptado"){ %>
+                        <span class="badge badge-success text-uppercase">Aceptado</span>
+                        <% } %>
+                      </td>
                       <td>
                         <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                       </td>
@@ -183,7 +198,7 @@
 
       var table = $('#dataTable').DataTable({
         order: [
-          [0, 'desc']
+          [1, 'desc']
         ],
         scrollY: true,
         scrollX: true,

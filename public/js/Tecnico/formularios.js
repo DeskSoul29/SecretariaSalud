@@ -131,29 +131,6 @@ if (document.getElementById("fVisit") != null) {
     }
   }
 }
-// if (document.getElementById("fVisit") != null) {
-//   document
-//     .getElementById("fVisit")
-//     .setAttribute(
-//       "min",
-//       new Date(new Date().getFullYear(), new Date().getMonth() - 1)
-//     );
-//   // document.getElementById("fVisit").setAttribute("max", time.max2(date));
-//   document.getElementById("fVisit").value = new Date()
-//     .toJSON()
-//     .substring(0, 10);
-// }
-
-//Original
-// if (document.getElementById("fVisit") != null) {
-//   document.getElementById("fVisit").setAttribute("min", time.min(date));
-//   document.getElementById("fVisit").setAttribute("max", time.max(date));
-//   document.getElementById("fVisit").value = time.formatDate(date);
-// }
-
-// value={new Date().toJSON().substring(0,10)}
-//    min={new Date(new Date().getFullYear(), new Date().getMonth()-1, new
-//    Date().getDate()).toJSON().substring(0,10)}
 
 function eventSalud(e) {
   if (
@@ -291,7 +268,8 @@ function establecimientosForm(e) {
     document.getElementById("accion").value == "Seleccione La Acción" ||
     document.getElementById("actaLey").value == "Seleccione" ||
     document.getElementById("acta").value == "Seleccione" ||
-    document.getElementById("myFile").files.length == 0
+    document.getElementById("myFile").files.length == 0 ||
+    document.getElementById("idHV").value == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();
@@ -417,7 +395,8 @@ function quejasForm(e) {
   } else if (document.getElementById("estableQueja").checked) {
     if (
       document.getElementById("rSocial").value ==
-      "Seleccione El Establecimiento"
+        "Seleccione El Establecimiento" ||
+      document.getElementById("idHV").value == 0
     ) {
       toast.toastInfo("Advertencia", "Elija un Establecimiento");
       e.preventDefault();
@@ -453,7 +432,8 @@ function vehiculosForm(e) {
     document.getElementById("produTrans").value == 0 ||
     document.getElementById("fVisit").value == 0 ||
     document.getElementById("score").value == 0 ||
-    document.getElementById("myFile").files.length == 0
+    document.getElementById("myFile").files.length == 0 ||
+    document.getElementById("idHV").value == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
     e.preventDefault();

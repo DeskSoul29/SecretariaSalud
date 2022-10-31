@@ -33,17 +33,6 @@ var authProf = (function () {
       var {
         provincia,
         municipio,
-        grupEsta,
-        codEsta,
-        tipoEsta,
-        Nriesgo,
-        tIden,
-        phone,
-        inputIden,
-        rSocial,
-        direccion,
-        rLegal,
-        estado,
         fVisit,
         score,
         concepto,
@@ -159,6 +148,10 @@ var authProf = (function () {
         observacion,
       } = req.body;
 
+      if (req.body.idHV != "") {
+        var idHV = req.body.idHV;
+      }
+
       new consolidaciones({
         status: "Enviado",
         provincia: provincia,
@@ -182,17 +175,7 @@ var authProf = (function () {
           quejas: quejasON,
           noveadministrativa: noveadministrativa,
         },
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        telefono: phone,
-        identificacion: inputIden,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
+        hojavida: idHV,
         fvisit: fVisit,
         score: score,
         concepto: concepto,
@@ -818,6 +801,10 @@ var authProf = (function () {
           } else if (nextCons[0].consolidacion.quejas == "on") {
             var rutaValidar =
               "/profesional/Consolidaciones/Validar/Quejas/" + nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.cronograma == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/Cronograma/" +
+              nextCons[0]._id;
           }
           authProf.isUser(
             req,
@@ -893,6 +880,10 @@ var authProf = (function () {
             var rutaValidar =
               "/profesional/Consolidaciones/Correccion/Quejas/" +
               nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.cronograma == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/Cronograma/" +
+              nextCons[0]._id;
           }
           authProf.isUser(
             req,
@@ -933,7 +924,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -950,7 +941,7 @@ var authProf = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .limit(1);
   };
 
@@ -1064,9 +1055,6 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
           $match: {
             provincia: decodificada.provincia,
             status: "Aceptado",
-            "consolidacion.noveadministrativa": {
-              $ne: "on",
-            },
           },
         },
         {
@@ -1368,15 +1356,22 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await consolidaciones
+    await consolidaciones
       .find({
         provincia: {
           $eq: decodificada.provincia,
         },
       })
-      .sort({ createdAt: -1 });
-    req.allConso = Estables;
-    return next();
+      .sort({ createdAt: -1 })
+      .then((result) => {
+        hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
+          req.allConso = hv;
+          return next();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } catch (error) {
     console.log(error);
     return next();

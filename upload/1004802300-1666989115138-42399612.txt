@@ -24,3 +24,4 @@ X Cambiar foto de portada para coordinacion
 
 Validar cronograma
 Informe Mensual, cambiar nombre
+Novedad Administrativa - Validar Municipio

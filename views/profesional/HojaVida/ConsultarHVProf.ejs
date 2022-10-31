@@ -203,12 +203,12 @@
       nav4.className += "  active";
     });
     $('#dataTable tfoot th').each(function() {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-      });
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
     var table = $("#dataTable").DataTable({
       order: [
-        [0, 'desc']
+        [1, 'desc']
       ],
       scrollY: true,
       scrollX: true,

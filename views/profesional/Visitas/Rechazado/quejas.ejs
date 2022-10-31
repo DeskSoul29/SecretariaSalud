@@ -71,66 +71,66 @@
                       </div>
                     </div>
 
-                    <div id="quejaEstable" style="display: none;">
-                      <div class="form-group row">
-                        <div class="col-sm-8 mb-3 mb-sm-0">
-                          <label class="mr-sm-2" for="grupEsta">Grupo Del
-                            Establecimiento</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.grupo %>" readonly>
-                        </div>
-                        <div class="col-sm-2">
-                          <label class="mr-sm-2" for="codEsta">Codigo</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.codigo %>" readonly />
-                        </div>
-                        <div class="col-sm-2">
-                          <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.nivelRiesgo %>" readonly />
-                        </div>
-
+                    <% if(consolidacion.hojavida != undefined){ %>
+                    <div class="form-group row">
+                      <div class="col-sm-8 mb-3 mb-sm-0">
+                        <label class="mr-sm-2" for="grupEsta">Grupo Del
+                          Establecimiento</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.grupo %>" readonly>
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="codEsta">Codigo</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.codigo %>" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.nivelRiesgo %>" readonly />
                       </div>
 
-                      <div class="form-group row">
-                        <div class="col-sm-12">
-                          <label class="mr-sm-2" for="tipoEsta">Tipo Del
-                            Establecimiento</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.tipo %>" readonly />
-                        </div>
-                      </div>
+                    </div>
 
-                      <div class="form-group row">
-                        <div class="col-sm-5">
-                          <label class="mr-sm-2" for="rSocial">Razón Social</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.razonSocial %>" readonly />
-                        </div>
-                        <div class="col-sm-2">
-                          <label class="mr-sm-3" for="tIden">Tipo </label>
-                          <input type="text" value="<%= consolidacion.tipoIdentificacion %>" class="form-control form-control-user" readonly>
-                        </div>
-                        <div class="col-sm-3">
-                          <label class="mr-sm-2" for="inputIden">Identificación</label>
-                          <input type="number" value="<%= consolidacion.identificacion %>" class="form-control form-control-user" readonly>
-                        </div>
-                        <div class="col-sm-2">
-                          <label class="mr-sm-2" for="phone">Telefono</label>
-                          <input type="number" value="<%= consolidacion.telefono %>" class="form-control form-control-user" readonly>
-                        </div>
-                      </div>
-
-                      <div class="form-group row">
-                        <div class="col-sm-6">
-                          <label class="mr-sm-2" for="rLegal">Representante Legal</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.repreLegal %>" readonly />
-                        </div>
-                        <div class="col-sm-3">
-                          <label class="mr-sm-2" for="direccion">Dirección</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.direccion %>" readonly />
-                        </div>
-                        <div class="col-sm-3">
-                          <label class="mr-sm-2" for="estado">Estado</label>
-                          <input type="text" class="form-control form-control-user" value="<%= consolidacion.estado %>" readonly />
-                        </div>
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="tipoEsta">Tipo Del
+                          Establecimiento</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.tipo %>" readonly />
                       </div>
                     </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-5">
+                        <label class="mr-sm-2" for="rSocial">Razón Social</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.razonSocial %>" readonly />
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-3" for="tIden">Tipo </label>
+                        <input type="text" value="<%= consolidacion.hojavida.tipoIdentificacion %>" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="inputIden">Identificación</label>
+                        <input type="number" value="<%= consolidacion.hojavida.identificacion %>" class="form-control form-control-user" readonly>
+                      </div>
+                      <div class="col-sm-2">
+                        <label class="mr-sm-2" for="phone">Telefono</label>
+                        <input type="number" value="<%= consolidacion.hojavida.telefono %>" class="form-control form-control-user" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="rLegal">Representante Legal</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.repreLegal %>" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.direccion %>" readonly />
+                      </div>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="estado">Estado</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.hojavida.estado %>" readonly />
+                      </div>
+                    </div>
+                    <% } %>
 
                     <div class="form-group row">
                       <div class="col-sm-6">
@@ -309,17 +309,7 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-  </script>
-
-  <script type="text/JavaScript">
     document.getElementById("tipQueja").value = "<%= consolidacion.ForQuejas.tipoQueja %>"
-
-    var establecimiento = "<%= consolidacion.grupo %>";
-
-    if (establecimiento != "") {
-      document.getElementById("quejaEstable").removeAttribute("style");
-    }
-    
   </script>
 </body>
 

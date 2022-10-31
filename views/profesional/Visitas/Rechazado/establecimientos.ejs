@@ -76,15 +76,15 @@
                       <div class="col-sm-8 mb-3 mb-sm-0">
                         <label class="mr-sm-2" for="grupEsta">Grupo Del
                           Establecimiento</label>
-                        <input type="text" value="<%= consolidacion.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.grupo %>" class="form-control form-control-user" id="grupEsta" name="grupEsta" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="codEsta">Codigo</label>
-                        <input type="text" value="<%= consolidacion.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.codigo %>" class="form-control form-control-user" id="codEsta" name="codEsta" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
-                        <input type="text" value="<%= consolidacion.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.nivelRiesgo %>" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" readonly />
                       </div>
 
                     </div>
@@ -93,41 +93,41 @@
                       <div class="col-sm-12">
                         <label class="mr-sm-2" for="tipoEsta">Tipo Del
                           Establecimiento</label>
-                        <input type="text" value="<%= consolidacion.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.tipo %>" class="form-control form-control-user" id="tipoEsta" name="tipoEsta" readonly />
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-5">
                         <label class="mr-sm-2" for="rSocial">Razón Social</label>
-                        <input type="text" value="<%= consolidacion.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.razonSocial %>" class="form-control form-control-user" id="rSocial" name="rSocial" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-3" for="tIden">Tipo </label>
-                        <input type="text" value="<%= consolidacion.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
+                        <input type="text" value="<%= consolidacion.hojavida.tipoIdentificacion %>" id="tIden" name="tIden" class="form-control form-control-user" readonly>
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="inputIden">Identificación</label>
-                        <input type="number" value="<%= consolidacion.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
+                        <input type="number" value="<%= consolidacion.hojavida.identificacion %>" id="inputIden" name="inputIden" class="form-control form-control-user" readonly>
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="phone">Telefono</label>
-                        <input type="number" value="<%= consolidacion.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
+                        <input type="number" value="<%= consolidacion.hojavida.telefono %>" id="phone" name="phone" class="form-control form-control-user" readonly>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6">
                         <label class="mr-sm-2" for="rLegal">Representante Legal</label>
-                        <input type="text" value="<%= consolidacion.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.repreLegal %>" class="form-control form-control-user" id="rLegal" name="rLegal" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="direccion">Dirección</label>
-                        <input type="text" value="<%= consolidacion.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.direccion %>" class="form-control form-control-user" id="direccion" name="direccion" readonly />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="estado">Estado</label>
-                        <input type="text" value="<%= consolidacion.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
+                        <input type="text" value="<%= consolidacion.hojavida.estado %>" class="form-control form-control-user" id="estado" name="estado" readonly />
                       </div>
                     </div>
 
@@ -441,7 +441,7 @@
                         <div class="col-sm-12">
                           <label class="mr-sm-2" for="observacionMedProd">Observaciones de Medidas Sanitarias a Productos
                             (Opcional)</label>
-                          <textarea name="observacionMedProd" id="observacionMedProd" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"></textarea>
+                          <textarea name="observacionMedProd" id="observacionMedProd" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.ForMSEstablecimientos.observacionMedProd %></textarea>
                         </div>
                       </div>
                     </div>
@@ -646,7 +646,6 @@
       document.getElementById("MedEstablecimientosTemplate").removeAttribute("style");
       document.getElementById("medidaApliEstable").value = "<%= consolidacion.ForMSEstablecimientos.medidaMSEstablecimientos %>"
       document.getElementById("motivoApli").value = "<%= consolidacion.ForMSEstablecimientos.motivoMSEstablecimientos %>"
-      // document.getElementById("observacionMedEsta").value = "<%= consolidacion.ForMSEstablecimientos.medidaMSEstablecimientos %>"
     }
     if (MSProduct === "on") {
       document.getElementById("productosON").setAttribute("checked", "checked")
@@ -661,10 +660,8 @@
       document.getElementById("fabriProduc").value = "<%= consolidacion.ForMSProductos.fabricanteMSProductos %>"
       document.getElementById("loteProduc").value = "<%= consolidacion.ForMSProductos.loteMSProductos %>"
       document.getElementById("fechProduc").value = "<%= moment(consolidacion.ForMSProductos.vencimientoMSProductos).format('YYYY-MM-DD'); %>"
-      // $('observacionMedProd').val(<%= consolidacion.ForMSProductos.observacionMedProd %>)
-      $('#observacionMedProd').val('<%= consolidacion.ForMSProductos.observacionMedProd %>');
     }
-    console.log(document.getElementById("observacionMedProd").value)
+
     if (Cementerio != "") {
       document.getElementById("templeCementerios").removeAttribute("style");
       document.getElementById("NecroMorg").value = "<%= consolidacion.salaNM %>"

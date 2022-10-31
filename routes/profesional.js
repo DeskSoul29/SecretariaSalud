@@ -908,6 +908,33 @@ router.post(
   }
 );
 router.get(
+  "/Consolidaciones/Validar/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Validar/EventosSaludPublica/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,
@@ -1118,6 +1145,33 @@ router.post(
   EditReport,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/vehiculos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Correccion/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Correccion/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/cronograma", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,

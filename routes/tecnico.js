@@ -494,6 +494,33 @@ router.post(
   }
 );
 router.get(
+  "/Consolidaciones/Rechazado/Cronograma/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Cronograma/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Rechazado/AntirrabicaAnimal/:_id",
   isAuthenticatedTecnic,
   ValConsolidaciones,

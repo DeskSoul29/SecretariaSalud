@@ -47,7 +47,7 @@
                         <select id="consoID" name="consolidacion" class="custom-select mr-sm-2" required>
                           <option selected disabled>Seleccione la Consolidación
                           </option>
-                          <option>Novedades Administrativas</option>
+                          <option>Informe Mensual</option>
                           <option>Eventos en Salud Pública</option>
                           <option>Establecimientos</option>
                           <option>Morgues</option>
@@ -107,10 +107,9 @@
                         <tbody>
                           <% if (allConso){ %>
                           <% allConso.forEach((allConso)=> { %>
-                          <% if(allConso.consolidacion.cronograma!="on"){ %>
                           <tr>
                             <td>
-                              <% if(allConso.status=="Pendiente" && allConso.consolidacion.cronograma!="on"){ %>
+                              <% if(allConso.status=="Pendiente"){ %>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Validar/Establecimientos/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
@@ -127,6 +126,8 @@
                               <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Validar/Cronograma/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Rechazado" ){ %>
                               <span class="badge badge-danger text-uppercase">Rechazado</span>
@@ -147,6 +148,8 @@
                               <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span> </a>
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion/Cronograma/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Enviado" ){ %>
                               <span class="badge badge-info text-uppercase">Enviado</span>
@@ -175,7 +178,9 @@
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
-                              Novedad Administrativa
+                              Informe Mensual
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              Cronograma de Actividades
                               <% } %>
                             </td>
                             <td>
@@ -186,7 +191,6 @@
                               <%= allConso.responsable.nombreResponsable %>
                             </td>
                           </tr>
-                          <% } %>
                           <% }); %>
                           <% } %>
                         </tbody>
@@ -273,7 +277,7 @@
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
-                              Novedad Administrativa
+                              Informe Mensual
                               <% } %>
                             </td>
                             <td>

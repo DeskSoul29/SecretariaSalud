@@ -329,8 +329,17 @@ export const inscribirEstablecimiento = async (req, res, next) => {
 
 //Consolidaciones
 export const ValConsolidaciones = async (req, res, next) => {
-  req.consolidacion = await consolidaciones.findById(req.params._id);
-  return next();
+  await consolidaciones
+    .findById(req.params._id)
+    .then((result) => {
+      hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
+        req.consolidacion = hv;
+        return next();
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 export const DownloadFile = async (req, res, next) => {
   await consolidaciones

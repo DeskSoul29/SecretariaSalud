@@ -99,7 +99,7 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.tipo == "CEMENTERIOS (CON O SIN MORGUE)"){ %>
+                    <% if (allConso.consolidacion.establecimiento == "on" && allConso.hojavida.tipo == "CEMENTERIOS (CON O SIN MORGUE)"){ %>
                     <tr>
                       <td>
                         <% if(allConso.status == "Pendiente"){ %>
@@ -124,13 +124,13 @@
                         <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= allConso.direccion %>
+                        <%= allConso.hojavida.direccion %>
                       </td>
                       <td>
-                        <%= allConso.telefono %>
+                        <%= allConso.hojavida.telefono %>
                       </td>
                       <td>
-                        <%= allConso.repreLegal %>
+                        <%= allConso.hojavida.repreLegal %>
                       </td>
                       <td>
                         <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>

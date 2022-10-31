@@ -36,6 +36,7 @@
                   </div>
                   <form onsubmit="quejasForm(event)" action="/tecnico/Consolidaciones/Enviar/Quejas/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="quejasON" name="quejasON" style="display: none;" readonly>
+                    <input type="text" id="idHV" name="idHV" style="display: none;" readonly>
 
                     <div class="form-group row">
                       <div class="col-sm-12">
@@ -262,19 +263,19 @@
 
   <script type="text/JavaScript">
     <% if(codigos){ %>
-            var arrayCod = []
-            <% codigos.forEach((codigos)=> { %>
-                arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
-            <% }) %>
-        <% } %>
+        var arrayCod = []
+        <% codigos.forEach((codigos)=> { %>
+            arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+        <% }) %>
+    <% } %>
 
-        <% if(hojavida){ %>
-            var arrayEsta = [] 
-            <% hojavida.forEach((hojavida)=> { %>
-                arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
-            <% }) %>
-        <% } %>
-    </script>
+    <% if(hojavida){ %>
+        var arrayEsta = [] 
+        <% hojavida.forEach((hojavida)=> { %>
+            arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"], ["<%= hojavida._id %>"])
+        <% }) %>
+    <% } %>
+  </script>
 
   <script>
     $(window).bind('load', function() {

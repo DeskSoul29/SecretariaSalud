@@ -223,7 +223,7 @@ function validConsolidacion(e) {
 }
 
 function novAdminis(e) {
-  if (date.getDate() > 6) {
+  if (date.getDate() > 31) {
     toast.toastError("Advertencia", "Debe esperar hasta inicio de mes");
     e.preventDefault();
   } else {

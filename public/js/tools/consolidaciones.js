@@ -1,5 +1,6 @@
 var municipio = document.getElementById("muniSelect");
 var tipEsta = document.getElementById("tipoEsta");
+const idHV = document.getElementById("idHV");
 
 //Si el tipo de establecimiento es cambiado entonces me elimine los campos anteriores
 tipEsta.addEventListener("change", function () {
@@ -12,6 +13,7 @@ tipEsta.addEventListener("change", function () {
   estado.value = "";
   razonSocial.selectedIndex = "Seleccione El Establecimiento";
   phone.value = "";
+  idHV.value = "";
 
   if (document.getElementById("templeCementerios")) {
     document.getElementById("score").value = "";
@@ -70,7 +72,6 @@ tipEsta.addEventListener("change", function () {
       arrayEsta[i + 3] == selectedOption.value &&
       arrayEsta[i + 2] == municipio.value
     ) {
-      console.log("entre");
       const option = document.createElement("option");
       const valor = arrayEsta[i + 4];
       option.value = valor;
@@ -94,6 +95,7 @@ razonSocial.addEventListener("change", function () {
       representante.value = arrayEsta[i + 8];
       estado.value = arrayEsta[i + 9];
       phone.value = arrayEsta[i + 10];
+      idHV.value = arrayEsta[i + 11];
     }
   }
 });
@@ -111,6 +113,8 @@ if (municipio != null) {
     tipEsta.selectedIndex = "Seleccione el Tipo";
     razonSocial.selectedIndex = "Seleccione El Establecimiento";
     phone.value = "";
+    idHV.value = "";
+
     if (document.getElementById("templeCementerios")) {
       document.getElementById("score").value = "";
       document.getElementById("concepto").value = "NO APLICA";

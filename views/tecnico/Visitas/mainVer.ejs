@@ -97,7 +97,6 @@
                         <tbody>
                           <% if (allConso){ %>
                           <% allConso.forEach((allConso)=> { %>
-                          <% if(allConso.consolidacion.cronograma!="on"){ %>
                           <tr>
                             <td>
                               <% if(allConso.status=="Rechazado" ){ %>
@@ -117,6 +116,8 @@
                               <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Pendiente" ){ %>
                               <span class="badge badge-warning text-uppercase">Pendiente</span>
@@ -148,13 +149,14 @@
                               Toma de Muestras
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              Cronograma de Actividades
                               <% } %>
                             </td>
                             <td>
                               <%= allConso.municipio %>
                             </td>
                           </tr>
-                          <% } %>
                           <% }); %>
                           <% } %>
                         </tbody>

@@ -132,7 +132,7 @@ const modalsUsuarios = (function () {
         "/coordinacion/Consolidaciones/Ver/AntirrabicaAnimal",
         "_self"
       );
-    } else if (consolidacion.value == "Novedades Administrativas") {
+    } else if (consolidacion.value == "Informe Mensual") {
       window.open(
         "/coordinacion/Consolidaciones/Ver/NoveAdministrativas",
         "_self"

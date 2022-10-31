@@ -39,17 +39,6 @@ var authTec = (function () {
       var {
         provincia,
         municipio,
-        grupEsta,
-        codEsta,
-        tipoEsta,
-        Nriesgo,
-        tIden,
-        phone,
-        inputIden,
-        rSocial,
-        direccion,
-        rLegal,
-        estado,
         fVisit,
         score,
         concepto,
@@ -150,7 +139,9 @@ var authTec = (function () {
         //Extra
         observacion,
       } = req.body;
-
+      if (req.body.idHV != "") {
+        var idHV = req.body.idHV;
+      }
       new consolidaciones({
         provincia: provincia,
         municipio: municipio,
@@ -173,17 +164,7 @@ var authTec = (function () {
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
         },
-        grupo: grupEsta,
-        codigo: codEsta,
-        tipo: tipoEsta,
-        nivelRiesgo: Nriesgo,
-        tipoIdentificacion: tIden,
-        telefono: phone,
-        identificacion: inputIden,
-        razonSocial: rSocial,
-        direccion: direccion,
-        repreLegal: rLegal,
-        estado: estado,
+        hojavida: idHV,
         fvisit: fVisit,
         score: score,
         concepto: concepto,
@@ -414,7 +395,6 @@ var authTec = (function () {
       zona,
       objEst,
       acompananteEmp,
-      observacion,
       //Vehiculos
       vehiculosON,
       classVehi,
@@ -423,6 +403,11 @@ var authTec = (function () {
       refriV,
       nInscrip,
       produTrans,
+      //Cronograma
+      mesCron,
+      //Extra
+      cronograma,
+      observacion,
     } = req.body;
 
     establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
@@ -438,6 +423,7 @@ var authTec = (function () {
     vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
     tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
     quejasON = quejasON == undefined ? "" : quejasON;
+    cronograma = cronograma == undefined ? "" : cronograma;
 
     var Ruta = await authTec.NextReport(req, decodificada);
 
@@ -455,6 +441,8 @@ var authTec = (function () {
 
           salaNM: NecroMorg,
 
+          mesCron: mesCron,
+
           consolidacion: {
             establecimiento: establecimientoON,
             rotulado: rotuladoON,
@@ -468,6 +456,7 @@ var authTec = (function () {
             vehiculos: vehiculosON,
             tomaMuestra: tomaMuestraON,
             quejas: quejasON,
+            cronograma: cronograma,
           },
 
           ForRotulado: {
@@ -598,6 +587,8 @@ var authTec = (function () {
               var tipoRuta = "EventosSaludPublica/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.antirrabica == "on") {
               var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.cronograma == "on") {
+              var tipoRuta = "Cronograma/" + Ruta[0]._id;
             }
             authTec.isUser(
               req,
@@ -736,9 +727,6 @@ export const ConsolidaEstados = async (req, res, next) => {
         },
         status: {
           $eq: "Pendiente",
-        },
-        "consolidacion.cronograma": {
-          $ne: "on",
         },
       })
       .count()
@@ -1013,16 +1001,24 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
       req.cookies.jwt,
       process.env.JWT_SECRETO
     );
-    const Estables = await consolidaciones.find({
-      "responsable.userResponsable": {
-        $eq: decodificada.user,
-      },
-      "consolidaciones.noveadministrativa": {
-        $ne: "on",
-      },
-    });
-    req.allConso = Estables;
-    return next();
+    await consolidaciones
+      .find({
+        "responsable.userResponsable": {
+          $eq: decodificada.user,
+        },
+        "consolidaciones.noveadministrativa": {
+          $ne: "on",
+        },
+      })
+      .then((result) => {
+        hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
+          req.allConso = hv;
+          return next();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   } catch (error) {
     console.log(error);
     return next();

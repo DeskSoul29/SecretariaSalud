@@ -33,6 +33,7 @@
                   </div>
                   <form onsubmit="tomMuestraForm(event)" action="/tecnico/Consolidaciones/Enviar/TomaMuestras/<%= user.user %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="tomaMuestraON" name="tomaMuestraON" style="display: none;" readonly>
+                    <input type="text" id="idHV" name="idHV" style="display: none;" readonly>
 
                     <%- include("./templateHV") %>
 
@@ -234,7 +235,7 @@
       <% if(hojavida){ %>
           var arrayEsta = []
           <% hojavida.forEach((hojavida)=> { %>
-              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"])
+              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"], ["<%= hojavida._id %>"])
           <% }) %>
       <% } %>
 

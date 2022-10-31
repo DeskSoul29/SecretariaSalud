@@ -187,6 +187,8 @@
                             <a href="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } else if(ListconsRech.consolidacion.quejas=="on" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
                           <td>
@@ -212,6 +214,8 @@
                             Toma de Muestras
                             <% } else if(ListconsRech.consolidacion.quejas=="on" ){ %>
                             Quejas
+                            <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
+                            Cronograma de Actividades
                             <% } %>
                           </td>
                           <td>
@@ -451,7 +455,7 @@
 
     $('#dataTable').DataTable({
       order: [
-        [0, 'desc']
+        [1, 'desc']
       ],
       scrollY: true,
       scrollX: true,

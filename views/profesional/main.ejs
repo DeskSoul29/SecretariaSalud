@@ -147,7 +147,7 @@
               <div class="card shadow mb-4">
 
                 <div id="accordion">
-
+                  <!-- Consolidaciones Pendientes -->
                   <div class="card">
                     <div class="card-header" id="headingOne">
                       <h5 class="mb-0">
@@ -181,7 +181,7 @@
                             <tbody>
                               <% if (allConso){ %>
                               <% allConso.forEach((allConso)=> { %>
-                              <% if(allConso.status=="Pendiente" && allConso.consolidacion.cronograma!="on"){ %>
+                              <% if(allConso.status=="Pendiente" ){ %>
                               <tr>
                                 <td>
                                   <% if(allConso.consolidacion.establecimiento=="on" ){ %>
@@ -200,6 +200,8 @@
                                   <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar/Cronograma/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                                   <% } %>
                                 </td>
                                 <td>
@@ -222,6 +224,8 @@
                                   Toma de Muestras
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   Quejas
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  Cronograma de Actividades
                                   <% } %>
                                 </td>
                                 <td>
@@ -242,6 +246,7 @@
                     </div>
                   </div>
 
+                  <!-- Consolidaciones Corregidas -->
                   <div class="card">
                     <div class="card-header" id="headingTwo">
                       <h5 class="mb-0">
@@ -294,6 +299,8 @@
                                   <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span> </a>
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Correccion/Cronograma/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                                   <% } %>
                                 </td>
                                 <td>
@@ -316,6 +323,8 @@
                                   Toma de Muestras
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   Quejas
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  Cronograma de Actividades
                                   <% } %>
                                 </td>
                                 <td>
@@ -336,6 +345,7 @@
                     </div>
                   </div>
 
+                  <!-- Consolidaciones Rechazadas Propias -->
                   <div class="card">
                     <div class="card-header" id="headingThree">
                       <h5 class="mb-0">
@@ -413,7 +423,7 @@
                                   <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                                   Quejas
                                   <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
-                                  Novedad Administrativa
+                                  Informe Mensual
                                   <% } %>
                                 </td>
                                 <td>
@@ -548,7 +558,7 @@
 
     $('#dataTable').DataTable({
       order: [
-        [0, 'desc']
+        [1, 'desc']
       ],
       scrollY: true,
       scrollX: true,
@@ -567,13 +577,35 @@
     });
     $('#dataTable2').DataTable({
       order: [
-        [0, 'desc']
+        [1, 'desc']
       ],
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
     });
     $('#dataTable3').DataTable({
       order: [
-        [0, 'desc']
+        [1, 'desc']
       ],
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
     });
   </script>
 </body>
