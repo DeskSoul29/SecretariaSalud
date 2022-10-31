@@ -669,6 +669,7 @@ router.get(
     res.render("coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
       hojavida: req.hojavida,
+      ultCons: req.ultCons,
     });
   }
 );

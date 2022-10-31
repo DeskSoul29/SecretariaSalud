@@ -85,11 +85,7 @@ for (var i = 0; i < barChaVisit.length; i++) {
   }
 }
 
-if (parseInt(mayor, 10) % 2 == 0) {
-  mayor = parseInt(mayor, 10) + 20;
-} else {
-  mayor = parseInt(mayor, 10) + 21;
-}
+mayor = parseInt(mayor, 10) + 20;
 
 var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {

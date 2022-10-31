@@ -1132,7 +1132,20 @@ export const SendReport = async (req, res, next) => {
 // Hojas de Vidas
 export const hojavidaConsultAll = async (req, res, next) => {
   const hv = await hojavida.find({}).sort({ createdAt: -1 });
+
+  const ultCons = await consolidaciones
+    .find({
+      $or: [
+        { "consolidacion.establecimiento": "on" },
+        { "consolidacion.vehiculos": "on" },
+      ],
+      SendNovAd: "on",
+    })
+    .sort({ createdAt: -1 });
+
   req.hojavida = hv;
+  req.ultCons = ultCons;
+
   return next();
 };
 export const HVConsultOne = async (req, res, next) => {
