@@ -27,88 +27,95 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
 
-          <!-- DataTales  -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">
-                Listado de Usuarios
-              </h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
-                  <thead>
-                    <tr>
-                      <th>Identificación</th>
-                      <th>Nombres</th>
-                      <th>Apellidos</th>
-                      <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Rol</th>
-                      <th>Apoyo</th>
-                      <th>Acción</th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>Identificación</th>
-                      <th>Nombres</th>
-                      <th>Apellidos</th>
-                      <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Rol</th>
-                      <th>Apoyo</th>
-                      <th>Acción</th>
-                    </tr>
-                  </tfoot>
-                  <tbody>
-                    <% if (users){ %>
-                    <% users.forEach((users)=> { %>
-                    <tr>
-                      <td>
-                        <%= users.user %>
-                      </td>
-                      <td>
-                        <%= users.nombre %>
-                      </td>
-                      <td>
-                        <%= users.apellido %>
-                      </td>
-                      <td>
-                        <%= users.provincia %>
-                      </td>
-                      <td>
-                        <%= users.municipio %>
-                      </td>
-                      <td>
-                        <%= users.rol %>
-                      </td>
-                      <td>
-                        <%= users.municipioExtra1 %>
-                        <br>
-                        <%= users.municipioExtra2 %>
-                        <br>
-                        <%= users.municipioExtra3 %>
-                      </td>
-                      <td>
-                        <a href="/coordinacion/Cuentas/Usuarios/Edit/<%= users._id %>" type="button" class="btn btn-warning btn-circle btn-sm">
-                          <i class="fas fa-pen-to-square"></i>
-                        </a>
-                        <a onclick='modalsUsuarios.eliminar_modal("<%= users._id %>", "<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")' type="button" data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                        <a onclick='modalsUsuarios.changePass_modal("<%= users._id %>", "<%= users.user %>")' type="button" data-target="#changePassModal" data-toggle="modal" class="btn btn-success btn-circle btn-sm">
-                          <i class="fas fa-key"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    <% }); %>
-                    <% } %>
-                  </tbody>
-                </table>
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+              <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">USUARIOS</h1>
+                  </div>
+
+                  <!-- DataTales  -->
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                        <thead>
+                          <tr>
+                            <th>Acción</th>
+                            <th>Identificación</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Provincia</th>
+                            <th>Municipio</th>
+                            <th>Rol</th>
+                            <th>Apoyo</th>
+                          </tr>
+                        </thead>
+                        <tfoot>
+                          <tr>
+                            <th>Acción</th>
+                            <th><input type="text" placeholder="Busca por Identificación" /></th>
+                            <th><input type="text" placeholder="Busca por Nombres" /></th>
+                            <th><input type="text" placeholder="Busca por Apellidos" /></th>
+                            <th><input type="text" placeholder="Busca por Provincia" /></th>
+                            <th><input type="text" placeholder="Busca por Municipio" /></th>
+                            <th><input type="text" placeholder="Busca por Rol" /></th>
+                            <th><input type="text" placeholder="Busca por Apoyo" /></th>
+                          </tr>
+                        </tfoot>
+                        <tbody>
+                          <% if (users){ %>
+                          <% users.forEach((users)=> { %>
+                          <tr>
+                            <td>
+                              <a href="/coordinacion/Cuentas/Usuarios/Edit/<%= users._id %>" type="button" class="btn btn-warning btn-circle btn-sm">
+                                <i class="fas fa-pen-to-square"></i>
+                              </a>
+                              <a onclick='modalsUsuarios.eliminar_modal("<%= users._id %>", "<%= users.user %>", "<%= users.nombre %> <%= users.apellido %>")' type="button" data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                                <i class="fas fa-trash"></i>
+                              </a>
+                              <a onclick='modalsUsuarios.changePass_modal("<%= users._id %>", "<%= users.user %>")' type="button" data-target="#changePassModal" data-toggle="modal" class="btn btn-success btn-circle btn-sm">
+                                <i class="fas fa-key"></i>
+                              </a>
+                            </td>
+                            <td>
+                              <%= users.user %>
+                            </td>
+                            <td>
+                              <%= users.nombre %>
+                            </td>
+                            <td>
+                              <%= users.apellido %>
+                            </td>
+                            <td>
+                              <%= users.provincia %>
+                            </td>
+                            <td>
+                              <%= users.municipio %>
+                            </td>
+                            <td>
+                              <%= users.rol %>
+                            </td>
+                            <td>
+                              <%= users.municipioExtra1 %>
+                              <br>
+                              <%= users.municipioExtra2 %>
+                              <br>
+                              <%= users.municipioExtra3 %>
+                            </td>
+                          </tr>
+                          <% }); %>
+                          <% } %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                </div>
+
               </div>
             </div>
           </div>
@@ -275,10 +282,6 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
-    });
-    $('#dataTable tfoot th').each(function() {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
 
     var table = $("#dataTable").DataTable({
