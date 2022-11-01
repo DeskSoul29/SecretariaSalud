@@ -30,6 +30,15 @@ if (grupEsta != null) {
   grupEsta.addEventListener("change", function () {
     var selectedOption = this.options[grupEsta.selectedIndex];
 
+    tipIdentificacion.value = "";
+    identificacion.value = "";
+    direccion.value = "";
+    representante.value = "";
+    estado.value = "";
+    razonSocial.selectedIndex = "Seleccione El Establecimiento";
+    phone.value = "";
+    idHV.value = "";
+
     if (document.getElementById("templeCementerios") != null) {
       document.getElementById("score").value = "";
       document.getElementById("concepto").value = "NO APLICA";

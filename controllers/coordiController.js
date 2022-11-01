@@ -1200,7 +1200,7 @@ export const editHV = async (req, res, next) => {
           "success",
           false,
           800,
-          "/coordinacion/HojaVida/ConsultarHV"
+          "coordinacion/HojaVida/ConsultarHV"
         );
       } else {
         authCoordi.isUser(
@@ -1210,7 +1210,7 @@ export const editHV = async (req, res, next) => {
           "error",
           true,
           false,
-          "/coordinacion/HojaVida/ConsultarHV"
+          "coordinacion/HojaVida/ConsultarHV"
         );
       }
     })

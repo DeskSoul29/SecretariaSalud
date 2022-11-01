@@ -68,15 +68,14 @@ tipEsta.addEventListener("change", function () {
   }
 
   for (var i = 0; i < arrayEsta.length; i++) {
-    if (
-      arrayEsta[i + 3] == selectedOption.value &&
-      arrayEsta[i + 2] == municipio.value
-    ) {
-      const option = document.createElement("option");
-      const valor = arrayEsta[i + 4];
-      option.value = valor;
-      option.text = valor;
-      razonSocial.add(option);
+    if (arrayEsta[i] == municipio.value) {
+      if (arrayEsta[i + 1] == selectedOption.value) {
+        const option = document.createElement("option");
+        const valor = arrayEsta[i + 2];
+        option.value = valor;
+        option.text = valor;
+        razonSocial.add(option);
+      }
     }
   }
 });
@@ -85,17 +84,16 @@ razonSocial.addEventListener("change", function () {
   var selectedOption = this.options[razonSocial.selectedIndex];
 
   for (var i = 0; i < arrayEsta.length; i++) {
-    if (
-      arrayEsta[i + 4] == selectedOption.value &&
-      arrayEsta[i + 2] == municipio.value
-    ) {
-      tipIdentificacion.value = arrayEsta[i + 5];
-      identificacion.value = arrayEsta[i + 6];
-      direccion.value = arrayEsta[i + 7];
-      representante.value = arrayEsta[i + 8];
-      estado.value = arrayEsta[i + 9];
-      phone.value = arrayEsta[i + 10];
-      idHV.value = arrayEsta[i + 11];
+    if (arrayEsta[i] == municipio.value) {
+      if (arrayEsta[i + 2] == selectedOption.value) {
+        tipIdentificacion.value = arrayEsta[i + 3];
+        identificacion.value = arrayEsta[i + 4];
+        direccion.value = arrayEsta[i + 5];
+        representante.value = arrayEsta[i + 6];
+        estado.value = arrayEsta[i + 7];
+        phone.value = arrayEsta[i + 8];
+        idHV.value = arrayEsta[i + 9];
+      }
     }
   }
 });
