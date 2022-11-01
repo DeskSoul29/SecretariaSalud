@@ -37,13 +37,6 @@
             </div>
           </div>
 
-          <label for="">
-            db.users.insertMany([
-            <% users2.forEach((users2)=> { %>
-            {user: <%= users2.user %>, nombre: "<%= users2.nombre %>", apellido: "<%= users2.apellido %>", pass: "<%= users2.pass %>", provincia: "<%= users2.provincia %>", municipio: "<%= users2.municipio %>", rol: "<%= users2.rol %>" },
-            <% }); %>
-            ])
-          </label>
           <!-- Content Row -->
           <div class="row">
 

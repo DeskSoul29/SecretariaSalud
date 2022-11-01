@@ -5,7 +5,6 @@ import {
   fillFields,
   register,
   users,
-  users2,
   deleteUser,
   editUser,
   ChangeImg,
@@ -36,11 +35,9 @@ router.get(
   "/",
   isAuthenticatedCoordinacion,
   ConsolidaEstadosCoor,
-  users2,
   (req, res) => {
     res.render("coordinacion/main", {
       user: req.user,
-      users2: req.users2,
       consEnv: req.consEnv,
       consAcep: req.consAcep,
       vacunas: req.vacunas,

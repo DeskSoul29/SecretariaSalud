@@ -825,7 +825,6 @@ export const ChangeImg = async (req, res, next) => {
         800,
         "/coordinacion"
       );
-      console.log(req.alert);
     }
     return next();
   });
@@ -889,20 +888,6 @@ export const users = async (req, res, next) => {
     );
     const users = await login.find({ user: { $ne: decodificada.user } });
     req.users = users;
-    return next();
-  } catch (error) {
-    console.log(error);
-    return next();
-  }
-};
-export const users2 = async (req, res, next) => {
-  try {
-    const decodificada = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_SECRETO
-    );
-    const users = await login.find({});
-    req.users2 = users;
     return next();
   } catch (error) {
     console.log(error);
