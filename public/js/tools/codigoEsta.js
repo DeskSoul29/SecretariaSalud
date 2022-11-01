@@ -37,7 +37,6 @@ if (grupEsta != null) {
     estado.value = "";
     razonSocial.selectedIndex = "Seleccione El Establecimiento";
     phone.value = "";
-    idHV.value = "";
 
     if (document.getElementById("templeCementerios") != null) {
       document.getElementById("score").value = "";

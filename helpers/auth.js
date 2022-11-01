@@ -273,50 +273,68 @@ export const inscribirEstablecimiento = async (req, res, next) => {
       }
 
       if (!salida) {
-        var estaNew = new hojavida({
-          provincia: provincia,
+        var nomHV = await hojavida.find({
           municipio: municipio,
-          grupo: grupEsta,
-          codigo: codEsta,
-          tipo: tipoEsta,
-          nivelRiesgo: Nriesgo,
-          tipoIdentificacion: tIden,
-          identificacion: inputIden,
-          telefono: phone,
           razonSocial: rSocial,
-          direccion: direccion,
-          repreLegal: rLegal,
-          estado: estado,
-          createdAt: new Date(),
         });
-        await estaNew
-          .save()
-          .then((result) => {
-            if (result) {
-              authLogin.isUser(
-                req,
-                "Conexión exitosa",
-                "Establecimiento Añadido Correctamente",
-                "success",
-                false,
-                800,
-                "/" + decodificada.rol + "/HojaVida/InscribirHV"
-              );
-            } else {
-              authLogin.isUser(
-                req,
-                "Advertencia",
-                "Error en la Base de Datos",
-                "error",
-                true,
-                false,
-                "/" + decodificada.rol + "/HojaVida/InscribirHV"
-              );
-            }
-          })
-          .catch((error) => {
-            console.error(error);
+
+        console.log(nomHV);
+        if (nomHV.length == 0) {
+          var estaNew = new hojavida({
+            provincia: provincia,
+            municipio: municipio,
+            grupo: grupEsta,
+            codigo: codEsta,
+            tipo: tipoEsta,
+            nivelRiesgo: Nriesgo,
+            tipoIdentificacion: tIden,
+            identificacion: inputIden,
+            telefono: phone,
+            razonSocial: rSocial,
+            direccion: direccion,
+            repreLegal: rLegal,
+            estado: estado,
+            createdAt: new Date(),
           });
+          await estaNew
+            .save()
+            .then((result) => {
+              if (result) {
+                authLogin.isUser(
+                  req,
+                  "Conexión exitosa",
+                  "Establecimiento Añadido Correctamente",
+                  "success",
+                  false,
+                  800,
+                  "/" + decodificada.rol + "/HojaVida/InscribirHV"
+                );
+              } else {
+                authLogin.isUser(
+                  req,
+                  "Advertencia",
+                  "Error en la Base de Datos",
+                  "error",
+                  true,
+                  false,
+                  "/" + decodificada.rol + "/HojaVida/InscribirHV"
+                );
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        } else {
+          authLogin.isUser(
+            req,
+            "Advertencia",
+            "Ya se encuentra una razón social con el mismo nombre",
+            "error",
+            true,
+            false,
+            "/" + decodificada.rol + "/HojaVida/InscribirHV"
+          );
+        }
       }
       return next();
     } catch (error) {
