@@ -126,10 +126,14 @@
                             <td>
                               <%= hojavida.estado %>
                             </td>
+                            <% ultCons.forEach((ultCons)=> { %>
+                            <% if (hojavida._id == ultCons.hojavida){ %>
+                            <td>hola</td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <% } %>
+                            <% }); %>
                           </tr>
                           <% }); %>
                           <% } %>
