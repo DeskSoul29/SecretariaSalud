@@ -50,6 +50,16 @@ var authCoordi = (function () {
     return next();
   };
 
+  var IncCons = async (req) => {
+    return await consolidaciones.findByIdAndUpdate(
+      { _id: req.params._id },
+      {
+        $inc: { lastCons: 1 },
+      },
+      { new: true }
+    );
+  };
+
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo } = req.body;
 
@@ -66,6 +76,9 @@ var authCoordi = (function () {
         { new: true }
       )
       .then((result) => {
+        if (criterio == "Aceptado") {
+          authCoordi.IncCons(req);
+        }
         if (nextCons.length === 0) {
           authCoordi.isUser(
             req,
@@ -586,6 +599,7 @@ var authCoordi = (function () {
     isUser: isUser,
     DeleteFile: DeleteFile,
     DeleteConsolidacion: DeleteConsolidacion,
+    IncCons: IncCons,
     UpdateCorreccion: UpdateCorreccion,
     SearchNextConsolidacion: SearchNextConsolidacion,
     UpdateAllCemenMorg: UpdateAllCemenMorg,

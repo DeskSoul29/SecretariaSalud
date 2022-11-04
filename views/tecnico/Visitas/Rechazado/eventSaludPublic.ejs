@@ -260,9 +260,9 @@
 
     if ("<%= consolidacion.ForEvenSPublica.covePart %>" == "SI") {
       document.getElementById("trueFalse").value = "<%= consolidacion.ForEvenSPublica.covePart %>"
-      $("#fReunion").attr("readonly", true);
+      $("#fReunion").attr("readonly", false);
     } else {
-      document.getElementById("trueFalse").value = "<%= consolidacion.ForEvenSPublica.covePart %>"
+      $("#fReunion").attr("readonly", true);
     }
 
     $("#trueFalse").change(function() {

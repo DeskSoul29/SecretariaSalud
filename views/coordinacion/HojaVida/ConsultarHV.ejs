@@ -85,50 +85,52 @@
                           </tr>
                         </tfoot>
                         <tbody>
-                          <% if (hojavida){ %>
-                          <% hojavida.forEach((hojavida)=> { %>
+                          <% if (hv){ %>
+                          <% hv.forEach((hv)=> { %>
                           <tr>
                             <td>
                               <!-- <a href="#" type="button" class="btn btn-info btn-circle btn-sm">
                             <i class="fas fa-eye"></i>
                         </a> -->
-                              <a href="/coordinacion/HojaVida/ConsultarHV/Edit/<%= hojavida._id%>" type="button" class="btn btn-warning btn-circle btn-sm">
+                              <a href="/coordinacion/HojaVida/ConsultarHV/Edit/<%= hv._id%>" type="button" class="btn btn-warning btn-circle btn-sm">
                                 <i class="fas fa-pen-to-square"></i>
                               </a>
                             </td>
                             <td>
-                              <%= hojavida.provincia %>
+                              <%= hv.provincia %>
                             </td>
                             <td>
-                              <%= hojavida.municipio %>
+                              <%= hv.municipio %>
                             </td>
                             <td>
-                              <%= hojavida.codigo %>
+                              <%= hv.codigo %>
                             </td>
                             <td>
-                              <%= hojavida.tipo %>
+                              <%= hv.tipo %>
                             </td>
                             <td>
-                              <%= hojavida.tipoIdentificacion %> - <%= hojavida.identificacion %>
+                              <%= hv.tipoIdentificacion %> - <%= hv.identificacion %>
                             </td>
                             <td>
-                              <%= hojavida.razonSocial %>
+                              <%= hv.razonSocial %>
                             </td>
                             <td>
-                              <%= hojavida.direccion %>
+                              <%= hv.direccion %>
                             </td>
                             <td>
-                              <%= hojavida.repreLegal %>
+                              <%= hv.repreLegal %>
                             </td>
                             <td>
-                              <%= hojavida.nivelRiesgo %>
+                              <%= hv.nivelRiesgo %>
                             </td>
                             <td>
-                              <%= hojavida.estado %>
+                              <%= hv.estado %>
                             </td>
                             <% ultCons.forEach((ultCons)=> { %>
-                            <% if (hojavida._id == ultCons.hojavida){ %>
-                            <td>hola</td>
+                            <%= hv._id %>
+                            <%= ultCons.hojavida %>
+                            <% if (hv._id === ultCons.hojavida){ %>
+                            <td>entre</td>
                             <td></td>
                             <td></td>
                             <td></td>

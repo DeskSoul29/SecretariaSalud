@@ -183,6 +183,7 @@ var EstablecimientosSchema = new Schema({
     fechRepor: Date,
   },
 
+  lastCons: { type: Number, default: 0 },
   observaciones: { type: String },
   createdAt: { type: Date },
 });

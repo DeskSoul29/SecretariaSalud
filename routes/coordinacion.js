@@ -658,7 +658,7 @@ router.get(
   (req, res) => {
     res.render("coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
-      hojavida: req.hojavida,
+      hv: req.hojavida,
       ultCons: req.ultCons,
     });
   }
