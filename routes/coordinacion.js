@@ -10,6 +10,8 @@ import {
   ChangeImg,
   changePass,
   deleteCons,
+  DateInfMen,
+  DateCrono,
   SeeCoorConsolidaciones,
   ConsolidaEstadosCoor,
   SendReport,
@@ -23,6 +25,7 @@ import {
   isAuthenticatedCoordinacion,
   CodigosEstablecimientos,
   consultUser,
+  configConsult,
   ValConsolidaciones,
   inscribirEstablecimiento,
   DownloadFile,
@@ -650,6 +653,46 @@ router.post(
   }
 );
 
+//Apartado: Configuraciones
+router.get(
+  "/Settings",
+  isAuthenticatedCoordinacion,
+  configConsult,
+  (req, res) => {
+    res.render("coordinacion/Settings/mainConfig", {
+      user: req.user,
+      settings: req.settings,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Settings/Cronograma/:_id",
+  isAuthenticatedCoordinacion,
+  configConsult,
+  DateCrono,
+  (req, res) => {
+    res.render("coordinacion/Settings/mainConfig", {
+      user: req.user,
+      settings: req.settings,
+      alert: req.alert,
+    });
+  }
+);
+router.post(
+  "/Settings/InformeMens/:_id",
+  isAuthenticatedCoordinacion,
+  configConsult,
+  DateInfMen,
+  (req, res) => {
+    res.render("coordinacion/Settings/mainConfig", {
+      user: req.user,
+      settings: req.settings,
+      alert: req.alert,
+    });
+  }
+);
+
 //Apartado: Hojas de Vida
 router.get(
   "/HojaVida/ConsultarHV",
@@ -659,7 +702,6 @@ router.get(
     res.render("coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
       hv: req.hojavida,
-      ultCons: req.ultCons,
     });
   }
 );

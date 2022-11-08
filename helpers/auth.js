@@ -4,9 +4,9 @@ import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
 
 import { promisify } from "util";
-import download from "download";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
+import settings from "../models/settings.js";
 import https from "https";
 
 var authLogin = (function () {
@@ -278,7 +278,6 @@ export const inscribirEstablecimiento = async (req, res, next) => {
           razonSocial: rSocial,
         });
 
-        console.log(nomHV);
         if (nomHV.length == 0) {
           var estaNew = new hojavida({
             provincia: provincia,
@@ -377,4 +376,10 @@ export const DownloadFile = async (req, res, next) => {
 export const logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/");
+};
+
+//Configuracion
+export const configConsult = async (req, res, next) => {
+  req.settings = await settings.find({}).sort({ createdAt: -1 }).limit(1);
+  return next();
 };

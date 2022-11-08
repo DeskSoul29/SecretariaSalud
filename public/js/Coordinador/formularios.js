@@ -174,3 +174,29 @@ function changeImgFrom(e) {
     e.preventDefault();
   }
 }
+
+function configDateCron(e) {
+  if (
+    parseInt(document.getElementById("cronMin").value, 10) >=
+    parseInt(document.getElementById("cronMax").value, 10)
+  ) {
+    toast.toastInfo(
+      "Advertencia",
+      "El 'Dia Minimo' debe ser menor a 'Dia Maximo'"
+    );
+    e.preventDefault();
+  }
+}
+
+function configDateInf(e) {
+  if (
+    parseInt(document.getElementById("infMin").value, 10) >=
+    parseInt(document.getElementById("infMax").value, 10)
+  ) {
+    toast.toastInfo(
+      "Advertencia",
+      "El 'Dia Minimo' debe ser menor a 'Dia Maximo'"
+    );
+    e.preventDefault();
+  }
+}

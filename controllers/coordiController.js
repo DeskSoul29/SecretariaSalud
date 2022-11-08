@@ -1,6 +1,7 @@
 import login from "../models/user.js";
 import local from "../models/localidades.js";
 import hojavida from "../models/hojavida.js";
+import settings from "../models/settings.js";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import fs from "fs";
@@ -1146,18 +1147,7 @@ export const SendReport = async (req, res, next) => {
 export const hojavidaConsultAll = async (req, res, next) => {
   const hv = await hojavida.find({}).sort({ createdAt: -1 });
 
-  const ultCons = await consolidaciones
-    .find({
-      $or: [
-        { "consolidacion.establecimiento": "on" },
-        { "consolidacion.vehiculos": "on" },
-      ],
-      SendNovAd: "on",
-    })
-    .sort({ createdAt: -1 });
-
   req.hojavida = hv;
-  req.ultCons = ultCons;
 
   return next();
 };
@@ -1174,9 +1164,7 @@ export const editHV = async (req, res, next) => {
     codEsta,
     tipoEsta,
     Nriesgo,
-    tIden,
     phone,
-    inputIden,
     rSocial,
     direccion,
     rLegal,
@@ -1194,9 +1182,7 @@ export const editHV = async (req, res, next) => {
           codigo: codEsta,
           tipo: tipoEsta,
           nivelRiesgo: Nriesgo,
-          tipoIdentificacion: tIden,
           telefono: phone,
-          identificacion: inputIden,
           razonSocial: rSocial,
           direccion: direccion,
           repreLegal: rLegal,
@@ -1225,6 +1211,93 @@ export const editHV = async (req, res, next) => {
           true,
           false,
           "coordinacion/HojaVida/ConsultarHV"
+        );
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  return next();
+};
+
+//Configuracion
+export const DateCrono = async (req, res, next) => {
+  const { cronMin, cronMax } = req.body;
+
+  await settings
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          cronogramaStart: cronMin,
+          cronogramaEnd: cronMax,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Fecha de Cronograma Actualizada",
+          "success",
+          false,
+          800,
+          "/coordinacion/Settings"
+        );
+        return next();
+      } else {
+        authCoordi.isUser(
+          req,
+          "Advertencia",
+          "Error en la Base de Datos",
+          "error",
+          true,
+          false,
+          "/coordinacion/Settings"
+        );
+        return next();
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      return next();
+    });
+};
+export const DateInfMen = async (req, res, next) => {
+  const { infMin, infMax } = req.body;
+  await settings
+    .findByIdAndUpdate(
+      req.params._id,
+      {
+        $set: {
+          infMensStart: infMin,
+          infMensEnd: infMax,
+        },
+      },
+      { new: true }
+    )
+    .then((result) => {
+      if (result) {
+        authCoordi.isUser(
+          req,
+          "Conexión exitosa",
+          "Fecha del Informe Mensual Actualizada",
+          "success",
+          false,
+          800,
+          "/coordinacion/Settings"
+        );
+      } else {
+        authCoordi.isUser(
+          req,
+          "Advertencia",
+          "Error en la Base de Datos",
+          "error",
+          true,
+          false,
+          "/coordinacion/Settings"
         );
       }
     })

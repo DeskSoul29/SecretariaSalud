@@ -15,6 +15,7 @@ import {
   isAuthenticatedTecnic,
   CodigosEstablecimientos,
   inscribirEstablecimiento,
+  configConsult,
   ValConsolidaciones,
   DownloadFile,
   logout,
@@ -28,6 +29,7 @@ router.get(
   isAuthenticatedTecnic,
   ConsolidaEstados,
   LisConsolidaRechazadas,
+  configConsult,
   (req, res) => {
     res.render("tecnico/main", {
       user: req.user,
@@ -41,6 +43,7 @@ router.get(
       vacunasExtra2: req.vacunasExtra2,
       vacunasExtra3: req.vacunasExtra3,
       vacunas: req.vacunas,
+      settings: req.settings,
       moment: moment,
       alert: undefined,
     });
@@ -64,6 +67,7 @@ router.post(
       vacunasExtra2: false,
       vacunasExtra3: false,
       vacunas: false,
+      settings: false,
       moment: false,
       alert: req.alert,
     });

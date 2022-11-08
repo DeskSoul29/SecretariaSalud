@@ -21,6 +21,7 @@ import {
   isAuthenticatedProf,
   CodigosEstablecimientos,
   consultUser,
+  configConsult,
   inscribirEstablecimiento,
   ValConsolidaciones,
   DownloadFile,
@@ -34,6 +35,7 @@ router.get(
   isAuthenticatedProf,
   ConsolidaEstadosProf,
   SeeProfConsolidaciones,
+  configConsult,
   (req, res) => {
     res.render("profesional/main", {
       user: req.user,
@@ -45,6 +47,7 @@ router.get(
       allConso: req.allConso,
       visitAcep: req.visitAcep,
       vacunas: req.vacunas,
+      settings: req.settings,
       moment: moment,
     });
   }
@@ -151,11 +154,13 @@ router.get(
   isAuthenticatedProf,
   fillMunicipio,
   CountActas,
+  configConsult,
   (req, res) => {
     res.render("profesional/Visitas/Enviar/nAdmin", {
       user: req.user,
       fields: req.localidades,
       actaAnul: req.actaAnul,
+      settings: req.settings,
     });
   }
 );

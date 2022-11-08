@@ -166,19 +166,19 @@
 
           <script type="text/JavaScript">
             const array = []
-                            <% if(fields){ %>
-                                <% fields.forEach((fields)=> { %>
-                                    array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
-                                <% }) %>
-                            <% } %>
+            <% if(fields){ %>
+                <% fields.forEach((fields)=> { %>
+                    array.push(["<%= fields.provincia %>"], ["<%= fields.municipio %>"])
+                <% }) %>
+            <% } %>
 
-                            const arrayCod = []
-                            <% if(codigos){ %>
-                                <% codigos.forEach((codigos)=> { %>
-                                    arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
-                                <% }) %>
-                            <% } %>
-                          </script>
+            const arrayCod = []
+            <% if(codigos){ %>
+                <% codigos.forEach((codigos)=> { %>
+                    arrayCod.push(["<%= codigos.grupo %>"], ["<%= codigos.codigo %>"], ["<%= codigos.tipo %>"], ["<%= codigos.nivelRiesgo %>"])
+                <% }) %>
+            <% } %>
+          </script>
 
         </div>
         <!-- /.container-fluid -->

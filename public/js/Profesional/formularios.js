@@ -223,8 +223,8 @@ function validConsolidacion(e) {
 }
 
 function novAdminis(e) {
-  if (date.getDate() > 6) {
-    toast.toastError("Advertencia", "Debe esperar hasta inicio de mes");
+  if (!(date.getDate() >= infMensStart && date.getDate() <= infMensEnd)) {
+    toast.toastError("Advertencia", "Aun no puedes subir el Informe Mensual");
     e.preventDefault();
   } else {
     if (

@@ -543,13 +543,13 @@
   <!-- Page level custom scripts -->
   <script src="/js/demo/datatables-demo.js"></script>
 
-  <script>
+  <script type="text/JavaScript">
     $(window).bind("load", function() {
       var nav = document.getElementById("nav1");
       nav.className += "  active";
 
       var date = new Date()
-      if (date.getDate() <= 5) {
+      if (date.getDate() >= <%= settings[0].infMensStart %> && date.getDate() <= <%= settings[0].infMensEnd %>) {
         $(document).ready(function() {
           $('#NovAdModal').modal('toggle')
         });
