@@ -1151,11 +1151,6 @@ export const hojavidaConsultAll = async (req, res, next) => {
 
   return next();
 };
-export const HVConsultOne = async (req, res, next) => {
-  const CHVida = await hojavida.findById(req.params.id).lean();
-  req.consultHV = CHVida;
-  return next();
-};
 export const editHV = async (req, res, next) => {
   const {
     provincia,
@@ -1171,52 +1166,72 @@ export const editHV = async (req, res, next) => {
     estado,
   } = req.body;
 
-  await hojavida
-    .findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: {
-          provincia: provincia,
-          municipio: municipio,
-          grupo: grupEsta,
-          codigo: codEsta,
-          tipo: tipoEsta,
-          nivelRiesgo: Nriesgo,
-          telefono: phone,
-          razonSocial: rSocial,
-          direccion: direccion,
-          repreLegal: rLegal,
-          estado: estado,
+  var nomHV = await hojavida.find({
+    _id: {
+      $ne: req.params.id,
+    },
+    municipio: municipio,
+    razonSocial: rSocial,
+  });
+
+  if (nomHV.length == 0) {
+    await hojavida
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            provincia: provincia,
+            municipio: municipio,
+            grupo: grupEsta,
+            codigo: codEsta,
+            tipo: tipoEsta,
+            nivelRiesgo: Nriesgo,
+            telefono: phone,
+            razonSocial: rSocial,
+            direccion: direccion,
+            repreLegal: rLegal,
+            estado: estado,
+          },
         },
-      },
-      { new: true }
-    )
-    .then((result) => {
-      if (result) {
-        authCoordi.isUser(
-          req,
-          "Conexión exitosa",
-          "Establecimiento Actualizado Correctamente",
-          "success",
-          false,
-          800,
-          "coordinacion/HojaVida/ConsultarHV"
-        );
-      } else {
-        authCoordi.isUser(
-          req,
-          "Advertencia",
-          "Error en la Base de Datos",
-          "error",
-          true,
-          false,
-          "coordinacion/HojaVida/ConsultarHV"
-        );
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+        { new: true }
+      )
+      .then((result) => {
+        if (result) {
+          authCoordi.isUser(
+            req,
+            "Conexión exitosa",
+            "Establecimiento Actualizado Correctamente",
+            "success",
+            false,
+            800,
+            "coordinacion/HojaVida/ConsultarHV"
+          );
+        } else {
+          authCoordi.isUser(
+            req,
+            "Advertencia",
+            "Error en la Base de Datos",
+            "error",
+            true,
+            false,
+            "coordinacion/HojaVida/ConsultarHV"
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    authProf.isUser(
+      req,
+      "Advertencia",
+      "Ya se encuentra una razón social con el mismo nombre",
+      "error",
+      true,
+      false,
+      "coordinacion/HojaVida/ConsultarHV/Edit/" + req.params.id
+    );
+  }
   return next();
 };
 

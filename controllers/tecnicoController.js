@@ -992,6 +992,71 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
     return res.redirect("/");
   }
 };
+export const editHVTec = async (req, res, next) => {
+  const { municipio, phone, rSocial, direccion, rLegal, estado } = req.body;
+  
+  var nomHV = await hojavida.find({
+    _id: {
+      $ne: req.params.id,
+    },
+    municipio: municipio,
+    razonSocial: rSocial,
+  });
+
+  if (nomHV.length == 0) {
+    await hojavida
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            telefono: phone,
+            razonSocial: rSocial,
+            direccion: direccion,
+            repreLegal: rLegal,
+            estado: estado,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        if (result) {
+          authTec.isUser(
+            req,
+            "Conexión exitosa",
+            "Establecimiento Actualizado Correctamente",
+            "success",
+            false,
+            800,
+            "tecnico/HojaVida/ConsultarHV"
+          );
+        } else {
+          authTec.isUser(
+            req,
+            "Advertencia",
+            "Error en la Base de Datos",
+            "error",
+            true,
+            false,
+            "tecnico/HojaVida/ConsultarHV"
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    authTec.isUser(
+      req,
+      "Advertencia",
+      "Ya se encuentra una razón social con el mismo nombre",
+      "error",
+      true,
+      false,
+      "tecnico/HojaVida/ConsultarHV/Edit/" + req.params.id
+    );
+  }
+  return next();
+};
 
 //Apartado: Consolidaciones
 //Consolidaciones - Ver

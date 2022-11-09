@@ -192,7 +192,7 @@
                             <% } %>
                           </td>
                           <td>
-                            <%= moment(ListconsRech.reporte.fechRepor,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                            <%= moment(ListconsRech.reporte.fechRepor,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                           </td>
                           <td>
                             <%= ListconsRech.municipio %>
@@ -429,6 +429,7 @@
       var nav = document.getElementById("nav1");
       nav.className += "  active";
 
+      <% if(settings){ %>
       var date = new Date()
       if (date.getDate() >= <%= settings[0].cronogramaStart %> && date.getDate() <= <%= settings[0].cronogramaEnd %>) {
         $(document).ready(function() {
@@ -451,6 +452,7 @@
         document.getElementById("btnCronograma").removeAttribute("style");
         document.getElementById("mesCron").value = MESES[date.getMonth()];
       }
+      <% } %>
     });
 
     $('#dataTable').DataTable({

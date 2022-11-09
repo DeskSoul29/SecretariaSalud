@@ -17,7 +17,6 @@ import {
   SendReport,
   SendManyAcept,
   hojavidaConsultAll,
-  HVConsultOne,
   editHV,
 } from "../controllers/coordiController.js";
 
@@ -26,6 +25,7 @@ import {
   CodigosEstablecimientos,
   consultUser,
   configConsult,
+  HVConsultOne,
   ValConsolidaciones,
   inscribirEstablecimiento,
   DownloadFile,

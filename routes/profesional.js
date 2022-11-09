@@ -12,6 +12,7 @@ import {
   ConsolidaEstadosProf,
   SendConsolidacion,
   EditConsolidacionRech,
+  editHVProf,
   CountActas,
   SendReport,
   EditReport,
@@ -22,6 +23,9 @@ import {
   CodigosEstablecimientos,
   consultUser,
   configConsult,
+  HVConsultOne,
+  UpdRespTM,
+  DownloadFileTM,
   inscribirEstablecimiento,
   ValConsolidaciones,
   DownloadFile,
@@ -140,6 +144,30 @@ router.post(
     });
   }
 );
+router.get(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedProf,
+  HVConsultOne,
+  (req, res) => {
+    res.render("profesional/HojaVida/EditHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedProf,
+  editHVProf,
+  (req, res) => {
+    res.render("profesional/HojaVida/EditHV", {
+      user: req.user,
+      consultHV: false,
+      alert: req.alert,
+    });
+  }
+);
 
 // Apartado: Consolidaciones
 
@@ -173,6 +201,7 @@ router.post(
       user: req.user,
       fields: false,
       actaAnul: false,
+      settings: false,
       alert: req.alert,
     });
   }
@@ -781,6 +810,20 @@ router.get(
       user: req.user,
       allConso: req.allConso,
       moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Evidencias/TomaMuestra/:_id",
+  isAuthenticatedProf,
+  UpdRespTM,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      allConso: false,
+      moment: false,
+      alert: req.alert,
     });
   }
 );
@@ -959,33 +1002,6 @@ router.post(
   SendReport,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/eventSaludPublic", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      alert: req.alert,
-      moment: moment,
-    });
-  }
-);
-router.get(
-  "/Consolidaciones/Validar/TomaMuestras/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/tomamuestras", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      alert: undefined,
-      moment: moment,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Validar/TomaMuestras/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  SendReport,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Validar/tomamuestras", {
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,
@@ -1348,6 +1364,7 @@ router.post(
 );
 
 router.get("/evidencia/:id", isAuthenticatedProf, DownloadFile);
+router.get("/evidenciaTM/:id", isAuthenticatedProf, DownloadFileTM);
 
 router.get("/logout", logout);
 

@@ -110,9 +110,9 @@
                     <tr>
                       <td>
                         <% if(allConso.status=="Pendiente" ){ %>
-                        <a href="/profesional/Consolidaciones/Validar/TomaMuestras/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                        <span class="badge badge-warning text-uppercase">Pendiente</span></a>
                         <% }else if(allConso.status=="Corregido" ){ %>
-                        <a href="/profesional/Consolidaciones/Correccion/TomaMuestras/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                        <span class="badge badge-primary text-uppercase">Corregido</span></a>
                         <% }else if(allConso.status=="Rechazado" ){ %>
                         <span class="badge badge-danger text-uppercase">Rechazado</span>
                         <% }else if(allConso.status=="Enviado" ){ %>

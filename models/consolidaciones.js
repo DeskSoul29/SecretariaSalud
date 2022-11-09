@@ -145,6 +145,7 @@ var EstablecimientosSchema = new Schema({
     zona: String,
     objAnalisis: String,
     acompanante: String,
+    resultado: String,
   },
 
   //Vehiculos

@@ -2,6 +2,7 @@ import login from "../models/user.js";
 import codEsta from "../models/codigoEstablecimientos.js";
 import hojavida from "../models/hojavida.js";
 import consolidaciones from "../models/consolidaciones.js";
+import upload from "../middleware/upload.js";
 
 import { promisify } from "util";
 import jwt from "jsonwebtoken";
@@ -24,8 +25,48 @@ var authLogin = (function () {
     ]);
   };
 
+  var SendRespTM = async (req, res, next, decodificada) => {
+    await consolidaciones
+      .findByIdAndUpdate(req.params._id, {
+        $set: {
+          status: "Enviado",
+          SendNovAd: "on",
+          "ForTomaMuestras.resultado": req.file.filename,
+        },
+      })
+      .then((result) => {
+        if (result != null) {
+          authLogin.isUser(
+            req,
+            "Conexión exitosa",
+            "Consolidación Enviada",
+            "success",
+            false,
+            800,
+            "/" + decodificada.rol + "/Consolidaciones/Ver/TomaMuestras"
+          );
+          return next();
+        } else {
+          authLogin.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            true,
+            false,
+            "/" + decodificada.rol
+          );
+          return next();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return {
     isUser: isUser,
+    SendRespTM: SendRespTM,
   };
 })();
 
@@ -234,23 +275,6 @@ export const inscribirEstablecimiento = async (req, res, next) => {
 
       if (tIden == "NIT") {
         await hojavida
-          .find({ identificacion: inputIden, tipoIdentificacion: tIden })
-          .count()
-          .then((result) => {
-            if (result >= 1) {
-              authLogin.isUser(
-                req,
-                "Advertencia",
-                "NIT ya registrado",
-                "error",
-                true,
-                false
-              );
-              salida = true;
-            }
-          });
-      } else if (tIden == "Cedula Ciudadania") {
-        await hojavida
           .find({
             identificacion: inputIden,
             tipoIdentificacion: tIden,
@@ -262,7 +286,7 @@ export const inscribirEstablecimiento = async (req, res, next) => {
               authLogin.isUser(
                 req,
                 "Advertencia",
-                "Usuario con Establecimiento En El Mismo Grupo",
+                "NIT ya registrado",
                 "error",
                 true,
                 false
@@ -343,6 +367,11 @@ export const inscribirEstablecimiento = async (req, res, next) => {
     return res.redirect("/");
   }
 };
+export const HVConsultOne = async (req, res, next) => {
+  const CHVida = await hojavida.findById(req.params.id).lean();
+  req.consultHV = CHVida;
+  return next();
+};
 
 //Consolidaciones
 export const ValConsolidaciones = async (req, res, next) => {
@@ -363,6 +392,33 @@ export const DownloadFile = async (req, res, next) => {
     .findOne({ _id: req.params.id })
     .then((result) => {
       res.download("./upload/" + result.evidencia.file, (err) => {
+        if (err) console.log(err);
+        res.status(200);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      return next();
+    });
+};
+export const UpdRespTM = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  req.params.user = decodificada.user;
+  await upload(req, res, function (err) {
+    if (err) {
+      return res.end("Error uploading file.");
+    }
+    authLogin.SendRespTM(req, res, next, decodificada);
+  });
+};
+export const DownloadFileTM = async (req, res, next) => {
+  await consolidaciones
+    .findOne({ _id: req.params.id })
+    .then((result) => {
+      res.download("./upload/" + result.ForTomaMuestras.resultado, (err) => {
         if (err) console.log(err);
         res.status(200);
       });

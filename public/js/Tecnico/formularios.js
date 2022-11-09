@@ -479,3 +479,10 @@ function UploadCronograma(e) {
     e.preventDefault();
   }
 }
+
+function UploadResultTM(e) {
+  if (document.getElementById("myFile").files.length == 0) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  }
+}

@@ -7,6 +7,7 @@ import {
   LisConsolidaRechazadas,
   hojavidaConsultAllTec,
   EditConsolidacionRech,
+  editHVTec,
   UploadCronograma,
   SendConsolidacion,
 } from "../controllers/tecnicoController.js";
@@ -16,6 +17,9 @@ import {
   CodigosEstablecimientos,
   inscribirEstablecimiento,
   configConsult,
+  HVConsultOne,
+  UpdRespTM,
+  DownloadFileTM,
   ValConsolidaciones,
   DownloadFile,
   logout,
@@ -218,6 +222,20 @@ router.get(
       user: req.user,
       allConso: req.allConso,
       moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Evidencias/TomaMuestra/:_id",
+  isAuthenticatedTecnic,
+  UpdRespTM,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      allConso: false,
+      moment: false,
+      alert: req.alert,
     });
   }
 );
@@ -750,8 +768,33 @@ router.post(
     });
   }
 );
+router.get(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedTecnic,
+  HVConsultOne,
+  (req, res) => {
+    res.render("tecnico/HojaVida/EditHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/HojaVida/ConsultarHV/Edit/:id",
+  isAuthenticatedTecnic,
+  editHVTec,
+  (req, res) => {
+    res.render("tecnico/HojaVida/EditHV", {
+      user: req.user,
+      consultHV: false,
+      alert: req.alert,
+    });
+  }
+);
 
 router.get("/evidencia/:id", isAuthenticatedTecnic, DownloadFile);
+router.get("/evidenciaTM/:id", isAuthenticatedTecnic, DownloadFileTM);
 
 router.get("/logout", logout);
 

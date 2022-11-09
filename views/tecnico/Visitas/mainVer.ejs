@@ -100,7 +100,7 @@
                           <tr>
                             <td>
                               <% if(allConso.status=="Rechazado" ){ %>
-                              <% if(allConso.consolidacion.establecimiento=="on" ){ %>
+                              <% if(allConso.consolidacion.establecimiento=="on"){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/Establecimientos/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.antirrabica=="on" ){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/AntirrabicaAnimal/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
@@ -130,7 +130,7 @@
                               <% } %>
                             </td>
                             <td>
-                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('DD-MM-YYYY h:mma'); %>
+                              <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                             </td>
                             <td>
                               <% if(allConso.consolidacion.establecimiento=="on" ){ %>

@@ -920,6 +920,9 @@ var authProf = (function () {
         status: {
           $eq: "Pendiente",
         },
+        "consolidacion.tomaMuestra": {
+          $ne: "on",
+        },
         _id: {
           $ne: req.params._id,
         },
@@ -992,6 +995,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
       .find({
         provincia: {
           $eq: decodificada.provincia,
+        },
+        "consolidacion.tomaMuestra": {
+          $ne: "on",
         },
         status: { $eq: "Pendiente" },
       })
@@ -1258,6 +1264,71 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
   } else {
     return res.redirect("/");
   }
+};
+export const editHVProf = async (req, res, next) => {
+  const { municipio, phone, rSocial, direccion, rLegal, estado } = req.body;
+
+  var nomHV = await hojavida.find({
+    _id: {
+      $ne: req.params.id,
+    },
+    municipio: municipio,
+    razonSocial: rSocial,
+  });
+
+  if (nomHV.length == 0) {
+    await hojavida
+      .findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: {
+            telefono: phone,
+            razonSocial: rSocial,
+            direccion: direccion,
+            repreLegal: rLegal,
+            estado: estado,
+          },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        if (result) {
+          authProf.isUser(
+            req,
+            "Conexión exitosa",
+            "Establecimiento Actualizado Correctamente",
+            "success",
+            false,
+            800,
+            "profesional/HojaVida/ConsultarHV"
+          );
+        } else {
+          authProf.isUser(
+            req,
+            "Advertencia",
+            "Error en la Base de Datos",
+            "error",
+            true,
+            false,
+            "profesional/HojaVida/ConsultarHV"
+          );
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  } else {
+    authProf.isUser(
+      req,
+      "Advertencia",
+      "Ya se encuentra una razón social con el mismo nombre",
+      "error",
+      true,
+      false,
+      "profesional/HojaVida/ConsultarHV/Edit/" + req.params.id
+    );
+  }
+  return next();
 };
 
 //Apartado: Consolidaciones
