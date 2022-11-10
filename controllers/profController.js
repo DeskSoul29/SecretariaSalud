@@ -148,12 +148,18 @@ var authProf = (function () {
         observacion,
       } = req.body;
 
+      var Estado = "Enviado";
+
       if (req.body.idHV != "") {
         var idHV = req.body.idHV;
       }
 
+      if (tomaMuestraON == "on") {
+        Estado = "Pendiente";
+      }
+
       new consolidaciones({
-        status: "Enviado",
+        status: Estado,
         provincia: provincia,
         municipio: municipio,
         responsable: {

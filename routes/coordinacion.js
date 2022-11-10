@@ -29,6 +29,7 @@ import {
   ValConsolidaciones,
   inscribirEstablecimiento,
   DownloadFile,
+  DownloadFileTM,
   logout,
 } from "../helpers/auth.js";
 
@@ -763,6 +764,7 @@ router.post(
 );
 
 router.get("/evidencia/:id", isAuthenticatedCoordinacion, DownloadFile);
+router.get("/evidenciaTM/:id", isAuthenticatedCoordinacion, DownloadFileTM);
 
 router.get("/logout", logout);
 
