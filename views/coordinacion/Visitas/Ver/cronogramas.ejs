@@ -5,7 +5,6 @@
   <%- include('../../../tools/head'); %>
   <!-- Custom styles for this page -->
   <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/dropzone.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
@@ -17,7 +16,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarProf'); %>
+    <%- include('../../../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -36,11 +35,8 @@
           <div class="card shadow mb-4">
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/profesional/Consolidaciones/Ver">Elegir
-                    Otra
-                    Consolidación</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Toma de
-                  Muestras
+                <li class="breadcrumb-item"><a href="/coordinacion/Consolidaciones/Ver">Consolidaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cronogramas Mensual
                 </li>
               </ol>
             </nav>
@@ -49,59 +45,44 @@
               <div class="table-responsive">
                 <div class="col">
                   <div class="row">
-                    <table border="0" cellspacing="5" cellpadding="5">
-                      <tbody>
-                        <tr>
-                          <td>Fecha Inicial:</td>
-                          <td><input type="text" id="min" name="min"></td>
-                        </tr>
-                        <tr>
-                          <td>Fecha Final:</td>
-                          <td><input type="text" id="max" name="max"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="col-xl-10">
+                      <table border="0" cellspacing="5" cellpadding="5">
+                        <tbody>
+                          <tr>
+                            <td>Fecha Inicial:</td>
+                            <td><input type="text" id="min" name="min"></td>
+                          </tr>
+                          <tr>
+                            <td>Fecha Final:</td>
+                            <td><input type="text" id="max" name="max"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-xl-2">
+                      <a href="/coordinacion/Consolidaciones/UpdateAcept/cronograma" class="btn btn-primary btn-sm">Aceptar Consolidaciones</a>
+                    </div>
                   </div>
                 </div>
-                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px; text-align: center !important;">
+                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
                       <th>Estado</th>
                       <th>Fecha_Enviado</th>
                       <th>Responsable</th>
                       <th>Provincia</th>
-                      <th>Municipio</th>
-                      <th>Tipo de Muestra</th>
-                      <th>Descripción de la Muestra</th>
-                      <th>Establecimiento</th>
-                      <th>Tipo de Analisis</th>
-                      <th>Rural / Urbano</th>
-                      <th>Objeto del Analisis</th>
-                      <th>Fecha_Visita</th>
-                      <th>Nombre Y Cargo del Acompañante</th>
-                      <th>Resultados</th>
-                      <th>Observaciones</th>
+                      <th>Mes</th>
                       <th>Archivos</th>
                       <th>Acción</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th><input type="text" placeholder="Busca por Estado" /></th>
+                      <th>Estado</th>
                       <th><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
                       <th><input type="text" placeholder="Busca por Responsable" /></th>
                       <th><input type="text" placeholder="Busca por Provincia" /></th>
-                      <th><input type="text" placeholder="Busca por Municipio" /></th>
-                      <th><input type="text" placeholder="Busca por Tipo de Muestra" /></th>
-                      <th><input type="text" placeholder="Busca por Descripción de la Muestra" /></th>
-                      <th><input type="text" placeholder="Busca por Establecimiento" /></th>
-                      <th><input type="text" placeholder="Busca por Tipo de Analisis" /></th>
-                      <th><input type="text" placeholder="Busca por Rural / Urbano" /></th>
-                      <th><input type="text" placeholder="Busca por Objeto del Analisis" /></th>
-                      <th><input type="text" placeholder="Busca por Fecha_Visita" /></th>
-                      <th><input type="text" placeholder="Busca por Nombre Y Cargo Acompañante" /></th>
-                      <th>Resultados</th>
-                      <th><input type="text" placeholder="Busca por Observaciones" /></th>
+                      <th><input type="text" placeholder="Busca por Mes" /></th>
                       <th>Archivos</th>
                       <th>Acción</th>
                     </tr>
@@ -109,17 +90,11 @@
                   <tbody>
                     <% if (allConso){ %>
                     <% allConso.forEach((allConso)=> { %>
-                    <% if (allConso.consolidacion.tomaMuestra == "on"){ %>
+                    <% if (allConso.consolidacion.cronograma == "on" && allConso.SendNovAd=="on"){ %>
                     <tr>
                       <td>
-                        <% if(allConso.status=="Pendiente" ){ %>
-                        <span class="badge badge-warning text-uppercase">Pendiente</span></a>
-                        <% }else if(allConso.status=="Corregido" ){ %>
-                        <span class="badge badge-primary text-uppercase">Corregido</span></a>
-                        <% }else if(allConso.status=="Rechazado" ){ %>
-                        <span class="badge badge-danger text-uppercase">Rechazado</span>
-                        <% }else if(allConso.status=="Enviado" ){ %>
-                        <span class="badge badge-info text-uppercase">Enviado</span>
+                        <% if(allConso.status=="Enviado" ){ %>
+                        <a href="/coordinacion/Consolidaciones/Validar/CronogramaMensual/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                         <% }else if(allConso.status=="Aceptado" ){ %>
                         <span class="badge badge-success text-uppercase">Aceptado</span>
                         <% } %>
@@ -128,61 +103,21 @@
                         <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
                       </td>
                       <td>
-                        <%= allConso.responsable.userResponsable %>
-                        <%= allConso.responsable.nombreResponsable %>
+                        <%= allConso.responsable.userResponsable %>-<%= allConso.responsable.nombreResponsable %>
                       </td>
                       <td>
                         <%= allConso.provincia %>
                       </td>
                       <td>
-                        <%= allConso.municipio %>
+                        <%= allConso.mesCron %>
                       </td>
                       <td>
-                        <%= allConso.ForTomaMuestras.tipMuestra %>
+                        <a href="/coordinacion/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
                       <td>
-                        <%= allConso.ForTomaMuestras.descMuestra %>
-                      </td>
-                      <td>
-                        <%= allConso.hojavida.razonSocial %>
-                      </td>
-                      <td>
-                        <%= allConso.ForTomaMuestras.tipAnalisis %>
-                      </td>
-                      <td>
-                        <%= allConso.ForTomaMuestras.zona %>
-                      </td>
-                      <td>
-                        <%= allConso.ForTomaMuestras.objAnalisis %>
-                      </td>
-                      <td>
-                        <%= moment(allConso.fvisit," YYYY/MM/DD").add(1, 'days' ).format('DD-MM-YYYY'); %>
-                      </td>
-                      <td>
-                        <%= allConso.ForTomaMuestras.acompanante %>
-                      </td>
-                      <td>
-                        <% if(allConso.status == "Pendiente" && allConso.responsable.userResponsable == user.user){ %>
-                        <a type="button" data-target="#resultModal" onclick="ActionTM('<%= allConso._id %>')" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
-                          <i class="fas fa-download"></i>
-                        </a>
-                        <% }else if(allConso.status == "Pendiente"){ %>
-                        <% }else{ %>
-                        <a href="/profesional/evidenciaTM/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
-                        <% } %>
-                      </td>
-                      <td>
-                        <%= allConso.observaciones %>
-                      </td>
-                      <td>
-                        <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
-                      </td>
-                      <td>
-                        <% if(allConso.SendNovAd == "off"){ %>
-                        <a type="button" onclick='modalsEstablecimientos.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                        <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
                           <i class="fas fa-trash"></i>
                         </a>
-                        <% } %>
                       </td>
                     </tr>
                     <% } %>
@@ -194,53 +129,24 @@
             </div>
           </div>
           <!-- /.container-fluid -->
+
         </div>
         <!-- End of Main Content -->
+
         <!-- Footer -->
         <%- include('../../../tools/footer'); %>
         <!-- End of Footer -->
+
       </div>
       <!-- End of Content Wrapper -->
+
     </div>
     <!-- End of Page Wrapper -->
+
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Add Result - Modal-->
-    <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">AÑADIR RESULTADO</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <form id="formResulTM" onsubmit="UploadResultTM(event)" method="POST" enctype="multipart/form-data">
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="mr-sm-2" for="fields">Adjuntar
-                  Archivo(s)</label>
-                <div class="drop-zone">
-                  <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
-                  <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-secondary" type="button" data-dismiss="modal">
-                Cancelar
-              </button>
-              <button class="btn btn-primary " type="submit">
-                Enviar
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
 
     <!-- Delete Modal-->
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -268,6 +174,7 @@
         </div>
       </div>
     </div>
+
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -278,44 +185,49 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Seleccione "Cerrar sesión" a continuación si está listo para finalizar su sesión actual.</div>
+          <div class="modal-body">Seleccione "Cerrar
+            sesión" a continuación si está listo para
+            finalizar su sesión actual.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="/profesional/logout">Cerrar
-              Sesión</a>
+            <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
           </div>
         </div>
       </div>
     </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <!-- Core plugin JavaScript-->
     <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+
     <!-- Page level plugins -->
     <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
-    <!-- Validation -->
-    <script src="/js/Profesional/validaciones.js"></script>
-    <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-    <script src="/js/Tecnico/formularios.js"></script>
+
+    <!-- Validations -->
+    <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
+
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
     <!-- Search Advanced -->
     <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
-    <!-- Alert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-      $(window).bind(' load', function() {
+      $(window).bind('load', function() {
         var nav = document.getElementById('nav2');
         $('#navlink1').removeClass('collapsed');
         var nav3 = document.getElementById('collapseTwo');
@@ -324,12 +236,6 @@
         nav3.className += "  show";
         nav4.className += "  active";
       });
-
-      function ActionTM(id) {
-        document
-          .getElementById("formResulTM")
-          .setAttribute("action", "/profesional/Evidencias/TomaMuestra/" + id);
-      }
 
       var table = $('#dataTable').DataTable({
         order: [
@@ -352,10 +258,10 @@
         dom: 'Bfrtlip',
         buttons: [{
           extend: 'excel',
-          filename: 'TOMAMUESTRAS_' + new Date().toJSON().substring(0, 10),
+          filename: 'CRONOGRAMA_' + new Date().toJSON().substring(0, 10),
           autoFilter: true,
-          sheetName: 'TOMA DE MUESTRAS',
-        }]
+          sheetName: 'CRONOGRAMA ACTIVIDADES',
+        }],
       });
       table.columns().every(function() {
         var that = this;
@@ -399,21 +305,6 @@
         });
       });
     </script>
-
-    <% if(typeof alert !="undefined" ) { %>
-    <script type="text/JavaScript">
-      Swal.fire({
-          title: '<%= alert[0].alertTitle %>',
-          text:'<%= alert[0].alertMessage %>',
-          icon:'<%= alert[0].alertIcon %>',
-          showConfirmButton: <%= alert[0].showConfirmButton %>,
-          timer: <%= alert[0].timer %>
-        }).then(()=>{
-          window.location = '<%= alert[0].ruta %>'
-        })
-      </script>
-    <% } %>
-
 </body>
 
 </html>

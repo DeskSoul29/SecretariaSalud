@@ -137,6 +137,11 @@ const modalsUsuarios = (function () {
         "/coordinacion/Consolidaciones/Ver/NoveAdministrativas",
         "_self"
       );
+    } else if (consolidacion.value == "Cronograma de Actividades") {
+      window.open(
+        "/coordinacion/Consolidaciones/Ver/CronogramaMensual",
+        "_self"
+      );
     }
   };
 

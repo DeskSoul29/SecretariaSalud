@@ -143,7 +143,7 @@ var authTec = (function () {
         var idHV = req.body.idHV;
       }
       new consolidaciones({
-        provincia: provincia,
+        provincia: decodificada.provincia,
         municipio: municipio,
         responsable: {
           userResponsable: decodificada.user,
@@ -163,7 +163,10 @@ var authTec = (function () {
           vehiculos: vehiculosON,
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
+          cronograma: req.body.cronograma,
         },
+        mesCron: req.body.mesCron,
+
         hojavida: idHV,
         fvisit: fVisit,
         score: score,
@@ -644,69 +647,11 @@ var authTec = (function () {
       .limit(1);
   };
 
-  var SendCronograma = async (req, next, decodificada) => {
-    new consolidaciones({
-      provincia: decodificada.provincia,
-      mesCron: req.body.mesCron,
-      responsable: {
-        userResponsable: decodificada.user,
-        nombreResponsable: decodificada.nombres + " " + decodificada.apellidos,
-      },
-      consolidacion: {
-        cronograma: req.body.cronograma,
-      },
-      evidencia: {
-        file: req.file.filename,
-      },
-      createdAt: new Date(),
-    })
-      .save()
-      .then((result) => {
-        if (result) {
-          authTec.isUser(
-            req,
-            "Conexión exitosa",
-            "Cronograma Enviado",
-            "success",
-            false,
-            800,
-            "/tecnico"
-          );
-        } else {
-          authTec.isUser(
-            req,
-            "Error en la Base de Datos",
-            "Envio Cancelado",
-            "error",
-            false,
-            false,
-            "/tecnico"
-          );
-        }
-        return next();
-      })
-      .catch((error) => {
-        console.log(error);
-        authTec.DeleteFile(req.file.filename);
-        authTec.isUser(
-          req,
-          "Cronograma Cancelado",
-          "Se encontro un cronograma por este mes",
-          "error",
-          true,
-          false,
-          "/tecnico"
-        );
-        return next();
-      });
-  };
-
   return {
     isUser: isUser,
     DeleteFile: DeleteFile,
     SendConsolidacion: SendConsolidacion,
     SendCorreccion: SendCorreccion,
-    SendCronograma: SendCronograma,
     NextReport: NextReport,
   };
 })();
@@ -951,18 +896,6 @@ export const LisConsolidaRechazadas = async (req, res, next) => {
     return next();
   }
 };
-export const UploadCronograma = async (req, res, next) => {
-  const decodificada = await promisify(jwt.verify)(
-    req.cookies.jwt,
-    process.env.JWT_SECRETO
-  );
-  await upload(req, res, function (err, res) {
-    if (err) {
-      return res.end("Error uploading file.");
-    }
-    authTec.SendCronograma(req, next, decodificada);
-  });
-};
 
 //Apartado: Hojas de Vida
 export const hojavidaConsultAllTec = async (req, res, next) => {
@@ -994,7 +927,7 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
 };
 export const editHVTec = async (req, res, next) => {
   const { municipio, phone, rSocial, direccion, rLegal, estado } = req.body;
-  
+
   var nomHV = await hojavida.find({
     _id: {
       $ne: req.params.id,

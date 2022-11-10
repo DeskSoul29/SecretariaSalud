@@ -227,6 +227,18 @@ router.get(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/CronogramaMensual",
+  isAuthenticatedCoordinacion,
+  SeeCoorConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/cronogramas", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Ver/Establecimientos",
   isAuthenticatedCoordinacion,
   SeeCoorConsolidaciones,
@@ -430,6 +442,33 @@ router.post(
   SendReport,
   (req, res) => {
     res.render("coordinacion/Visitas/Ver/Validar/nAdmin", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/CronogramaMensual/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/CronogramaMensual/:_id",
+  isAuthenticatedCoordinacion,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("coordinacion/Visitas/Ver/Validar/cronograma", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,

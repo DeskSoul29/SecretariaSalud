@@ -57,6 +57,8 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Enviar/AntirrabicaAnimal", "_self");
     } else if (consolidacion.value == "Quejas") {
       window.open("/tecnico/Consolidaciones/Enviar/Quejas", "_self");
+    } else if (consolidacion.value == "Vivienda Saludable") {
+      window.open("/tecnico/Consolidaciones/Enviar/ViviendaSaludable", "_self");
     }
   };
 

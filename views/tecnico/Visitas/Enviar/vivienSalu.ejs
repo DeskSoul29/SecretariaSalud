@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <%- include('../../../tools/head'); %>
+  <link rel="stylesheet" href="/css/dropzone.css">
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include('../../../tools/sidebarTec'); %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <%- include('../../../tools/topbar'); %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <div class="container">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+              <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">VIVIENDA SALUDABLE</h1>
+                  </div>
+
+                  <form onsubmit="antirrabicalAnimalForm(event)" action="/tecnico/Consolidaciones/Enviar/ViviendaSaludable/<%= user.user %>" method="POST" enctype="multipart/form-data">
+                    <input type="text" value="on" id="viviSaluON" name="viviSaluON" style="display: none;" readonly>
+
+                    <div class="form-row align-items-center mb-sm-2">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
+                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
+                        <select id="muniSelect" name="municipio" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione el Municipio
+                          </option>
+                          <option value="<%= user.municipio %>">
+                            <%= user.municipio %>
+                          </option>
+                          <% if(user.municipioExtra1 !="" ){ %>
+                          <option value="<%= user.municipioExtra1 %>">
+                            <%= user.municipioExtra1 %>
+                          </option>
+                          <% } %>
+                          <% if(user.municipioExtra2 !="" ){ %>
+                          <option value="<%= user.municipioExtra2 %>">
+                            <%= user.municipioExtra2 %>
+                          </option>
+                          <% } %>
+                          <% if(user.municipioExtra3 !="" ){ %>
+                          <option value="<%= user.municipioExtra3 %>">
+                            <%= user.municipioExtra3 %>
+                          </option>
+                          <% } %>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="vereda">Vereda/Localidad</label>
+                        <input type="text" class="form-control form-control-user" id="vereda" name="vereda" onkeyup="mayus(this);" readonly>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="direccion">Dirección</label>
+                        <input type="text" class="form-control form-control-user" id="direccion" name="direccion" onkeyup="mayus(this);" readonly />
+                      </div>
+                      <div class="col my-1"">
+                        <label class=" mr-sm-2" for="viviendaOld">Vivienda</label>
+                        <select id="viviendaOld" name="viviendaOld" class="custom-select mr-sm-2">
+                          <option selected disabled>Seleccione
+                          </option>
+                          <option value="NUEVA VIVIENDA">NUEVA VIVIENDA</option>
+                        </select>
+                      </div>
+                      <div class="col my-1"">
+                        <label class=" mr-sm-2" for="viviendaNew">Vivienda Nueva</label>
+                        <input type="text" class="form-control form-control-user" id="viviendaNew" name="viviendaNew" onkeyup="mayus(this);" readonly />
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="caninosUrbano">Nº de Visita</label>
+                        <input type="number" min="1" max="6" value="1" class="form-control form-control-user" id="caninosUrbano" name="caninosUrbano" />
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="caninosRural">Fecha Visita</label>
+                        <input type="date" class="form-control form-control-user" id="fVisit" name="fVisit" />
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">VIVIENDA COMO ESPACIO VITAL</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">101</label>
+                        <select id="101" name="101" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">102</label>
+                        <select id="102" name="102" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">103</label>
+                        <select id="103" name="103" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">104</label>
+                        <select id="104" name="104" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">105</label>
+                        <select id="105" name="105" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final1" name="Final1" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">SORBOS DE VIDA - AGUA PARA CONSUMIR EN LA VIVIENDA</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">201</label>
+                        <select id="201" name="201" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">202</label>
+                        <select id="202" name="202" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">203</label>
+                        <select id="203" name="203" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">204</label>
+                        <select id="204" name="204" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final2" name="Final2" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">LAS EXCRETAS Y LAS AGUAS SUCIAS ANDAN POR AHÍ</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">301</label>
+                        <select id="301" name="301" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">302</label>
+                        <select id="302" name="302" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">303</label>
+                        <select id="303" name="303" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">304</label>
+                        <select id="304" name="304" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">305</label>
+                        <select id="305" name="305" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final3" name="Final3" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">LOS RESIDUOS SOLIDOS (BASURA EN LA VIVIENDA)</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">401</label>
+                        <select id="401" name="401" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">402</label>
+                        <select id="402" name="402" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">403</label>
+                        <select id="403" name="403" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">404</label>
+                        <select id="404" name="404" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final4" name="Final4" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">OJO CON LAS PLAGAS</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">501</label>
+                        <select id="501" name="501" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">502</label>
+                        <select id="502" name="502" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">503</label>
+                        <select id="503" name="503" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">504</label>
+                        <select id="504" name="504" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final5" name="Final5" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">ALIMENTOS Y VIVIENDA CON HIGIENE Y SALUD</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">601</label>
+                        <select id="601" name="601" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">602</label>
+                        <select id="602" name="602" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">603</label>
+                        <select id="603" name="603" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final6" name="Final6" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-12">DINAMICA FAMILIAR</label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">701</label>
+                        <select id="701" name="701" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">702</label>
+                        <select id="702" name="702" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">703</label>
+                        <select id="703" name="703" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                      <div class="col my-1">
+                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <select id="Final7" name="Final7" class="custom-select mr-sm-2">
+                          <option>Blanco</option>
+                          <option>Rojo</option>
+                          <option>Verde</option>
+                          <option>Amarillo</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones
+                          (Opcional)</label>
+                        <textarea name="observacion" id="observacion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" placeholder="Escribe las Observaciones Que Creas Necesarias"></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0);">
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s)</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-user btn-block" type="submit">
+                      Registrar Consolidación
+                    </button>
+                    <a href="/tecnico/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                      Cancelar
+                    </a>
+
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include('../../../tools/footer'); %>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Seleccione "Cerrar
+          sesión" a continuación si está listo para
+          finalizar su sesión actual.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/js/sb-admin-2.min.js"></script>
+
+  <!-- Validations -->
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+
+  <!-- Alert -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <% if(typeof alert !="undefined" ) { %>
+  <script type="text/JavaScript">
+    Swal.fire({
+      title: '<%= alert[0].alertTitle %>',
+      text:'<%= alert[0].alertMessage %>',
+      icon:'<%= alert[0].alertIcon %>',
+      showConfirmButton: <%= alert[0].showConfirmButton %>,
+      timer: <%= alert[0].timer %>
+    }).then(()=>{
+      window.location = '<%= alert[0].ruta %>'
+    })
+  </script>
+  <% } %>
+
+  <script>
+    $(window).bind('load', function() {
+      var nav = document.getElementById('nav2');
+      $('#navlink1').removeClass('collapsed');
+      var nav3 = document.getElementById('collapseOne');
+      var nav4 = document.getElementById('show2');
+      nav.className += "  active";
+      nav3.className += "  show";
+      nav4.className += "  active";
+    });
+
+    $("#viviendaOld").change(function() {
+      if (document.getElementById("viviendaOld").value == "NUEVA VIVIENDA") {
+        $("#viviendaNew").attr("readonly", false);
+        $("#direccion").attr("readonly", false);
+        $("#vereda").attr("readonly", false);
+      } else {
+        $("#viviendaNew").attr("readonly", true);
+        $("#direccion").attr("readonly", true);
+        $("#vereda").attr("readonly", true);
+        $("#viviendaOld").attr("readonly", true);
+      }
+    });
+  </script>
+</body>
+
+</html>

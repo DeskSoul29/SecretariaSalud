@@ -472,7 +472,7 @@ function validConsolidacion(e) {
 
 function UploadCronograma(e) {
   if (
-    document.getElementById("mesCron").value == "" ||
+    document.getElementById("mesCron").value == "Seleccione" ||
     document.getElementById("myFile").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");

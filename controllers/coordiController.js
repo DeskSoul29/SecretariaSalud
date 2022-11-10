@@ -126,6 +126,10 @@ var authCoordi = (function () {
             var rutaValidar =
               "/coordinacion/Consolidaciones/Validar/NoveAdministrativas/" +
               nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.cronograma == "on") {
+            var rutaValidar =
+              "/coordinacion/Consolidaciones/Validar/CronogramaMensual/" +
+              nextCons[0]._id;
           }
           authCoordi.isUser(
             req,
@@ -152,9 +156,6 @@ var authCoordi = (function () {
         },
         _id: {
           $ne: req.params._id,
-        },
-        "consolidacion.noveadministrativa": {
-          $ne: "on",
         },
       })
       .sort({ createdAt: 1 })
@@ -565,6 +566,37 @@ var authCoordi = (function () {
       });
   };
 
+  var UpdateAllCronograma = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.cronograma": "on",
+          status: "Enviado",
+          SendNovAd: "on",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/CronogramaMensual"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   var UpdateAllNoveAdministrativas = async (req, next) => {
     await consolidaciones
       .updateMany(
@@ -616,6 +648,7 @@ var authCoordi = (function () {
     UpdateAllVehiculos: UpdateAllVehiculos,
     UpdateAllTomaMuestras: UpdateAllTomaMuestras,
     UpdateAllQuejas: UpdateAllQuejas,
+    UpdateAllCronograma: UpdateAllCronograma,
     UpdateAllNoveAdministrativas: UpdateAllNoveAdministrativas,
   };
 })();
@@ -1111,6 +1144,8 @@ export const SendManyAcept = async (req, res, next) => {
       authCoordi.UpdateAllTomaMuestras(req, next);
     } else if (req.params.tipCons == "quejas") {
       authCoordi.UpdateAllQuejas(req, next);
+    } else if (req.params.tipCons == "cronograma") {
+      authCoordi.UpdateAllCronograma(req, next);
     } else if (req.params.tipCons == "noveadministrativa") {
       authCoordi.UpdateAllNoveAdministrativas(req, next);
     }

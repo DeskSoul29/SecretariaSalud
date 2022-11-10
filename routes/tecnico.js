@@ -8,7 +8,6 @@ import {
   hojavidaConsultAllTec,
   EditConsolidacionRech,
   editHVTec,
-  UploadCronograma,
   SendConsolidacion,
 } from "../controllers/tecnicoController.js";
 
@@ -57,7 +56,7 @@ router.get(
 router.post(
   "/Consolidaciones/Cronograma/:user",
   isAuthenticatedTecnic,
-  UploadCronograma,
+  SendConsolidacion,
   (req, res) => {
     res.render("tecnico/main", {
       user: req.user,
@@ -482,6 +481,27 @@ router.post(
       user: req.user,
       codigos: null,
       hojavida: null,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Enviar/ViviendaSaludable",
+  isAuthenticatedTecnic,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/vivienSalu", {
+      user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/ViviendaSaludable/:user",
+  isAuthenticatedTecnic,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/vivienSalu", {
+      user: req.user,
       alert: req.alert,
     });
   }
