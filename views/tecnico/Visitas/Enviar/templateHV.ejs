@@ -41,8 +41,7 @@
       <% var numberSelected2="" ; %>
       <% if(codigos){ %>
       <% codigos.forEach((codigos)=> { %>
-      <% if (numberSelected2 !=codigos.grupo && codigos.grupo
-                            !="VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS" ){ %>
+      <% if (numberSelected2 !=codigos.grupo && codigos.grupo !="VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS" ){ %>
       <option value="<%= codigos.grupo %>">
         <%= codigos.grupo %>
       </option>

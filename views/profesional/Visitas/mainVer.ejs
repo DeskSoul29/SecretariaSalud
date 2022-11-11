@@ -128,6 +128,8 @@
                               <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Validar/Cronograma/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Validar//<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Rechazado" ){ %>
                               <span class="badge badge-danger text-uppercase">Rechazado</span>
@@ -150,6 +152,8 @@
                               <a href="/profesional/Consolidaciones/Correccion/Quejas/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span> </a>
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               <a href="/profesional/Consolidaciones/Correccion/Cronograma/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/profesional/Consolidaciones/Correccion//<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Corregido</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Enviado" ){ %>
                               <span class="badge badge-info text-uppercase">Enviado</span>
@@ -181,6 +185,8 @@
                               Informe Mensual
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               Cronograma de Actividades
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              Vivienda Saludable
                               <% } %>
                             </td>
                             <td>

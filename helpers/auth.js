@@ -428,6 +428,28 @@ export const DownloadFileTM = async (req, res, next) => {
       return next();
     });
 };
+//Listado de Vivendas Saludables Registradas
+export const LisViviendas = async (req, res, next) => {
+  try {
+    await consolidaciones
+      .find({
+        "consolidacion.viviSalu": {
+          $eq: "on",
+        },
+      })
+      .sort({ createdAt: -1 })
+      .then((data) => {
+        req.ListVivi = data;
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
+};
 
 export const logout = (req, res) => {
   res.clearCookie("jwt");

@@ -132,6 +132,8 @@
                               <a href="/coordinacion/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/NoveAdministrativas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar//<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Aceptado"){ %>
                               <span class="badge badge-success text-uppercase">Aceptado</span>
@@ -159,6 +161,8 @@
                               Quejas
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               Informe Mensual
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              Vivienda Saludable
                               <% } %>
                             </td>
                             <td>

@@ -200,6 +200,8 @@
                                   <a href="/profesional/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                                   <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                                   <a href="/profesional/Consolidaciones/Validar/Cronograma/<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Validar//<%= allConso._id %>"><span class="badge badge-warning text-uppercase">Pendiente</span></a>
                                   <% } %>
                                 </td>
                                 <td>
@@ -224,6 +226,8 @@
                                   Quejas
                                   <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                                   Cronograma de Actividades
+                                  <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                                  Vivienda Saludable
                                   <% } %>
                                 </td>
                                 <td>

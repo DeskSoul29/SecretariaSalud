@@ -118,6 +118,8 @@
                               <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/tecnico/Consolidaciones/Rechazado//<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Pendiente" ){ %>
                               <span class="badge badge-warning text-uppercase">Pendiente</span>
@@ -149,6 +151,8 @@
                               Toma de Muestras
                               <% } else if(allConso.consolidacion.quejas=="on" ){ %>
                               Quejas
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              Vivienda Saludable
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               Cronograma de Actividades
                               <% } %>

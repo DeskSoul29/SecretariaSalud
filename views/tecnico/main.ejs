@@ -189,6 +189,8 @@
                             <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado//<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
                           <td>
@@ -215,6 +217,8 @@
                             <% } else if(ListconsRech.consolidacion.quejas=="on" ){ %>
                             Quejas
                             <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
+                            Cronograma de Actividades
+                            <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
                             Cronograma de Actividades
                             <% } %>
                           </td>

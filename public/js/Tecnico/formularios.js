@@ -452,6 +452,23 @@ function vehiculosForm(e) {
   }
 }
 
+function VivSaludableForm(e) {
+  if (
+    document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
+    document.getElementById("vereda").value == 0 ||
+    document.getElementById("vivienda").value == "Seleccione" ||
+    document.getElementById("direccion").value == 0 ||
+    document.getElementById("fVisit").value == 0 ||
+    document.getElementById("myFile").files.length == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
+  }
+}
+
 function validConsolidacion(e) {
   if (document.getElementById("criterio").value == "Seleccione") {
     toast.toastInfo("Advertencia", "Seleccione un Criterio");

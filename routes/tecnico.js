@@ -17,6 +17,7 @@ import {
   inscribirEstablecimiento,
   configConsult,
   HVConsultOne,
+  LisViviendas,
   UpdRespTM,
   DownloadFileTM,
   ValConsolidaciones,
@@ -488,9 +489,11 @@ router.post(
 router.get(
   "/Consolidaciones/Enviar/ViviendaSaludable",
   isAuthenticatedTecnic,
+  LisViviendas,
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/vivienSalu", {
       user: req.user,
+      ListVivi: req.ListVivi,
       alert: undefined,
     });
   }
@@ -502,6 +505,7 @@ router.post(
   (req, res) => {
     res.render("tecnico/Visitas/Enviar/vivienSalu", {
       user: req.user,
+      ListVivi: false,
       alert: req.alert,
     });
   }

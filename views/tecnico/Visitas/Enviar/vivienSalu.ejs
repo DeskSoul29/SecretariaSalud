@@ -35,7 +35,7 @@
                     <h1 class="h4 text-gray-900 mb-4">VIVIENDA SALUDABLE</h1>
                   </div>
 
-                  <form onsubmit="antirrabicalAnimalForm(event)" action="/tecnico/Consolidaciones/Enviar/ViviendaSaludable/<%= user.user %>" method="POST" enctype="multipart/form-data">
+                  <form onsubmit="VivSaludableForm(event)" action="/tecnico/Consolidaciones/Enviar/ViviendaSaludable/<%= user.user %>" method="POST" enctype="multipart/form-data">
                     <input type="text" value="on" id="viviSaluON" name="viviSaluON" style="display: none;" readonly>
 
                     <div class="form-row align-items-center mb-sm-2">
@@ -79,27 +79,28 @@
                         <label class="mr-sm-2" for="direccion">Dirección</label>
                         <input type="text" class="form-control form-control-user" id="direccion" name="direccion" onkeyup="mayus(this);" readonly />
                       </div>
-                      <div class="col my-1"">
-                        <label class=" mr-sm-2" for="viviendaOld">Vivienda</label>
-                        <select id="viviendaOld" name="viviendaOld" class="custom-select mr-sm-2">
+                      <div class="col my-1">
+                        <label class=" mr-sm-2" for="vivienda">Vivienda</label>
+                        <select id="viviendaOld" name="vivienda" class="custom-select mr-sm-2">
                           <option selected disabled>Seleccione
                           </option>
-                          <option value="NUEVA VIVIENDA">NUEVA VIVIENDA</option>
                         </select>
                       </div>
-                      <div class="col my-1"">
+                      <div class="col my-1">
                         <label class=" mr-sm-2" for="viviendaNew">Vivienda Nueva</label>
-                        <input type="text" class="form-control form-control-user" id="viviendaNew" name="viviendaNew" onkeyup="mayus(this);" readonly />
+                        <a href="/tecnico/Consolidaciones/InsVivi" class="btn btn-primary btn-user btn-block">
+                          INSCRIBIR
+                        </a>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6">
-                        <label class="mr-sm-2" for="caninosUrbano">Nº de Visita</label>
-                        <input type="number" min="1" max="6" value="1" class="form-control form-control-user" id="caninosUrbano" name="caninosUrbano" />
+                        <label class="mr-sm-2" for="NVisit">Nº de Visita</label>
+                        <input type="number" min="1" max="6" value="1" class="form-control form-control-user" id="NVisit" name="NVisit" />
                       </div>
                       <div class="col-sm-6">
-                        <label class="mr-sm-2" for="caninosRural">Fecha Visita</label>
+                        <label class="mr-sm-2" for="fVisit">Fecha Visita</label>
                         <input type="date" class="form-control form-control-user" id="fVisit" name="fVisit" />
                       </div>
                     </div>
@@ -112,8 +113,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">101</label>
-                        <select id="101" name="101" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F101">101</label>
+                        <select id="F101" name="F101" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -121,8 +122,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">102</label>
-                        <select id="102" name="102" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F102">102</label>
+                        <select id="F102" name="F102" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -130,8 +131,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">103</label>
-                        <select id="103" name="103" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F103">103</label>
+                        <select id="F103" name="F103" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -139,8 +140,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">104</label>
-                        <select id="104" name="104" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F104">104</label>
+                        <select id="F104" name="F104" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -148,8 +149,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">105</label>
-                        <select id="105" name="105" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F105">105</label>
+                        <select id="F105" name="F105" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -157,7 +158,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final1">Final</label>
                         <select id="Final1" name="Final1" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -175,8 +176,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">201</label>
-                        <select id="201" name="201" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F201">201</label>
+                        <select id="F201" name="F201" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -184,8 +185,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">202</label>
-                        <select id="202" name="202" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F202">202</label>
+                        <select id="F202" name="F202" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -193,8 +194,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">203</label>
-                        <select id="203" name="203" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F203">203</label>
+                        <select id="F203" name="F203" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -202,8 +203,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">204</label>
-                        <select id="204" name="204" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F204">204</label>
+                        <select id="F204" name="F204" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -211,7 +212,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final2">Final</label>
                         <select id="Final2" name="Final2" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -229,8 +230,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">301</label>
-                        <select id="301" name="301" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F301">301</label>
+                        <select id="F301" name="F301" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -238,8 +239,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">302</label>
-                        <select id="302" name="302" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F302">302</label>
+                        <select id="F302" name="F302" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -247,8 +248,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">303</label>
-                        <select id="303" name="303" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F303">303</label>
+                        <select id="F303" name="F303" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -256,8 +257,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">304</label>
-                        <select id="304" name="304" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F304">304</label>
+                        <select id="F304" name="F304" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -265,8 +266,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">305</label>
-                        <select id="305" name="305" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F305">305</label>
+                        <select id="F305" name="F305" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -274,7 +275,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final3">Final</label>
                         <select id="Final3" name="Final3" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -292,8 +293,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">401</label>
-                        <select id="401" name="401" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F401">401</label>
+                        <select id="F401" name="F401" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -301,8 +302,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">402</label>
-                        <select id="402" name="402" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F402">402</label>
+                        <select id="F402" name="F402" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -310,8 +311,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">403</label>
-                        <select id="403" name="403" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F403">403</label>
+                        <select id="F403" name="F403" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -319,8 +320,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">404</label>
-                        <select id="404" name="404" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F404">404</label>
+                        <select id="F404" name="F404" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -328,7 +329,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final4">Final</label>
                         <select id="Final4" name="Final4" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -346,8 +347,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">501</label>
-                        <select id="501" name="501" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F501">501</label>
+                        <select id="F501" name="F501" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -355,8 +356,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">502</label>
-                        <select id="502" name="502" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F502">502</label>
+                        <select id="F502" name="F502" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -364,8 +365,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">503</label>
-                        <select id="503" name="503" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F503">503</label>
+                        <select id="F503" name="F503" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -373,8 +374,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">504</label>
-                        <select id="504" name="504" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F504">504</label>
+                        <select id="F504" name="F504" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -382,7 +383,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final5">Final</label>
                         <select id="Final5" name="Final5" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -400,8 +401,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">601</label>
-                        <select id="601" name="601" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F601">601</label>
+                        <select id="F601" name="F601" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -409,8 +410,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">602</label>
-                        <select id="602" name="602" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F602">602</label>
+                        <select id="F602" name="F602" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -418,8 +419,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">603</label>
-                        <select id="603" name="603" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F603">603</label>
+                        <select id="F603" name="F603" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -445,8 +446,8 @@
 
                     <div class="form-group row">
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">701</label>
-                        <select id="701" name="701" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F701">701</label>
+                        <select id="F701" name="F701" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -454,8 +455,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">702</label>
-                        <select id="702" name="702" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F702">702</label>
+                        <select id="F702" name="F702" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -463,8 +464,8 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">703</label>
-                        <select id="703" name="703" class="custom-select mr-sm-2">
+                        <label class="mr-sm-2" for="F703">703</label>
+                        <select id="F703" name="F703" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
                           <option>Verde</option>
@@ -472,7 +473,7 @@
                         </select>
                       </div>
                       <div class="col my-1">
-                        <label class="mr-sm-2" for="caninosUrbano">Final</label>
+                        <label class="mr-sm-2" for="Final7">Final</label>
                         <select id="Final7" name="Final7" class="custom-select mr-sm-2">
                           <option>Blanco</option>
                           <option>Rojo</option>
@@ -577,6 +578,15 @@
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+  <script type="text/JavaScript">
+    <% if(ListVivi){ %>
+          var arrayLisVivi = []
+          <% ListVivi.forEach((ListVivi)=> { %>
+            arrayLisVivi.push("<%= ListVivi.municipio %>", "<%= ListVivi.ForViviSaludable.vivienda %>", "<%= ListVivi.ForViviSaludable.direccion %>", "<%= ListVivi.ForViviSaludable.vereda %>")
+          <% }) %>
+      <% } %>
+  </script>
+
   <% if(typeof alert !="undefined" ) { %>
   <script type="text/JavaScript">
     Swal.fire({
@@ -602,16 +612,38 @@
       nav4.className += "  active";
     });
 
-    $("#viviendaOld").change(function() {
-      if (document.getElementById("viviendaOld").value == "NUEVA VIVIENDA") {
-        $("#viviendaNew").attr("readonly", false);
-        $("#direccion").attr("readonly", false);
-        $("#vereda").attr("readonly", false);
-      } else {
-        $("#viviendaNew").attr("readonly", true);
-        $("#direccion").attr("readonly", true);
-        $("#vereda").attr("readonly", true);
-        $("#viviendaOld").attr("readonly", true);
+    const muniSelect = document.getElementById("muniSelect")
+    const viviendaOld = document.getElementById("viviendaOld")
+    const direccion = document.getElementById("direccion")
+    const vereda = document.getElementById("vereda")
+
+    muniSelect.addEventListener("change", function() {
+      document.getElementById("viviendaNew").value = "";
+      direccion.value = "";
+      vereda.value = "";
+
+      for (let i = viviendaOld.options.length; i >= 1; i--) {
+        viviendaOld.remove(i);
+        viviendaOld.selectedIndex = "Seleccione";
+      }
+
+      for (var i = 0; i < arrayLisVivi.length; i++) {
+        if (arrayLisVivi[i] == muniSelect.value) {
+          const option = document.createElement("option");
+          const valor = arrayLisVivi[i + 1];
+          option.value = valor;
+          option.text = valor;
+          viviendaOld.add(option);
+        }
+      }
+    });
+
+    viviendaOld.addEventListener("change", function() {
+      for (var i = 0; i < arrayLisVivi.length; i++) {
+        if (arrayLisVivi[i] == viviendaOld.value && sum != viviendaOld.value) {
+          direccion.value = arrayLisVivi[i + 1];
+          vereda.value = arrayLisVivi[i + 2];
+        }
       }
     });
   </script>
