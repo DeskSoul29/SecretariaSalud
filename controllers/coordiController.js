@@ -631,6 +631,99 @@ var authCoordi = (function () {
       });
   };
 
+  var UpdateAllViviendaSaludable = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.viviSalu": "on",
+          status: "Enviado",
+          SendNovAd: "on",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/ViviendaSaludable"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllPermanenciaMunicipio = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.permMunicipio": "on",
+          status: "Enviado",
+          SendNovAd: "on",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/PermMunicipio"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  var UpdateAllAlertaSanitaria = async (req, next) => {
+    await consolidaciones
+      .updateMany(
+        {
+          "consolidacion.alertSani": "on",
+          status: "Enviado",
+          SendNovAd: "on",
+        },
+        {
+          $set: {
+            status: "Aceptado",
+          },
+        }
+      )
+      .then((result) => {
+        authCoordi.isUser(
+          req,
+          "Reportes Enviados",
+          "Consolidaciones Enviadas",
+          "success",
+          false,
+          800,
+          "/coordinacion/Consolidaciones/Ver/AlertaSanitaria"
+        );
+        return next();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return {
     isUser: isUser,
     DeleteFile: DeleteFile,
@@ -653,6 +746,9 @@ var authCoordi = (function () {
     UpdateAllQuejas: UpdateAllQuejas,
     UpdateAllCronograma: UpdateAllCronograma,
     UpdateAllNoveAdministrativas: UpdateAllNoveAdministrativas,
+    UpdateAllViviendaSaludable: UpdateAllViviendaSaludable,
+    UpdateAllPermanenciaMunicipio: UpdateAllPermanenciaMunicipio,
+    UpdateAllAlertaSanitaria: UpdateAllAlertaSanitaria,
   };
 })();
 
@@ -1092,6 +1188,7 @@ export const SeeCoorConsolidaciones = async (req, res, next) => {
   req.allConso = await consolidaciones
     .find({
       $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
+      SendNovAd: { $eq: "on" },
     })
     .sort({ createdAt: -1 });
   return next();
@@ -1151,6 +1248,12 @@ export const SendManyAcept = async (req, res, next) => {
       authCoordi.UpdateAllCronograma(req, next);
     } else if (req.params.tipCons == "noveadministrativa") {
       authCoordi.UpdateAllNoveAdministrativas(req, next);
+    } else if (req.params.tipCons == "ViviendaSaludable") {
+      authCoordi.UpdateAllViviendaSaludable(req, next);
+    } else if (req.params.tipCons == "PermanenciaMunicipio") {
+      authCoordi.UpdateAllPermanenciaMunicipio(req, next);
+    } else if (req.params.tipCons == "AlertaSanitaria") {
+      authCoordi.UpdateAllAlertaSanitaria(req, next);
     }
   }
 };

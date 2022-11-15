@@ -45,18 +45,23 @@
               <div class="table-responsive">
                 <div class="col">
                   <div class="row">
-                    <table border="0" cellspacing="5" cellpadding="5">
-                      <tbody>
-                        <tr>
-                          <td>Fecha Inicial:</td>
-                          <td><input type="text" id="min" name="min"></td>
-                        </tr>
-                        <tr>
-                          <td>Fecha Final:</td>
-                          <td><input type="text" id="max" name="max"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="col-xl-10">
+                      <table border="0" cellspacing="5" cellpadding="5">
+                        <tbody>
+                          <tr>
+                            <td>Fecha Inicial:</td>
+                            <td><input type="text" id="min" name="min"></td>
+                          </tr>
+                          <tr>
+                            <td>Fecha Final:</td>
+                            <td><input type="text" id="max" name="max"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-xl-2">
+                      <a href="/coordinacion/Consolidaciones/UpdateAcept/AlertaSanitaria" class="btn btn-primary btn-sm">Aceptar Consolidaciones</a>
+                    </div>
                   </div>
                 </div>
                 <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
@@ -69,6 +74,7 @@
                       <th>Descripción</th>
                       <th>Observaciones</th>
                       <th>Archivos</th>
+                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -80,6 +86,7 @@
                       <th><input type="text" placeholder="Busca por Descripción" /></th>
                       <th><input type="text" placeholder="Busca por Observaciones" /></th>
                       <th>Archivos</th>
+                      <th>Acción</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -118,6 +125,11 @@
                       <td>
                         <a href="/coordinacion/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                       </td>
+                      <td>
+                        <a type="button" onclick='modalsUsuarios.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
+                          <i class="fas fa-trash"></i>
+                        </a>
+                      </td>
                     </tr>
                     <% } %>
                     <% }); %>
@@ -146,6 +158,33 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
+
+    <!-- Delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">¡ATENCIÓN!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ¿Esta seguro de eliminar esta consolidación?
+            <br>
+            <b>RECUERDE QUE ESTA ACCIÓN ES IRREVERSIBLE</b>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <a id="formDeleteCons" class="btn btn-primary">
+              Eliminar
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -184,6 +223,9 @@
 
     <!-- Page level custom scripts -->
     <script src="/js/demo/datatables-demo.js"></script>
+
+    <!-- Validations -->
+    <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
 
     <!-- Excel -->
     <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>

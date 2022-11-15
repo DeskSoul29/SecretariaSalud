@@ -978,6 +978,18 @@ router.post(
   }
 );
 router.get(
+  "/HojaVida/ConsultarHV/View/:id",
+  isAuthenticatedTecnic,
+  HVConsultOne,
+  (req, res) => {
+    res.render("tecnico/HojaVida/ViewHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      alert: undefined,
+    });
+  }
+);
+router.get(
   "/HojaVida/ConsultarHV/Edit/:id",
   isAuthenticatedTecnic,
   HVConsultOne,

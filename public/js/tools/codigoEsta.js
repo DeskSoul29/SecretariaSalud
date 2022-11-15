@@ -30,11 +30,11 @@ if (grupEsta != null) {
   grupEsta.addEventListener("change", function () {
     var selectedOption = this.options[grupEsta.selectedIndex];
 
-    tipIdentificacion.value = "";
+    tipIdentificacion.value = "Seleccione";
     identificacion.value = "";
     direccion.value = "";
     representante.value = "";
-    estado.value = "";
+    estado.value = "Seleccione el Estado";
     razonSocial.selectedIndex = "Seleccione El Establecimiento";
     phone.value = "";
 

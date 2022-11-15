@@ -182,6 +182,9 @@ var authTec = (function () {
         alertSaniON,
         tipAlert,
         descripcion,
+        //Cronograma
+        cronograma,
+        mesCron,
         //Extra
         observacion,
       } = req.body;
@@ -211,10 +214,10 @@ var authTec = (function () {
           quejas: quejasON,
           viviSalu: viviSaluON,
           alertSani: alertSaniON,
-          cronograma: req.body.cronograma,
+          cronograma: cronograma,
           permMunicipio: permMunicipio,
         },
-        mesCron: req.body.mesCron,
+        mesCron: mesCron,
 
         hojavida: idHV,
         fvisit: fVisit,

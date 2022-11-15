@@ -80,6 +80,28 @@ router.post(
     });
   }
 );
+// Dashboad - Cronograma
+router.post(
+  "/Consolidaciones/Cronograma/:user",
+  isAuthenticatedProf,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("profesional/main", {
+      user: req.user,
+      consPend: false,
+      consEnv: false,
+      consCorre: false,
+      consAcep: false,
+      consRechProf: false,
+      allConso: false,
+      visitAcep: false,
+      vacunas: false,
+      settings: false,
+      moment: false,
+      alert: req.alert,
+    });
+  }
+);
 
 // Apartado: Usuarios
 router.get("/Cuentas/Usuarios", isAuthenticatedProf, users, (req, res) => {

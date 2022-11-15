@@ -2,19 +2,20 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var HojaVidaSchema = new Schema({
-  provincia: { type: String, required: true, max: 100 },
-  municipio: { type: String, required: true, max: 100 },
-  grupo: { type: String, required: true, max: 100 },
-  codigo: { type: Number, required: true, max: 100 },
-  tipo: { type: String, required: true, max: 100 },
-  nivelRiesgo: { type: String, required: true, max: 100 },
-  tipoIdentificacion: { type: String, required: true, max: 100 },
+  provincia: { type: String, required: true },
+  municipio: { type: String, required: true },
+  grupo: { type: String, required: true },
+  codigo: { type: Number, required: true },
+  tipo: { type: String, required: true },
+  nivelRiesgo: { type: String, required: true },
+  tipoIdentificacion: { type: String, required: true },
   identificacion: { type: Number, required: true },
   telefono: { type: Number, required: true },
-  razonSocial: { type: String, required: true, max: 100 },
-  direccion: { type: String, required: true, max: 100 },
-  repreLegal: { type: String, required: true, max: 100 },
-  estado: { type: String, required: true, max: 100 },
+  razonSocial: { type: String, required: true },
+  direccion: { type: String, required: true },
+  repreLegal: { type: String },
+  placa: { type: String },
+  estado: { type: String, required: true },
   createdAt: { type: Date },
 });
 

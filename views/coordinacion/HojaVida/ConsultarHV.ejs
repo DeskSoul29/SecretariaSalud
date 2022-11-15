@@ -204,6 +204,14 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
+    $("#grupEsta").change(function() {
+      if (document.getElementById("grupEsta").value == "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS") {
+        document.getElementById("placaDiv").removeAttribute("style")
+      } else {
+        document.getElementById("placaDiv").style.display = "none"
+      }
+    });
+
     var table = $("#dataTable").DataTable({
       order: [
         [1, 'desc']

@@ -50,6 +50,7 @@
                           <option>Informe Mensual</option>
                           <option>Cronograma de Actividades</option>
                           <option>Eventos en Salud Pública</option>
+                          <option>Vivienda Saludable</option>
                           <option>Establecimientos</option>
                           <option>Morgues</option>
                           <option>Cementerios</option>
@@ -63,6 +64,7 @@
                           <option>Educación Sanitaria</option>
                           <option>Listado De Carnetizados</option>
                           <option>Antirrabica Animal</option>
+                          <option>Alertas Sanitarias</option>
                           <option>Permanencia En Municipio</option>
                         </select>
                       </div>
@@ -133,10 +135,14 @@
                               <a href="/coordinacion/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/NoveAdministrativas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/Cronograma/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/PermMunicipio/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/AlertaSanitaria/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Aceptado"){ %>
                               <span class="badge badge-success text-uppercase">Aceptado</span>
@@ -164,10 +170,14 @@
                               Quejas
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               Informe Mensual
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              Cronograma de Actividades
                               <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
                               Vivienda Saludable
                               <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
                               Permanencia en Municipio
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              Alerta Sanitaria
                               <% } %>
                             </td>
                             <td>

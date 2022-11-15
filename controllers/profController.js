@@ -186,6 +186,9 @@ var authProf = (function () {
         motDevol,
         //PermanenciaMunicipio
         permMunicipio,
+        //Cronograma
+        cronograma,
+        mesCron,
         //Extra
         observacion,
       } = req.body;
@@ -203,8 +206,8 @@ var authProf = (function () {
         SendNovAdRes = "on";
       } else if (permMunicipio == "on") {
         SendNovAdRes = "on";
-        // } else if(cronograma == "on"){
-        //   SendNovAdRes = "on";
+      } else if (cronograma == "on") {
+        SendNovAdRes = "on";
       }
 
       new consolidaciones({
@@ -231,8 +234,11 @@ var authProf = (function () {
           quejas: quejasON,
           viviSalu: viviSaluON,
           noveadministrativa: noveadministrativa,
+          cronograma: cronograma,
           permMunicipio: permMunicipio,
         },
+        mesCron: mesCron,
+
         hojavida: idHV,
         fvisit: fVisit,
         score: score,

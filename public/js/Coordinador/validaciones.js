@@ -142,6 +142,15 @@ const modalsUsuarios = (function () {
         "/coordinacion/Consolidaciones/Ver/CronogramaMensual",
         "_self"
       );
+    } else if (consolidacion.value == "Alertas Sanitarias") {
+      window.open("/coordinacion/Consolidaciones/Ver/AlertaSanitaria", "_self");
+    } else if (consolidacion.value == "Vivienda Saludable") {
+      window.open(
+        "/coordinacion/Consolidaciones/Ver/ViviendaSaludable",
+        "_self"
+      );
+    } else if (consolidacion.value == "Permanencia En Municipio") {
+      window.open("/coordinacion/Consolidaciones/Ver/PermMunicipio", "_self");
     }
   };
 

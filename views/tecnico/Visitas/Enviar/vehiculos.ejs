@@ -159,7 +159,7 @@
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="placa">Placa</label>
-                        <input type="text" class="form-control form-control-user" id="placa" name="placa" onkeyup="mayus(this);" />
+                        <input type="text" class="form-control form-control-user" id="placa" name="placa" onkeyup="mayus(this);" readonly />
                       </div>
                       <div class="col-sm-2">
                         <label class="mr-sm-2" for="refriV">Refrigeración</label>
@@ -324,7 +324,7 @@
       <% if(hojavida){ %>
           var arrayEsta = []
           <% hojavida.forEach((hojavida)=> { %>
-              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"], ["<%= hojavida._id %>"])
+              arrayEsta.push(["<%= hojavida.provincia %>"], ["<%= hojavida.municipio %>"], ["<%= hojavida.tipo %>"], ["<%= hojavida.razonSocial %>"], ["<%= hojavida.tipoIdentificacion %>"], ["<%= hojavida.identificacion %>"], ["<%= hojavida.direccion %>"], ["<%= hojavida.repreLegal %>"], ["<%= hojavida.estado %>"], ["<%= hojavida.telefono %>"], ["<%= hojavida._id %>"], ["<%= hojavida.placa %>"])
           <% }) %>
       <% } %>
 
@@ -347,6 +347,14 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+    });
+
+    $("#grupEsta").change(function() {
+      if (document.getElementById("grupEsta").value == "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS") {
+        $("#placa").attr("readonly", true);
+      } else {
+        $("#placa").attr("readonly", false);
+      }
     });
   </script>
 </body>

@@ -131,7 +131,6 @@ function editUserForm(e) {
 function hvForm(e) {
   if (
     document.getElementById("estado").value == "Seleccione el Estado" ||
-    document.getElementById("rLegal").value == 0 ||
     document.getElementById("direccion").value == 0 ||
     document.getElementById("rSocial").value == 0 ||
     document.getElementById("phone").value == 0 ||
@@ -142,6 +141,20 @@ function hvForm(e) {
     document.getElementById("tIden").value == "Seleccione"
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("grupEsta").value ==
+      "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS" &&
+    document.getElementById("placa").value == ""
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar la placa del vehiculo");
+    e.preventDefault();
+  } else if (
+    document.getElementById("grupEsta").value !=
+      "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS" &&
+    document.getElementById("rLegal").value == ""
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar el Representante Legal");
     e.preventDefault();
   } else if (
     document.getElementById("user").value.length < 6 ||

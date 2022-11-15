@@ -1,6 +1,7 @@
 var municipio = document.getElementById("muniSelect");
 var tipEsta = document.getElementById("tipoEsta");
 const idHV = document.getElementById("idHV");
+const placa = document.getElementById("placa");
 
 //Si el tipo de establecimiento es cambiado entonces me elimine los campos anteriores
 tipEsta.addEventListener("change", function () {
@@ -93,6 +94,9 @@ razonSocial.addEventListener("change", function () {
         estado.value = arrayEsta[i + 7];
         phone.value = arrayEsta[i + 8];
         idHV.value = arrayEsta[i + 9];
+        if (placa != null) {
+          placa.value = arrayEsta[i + 10];
+        }
       }
     }
   }
