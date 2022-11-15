@@ -31,7 +31,6 @@ var authProf = (function () {
         process.env.JWT_SECRETO
       );
       var {
-        provincia,
         municipio,
         fVisit,
         score,
@@ -123,6 +122,47 @@ var authProf = (function () {
         zona,
         objEst,
         acompananteEmp,
+        //ViviendaSaludable
+        viviSaluON,
+        vereda,
+        direccion,
+        vivienda,
+        NVisit,
+        F101,
+        F102,
+        F103,
+        F104,
+        F105,
+        Final1,
+        F201,
+        F202,
+        F203,
+        F204,
+        Final2,
+        F301,
+        F302,
+        F303,
+        F304,
+        F305,
+        Final3,
+        F401,
+        F402,
+        F403,
+        F404,
+        Final4,
+        F501,
+        F502,
+        F503,
+        F504,
+        Final5,
+        F601,
+        F602,
+        F603,
+        Final6,
+        F701,
+        F702,
+        F703,
+        Final7,
         //Vehiculos
         vehiculosON,
         classVehi,
@@ -144,6 +184,8 @@ var authProf = (function () {
         numActas,
         nomActas,
         motDevol,
+        //PermanenciaMunicipio
+        permMunicipio,
         //Extra
         observacion,
       } = req.body;
@@ -154,13 +196,21 @@ var authProf = (function () {
         var idHV = req.body.idHV;
       }
 
+      var SendNovAdRes = "off";
       if (tomaMuestraON == "on") {
         Estado = "Pendiente";
+      } else if (viviSaluON == "on") {
+        SendNovAdRes = "on";
+      } else if (permMunicipio == "on") {
+        SendNovAdRes = "on";
+        // } else if(cronograma == "on"){
+        //   SendNovAdRes = "on";
       }
 
       new consolidaciones({
         status: Estado,
-        provincia: provincia,
+        SendNovAd: SendNovAdRes,
+        provincia: decodificada.provincia,
         municipio: municipio,
         responsable: {
           userResponsable: decodificada.user,
@@ -179,7 +229,9 @@ var authProf = (function () {
           vehiculos: vehiculosON,
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
+          viviSalu: viviSaluON,
           noveadministrativa: noveadministrativa,
+          permMunicipio: permMunicipio,
         },
         hojavida: idHV,
         fvisit: fVisit,
@@ -272,6 +324,47 @@ var authProf = (function () {
           objAnalisis: objEst,
           acompanante: acompananteEmp,
         },
+        ForViviSaludable: {
+          vereda: vereda,
+          direccion: direccion,
+          vivienda: vivienda,
+          NVisit: NVisit,
+          F101: F101,
+          F102: F102,
+          F103: F103,
+          F104: F104,
+          F105: F105,
+          Final1: Final1,
+          F201: F201,
+          F202: F202,
+          F203: F203,
+          F204: F204,
+          Final2: Final2,
+          F301: F301,
+          F302: F302,
+          F303: F303,
+          F304: F304,
+          F305: F305,
+          Final3: Final3,
+          F401: F401,
+          F402: F402,
+          F403: F403,
+          F404: F404,
+          Final4: Final4,
+          F501: F501,
+          F502: F502,
+          F503: F503,
+          F504: F504,
+          Final5: Final5,
+          F601: F601,
+          F602: F602,
+          F603: F603,
+          Final6: Final6,
+          F701: F701,
+          F702: F702,
+          F703: F703,
+          Final7: Final7,
+        },
         ForVehiculos: {
           claseVehiculo: classVehi,
           otraClase: otroV,
@@ -307,7 +400,7 @@ var authProf = (function () {
         .then((result) => {
           if (result) {
             if (noveadministrativa == "on") {
-              authProf.UpdateAceptAll(req, provincia, municipio);
+              authProf.UpdateAceptAll(req, decodificada.provincia, municipio);
             }
             authProf.isUser(
               req,
@@ -465,6 +558,47 @@ var authProf = (function () {
       zona,
       objEst,
       acompananteEmp,
+      //ViviendaSaludable
+      viviSaluON,
+      vereda,
+      direccion,
+      vivienda,
+      NVisit,
+      F101,
+      F102,
+      F103,
+      F104,
+      F105,
+      Final1,
+      F201,
+      F202,
+      F203,
+      F204,
+      Final2,
+      F301,
+      F302,
+      F303,
+      F304,
+      F305,
+      Final3,
+      F401,
+      F402,
+      F403,
+      F404,
+      Final4,
+      F501,
+      F502,
+      F503,
+      F504,
+      Final5,
+      F601,
+      F602,
+      F603,
+      Final6,
+      F701,
+      F702,
+      F703,
+      Final7,
       //Vehiculos
       vehiculosON,
       classVehi,
@@ -486,6 +620,8 @@ var authProf = (function () {
       numActas,
       nomActas,
       motDevol,
+      //PermanenciaMunicipio
+      permMunicipio,
       //Extra
       observacion,
     } = req.body;
@@ -503,8 +639,10 @@ var authProf = (function () {
     vehiculosON = vehiculosON == undefined ? "" : vehiculosON;
     tomaMuestraON = tomaMuestraON == undefined ? "" : tomaMuestraON;
     quejasON = quejasON == undefined ? "" : quejasON;
+    viviSaluON = viviSaluON == undefined ? "" : viviSaluON;
     noveadministrativa =
       noveadministrativa == undefined ? "" : noveadministrativa;
+    permMunicipio = permMunicipio == undefined ? "" : permMunicipio;
 
     var Ruta = await authProf.NextReport(req, decodificada);
 
@@ -536,7 +674,9 @@ var authProf = (function () {
             vehiculos: vehiculosON,
             tomaMuestra: tomaMuestraON,
             quejas: quejasON,
+            viviSalu: viviSaluON,
             noveadministrativa: noveadministrativa,
+            permMunicipio: permMunicipio,
           },
 
           ForRotulado: {
@@ -626,6 +766,47 @@ var authProf = (function () {
             nInscripcion: nInscrip,
             productosVehiculo: produTrans,
           },
+          ForViviSaludable: {
+            vereda: vereda,
+            direccion: direccion,
+            vivienda: vivienda,
+            NVisit: NVisit,
+            F101: F101,
+            F102: F102,
+            F103: F103,
+            F104: F104,
+            F105: F105,
+            Final1: Final1,
+            F201: F201,
+            F202: F202,
+            F203: F203,
+            F204: F204,
+            Final2: Final2,
+            F301: F301,
+            F302: F302,
+            F303: F303,
+            F304: F304,
+            F305: F305,
+            Final3: Final3,
+            F401: F401,
+            F402: F402,
+            F403: F403,
+            F404: F404,
+            Final4: Final4,
+            F501: F501,
+            F502: F502,
+            F503: F503,
+            F504: F504,
+            Final5: Final5,
+            F601: F601,
+            F602: F602,
+            F603: F603,
+            Final6: Final6,
+            F701: F701,
+            F702: F702,
+            F703: F703,
+            Final7: Final7,
+          },
           ForNAdmin: {
             mesNA: mesNA,
             entreInfor: entreInfor,
@@ -682,7 +863,10 @@ var authProf = (function () {
               var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.noveadministrativa == "on") {
               var tipoRuta = "NoveAdministrativas/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.permMunicipio == "on") {
+              var tipoRuta = "PermMunicipio/" + Ruta[0]._id;
             }
+
             authProf.isUser(
               req,
               "Conexión exitosa",
@@ -751,9 +935,20 @@ var authProf = (function () {
 
   var UpdateConsoli = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
+
+    var SendNovAdRes = "off";
+    if (
+      (tipCon == "Cronograma" && criterio == "Enviado") ||
+      (tipCon == "Alerta Sanitaria" && criterio == "Enviado") ||
+      (tipCon == "Permanencia En Municipio" && criterio == "Enviado")
+    ) {
+      SendNovAdRes = "on";
+    }
+
     await consolidaciones
       .findByIdAndUpdate(req.params._id, {
         $set: {
+          SendNovAd: SendNovAdRes,
           status: criterio,
           reporte: {
             motivo: motivo,
@@ -811,6 +1006,14 @@ var authProf = (function () {
             var rutaValidar =
               "/profesional/Consolidaciones/Validar/Cronograma/" +
               nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.viviSalu == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/ViviendaSaludable/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.permMunicipio == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/PermMunicipio/" +
+              nextCons[0]._id;
           }
           authProf.isUser(
             req,
@@ -828,11 +1031,22 @@ var authProf = (function () {
 
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
+
+    var SendNovAdRes = "off";
+    if (
+      (tipCon == "Cronograma" && criterio == "Enviado") ||
+      (tipCon == "Alerta Sanitaria" && criterio == "Enviado") ||
+      (tipCon == "Permanencia En Municipio" && criterio == "Enviado")
+    ) {
+      SendNovAdRes = "on";
+    }
+
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
         {
           $set: {
+            SendNovAd: SendNovAdRes,
             status: criterio,
             "reporte.motivo": motivo,
           },
@@ -890,6 +1104,14 @@ var authProf = (function () {
             var rutaValidar =
               "/profesional/Consolidaciones/Correccion/Cronograma/" +
               nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.viviSalu == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/ViviendaSaludable/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.permMunicipio == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Correccion/PermMunicipio/" +
+              nextCons[0]._id;
           }
           authProf.isUser(
             req,
@@ -927,6 +1149,9 @@ var authProf = (function () {
           $eq: "Pendiente",
         },
         "consolidacion.tomaMuestra": {
+          $ne: "on",
+        },
+        "consolidacion.vivienda": {
           $ne: "on",
         },
         _id: {
@@ -1003,6 +1228,9 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
           $eq: decodificada.provincia,
         },
         "consolidacion.tomaMuestra": {
+          $ne: "on",
+        },
+        "consolidacion.vivienda": {
           $ne: "on",
         },
         status: { $eq: "Pendiente" },
@@ -1439,7 +1667,7 @@ export const SeeProfConsolidaciones = async (req, res, next) => {
           $eq: decodificada.provincia,
         },
       })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .then((result) => {
         hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
           req.allConso = hv;

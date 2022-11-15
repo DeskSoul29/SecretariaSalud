@@ -104,6 +104,14 @@
                               <a href="/coordinacion/Consolidaciones/Validar/Quejas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/NoveAdministrativas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/PermMunicipio/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/CronogramaMensual/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/AlertaSanitaria/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } %>
                             </td>
                             <td>
@@ -128,6 +136,14 @@
                               Quejas
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               Informe Mensual
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              Vivienda Saludable
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              Permanencia en Municipio
+                              <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                              Cronograma de Actividades
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              Alerta Sanitaria
                               <% } %>
                             </td>
                             <td>

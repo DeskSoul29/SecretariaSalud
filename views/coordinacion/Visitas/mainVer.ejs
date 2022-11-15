@@ -63,6 +63,7 @@
                           <option>Educación Sanitaria</option>
                           <option>Listado De Carnetizados</option>
                           <option>Antirrabica Animal</option>
+                          <option>Permanencia En Municipio</option>
                         </select>
                       </div>
                       <div class="card-footer text-muted">
@@ -133,7 +134,9 @@
                               <% } else if(allConso.consolidacion.noveadministrativa=="on" ){ %>
                               <a href="/coordinacion/Consolidaciones/Validar/NoveAdministrativas/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
-                              <a href="/coordinacion/Consolidaciones/Validar//<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <a href="/coordinacion/Consolidaciones/Validar/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              <a href="/coordinacion/Consolidaciones/Validar/PermMunicipio/<%= allConso._id %>"><span class="badge badge-info text-uppercase">Enviado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Aceptado"){ %>
                               <span class="badge badge-success text-uppercase">Aceptado</span>
@@ -163,6 +166,8 @@
                               Informe Mensual
                               <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
                               Vivienda Saludable
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              Permanencia en Municipio
                               <% } %>
                             </td>
                             <td>

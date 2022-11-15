@@ -17,6 +17,7 @@ import {
   inscribirEstablecimiento,
   configConsult,
   HVConsultOne,
+  InsVivienda,
   LisViviendas,
   UpdRespTM,
   DownloadFileTM,
@@ -56,6 +57,30 @@ router.get(
 // Dashboad - Cronograma
 router.post(
   "/Consolidaciones/Cronograma/:user",
+  isAuthenticatedTecnic,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("tecnico/main", {
+      user: req.user,
+      consPend: false,
+      consCorre: false,
+      consEnv: false,
+      consAcep: false,
+      ListconsRech: false,
+      visitAcep: false,
+      vacunasExtra1: false,
+      vacunasExtra2: false,
+      vacunasExtra3: false,
+      vacunas: false,
+      settings: false,
+      moment: false,
+      alert: req.alert,
+    });
+  }
+);
+// Dashboad - Permanencia En Municipio
+router.post(
+  "/Consolidaciones/PermMunicipio/:user",
   isAuthenticatedTecnic,
   SendConsolidacion,
   (req, res) => {
@@ -219,6 +244,47 @@ router.get(
   SeeTecConsolidaciones,
   (req, res) => {
     res.render("tecnico/Visitas/Ver/tomamuestras", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/AlertaSanitaria",
+  isAuthenticatedTecnic,
+  SeeTecConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/alertSani", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/ViviendaSaludable",
+  isAuthenticatedTecnic,
+  SeeTecConsolidaciones,
+  LisViviendas,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/vivienSalu", {
+      user: req.user,
+      allConso: req.allConso,
+      ListVivi: req.ListVivi,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/PermMunicipio",
+  isAuthenticatedTecnic,
+  SeeTecConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Ver/perMuni", {
       user: req.user,
       allConso: req.allConso,
       moment: moment,
@@ -510,6 +576,44 @@ router.post(
     });
   }
 );
+router.get("/Consolidaciones/InsVivi", isAuthenticatedTecnic, (req, res) => {
+  res.render("tecnico/Visitas/Enviar/insVivi", {
+    user: req.user,
+    alert: undefined,
+  });
+});
+router.post(
+  "/Consolidaciones/InsVivi",
+  isAuthenticatedTecnic,
+  InsVivienda,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/insVivi", {
+      user: req.user,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Enviar/AlertaSanitaria",
+  isAuthenticatedTecnic,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/alertSani", {
+      user: req.user,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/AlertaSanitaria/:user",
+  isAuthenticatedTecnic,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("tecnico/Visitas/Enviar/alertSani", {
+      user: req.user,
+      alert: req.alert,
+    });
+  }
+);
 
 //Consolidaciones - Rechazos
 router.get(
@@ -748,6 +852,87 @@ router.post(
   EditConsolidacionRech,
   (req, res) => {
     res.render("tecnico/Visitas/Rechazado/quejas", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/ViviendaSaludable/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/ViviendaSaludable/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/AlertaSanitaria/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/alertSani", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/AlertaSanitaria/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/alertSani", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/PermMunicipio/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/PermMunicipio/:_id",
+  isAuthenticatedTecnic,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("tecnico/Visitas/Rechazado/perMuni", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,

@@ -469,6 +469,31 @@ function VivSaludableForm(e) {
   }
 }
 
+function alertSaniForm(e) {
+  if (
+    document.getElementById("tipAlert").value == 0 ||
+    document.getElementById("myFile").files.length == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
+  }
+}
+
+function InsVivForm(e) {
+  if (
+    document.getElementById("muniSelect").value == "Seleccione el Municipio" ||
+    document.getElementById("vereda").value == 0 ||
+    document.getElementById("vivienda").value == 0 ||
+    document.getElementById("direccion").value == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  }
+}
+
 function validConsolidacion(e) {
   if (document.getElementById("criterio").value == "Seleccione") {
     toast.toastInfo("Advertencia", "Seleccione un Criterio");
@@ -490,9 +515,22 @@ function validConsolidacion(e) {
 function UploadCronograma(e) {
   if (
     document.getElementById("mesCron").value == "Seleccione" ||
-    document.getElementById("myFile").files.length == 0
+    document.getElementById("myFileCron").files.length == 0
   ) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
+  }
+}
+
+function UploadPermanencia(e) {
+  if (document.getElementById("myFile").files.length == 0) {
+    toast.toastInfo("Advertencia", "Debe subir un documento");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }
@@ -500,6 +538,9 @@ function UploadCronograma(e) {
 function UploadResultTM(e) {
   if (document.getElementById("myFile").files.length == 0) {
     toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
     e.preventDefault();
   }
 }

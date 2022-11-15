@@ -11,7 +11,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -35,7 +35,7 @@
                     <h1 class="h4 text-gray-900 mb-4">VIVIENDA SALUDABLE</h1>
                   </div>
 
-                  <form onsubmit="VivSaludableForm(event)" action="/tecnico/Consolidaciones/Enviar/ViviendaSaludable/<%= user.user %>" method="POST" enctype="multipart/form-data">
+                  <form onsubmit="VivSaludableForm(event)" action="/profesional/Consolidaciones/Enviar/ViviendaSaludable/<%= user.user %>" method="POST" enctype="multipart/form-data">
                     <input type="text" value="on" id="viviSaluON" name="viviSaluON" style="display: none;" readonly>
 
                     <div class="form-row align-items-center mb-sm-2">
@@ -51,20 +51,12 @@
                           <option value="<%= user.municipio %>">
                             <%= user.municipio %>
                           </option>
-                          <% if(user.municipioExtra1 !="" ){ %>
-                          <option value="<%= user.municipioExtra1 %>">
-                            <%= user.municipioExtra1 %>
+                          <% if(fields){ %>
+                          <% fields.forEach((fields)=> { %>
+                          <option value="<%= fields.municipio %>">
+                            <%= fields.municipio %>
                           </option>
-                          <% } %>
-                          <% if(user.municipioExtra2 !="" ){ %>
-                          <option value="<%= user.municipioExtra2 %>">
-                            <%= user.municipioExtra2 %>
-                          </option>
-                          <% } %>
-                          <% if(user.municipioExtra3 !="" ){ %>
-                          <option value="<%= user.municipioExtra3 %>">
-                            <%= user.municipioExtra3 %>
-                          </option>
+                          <% }); %>
                           <% } %>
                         </select>
                       </div>
@@ -88,7 +80,7 @@
                       </div>
                       <div class="col my-1">
                         <label class=" mr-sm-2">Vivienda Nueva</label>
-                        <a href="/tecnico/Consolidaciones/InsVivi" class="btn btn-primary btn-user btn-block">
+                        <a href="/profesional/Consolidaciones/InsVivi" class="btn btn-primary btn-user btn-block">
                           INSCRIBIR
                         </a>
                       </div>
@@ -508,7 +500,7 @@
                     <button class="btn btn-primary btn-user btn-block" type="submit">
                       Registrar Consolidación
                     </button>
-                    <a href="/tecnico/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
+                    <a href="/profesional/Consolidaciones/Enviar" class="btn btn-secondary btn-user btn-block">
                       Cancelar
                     </a>
 
@@ -555,7 +547,7 @@
           finalizar su sesión actual.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -605,7 +597,7 @@
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
+      var nav3 = document.getElementById('collapseTwo');
       var nav4 = document.getElementById('show2');
       nav.className += "  active";
       nav3.className += "  show";

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <%- include('../../../tools/head'); %>
+  <!-- Custom styles for this page -->
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include('../../../tools/sidebarTec'); %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <%- include('../../../tools/topbar'); %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- DataTales -->
+          <div class="card shadow mb-4">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Vivienda Saludable
+                </li>
+              </ol>
+            </nav>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <div class="col">
+                  <div class="row">
+                    <table border="0" cellspacing="5" cellpadding="5">
+                      <tbody>
+                        <tr>
+                          <td>Fecha Inicial:</td>
+                          <td><input type="text" id="min" name="min"></td>
+                        </tr>
+                        <tr>
+                          <td>Fecha Final:</td>
+                          <td><input type="text" id="max" name="max"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                  <thead>
+                    <tr>
+                      <th rowspan="2">Estado</th>
+                      <th rowspan="2">Fecha_Enviado</th>
+                      <th rowspan="2">Provincia</th>
+                      <th rowspan="2">Municipio</th>
+                      <th rowspan="2">Vereda/Localidad</th>
+                      <th rowspan="2">Dirección</th>
+                      <th rowspan="2">Vivienda</th>
+                      <th colspan="2">VISITA DOMICILIARIA</th>
+                      <th colspan="6">VIVIENDA COMO ESPACIO VITAL</th>
+                      <th colspan="5">SORBOS DE VIDA-AGUA PARA CONSUMIR EN LA VIVIENDA</th>
+                      <th colspan="6">LAS EXCRETAS Y LAS AGUAS SUCIAS ANDAN POR AHÍ</th>
+                      <th colspan="5">LOS RESIDUOS SOLIDOS (BASURA EN LA VIVIENDA)</th>
+                      <th colspan="5">OJO CON LAS PLAGAS</th>
+                      <th colspan="4">ALIMENTOS Y VIVIENDA CON HIGIENE Y SALUD</th>
+                      <th colspan="4">DINAMICA FAMILIAR</th>
+                      <th rowspan="2">Observaciones</th>
+                      <th rowspan="2">Archivos</th>
+                    </tr>
+                    <tr>
+                      <th>Nº De Visita</th>
+                      <th>Fecha Visita</th>
+
+                      <th>101</th>
+                      <th>102</th>
+                      <th>103</th>
+                      <th>104</th>
+                      <th>105</th>
+                      <th>Final</th>
+                      <th>201</th>
+                      <th>202</th>
+                      <th>203</th>
+                      <th>204</th>
+                      <th>Final</th>
+                      <th>301</th>
+                      <th>302</th>
+                      <th>303</th>
+                      <th>304</th>
+                      <th>305</th>
+                      <th>Final</th>
+                      <th>401</th>
+                      <th>402</th>
+                      <th>403</th>
+                      <th>404</th>
+                      <th>Final</th>
+                      <th>501</th>
+                      <th>502</th>
+                      <th>503</th>
+                      <th>504</th>
+                      <th>Final</th>
+                      <th>601</th>
+                      <th>602</th>
+                      <th>603</th>
+                      <th>Final</th>
+                      <th>701</th>
+                      <th>702</th>
+                      <th>703</th>
+                      <th>Final</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Estado</th>
+                      <th>Fecha_Enviado</th>
+                      <th>Provincia</th>
+                      <th>Municipio</th>
+                      <th>Vereda/Localidad</th>
+                      <th>Dirección</th>
+                      <th>Vivienda</th>
+                      <th>Nº De Visita</th>
+                      <th>Fecha Visita</th>
+
+                      <th>101</th>
+                      <th>102</th>
+                      <th>103</th>
+                      <th>104</th>
+                      <th>105</th>
+                      <th>Final</th>
+                      <th>201</th>
+                      <th>202</th>
+                      <th>203</th>
+                      <th>204</th>
+                      <th>Final</th>
+                      <th>301</th>
+                      <th>302</th>
+                      <th>303</th>
+                      <th>304</th>
+                      <th>305</th>
+                      <th>Final</th>
+                      <th>401</th>
+                      <th>402</th>
+                      <th>403</th>
+                      <th>404</th>
+                      <th>Final</th>
+                      <th>501</th>
+                      <th>502</th>
+                      <th>503</th>
+                      <th>504</th>
+                      <th>Final</th>
+                      <th>601</th>
+                      <th>602</th>
+                      <th>603</th>
+                      <th>Final</th>
+                      <th>701</th>
+                      <th>702</th>
+                      <th>703</th>
+                      <th>Final</th>
+                      <th>Observaciones</th>
+                      <th>Archivos</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <% if (ListVivi){ %>
+                    <% ListVivi.forEach((ListVivi)=> { %>
+                    <% allConso.forEach((allConso)=> { %>
+                    <% if (allConso.consolidacion.viviSalu == "on" && ListVivi.ForVivienda.viviendaViv == allConso.ForViviSaludable.vivienda && ListVivi.municipio == allConso.municipio){ %>
+                    <tr>
+                      <td>
+                        <% if(allConso.status == "Pendiente"){ %>
+                        <span class="badge badge-warning text-uppercase">Pendiente</span>
+                        <% }else if(allConso.status == "Rechazado"){ %>
+                        <a href="/tecnico/Consolidaciones/Rechazado/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                        <% }else if(allConso.status=="Corregido" ){ %>
+                        <span class="badge badge-primary text-uppercase">Corregido</span>
+                        <% }else if(allConso.status == "Enviado"){ %>
+                        <span class="badge badge-info text-uppercase">Enviado</span>
+                        <% }else if(allConso.status == "Aceptado"){ %>
+                        <span class="badge badge-success text-uppercase">Aceptado</span>
+                        <% } %>
+                      </td>
+                      <td>
+                        <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                      </td>
+                      <td>
+                        <%= allConso.provincia %>
+                      </td>
+                      <td>
+                        <%= allConso.municipio %>
+                      </td>
+                      <td>
+                        <%= allConso.ForViviSaludable.vereda %>
+                      </td>
+                      <td>
+                        <%= allConso.ForViviSaludable.direccion %>
+                      </td>
+                      <td>
+                        <%= allConso.ForViviSaludable.vivienda %>
+                      </td>
+                      <td>
+                        <%= allConso.ForViviSaludable.NVisit %>
+                      </td>
+                      <td>
+                        <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F101 == "Blanco"){ %><td><%}%>
+                        <% if(allConso.ForViviSaludable.F101 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F101 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F101 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F101 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F102 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.F102 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F102 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F102 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F102 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F103 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.F103 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F103 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F103 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F103 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F104 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.F104 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F104 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F104 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F104 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F105 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.F105 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F105 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F105 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F105 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final1 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.Final1 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.Final1 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.Final1 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final1 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F201 == "Blanco"){ %>
+                      <td><%}%>
+                        <% if(allConso.ForViviSaludable.F201 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                          <% if(allConso.ForViviSaludable.F201 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                            <% if(allConso.ForViviSaludable.F201 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F201 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F202 == "Blanco"){ %>
+                      <td><%}%>
+                          <% if(allConso.ForViviSaludable.F202 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                            <% if(allConso.ForViviSaludable.F202 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                              <% if(allConso.ForViviSaludable.F202 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F202 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F203 == "Blanco"){ %>
+                      <td><%}%>
+                          <% if(allConso.ForViviSaludable.F203 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                            <% if(allConso.ForViviSaludable.F203 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                              <% if(allConso.ForViviSaludable.F203 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F203 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F204 == "Blanco"){ %>
+                      <td><%}%>
+                          <% if(allConso.ForViviSaludable.F204 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                            <% if(allConso.ForViviSaludable.F204 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                              <% if(allConso.ForViviSaludable.F204 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F204 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final2 == "Blanco"){ %>
+                      <td><%}%>
+                          <% if(allConso.ForViviSaludable.Final2 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                            <% if(allConso.ForViviSaludable.Final2 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                              <% if(allConso.ForViviSaludable.Final2 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final2 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F301 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F301 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F301 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F301 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F301 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F302 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F302 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F302 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F302 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F302 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F303 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F303 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F303 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F303 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F303 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F304 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F304 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F304 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F304 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F304 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F305 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F305 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F305 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F305 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F305 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final3 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.Final3 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.Final3 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.Final3 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final3 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F401 == "Blanco"){ %>
+                      <td><%}%>
+                            <% if(allConso.ForViviSaludable.F401 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                              <% if(allConso.ForViviSaludable.F401 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                <% if(allConso.ForViviSaludable.F401 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F401 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F402 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.F402 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.F402 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.F402 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F402 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F403 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.F403 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.F403 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.F403 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F403 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F404 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.F404 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.F404 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.F404 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F404 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final4 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.Final4 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.Final4 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.Final4 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final4 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F501 == "Blanco"){ %>
+                      <td><%}%>
+                              <% if(allConso.ForViviSaludable.F501 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                <% if(allConso.ForViviSaludable.F501 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                  <% if(allConso.ForViviSaludable.F501 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F501 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F502 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F502 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F502 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F502 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F502 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F503 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F503 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F503 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F503 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F503 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F504 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F504 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F504 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F504 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F504 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final5 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.Final5 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.Final5 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.Final5 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final5 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F601 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F601 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F601 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F601 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F601 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F602 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F602 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F602 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F602 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F602 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F603 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F603 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F603 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F603 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F603 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final6 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.Final6 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.Final6 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.Final6 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final6 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F701 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F701 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F701 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F701 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F701 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F702 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F702 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F702 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F702 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F702 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.F703 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.F703 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.F703 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.F703 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.F703 %>
+                      </td>
+                      <% if(allConso.ForViviSaludable.Final7 == "Blanco"){ %>
+                      <td><%}%>
+                                <% if(allConso.ForViviSaludable.Final7 == "Rojo"){ %>
+                      <td bgcolor="red"><%}%>
+                                  <% if(allConso.ForViviSaludable.Final7 == "Verde"){ %>
+                      <td bgcolor="green"><%}%>
+                                    <% if(allConso.ForViviSaludable.Final7 == "Amarillo"){ %>
+                      <td bgcolor="yellow"><%}%>
+                        <%= allConso.ForViviSaludable.Final7 %>
+                      </td>
+                      <td>
+                        <%= allConso.observaciones %>
+                      </td>
+                      <td>
+                        <a href="/tecnico/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                      </td>
+                    </tr>
+                    <% } %>
+                    <% }); %>
+                    <% }); %>
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <%- include('../../../tools/footer'); %>
+        <!-- End of Footer -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Seleccione "Cerrar
+            sesión" a continuación si está listo para
+            finalizar su sesión actual.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="/js/demo/datatables-demo.js"></script>
+
+    <!-- Excel -->
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
+    <!-- Search Advanced -->
+    <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
+    <script>
+      $(window).bind('load', function() {
+        var nav = document.getElementById('nav2');
+        $('#navlink1').removeClass('collapsed');
+        var nav3 = document.getElementById('collapseOne');
+        var nav4 = document.getElementById('show1');
+        nav.className += "  active";
+        nav3.className += "  show";
+        nav4.className += "  active";
+      });
+      $('#dataTable tfoot th').each(function() {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+      var table = $('#dataTable').DataTable({
+        "ordering": false,
+        scrollY: true,
+        scrollX: true,
+        scrollCollapse: true,
+        language: {
+          search: "Buscar:",
+          info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+          zeroRecords: "Sin Datos en esta Tabla",
+          infoFiltered: " - filtrado desde _MAX_ entradas",
+          lengthMenu: "Mostrando _MENU_ entradas",
+          paginate: {
+            previous: "Anterior",
+            next: "Siguiente",
+          },
+        },
+        dom: 'Bfrtlip',
+        buttons: [{
+          extend: 'excel',
+          filename: 'VIVIENDA-SALUDABLE_' + new Date().toJSON().substring(0, 10),
+          autoFilter: true,
+          sheetName: 'VIVIENDA SALUDABLE',
+        }],
+      });
+      table.columns().every(function() {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function() {
+          that
+            .search(this.value)
+            .draw();
+        });
+      });
+
+      var minDate, maxDate;
+
+      $.fn.dataTable.ext.search.push(
+        function(settings, data, dataIndex) {
+          var min = minDate.val();
+          var max = maxDate.val();
+          var date = new Date(data[1]);
+
+          if (
+            (min === null && max === null) ||
+            (min === null && date <= max) ||
+            (min <= date && max === null) ||
+            (min <= date && date <= max)
+          ) {
+            return true;
+          }
+          return false;
+        }
+      );
+
+      $(document).ready(function() {
+        minDate = new DateTime($('#min'), {
+          format: 'YYYY-MM-DD'
+        });
+        maxDate = new DateTime($('#max'), {
+          format: 'YYYY-MM-DD'
+        });
+
+        $('#min, #max').on('change', function() {
+          table.draw();
+        });
+      });
+    </script>
+</body>
+
+</html>

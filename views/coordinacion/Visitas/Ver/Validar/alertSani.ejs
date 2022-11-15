@@ -32,7 +32,7 @@
                       <a href="/coordinacion/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/coordinacion/Consolidaciones/Ver/CronogramaMensual">Cronogramas de Actividades</a>
+                      <a href="/coordinacion/Consolidaciones/Ver/AlertaSanitaria">Alerta Sanitaria</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Validar
@@ -42,11 +42,11 @@
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">CRONOGRAMA DE ACTIVIDADES</h1>
+                    <h1 class="h4 text-gray-900 mb-4">ALERTA SANITARIA</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/CronogramaMensual/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <input type="text" value="Cronograma" id="tipCon" name="tipCon" style="display: none;" readonly>
+                  <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/AlertaSanitaria/<%= consolidacion._id %>" method="POST">
+                    <input type="text" value="Alerta Sanitaria" id="tipCon" name="tipCon" style="display: none;" readonly>
 
                     <div class="form-row align-items-center mb-sm-2">
                       <div class="col my-1">
@@ -59,14 +59,25 @@
                       </div>
                     </div>
 
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="tipAlert">Tipo de Alerta</label>
+                        <input type="text" class="form-control form-control-user" id="tipAlert" name="tipAlert" value="<%= consolidacion.ForAlertSani.tipAlert %>" readonly />
                       </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="mesCron">Mes</label>
-                        <input type="text" class="form-control form-control-user" id="mesCron" name="mesCron" value="<%= consolidacion.mesCron %>" readonly>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="descripcion">Descripción
+                          (Opcional)</label>
+                        <textarea name="descripcion" id="descripcion" rows="2" class="form-control form-control-user" readonly><%= consolidacion.ForAlertSani.descripcionAlert %></textarea>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="observacion">Observaciones</label>
+                        <textarea name="observacion" id="observacion" class="form-control form-control-user" readonly><%= consolidacion.observaciones %></textarea>
                       </div>
                     </div>
 
@@ -91,7 +102,7 @@
                       </div>
                       <div class="col-sm-9" id="divMotivo" style="display: none">
                         <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+                        <textarea name="motivo" id="motivo" maxlength="270" rows="2" onkeyup="mayus(this);" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
                       </div>
                     </div>
 
@@ -156,8 +167,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
+  <script type="text/javascript" src="/js/Coordinador/validaciones.js"></script>
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
   <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
 
   <!-- Alert -->

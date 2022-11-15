@@ -59,6 +59,8 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Enviar/Quejas", "_self");
     } else if (consolidacion.value == "Vivienda Saludable") {
       window.open("/tecnico/Consolidaciones/Enviar/ViviendaSaludable", "_self");
+    } else if (consolidacion.value == "Alertas Sanitarias") {
+      window.open("/tecnico/Consolidaciones/Enviar/AlertaSanitaria", "_self");
     }
   };
 
@@ -96,6 +98,12 @@ const modalsEstablecimientos = (function () {
       window.open("/tecnico/Consolidaciones/Ver/AntirrabicaAnimal", "_self");
     } else if (consolidacion.value == "Cronograma de Actividades") {
       window.open("/tecnico/Consolidaciones/Ver/CronogramaMensual", "_self");
+    } else if (consolidacion.value == "Vivienda Saludable") {
+      window.open("/tecnico/Consolidaciones/Ver/ViviendaSaludable", "_self");
+    } else if (consolidacion.value == "Permanencia En Municipio") {
+      window.open("/tecnico/Consolidaciones/Ver/PermMunicipio", "_self");
+    } else if (consolidacion.value == "Alertas Sanitarias") {
+      window.open("/tecnico/Consolidaciones/Ver/AlertaSanitaria", "_self");
     }
   };
 

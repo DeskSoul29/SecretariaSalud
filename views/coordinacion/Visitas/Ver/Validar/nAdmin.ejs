@@ -63,52 +63,64 @@
                     </div>
 
                     <div class="row" style="text-align: center !important;">
-                      <div class="col-sm-6">
+                      <div class="col-sm-12">
                         <label class="mr-sm-12">CONSOLIDADO INFORME MENSUAL</label>
                       </div>
-                      <div class="col-sm-6">
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-12">
+                        <label class="mr-sm-2" for="entreInfor">Si/No</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreInfor %>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
                         <label class="mr-sm-12">ENTREGA DE CRONOGRAMA DE ACTIVIDADES</label>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <div class="col-sm-6">
-                        <label class="mr-sm-2" for="entreInfor">Si/No</label>
-                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreInfor %>" readonly>
-                      </div>
-                      <div class="col-sm-3">
                         <label class="mr-sm-2" for="entreCrono">Si/No</label>
                         <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreCrono %>" readonly>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="fechCrono">Fecha de Entrega</label>
                         <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.ForNAdmin.fechCrono,'YYYY/MM/DD').add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
                       </div>
                     </div>
 
                     <div class="row" style="text-align: center !important;">
-                      <div class="col-sm-6">
+                      <div class="col-sm-12">
                         <label class="mr-sm-12">CONTROL DE ASISTENCIA AL MUNICIPIO</label>
                       </div>
+                    </div>
+
+                    <div class="form-group row">
                       <div class="col-sm-6">
+                        <label class="mr-sm-2" for="entreAsis">Si/No</label>
+                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreAsis %>" readonly>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="fechAsis">Fecha de Entrega</label>
+                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.ForNAdmin.fechAsis,'YYYY/MM/DD').add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
+                      </div>
+                    </div>
+
+                    <div class="row" style="text-align: center !important;">
+                      <div class="col-sm-12">
                         <label class="mr-sm-12">CUMPLIMIENTO DE CIRCULARES</label>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="entreAsis">Si/No</label>
-                        <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreAsis %>" readonly>
-                      </div>
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="fechAsis">Fecha de Entrega</label>
-                        <input type="text" class="form-control form-control-user" value="<%= moment(consolidacion.ForNAdmin.fechAsis,'YYYY/MM/DD').add(1, 'days').format('DD-MM-YYYY'); %>" readonly />
-                      </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="entreCircu">Si/No</label>
                         <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.entreCircu %>" readonly>
                       </div>
-                      <div class="col-sm-3">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="NumCir">N° de Circular</label>
                         <input type="text" class="form-control form-control-user" value="<%= consolidacion.ForNAdmin.NumCir %>" readonly>
                       </div>

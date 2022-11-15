@@ -25,6 +25,8 @@ import {
   configConsult,
   HVConsultOne,
   UpdRespTM,
+  LisViviendas,
+  InsVivienda,
   DownloadFileTM,
   inscribirEstablecimiento,
   ValConsolidaciones,
@@ -53,6 +55,28 @@ router.get(
       vacunas: req.vacunas,
       settings: req.settings,
       moment: moment,
+    });
+  }
+);
+// Dashboad - Permanencia En Municipio
+router.post(
+  "/Consolidaciones/PermMunicipio/:user",
+  isAuthenticatedProf,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("profesional/main", {
+      user: req.user,
+      consPend: false,
+      consEnv: false,
+      consCorre: false,
+      consAcep: false,
+      consRechProf: false,
+      allConso: false,
+      visitAcep: false,
+      vacunas: false,
+      settings: false,
+      moment: false,
+      alert: req.alert,
     });
   }
 );
@@ -233,6 +257,57 @@ router.post(
       hojavida: null,
       alert: req.alert,
       fields: false,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Enviar/ViviendaSaludable",
+  isAuthenticatedProf,
+  LisViviendas,
+  fillMunicipio,
+  (req, res) => {
+    res.render("profesional/Visitas/Enviar/vivienSalu", {
+      user: req.user,
+      fields: req.localidades,
+      ListVivi: req.ListVivi,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Enviar/ViviendaSaludable/:user",
+  isAuthenticatedProf,
+  SendConsolidacion,
+  (req, res) => {
+    res.render("profesional/Visitas/Enviar/vivienSalu", {
+      user: req.user,
+      alert: req.alert,
+      fields: false,
+      ListVivi: false,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/InsVivi",
+  isAuthenticatedProf,
+  fillMunicipio,
+  (req, res) => {
+    res.render("profesional/Visitas/Enviar/insVivi", {
+      user: req.user,
+      fields: req.localidades,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/InsVivi",
+  isAuthenticatedProf,
+  InsVivienda,
+  (req, res) => {
+    res.render("profesional/Visitas/Enviar/insVivi", {
+      user: req.user,
+      fields: false,
+      alert: req.alert,
     });
   }
 );
@@ -666,6 +741,60 @@ router.post(
     });
   }
 );
+router.get(
+  "/Consolidaciones/Rechazado/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
 // Consolidaciones - Consultar
 router.get(
   "/Consolidaciones/Ver",
@@ -888,6 +1017,44 @@ router.get(
   }
 );
 router.get(
+  "/Consolidaciones/Ver/ViviendaSaludable",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  LisViviendas,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/vivienSalu", {
+      user: req.user,
+      allConso: req.allConso,
+      ListVivi: req.ListVivi,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/AlertaSanitaria",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/alertSani", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Ver/PermMunicipio",
+  isAuthenticatedProf,
+  SeeProfConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/perMuni", {
+      user: req.user,
+      allConso: req.allConso,
+      moment: moment,
+    });
+  }
+);
+router.get(
   "/Consolidaciones/Ver/NoveAdministrativa",
   isAuthenticatedProf,
   SeeProfConsolidaciones,
@@ -921,6 +1088,87 @@ router.post(
   SendReport,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Validar/establecimientos", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/AlertaSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/alertSani", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/AlertaSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/alertSani", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Validar/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      moment: moment,
+      alert: undefined,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Validar/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  SendReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Validar/perMuni", {
       user: req.user,
       consolidacion: req.consolidacion,
       moment: moment,
@@ -1328,6 +1576,87 @@ router.post(
   EditReport,
   (req, res) => {
     res.render("profesional/Visitas/Ver/Correccion/antirrabica", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Correccion/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Correccion/ViviendaSaludable/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/vivienSalu", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Correccion/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Correccion/PermMunicipio/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/perMuni", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Correccion/AlertaSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/alertSani", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Correccion/AlertaSanitaria/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditReport,
+  (req, res) => {
+    res.render("profesional/Visitas/Ver/Correccion/alertSani", {
       user: req.user,
       consolidacion: req.consolidacion,
       alert: req.alert,

@@ -63,7 +63,6 @@ var authCoordi = (function () {
 
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo } = req.body;
-
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
@@ -129,6 +128,10 @@ var authCoordi = (function () {
           } else if (nextCons[0].consolidacion.cronograma == "on") {
             var rutaValidar =
               "/coordinacion/Consolidaciones/Validar/CronogramaMensual/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.viviSalu == "on") {
+            var rutaValidar =
+              "/coordinacion/Consolidaciones/Validar/ViviendaSaludable/" +
               nextCons[0]._id;
           }
           authCoordi.isUser(

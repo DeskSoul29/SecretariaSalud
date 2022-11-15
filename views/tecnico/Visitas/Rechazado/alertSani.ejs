@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -31,7 +32,7 @@
                       <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver/EventosSaludPublica">Eventos En Salud Publica</a>
+                      <a href="/tecnico/Consolidaciones/Ver/AlertaSanitaria">Alerta Sanitaria</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Corregir
@@ -41,11 +42,11 @@
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">EVENTOS EN SALUD PUBLICA</h1>
+                    <h1 class="h4 text-gray-900 mb-4">ALERTA SANITARIA</h1>
                   </div>
 
-                  <form onsubmit="eventSalud(event)" action="/tecnico/Consolidaciones/Rechazado/EventosSaludPublica/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
-                    <input type="text" value="on" id="EvenSaludPubliON" name="EvenSaludPubliON" style="display: none;" readonly>
+                  <form onsubmit="alertSaniForm(event)" action="/tecnico/Consolidaciones/Rechazado/AlertaSanitaria/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
+                    <input type="text" value="on" id="alertSaniON" name="alertSaniON" style="display: none;" readonly>
 
                     <div class="form-group row">
                       <div class="col-sm-3">
@@ -61,94 +62,18 @@
                     <!-- Divider -->
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="mes">Mes</label>
-                        <input type="text" class="form-control form-control-user" name="mes" value="<%= consolidacion.ForEvenSPublica.mes %>" readonly>
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="muniSelect">Municipio</label>
-                        <input type="text" class="form-control form-control-user" id="muniSelect" name="municipio" value="<%= consolidacion.municipio %>" readonly>
-                      </div>
-                    </div>
-
-                    <div class="row" style="text-align: center !important;">
+                    <div class="form-group row">
                       <div class="col-sm-12">
-                        <label class="mr-sm-12">ETAS</label>
+                        <label class="mr-sm-2" for="tipAlert">Tipo de Alerta</label>
+                        <input type="text" class="form-control form-control-user" id="tipAlert" name="tipAlert" onkeyup="mayus(this);" value="<%= consolidacion.ForAlertSani.tipAlert %>" />
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="etasPresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentEtas %>" min="0" class="form-control form-control-user" id="etasPresent" name="etasPresent" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="etasAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendEtas %>" min="0" class="form-control form-control-user" id="etasAtend" name="etasAtend" />
-                      </div>
-                    </div>
-
-                    <div class="row" style="text-align: center !important;">
                       <div class="col-sm-12">
-                        <label class="mr-sm-12">INTOXICACIONES POR
-                          SUSTANCIAS QUIMICAS</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="intoxPresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentIntox %>" min="0" class="form-control form-control-user" id="intoxPresent" name="intoxPresent" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="intoxAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendIntox %>" min="0" class="form-control form-control-user" id="intoxAtend" name="intoxAtend" />
-                      </div>
-                    </div>
-
-                    <div class="row" style="text-align: center !important;">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-12">AGRESIONES</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="agrePresent">Presentadas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.presentAgre %>" min="0" class="form-control form-control-user" id="agrePresent" name="agrePresent" />
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="agreAtend">Atendidas</label>
-                        <input type="number" value="<%= consolidacion.ForEvenSPublica.atendAgre %>" min="0" class="form-control form-control-user" id="agreAtend" name="agreAtend" />
-                      </div>
-                    </div>
-
-                    <div class="row" style="text-align: center !important;">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-12">PARTICIPACIÓN EN
-                          COVE</label>
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="trueFalse">Si o No</label>
-                        <select id="trueFalse" name="trueFalse" class="custom-select mr-sm-2">
-                          <option selected disabled>
-                            Seleccione
-                          </option>
-                          <option value="SI">SI</option>
-                          <option value="NO">NO</option>
-                        </select>
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="fReunion">Fecha de Reunion</label>
-                        <input type="date" class="form-control form-control-user" id="fReunion" name="fReunion" value="<%= moment(consolidacion.ForEvenSPublica.coveFech).add(1, 'days').format('YYYY-MM-DD'); %>" readonly />
+                        <label class="mr-sm-2" for="descripcion">Descripción
+                          (Opcional)</label>
+                        <textarea name="descripcion" id="descripcion" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.ForAlertSani.descripcionAlert %></textarea>
                       </div>
                     </div>
 
@@ -161,14 +86,12 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2">Archivos Adjuntos</label>
                         <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
                       </div>
-                    </div>
 
-                    <div class="form-group row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="fields">Adjuntar
                           Archivo(s) Nuevos</label>
                         <div class="drop-zone">
@@ -222,7 +145,7 @@
           <button class="btn btn-secondary" type="button" data-dismiss="modal">
             Cancelar
           </button>
-          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
+          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -239,8 +162,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -269,25 +192,7 @@
       nav3.className += "  show";
       nav4.className += "  active";
     });
-
-    document.getElementById("trueFalse").value = "<%= consolidacion.ForEvenSPublica.covePart %>"
-
-    if ("<%= consolidacion.ForEvenSPublica.covePart %>" == "SI") {
-      $("#fReunion").attr("readonly", false);
-    } else {
-      $("#fReunion").attr("readonly", true);
-    }
-
-    $("#trueFalse").change(function() {
-      if (document.getElementById("trueFalse").value == "SI") {
-        $("#fReunion").attr("readonly", false);
-      } else {
-        document.getElementById("fReunion").value = "dd/mm/aaaa"
-        $("#fReunion").attr("readonly", true);
-      }
-    });
   </script>
-
 </body>
 
 </html>

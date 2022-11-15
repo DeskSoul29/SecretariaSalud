@@ -190,7 +190,11 @@
                             <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
                             <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
-                            <a href="/tecnico/Consolidaciones/Rechazado//<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <a href="/tecnico/Consolidaciones/Rechazado/ViviendaSaludable/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.permMunicipio=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/PermMunicipio/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                            <% } else if(ListconsRech.consolidacion.alertSani=="on" ){ %>
+                            <a href="/tecnico/Consolidaciones/Rechazado/AlertaSanitaria/<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                             <% } %>
                           </td>
                           <td>
@@ -219,7 +223,11 @@
                             <% } else if(ListconsRech.consolidacion.cronograma=="on" ){ %>
                             Cronograma de Actividades
                             <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
-                            Cronograma de Actividades
+                            Vivienda Saludable
+                            <% } else if(ListconsRech.consolidacion.permMunicipio=="on" ){ %>
+                            Permanencia en Municipio
+                            <% } else if(ListconsRech.consolidacion.alertSani=="on" ){ %>
+                            Alerta Sanitaria
                             <% } %>
                           </td>
                           <td>
@@ -237,6 +245,9 @@
 
             <!-- Listado de Herramientas Extras -->
             <div class="col-xl-3">
+              <div class="card shadow mb-2">
+                <a type="button" data-target="#permMuniModal" data-toggle="modal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class=" fas fa-file fa-sm text-white-50"></i> Permanencia En Municipio</a>
+              </div>
               <ul class="list-group">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   Total Visitas
@@ -339,7 +350,43 @@
     </div>
   </div>
 
-  <!-- Cronograma Modal-->
+  <!-- Permanencia En municipio - Modal -->
+  <div class="modal fade" id="permMuniModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">PERMANENCIA EN MUNICIPIO</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form onsubmit="UploadPermanencia(event)" method="POST" action="/tecnico/Consolidaciones/PermMunicipio/<%= user.user %>" enctype="multipart/form-data">
+          <input type="text" value="on" id="permMunicipio" name="permMunicipio" style="display: none;" readonly>
+
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="mr-sm-2" for="fields">Adjuntar
+                Archivo(s)</label>
+              <div class="drop-zone">
+                <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Cancelar
+            </button>
+            <button class="btn btn-primary " type="submit">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cronograma - Modal-->
   <div class="modal fade" id="cronoModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -378,7 +425,7 @@
                 Archivo(s)</label>
               <div class="drop-zone">
                 <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
-                <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                <input type="file" name="myFile" id="myFileCron" class="drop-zone__input" />
               </div>
             </div>
             <b>*RECUERDE QUE ESTA ACCIÓN ES UNICA EN EL MES*</b>

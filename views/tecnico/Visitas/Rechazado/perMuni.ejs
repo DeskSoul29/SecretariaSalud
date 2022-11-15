@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-  <%- include('../../../../tools/head'); %>
+  <%- include('../../../tools/head'); %>
   <link rel="stylesheet" href="/css/dropzone.css">
 </head>
 
@@ -10,7 +10,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../../tools/sidebarAdmin'); %>
+    <%- include('../../../tools/sidebarTec'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -18,7 +18,7 @@
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <%- include('../../../../tools/topbar'); %>
+        <%- include('../../../tools/topbar'); %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -29,51 +29,33 @@
                 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                      <a href="/coordinacion/Consolidaciones/Ver">Consolidaciones</a>
+                      <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/coordinacion/Consolidaciones/Ver/CronogramaMensual">Cronogramas de Actividades</a>
+                      <a href="/tecnico/Consolidaciones/Ver/PermMunicipio">Permanencia En Municipio</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                      Validar
+                      Corregir
                     </li>
                   </ol>
                 </nav>
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">CRONOGRAMA DE ACTIVIDADES</h1>
+                    <h1 class="h4 text-gray-900 mb-4">PERMANENCIA EN MUNICIPIO</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/coordinacion/Consolidaciones/Validar/CronogramaMensual/<%= consolidacion._id %>" method="POST" autocomplete="off">
-                    <input type="text" value="Cronograma" id="tipCon" name="tipCon" style="display: none;" readonly>
-
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Identificación Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="userTec" name="userTec" value="<%= consolidacion.responsable.userResponsable %>" readonly />
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2">Nombre Responsable</label>
-                        <input type="text" class="form-control form-control-user" id="nameTec" name="nameTec" value="<%= consolidacion.responsable.nombreResponsable %>" readonly />
-                      </div>
-                    </div>
-
-                    <div class="form-row align-items-center mb-sm-2">
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="provinciaID">Provincia</label>
-                        <input type="text" class="form-control form-control-user" id="provinciaID" name="provincia" value="<%= user.provincia %>" readonly>
-                      </div>
-                      <div class="col my-1">
-                        <label class="mr-sm-2" for="mesCron">Mes</label>
-                        <input type="text" class="form-control form-control-user" id="mesCron" name="mesCron" value="<%= consolidacion.mesCron %>" readonly>
-                      </div>
-                    </div>
+                  <form onsubmit="UploadPermanencia(event)" action="/tecnico/Consolidaciones/Rechazado/PermMunicipio/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
+                    <input type="text" value="on" id="permMunicipio" name="permMunicipio" style="display: none;" readonly>
 
                     <div class="form-group row">
-                      <div class="col-sm-12">
-                        <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/coordinacion/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      <div class="col-sm-3">
+                        <label class="mr-sm-2" for="criterio">Criterio</label>
+                        <input type="text" class="form-control form-control-user" value="Rechazado" readonly>
+                      </div>
+                      <div class="col-sm-9" id="divMotivo">
+                        <label class="mr-sm-2" for="motivo">Motivo</label>
+                        <textarea maxlength="270" rows="2" name="motivo" id="motivo" class="form-control form-control-user" readonly><%= consolidacion.reporte.motivo %></textarea>
                       </div>
                     </div>
 
@@ -81,22 +63,23 @@
                     <hr class="sidebar-divider" style="border-top: 1px solid rgb(0 0 0)" />
 
                     <div class="form-group row">
-                      <div class="col-sm-3">
-                        <label class="mr-sm-2" for="criterio">Criterio</label>
-                        <select id="criterio" name="criterio" class="custom-select mr-sm-2">
-                          <option selected disabled>Seleccione</option>
-                          <option value="Aceptado">Aceptable</option>
-                          <option value="Rechazado">Rechazar</option>
-                        </select>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2">Archivos Adjuntos</label>
+                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
                       </div>
-                      <div class="col-sm-9" id="divMotivo" style="display: none">
-                        <label class="mr-sm-2" for="motivo">Motivo</label>
-                        <textarea name="motivo" id="motivo" onkeyup="mayus(this);" maxlength="270" rows="2" class="form-control form-control-user" onkeyup="mayus(this);" placeholder="Escribe el motivo por el que rechazas la consolidación"></textarea>
+
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Archivo(s) Nuevos</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
                       </div>
                     </div>
 
                     <button class="btn btn-primary btn-user btn-block" type="submit">
-                      Enviar Reporte
+                      Enviar Corrección
                     </button>
                   </form>
                 </div>
@@ -109,7 +92,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include('../../../../tools/footer'); %>
+      <%- include('../../../tools/footer'); %>
       <!-- End of Footer -->
     </div>
     <!-- End of Content Wrapper -->
@@ -139,7 +122,7 @@
           <button class="btn btn-secondary" type="button" data-dismiss="modal">
             Cancelar
           </button>
-          <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
+          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -156,9 +139,8 @@
   <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Validations -->
+  <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
   <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/validaciones.js"></script>
-  <script type="text/JavaScript" src="/js/Profesional/formularios.js"></script>
 
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -178,11 +160,11 @@
   <% } %>
 
   <script>
-    $(window).bind("load", function() {
-      var nav = document.getElementById("nav2");
-      $("#navlink1").removeClass("collapsed");
-      var nav3 = document.getElementById("collapseTwo");
-      var nav4 = document.getElementById("show1");
+    $(window).bind('load', function() {
+      var nav = document.getElementById('nav2');
+      $('#navlink1').removeClass('collapsed');
+      var nav3 = document.getElementById('collapseOne');
+      var nav4 = document.getElementById('show1');
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";

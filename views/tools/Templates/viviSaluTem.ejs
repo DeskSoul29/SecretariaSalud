@@ -1,0 +1,247 @@
+<div class="form-row align-items-center mb-sm-2">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="provinciaID">Provincia</label>
+    <input type="text" class="form-control form-control-user" value="<%= consolidacion.provincia %>" readonly>
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="muniSelect">Municipio</label>
+    <input id="municipio" name="municipio" type="text" class="form-control form-control-user" value="<%= consolidacion.municipio %>" readonly>
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="vereda">Vereda/Localidad</label>
+    <input type="text" class="form-control form-control-user" id="vereda" name="vereda" value="<%= consolidacion.ForViviSaludable.vereda %>" readonly>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="direccion">Dirección</label>
+    <input type="text" class="form-control form-control-user" id="direccion" name="direccion" value="<%= consolidacion.ForViviSaludable.direccion %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class=" mr-sm-2" for="vivienda">Vivienda</label>
+    <input id="vivienda" name="vivienda" class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.vivienda %>" readonly />
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-6">
+    <label class="mr-sm-2" for="NVisit">Nº de Visita</label>
+    <input type="number" value="<%= consolidacion.ForViviSaludable.NVisit %>" readonly class="form-control form-control-user" />
+  </div>
+  <div class="col-sm-6">
+    <label class="mr-sm-2" for="fVisit">Fecha Visita</label>
+    <input type="date" name="fVisit" class="form-control form-control-user" value="<%= moment(consolidacion.fvisit).add(1, 'days').format('YYYY-MM-DD'); %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">VIVIENDA COMO ESPACIO VITAL</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F101">101</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F101 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F102">102</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F102 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F103">103</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F103 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F104">104</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F104 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F105">105</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F105 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final1">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final1 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">SORBOS DE VIDA - AGUA PARA CONSUMIR EN LA VIVIENDA</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F201">201</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F201 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F202">202</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F202 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F203">203</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F203 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F204">204</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F204 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final2">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final2 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">LAS EXCRETAS Y LAS AGUAS SUCIAS ANDAN POR AHÍ</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F301">301</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F301 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F302">302</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F302 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F303">303</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F303 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F304">304</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F304 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F305">305</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F305 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final3">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final3 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">LOS RESIDUOS SOLIDOS (BASURA EN LA VIVIENDA)</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F401">401</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F401 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F402">402</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F402 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F403">403</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F403 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F404">404</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F404 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final4">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final4 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">OJO CON LAS PLAGAS</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F501">501</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F501 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F502">502</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F502 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F503">503</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F503 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F504">504</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F504 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final5">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final5 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">ALIMENTOS Y VIVIENDA CON HIGIENE Y SALUD</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F601">601</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F601 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F602">602</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F602 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F603">603</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F603 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="caninosUrbano">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final6 %>" readonly />
+  </div>
+</div>
+
+<div class="row" style="text-align: center !important;">
+  <div class="col-sm-12">
+    <label class="mr-sm-12">DINAMICA FAMILIAR</label>
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F701">701</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F701 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F702">702</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F702 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="F703">703</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.F703 %>" readonly />
+  </div>
+  <div class="col my-1">
+    <label class="mr-sm-2" for="Final7">Final</label>
+    <input class="form-control form-control-user" value="<%= consolidacion.ForViviSaludable.Final7 %>" readonly />
+  </div>
+</div>
+
+<div class="form-group row">
+  <div class="col-sm-12">
+    <label class="mr-sm-2" for="observacion">Observaciones
+      (Opcional)</label>
+    <textarea readonly maxlength="270" rows="2" class="form-control form-control-user"><%= consolidacion.observaciones %></textarea>
+  </div>
+</div>

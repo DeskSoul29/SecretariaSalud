@@ -78,6 +78,11 @@ const modalsEstablecimientos = (function () {
         "/profesional/Consolidaciones/Enviar/NoveAdministrativa",
         "_self"
       );
+    } else if (consolidacion.value == "Vivienda Saludable") {
+      window.open(
+        "/profesional/Consolidaciones/Enviar/ViviendaSaludable",
+        "_self"
+      );
     }
   };
 
@@ -132,6 +137,15 @@ const modalsEstablecimientos = (function () {
         "/profesional/Consolidaciones/Ver/CronogramaMensual",
         "_self"
       );
+    } else if (consolidacion.value == "Vivienda Saludable") {
+      window.open(
+        "/profesional/Consolidaciones/Ver/ViviendaSaludable",
+        "_self"
+      );
+    } else if (consolidacion.value == "Permanencia en Municipio") {
+      window.open("/profesional/Consolidaciones/Ver/PermMunicipio", "_self");
+    } else if (consolidacion.value == "Alertas Sanitarias") {
+      window.open("/profesional/Consolidaciones/Ver/AlertaSanitaria", "_self");
     }
   };
 

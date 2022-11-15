@@ -50,6 +50,7 @@
                           <option selected disabled>Seleccione la Consolidación
                           </option>
                           <option>Eventos en Salud Pública</option>
+                          <option>Vivienda Saludable</option>
                           <option>Establecimientos</option>
                           <option>Morgues</option>
                           <option>Cementerios</option>
@@ -63,6 +64,8 @@
                           <option>Educación Sanitaria</option>
                           <option>Listado De Carnetizados</option>
                           <option>Antirrabica Animal</option>
+                          <option>Alertas Sanitarias</option>
+                          <option>Permanencia En Municipio</option>
                           <option>Cronograma de Actividades</option>
                         </select>
                       </div>
@@ -118,8 +121,12 @@
                               <a href="/tecnico/Consolidaciones/Rechazado/Quejas/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               <a href="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
-                              <% } else if(ListconsRech.consolidacion.viviSalu=="on" ){ %>
-                              <a href="/tecnico/Consolidaciones/Rechazado//<%= ListconsRech._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(allConso.consolidacion.viviSalu=="on" ){ %>
+                              <a href="/tecnico/Consolidaciones/Rechazado/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              <a href="/tecnico/Consolidaciones/Rechazado/PermMunicipio/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              <a href="/tecnico/Consolidaciones/Rechazado/AlertaSanitaria/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                               <% } %>
                               <% }else if(allConso.status=="Pendiente" ){ %>
                               <span class="badge badge-warning text-uppercase">Pendiente</span>
@@ -155,6 +162,10 @@
                               Vivienda Saludable
                               <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
                               Cronograma de Actividades
+                              <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
+                              Permanencia en Municipio
+                              <% } else if(allConso.consolidacion.alertSani=="on" ){ %>
+                              Alerta Sanitaria
                               <% } %>
                             </td>
                             <td>

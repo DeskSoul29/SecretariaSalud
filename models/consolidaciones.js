@@ -5,14 +5,14 @@ var EstablecimientosSchema = new Schema({
   status: { type: String, default: "Pendiente" },
   SendNovAd: { type: String, default: "off" },
 
-  provincia: { type: String, required: true, max: 100 },
-  municipio: { type: String, max: 100 },
+  provincia: { type: String, required: true },
+  municipio: { type: String },
 
   hojavida: { type: Schema.ObjectId, ref: "hojavidas" },
 
   responsable: {
     userResponsable: { type: Number, required: true },
-    nombreResponsable: { type: String, required: true, max: 200 },
+    nombreResponsable: { type: String, required: true },
   },
 
   consolidacion: {
@@ -30,7 +30,10 @@ var EstablecimientosSchema = new Schema({
     quejas: String,
     noveadministrativa: String,
     viviSalu: String,
+    vivienda: String,
+    alertSani: String,
     cronograma: String,
+    permMunicipio: String,
   },
 
   fvisit: Date,
@@ -159,6 +162,13 @@ var EstablecimientosSchema = new Schema({
     productosVehiculo: String,
   },
 
+  //Alerta Sanitaria
+  ForAlertSani: {
+    tipAlert: String,
+    descripcionAlert: String,
+  },
+
+  //Vivienda Saludable
   ForViviSaludable: {
     vereda: String,
     direccion: String,
@@ -214,6 +224,13 @@ var EstablecimientosSchema = new Schema({
     numActas: Number,
     nomActas: String,
     motDevol: String,
+  },
+
+  //Vivienda
+  ForVivienda: {
+    veredaViv: String,
+    direccionViv: String,
+    viviendaViv: String,
   },
 
   // Evidencias

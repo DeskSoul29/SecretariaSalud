@@ -131,8 +131,7 @@ var authTec = (function () {
         viviSaluON,
         vereda,
         direccion,
-        viviendaOld,
-        viviendaNew,
+        vivienda,
         NVisit,
         F101,
         F102,
@@ -177,6 +176,12 @@ var authTec = (function () {
         refriV,
         nInscrip,
         produTrans,
+        //PermanenciaMunicipio
+        permMunicipio,
+        //AlertaSanitaria
+        alertSaniON,
+        tipAlert,
+        descripcion,
         //Extra
         observacion,
       } = req.body;
@@ -205,7 +210,9 @@ var authTec = (function () {
           tomaMuestra: tomaMuestraON,
           quejas: quejasON,
           viviSalu: viviSaluON,
+          alertSani: alertSaniON,
           cronograma: req.body.cronograma,
+          permMunicipio: permMunicipio,
         },
         mesCron: req.body.mesCron,
 
@@ -300,10 +307,14 @@ var authTec = (function () {
           objAnalisis: objEst,
           acompanante: acompananteEmp,
         },
+        ForAlertSani: {
+          tipAlert: tipAlert,
+          descripcionAlert: descripcion,
+        },
         ForViviSaludable: {
           vereda: vereda,
           direccion: direccion,
-          vivienda: viviendaOld + viviendaNew,
+          vivienda: vivienda,
           NVisit: NVisit,
           F101: F101,
           F102: F102,
@@ -485,8 +496,7 @@ var authTec = (function () {
       viviSaluON,
       vereda,
       direccion,
-      viviendaOld,
-      viviendaNew,
+      vivienda,
       NVisit,
       F101,
       F102,
@@ -533,6 +543,12 @@ var authTec = (function () {
       produTrans,
       //Cronograma
       mesCron,
+      //PermanenciaMunicipio
+      permMunicipio,
+      //AlertaSanitaria
+      alertSaniON,
+      tipAlert,
+      descripcion,
       //Extra
       cronograma,
       observacion,
@@ -553,6 +569,8 @@ var authTec = (function () {
     quejasON = quejasON == undefined ? "" : quejasON;
     viviSaluON = viviSaluON == undefined ? "" : viviSaluON;
     cronograma = cronograma == undefined ? "" : cronograma;
+    permMunicipio = permMunicipio == undefined ? "" : permMunicipio;
+    alertSaniON = alertSaniON == undefined ? "" : alertSaniON;
 
     var Ruta = await authTec.NextReport(req, decodificada);
 
@@ -586,7 +604,9 @@ var authTec = (function () {
             tomaMuestra: tomaMuestraON,
             quejas: quejasON,
             viviSalu: viviSaluON,
+            alertSani: alertSaniON,
             cronograma: cronograma,
+            permMunicipio: permMunicipio,
           },
 
           ForRotulado: {
@@ -676,10 +696,14 @@ var authTec = (function () {
             nInscripcion: nInscrip,
             productosVehiculo: produTrans,
           },
+          ForAlertSani: {
+            tipAlert: tipAlert,
+            descripcionAlert: descripcion,
+          },
           ForViviSaludable: {
             vereda: vereda,
             direccion: direccion,
-            vivienda: viviendaOld + viviendaNew,
+            vivienda: vivienda,
             NVisit: NVisit,
             F101: F101,
             F102: F102,
@@ -762,7 +786,12 @@ var authTec = (function () {
               var tipoRuta = "ViviendaSaludable/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.cronograma == "on") {
               var tipoRuta = "Cronograma/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.permMunicipio == "on") {
+              var tipoRuta = "PermMunicipio/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.alertSani == "on") {
+              var tipoRuta = "AlertaSanitaria/" + Ruta[0]._id;
             }
+
             authTec.isUser(
               req,
               "Conexión exitosa",
@@ -839,6 +868,9 @@ export const ConsolidaEstados = async (req, res, next) => {
       .find({
         "responsable.userResponsable": {
           $eq: decodificada.user,
+        },
+        "consolidacion.vivienda": {
+          $ne: "on",
         },
         status: {
           $eq: "Pendiente",
@@ -1174,7 +1206,7 @@ export const SeeTecConsolidaciones = async (req, res, next) => {
         "responsable.userResponsable": {
           $eq: decodificada.user,
         },
-        "consolidaciones.noveadministrativa": {
+        "consolidacion.vivienda": {
           $ne: "on",
         },
       })

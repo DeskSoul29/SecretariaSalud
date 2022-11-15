@@ -433,7 +433,7 @@ export const LisViviendas = async (req, res, next) => {
   try {
     await consolidaciones
       .find({
-        "consolidacion.viviSalu": {
+        "consolidacion.vivienda": {
           $eq: "on",
         },
       })
@@ -450,7 +450,74 @@ export const LisViviendas = async (req, res, next) => {
     return next();
   }
 };
+//Inscribir Vivienda
+export const InsVivienda = async (req, res, next) => {
+  const decodificada = await promisify(jwt.verify)(
+    req.cookies.jwt,
+    process.env.JWT_SECRETO
+  );
+  var { municipio, vereda, direccion, vivienda, viviendaON } = req.body;
+  var validar = await consolidaciones.find({
+    municipio: municipio,
+    "consolidacion.vivienda": "on",
+    "ForVivienda.viviendaViv": vivienda,
+  });
 
+  if (validar.length == 0) {
+    new consolidaciones({
+      provincia: decodificada.provincia,
+      municipio: municipio,
+      responsable: {
+        userResponsable: decodificada.user,
+        nombreResponsable: decodificada.nombres + " " + decodificada.apellidos,
+      },
+      consolidacion: {
+        vivienda: viviendaON,
+      },
+      ForVivienda: {
+        veredaViv: vereda,
+        direccionViv: direccion,
+        viviendaViv: vivienda,
+      },
+    })
+      .save()
+      .then((result) => {
+        if (result) {
+          authLogin.isUser(
+            req,
+            "Conexión exitosa",
+            "Vivienda Inscrita",
+            "success",
+            false,
+            800,
+            "/" + decodificada.rol + "/Consolidaciones/Enviar/ViviendaSaludable"
+          );
+        } else {
+          authLogin.isUser(
+            req,
+            "Error en la Base de Datos",
+            "Envio Cancelado",
+            "error",
+            false,
+            true,
+            "/" + decodificada.rol + "/Consolidaciones/InsVivi"
+          );
+        }
+        return next();
+      });
+  } else {
+    authLogin.isUser(
+      req,
+      "Envio Cancelado",
+      "Vivienda Ya Registrada",
+      "error",
+      true,
+      false,
+      "/" + decodificada.rol + "/Consolidaciones/InsVivi"
+    );
+    return next();
+  }
+};
 export const logout = (req, res) => {
   res.clearCookie("jwt");
   return res.redirect("/");
