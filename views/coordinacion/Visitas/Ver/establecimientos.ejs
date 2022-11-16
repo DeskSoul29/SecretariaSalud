@@ -64,7 +64,7 @@
                     </div>
                   </div>
                 </div>
-                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 12px;  text-align: center !important;">
+                <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
                   <thead>
                     <tr>
                       <th>Estado</th>
@@ -139,19 +139,19 @@
                         <%= allConso.municipio %>
                       </td>
                       <td>
-                        <%= allConso.codigo %>
+                        <%= allConso.hojavida.codigo %>
                       </td>
                       <td>
-                        <%= allConso.tipo %>
+                        <%= allConso.hojavida.tipo %>
                       </td>
                       <td>
-                        <%= allConso.razonSocial %>
+                        <%= allConso.hojavida.razonSocial %>
                       </td>
                       <td>
-                        <%= allConso.direccion %>
+                        <%= allConso.hojavida.direccion %>
                       </td>
                       <td>
-                        <%= allConso.repreLegal %>
+                        <%= allConso.hojavida.repreLegal %>
                       </td>
                       <td>
                         <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>

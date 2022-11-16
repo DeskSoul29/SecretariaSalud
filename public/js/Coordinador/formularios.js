@@ -131,6 +131,7 @@ function editUserForm(e) {
 function hvForm(e) {
   if (
     document.getElementById("estado").value == "Seleccione el Estado" ||
+    document.getElementById("idenSocial").value == 0 ||
     document.getElementById("direccion").value == 0 ||
     document.getElementById("rSocial").value == 0 ||
     document.getElementById("phone").value == 0 ||

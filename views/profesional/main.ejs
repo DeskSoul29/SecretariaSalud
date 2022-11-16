@@ -143,6 +143,23 @@
             </div>
           </div>
 
+          <!-- Visitas en el año - BarChar -->
+          <div class="row">
+            <div class="col-xl-12 col-md-6 mb-4">
+              <!-- Bar Chart -->
+              <div class="card shadow ">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Visitas En El Año De La Provincia De <%= user.provincia %></h6>
+                </div>
+                <div class="card-body">
+                  <div class="chart-bar">
+                    <canvas id="myBarChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row">
             <div class="col-xl-9">
               <div class="card shadow mb-4">
@@ -387,7 +404,7 @@
                                 <th>Fecha_Rechazado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Responsable</th>
+                                <th>Motivo</th>
                               </tr>
                             </thead>
                             <tfoot>
@@ -396,7 +413,7 @@
                                 <th>Fecha_Rechazado</th>
                                 <th>Tipo Consolidación</th>
                                 <th>Municipio</th>
-                                <th>Responsable</th>
+                                <th>Motivo</th>
                               </tr>
                             </tfoot>
                             <tbody>
@@ -427,6 +444,8 @@
                                   <a href="/profesional/Consolidaciones/Rechazado/ViviendaSaludable/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                                   <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
                                   <a href="/profesional/Consolidaciones/Rechazado/PermMunicipio/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  <a href="/profesional/Consolidaciones/Rechazado/Cronograma/<%= allConso._id %>"><span class="badge badge-danger text-uppercase">Rechazado</span></a>
                                   <% } %>
                                 </td>
                                 <td>
@@ -455,14 +474,15 @@
                                   Informe Mensual
                                   <% } else if(allConso.consolidacion.permMunicipio=="on" ){ %>
                                   Permanencia en Municipio
+                                  <% } else if(allConso.consolidacion.cronograma=="on" ){ %>
+                                  Cronograma De Actividades
                                   <% } %>
                                 </td>
                                 <td>
                                   <%= allConso.municipio %><%= allConso.ForQuejas.municipioComuni %>
                                 </td>
                                 <td>
-                                  <%= allConso.responsable.userResponsable %> -
-                                  <%= allConso.responsable.nombreResponsable %>
+                                  <%= allConso.reporte.motivo %>
                                 </td>
                               </tr>
                               <% } %>
@@ -705,6 +725,51 @@
     </div>
   </div>
 
+  <script type="text/JavaScript">
+    //Meses
+    let barMESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    
+    //Visitas
+    <% if(barChaVisit){ %>
+    var barChaVisit = []
+    <% barChaVisit.forEach((barChaVisit)=> { %>
+      <% if(barChaVisit._id.anno == new Date().getFullYear()){ %>
+        barChaVisit.push("<%= barChaVisit._id.anno %>",barMESES[<%= barChaVisit._id.mes %>- 1], "<%= barChaVisit.count %>")
+      <% } %>
+    <% }) %>
+    <% } %>
+
+     //Favorable
+     <% if(barChaFav){ %>
+    var barChaFav = []
+    <% barChaFav.forEach((barChaFav)=> { %>
+      <% if(barChaFav._id.anno == new Date().getFullYear()){ %>
+        barChaFav.push("<%= barChaFav._id.anno %>", barMESES[<%= barChaFav._id.mes %>- 1], "<%= barChaFav.count %>")
+      <% } %>
+    <% }) %>
+    <% } %>
+
+    // Desfavorable
+    <% if(barChaDes){ %>
+    var barChaDes = []
+    <% barChaDes.forEach((barChaDes)=> { %>
+      <% if(barChaDes._id.anno == new Date().getFullYear()){ %>
+        barChaDes.push("<%= barChaDes._id.anno %>", barMESES[<%= barChaDes._id.mes %>- 1], "<%= barChaDes.count %>")
+      <% } %>
+    <% }) %>
+    <% } %>
+
+    // Favorable Con Requerimientos
+    <% if(barChaFavRe){ %>
+    var barChaFavRe = []
+    <% barChaFavRe.forEach((barChaFavRe)=> { %>
+      <% if(barChaFavRe._id.anno == new Date().getFullYear()){ %>
+        barChaFavRe.push("<%= barChaFavRe._id.anno %>", barMESES[<%= barChaFavRe._id.mes %>- 1], "<%= barChaFavRe.count %>")
+      <% } %>
+    <% }) %>
+    <% } %>
+  </script>
+
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -719,14 +784,18 @@
   <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
+  <!-- Page level plugins -->
+  <script src="/vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="/js/demo/chart-bar-demo.js"></script>
+  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
+  <script src="/js/demo/datatables-demo.js"></script>
+
   <!-- Alert -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/datatables-demo.js"></script>
-
   <!-- Validations -->
-  <script type="text/JavaScript" src="/js/tools/dropzone.js"></script>
   <script type="text/JavaScript" src="/js/Tecnico/formularios.js"></script>
 
   <script type="text/JavaScript">

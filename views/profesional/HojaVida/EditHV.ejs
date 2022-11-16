@@ -101,22 +101,30 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="rSocial">Razón
+                      <div class="col-sm-4">
+                        <label class="mr-sm-4" for="rSocial">Razón
                           Social</label>
                         <input type="text" class="form-control form-control-user" id="rSocial" name="rSocial" onkeyup="mayus(this);" value="<%= consultHV.razonSocial %>" />
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="idenSocial">Identificación Razón Social</label>
+                        <input type="text" class="form-control form-control-user" id="idenSocial" name="idenSocial" value="<%= consultHV.idenSocial %>" />
+                      </div>
+                      <div class="col-sm-4">
                         <label class="mr-sm-2" for="direccion">Dirección</label>
                         <input type="text" class="form-control form-control-user" id="direccion" onkeyup="mayus(this);" name="direccion" value="<%= consultHV.direccion %>" />
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-8">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="rLegal">Representante
                           Legal</label>
                         <input type="text" class="form-control form-control-user" id="rLegal" onkeyup="mayus(this);" name="rLegal" value="<%= consultHV.repreLegal %>" />
+                      </div>
+                      <div class="col-sm-2" id="placaDiv" style="display: none;">
+                        <label class="mr-sm-2" for="placa">Placa</label>
+                        <input type="text" class="form-control form-control-user" onkeyup="mayus(this);" id="placa" name="placa" value="<%= consultHV.placa %>" />
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-2" for="estado">Estado</label>
@@ -209,6 +217,9 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+      if ("<%= consultHV.grupo %>" == "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS") {
+        document.getElementById("placaDiv").removeAttribute("style")
+      } 
     });
     estado.value = "<%= consultHV.estado %>";
     </script>

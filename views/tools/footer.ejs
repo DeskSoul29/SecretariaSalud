@@ -42,10 +42,12 @@
             <label class="mr-sm-2">Provincia</label>
             <input type="text" class="form-control form-control-user" value="<%= user.provincia %>" readonly />
           </div>
+          <% if(user.rol == "tecnico"){ %>
           <div class="col-sm-6">
             <label class="mr-sm-2">Municipio</label>
             <input type="text" class="form-control form-control-user" value="<%= user.municipio %>" readonly />
           </div>
+          <% } %>
         </div>
 
         <% if(user.rol == "tecnico"){ %>

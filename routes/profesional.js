@@ -53,6 +53,10 @@ router.get(
       allConso: req.allConso,
       visitAcep: req.visitAcep,
       vacunas: req.vacunas,
+      barChaVisit: req.barChaVisit,
+      barChaFav: req.barChaFav,
+      barChaDes: req.barChaDes,
+      barChaFavRe: req.barChaFavRe,
       settings: req.settings,
       moment: moment,
     });
@@ -74,6 +78,10 @@ router.post(
       allConso: false,
       visitAcep: false,
       vacunas: false,
+      barChaVisit: false,
+      barChaFav: false,
+      barChaDes: false,
+      barChaFavRe: false,
       settings: false,
       moment: false,
       alert: req.alert,
@@ -96,6 +104,10 @@ router.post(
       allConso: false,
       visitAcep: false,
       vacunas: false,
+      barChaVisit: false,
+      barChaFav: false,
+      barChaDes: false,
+      barChaFavRe: false,
       settings: false,
       moment: false,
       alert: req.alert,
@@ -544,6 +556,33 @@ router.post(
       consolidacion: req.consolidacion,
       moment: moment,
       alert: req.alert,
+    });
+  }
+);
+router.get(
+  "/Consolidaciones/Rechazado/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: undefined,
+      moment: moment,
+    });
+  }
+);
+router.post(
+  "/Consolidaciones/Rechazado/Cronograma/:_id",
+  isAuthenticatedProf,
+  ValConsolidaciones,
+  EditConsolidacionRech,
+  (req, res) => {
+    res.render("profesional/Visitas/Rechazado/cronograma", {
+      user: req.user,
+      consolidacion: req.consolidacion,
+      alert: req.alert,
+      moment: moment,
     });
   }
 );

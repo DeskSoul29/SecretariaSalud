@@ -36,6 +36,7 @@ var authTec = (function () {
         req.cookies.jwt,
         process.env.JWT_SECRETO
       );
+
       var {
         municipio,
         fVisit,
@@ -188,12 +189,20 @@ var authTec = (function () {
         //Extra
         observacion,
       } = req.body;
+
       if (req.body.idHV != "") {
         var idHV = req.body.idHV;
+      }
+
+      var SendNovAdRes = "off";
+
+      if (cronograma == "on" || alertSaniON == "on" || permMunicipio == "on") {
+        SendNovAdRes = "on";
       }
       new consolidaciones({
         provincia: decodificada.provincia,
         municipio: municipio,
+        SendNovAd: SendNovAdRes,
         responsable: {
           userResponsable: decodificada.user,
           nombreResponsable:
@@ -1069,6 +1078,109 @@ export const ConsolidaEstados = async (req, res, next) => {
         }
       });
 
+    //Bar Chart
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            municipio: decodificada.municipio,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaVisit = data;
+      });
+
+    // Bar Chart - Favorable
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "FAVORABLE",
+            municipio: decodificada.municipio,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaFav = data;
+      });
+
+    // Bar Chart - Desfavorable
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "DESFAVORABLE",
+            municipio: decodificada.municipio,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaDes = data;
+      });
+
+    // Bar Chart - Favorable Con Requerimientos
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "FAVORABLE CON REQUERIMIENTOS",
+            municipio: decodificada.municipio,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaFavRe = data;
+      });
+
     return next();
   } catch (error) {
     console.log(error);
@@ -1131,66 +1243,96 @@ export const hojavidaConsultAllTec = async (req, res, next) => {
   }
 };
 export const editHVTec = async (req, res, next) => {
-  const { municipio, phone, rSocial, direccion, rLegal, estado } = req.body;
+  const {
+    municipio,
+    phone,
+    rSocial,
+    direccion,
+    rLegal,
+    estado,
+    idenSocial,
+    placa,
+  } = req.body;
 
-  var nomHV = await hojavida.find({
+  var IdenRep = await hojavida.find({
     _id: {
       $ne: req.params.id,
     },
-    municipio: municipio,
-    razonSocial: rSocial,
+    idenSocial: idenSocial,
   });
 
-  if (nomHV.length == 0) {
-    await hojavida
-      .findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: {
-            telefono: phone,
-            razonSocial: rSocial,
-            direccion: direccion,
-            repreLegal: rLegal,
-            estado: estado,
+  if (IdenRep.length == 0) {
+    var nomHV = await hojavida.find({
+      _id: {
+        $ne: req.params.id,
+      },
+      municipio: municipio,
+      razonSocial: rSocial,
+    });
+
+    if (nomHV.length == 0) {
+      await hojavida
+        .findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              telefono: phone,
+              razonSocial: rSocial,
+              direccion: direccion,
+              idenSocial: idenSocial,
+              placa: placa,
+              repreLegal: rLegal,
+              estado: estado,
+            },
           },
-        },
-        { new: true }
-      )
-      .then((result) => {
-        if (result) {
-          authTec.isUser(
-            req,
-            "Conexión exitosa",
-            "Establecimiento Actualizado Correctamente",
-            "success",
-            false,
-            800,
-            "tecnico/HojaVida/ConsultarHV"
-          );
-        } else {
-          authTec.isUser(
-            req,
-            "Advertencia",
-            "Error en la Base de Datos",
-            "error",
-            true,
-            false,
-            "tecnico/HojaVida/ConsultarHV"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          { new: true }
+        )
+        .then((result) => {
+          if (result) {
+            authTec.isUser(
+              req,
+              "Conexión exitosa",
+              "Establecimiento Actualizado Correctamente",
+              "success",
+              false,
+              800,
+              "tecnico/HojaVida/ConsultarHV"
+            );
+          } else {
+            authTec.isUser(
+              req,
+              "Advertencia",
+              "Error en la Base de Datos",
+              "error",
+              true,
+              false,
+              "tecnico/HojaVida/ConsultarHV"
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      authTec.isUser(
+        req,
+        "Advertencia",
+        "Ya se encuentra una razón social con el mismo nombre",
+        "error",
+        true,
+        false,
+        "tecnico/HojaVida/ConsultarHV/Edit/" + req.params.id
+      );
+    }
   } else {
     authTec.isUser(
       req,
       "Advertencia",
-      "Ya se encuentra una razón social con el mismo nombre",
+      "Identificación de la Razón Social ya se encuentra inscrita",
       "error",
       true,
       false,
-      "tecnico/HojaVida/ConsultarHV/Edit/" + req.params.id
+      "tecnico/HojaVida/ConsultarHV"
     );
   }
   return next();

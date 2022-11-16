@@ -134,7 +134,9 @@
                         <%= allConso.ForQuejas.tipoQueja %>
                       </td>
                       <td>
-                        <%= allConso.razonSocial %>
+                        <% if(allConso.hojavida != undefined){ %>
+                        <%= allConso.hojavida.razonSocial %>
+                        <% } %>
                       </td>
                       <td>
                         <%= allConso.ForQuejas.descQueja %>

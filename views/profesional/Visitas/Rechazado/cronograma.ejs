@@ -10,7 +10,7 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
     <!-- Sidebar -->
-    <%- include('../../../tools/sidebarTec'); %>
+    <%- include('../../../tools/sidebarProf'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -29,10 +29,10 @@
                 <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver">Consolidaciones</a>
+                      <a href="/profesional/Consolidaciones/Ver">Consolidaciones</a>
                     </li>
                     <li class="breadcrumb-item">
-                      <a href="/tecnico/Consolidaciones/Ver/CronogramaMensual">Cronograma Mensual</a>
+                      <a href="/profesional/Consolidaciones/Ver/Cronograma">Cronograma de Actividades</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                       Corregir
@@ -42,10 +42,10 @@
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">CRONOGRAMA MENSUAL</h1>
+                    <h1 class="h4 text-gray-900 mb-4">CRONOGRAMA DE ACTIVIDADES</h1>
                   </div>
 
-                  <form onsubmit="UploadCronograma(event)" action="/tecnico/Consolidaciones/Rechazado/Cronograma/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
+                  <form onsubmit="UploadCronograma(event)" action="/profesional/Consolidaciones/Rechazado/Cronograma/<%= consolidacion._id %>" method="POST" enctype="multipart/form-data">
                     <input type="text" value="on" id="cronograma" name="cronograma" style="display: none;" readonly>
 
                     <div class="form-group row">
@@ -89,7 +89,7 @@
                     <div class="form-group row">
                       <div class="col-sm-6">
                         <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
                       </div>
 
                       <div class="col-sm-6">
@@ -146,7 +146,7 @@
           <button class="btn btn-secondary" type="button" data-dismiss="modal">
             Cancelar
           </button>
-          <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+          <a class="btn btn-primary" href="/profesional/logout">Cerrar Sesión</a>
         </div>
       </div>
     </div>
@@ -187,7 +187,7 @@
     $(window).bind('load', function() {
       var nav = document.getElementById('nav2');
       $('#navlink1').removeClass('collapsed');
-      var nav3 = document.getElementById('collapseOne');
+      var nav3 = document.getElementById('collapseTwo');
       var nav4 = document.getElementById('show1');
       nav.className += "  active";
       nav3.className += "  show";

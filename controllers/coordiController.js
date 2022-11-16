@@ -133,6 +133,14 @@ var authCoordi = (function () {
             var rutaValidar =
               "/coordinacion/Consolidaciones/Validar/ViviendaSaludable/" +
               nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.permMunicipio == "on") {
+            var rutaValidar =
+              "/coordinacion/Consolidaciones/Validar/PermMunicipio/" +
+              nextCons[0]._id;
+          } else if (nextCons[0].consolidacion.alertSani == "on") {
+            var rutaValidar =
+              "/coordinacion/Consolidaciones/Validar/AlertaSanitaria/" +
+              nextCons[0]._id;
           }
           authCoordi.isUser(
             req,
@@ -1185,13 +1193,26 @@ export const deleteCons = async (req, res, next) => {
 };
 //Consolidaciones - Consultar
 export const SeeCoorConsolidaciones = async (req, res, next) => {
-  req.allConso = await consolidaciones
-    .find({
-      $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
-      SendNovAd: { $eq: "on" },
-    })
-    .sort({ createdAt: -1 });
-  return next();
+  try {
+    await consolidaciones
+      .find({
+        $or: [{ status: { $eq: "Enviado" } }, { status: { $eq: "Aceptado" } }],
+        SendNovAd: { $eq: "on" },
+      })
+      .sort({ createdAt: -1 })
+      .then((result) => {
+        hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
+          req.allConso = hv;
+          return next();
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } catch (error) {
+    console.log(error);
+    return next();
+  }
 };
 //Consolidaciones - Validar
 export const ConsolidaEnviada = async (req, res, next) => {
@@ -1307,70 +1328,91 @@ export const editHV = async (req, res, next) => {
     estado,
   } = req.body;
 
-  var nomHV = await hojavida.find({
+  var IdenRep = await hojavida.find({
     _id: {
       $ne: req.params.id,
     },
-    municipio: municipio,
-    razonSocial: rSocial,
+    idenSocial: idenSocial,
   });
 
-  if (nomHV.length == 0) {
-    await hojavida
-      .findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: {
-            provincia: provincia,
-            municipio: municipio,
-            grupo: grupEsta,
-            codigo: codEsta,
-            tipo: tipoEsta,
-            nivelRiesgo: Nriesgo,
-            telefono: phone,
-            razonSocial: rSocial,
-            direccion: direccion,
-            repreLegal: rLegal,
-            estado: estado,
+  if (IdenRep.length == 0) {
+    var nomHV = await hojavida.find({
+      _id: {
+        $ne: req.params.id,
+      },
+      municipio: municipio,
+      razonSocial: rSocial,
+    });
+
+    if (nomHV.length == 0) {
+      await hojavida
+        .findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              provincia: provincia,
+              municipio: municipio,
+              grupo: grupEsta,
+              codigo: codEsta,
+              tipo: tipoEsta,
+              nivelRiesgo: Nriesgo,
+              telefono: phone,
+              razonSocial: rSocial,
+              idenSocial: idenSocial,
+              placa: placa,
+              direccion: direccion,
+              repreLegal: rLegal,
+              estado: estado,
+            },
           },
-        },
-        { new: true }
-      )
-      .then((result) => {
-        if (result) {
-          authCoordi.isUser(
-            req,
-            "Conexión exitosa",
-            "Establecimiento Actualizado Correctamente",
-            "success",
-            false,
-            800,
-            "coordinacion/HojaVida/ConsultarHV"
-          );
-        } else {
-          authCoordi.isUser(
-            req,
-            "Advertencia",
-            "Error en la Base de Datos",
-            "error",
-            true,
-            false,
-            "coordinacion/HojaVida/ConsultarHV"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          { new: true }
+        )
+        .then((result) => {
+          if (result) {
+            authCoordi.isUser(
+              req,
+              "Conexión exitosa",
+              "Establecimiento Actualizado Correctamente",
+              "success",
+              false,
+              800,
+              "coordinacion/HojaVida/ConsultarHV"
+            );
+          } else {
+            authCoordi.isUser(
+              req,
+              "Advertencia",
+              "Error en la Base de Datos",
+              "error",
+              true,
+              false,
+              "coordinacion/HojaVida/ConsultarHV"
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      authProf.isUser(
+        req,
+        "Advertencia",
+        "Ya se encuentra una razón social con el mismo nombre",
+        "error",
+        true,
+        false,
+        "coordinacion/HojaVida/ConsultarHV/Edit/" + req.params.id
+      );
+    }
   } else {
     authProf.isUser(
       req,
       "Advertencia",
-      "Ya se encuentra una razón social con el mismo nombre",
+      "Identificación de la Razón Social ya se encuentra inscrita",
       "error",
       true,
       false,
-      "coordinacion/HojaVida/ConsultarHV/Edit/" + req.params.id
+      "coordinacion/HojaVida/ConsultarHV"
     );
   }
   return next();

@@ -12,6 +12,7 @@ var HojaVidaSchema = new Schema({
   identificacion: { type: Number, required: true },
   telefono: { type: Number, required: true },
   razonSocial: { type: String, required: true },
+  idenSocial: { type: String, required: true, unique: true },
   direccion: { type: String, required: true },
   repreLegal: { type: String },
   placa: { type: String },

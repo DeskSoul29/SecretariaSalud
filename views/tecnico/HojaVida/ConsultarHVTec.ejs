@@ -49,8 +49,10 @@
                             <th>Tipo</th>
                             <th>Identificiación</th>
                             <th>Razón Social</th>
+                            <th>Identificación Razón Social</th>
                             <th>Dirección</th>
                             <th>Representante Legal</th>
+                            <th>Placa</th>
                             <th>Nivel de Riesgo</th>
                             <th>Estado</th>
                           </tr>
@@ -63,9 +65,11 @@
                             <th><input type="text" placeholder="Busca por Codigo" /></th>
                             <th><input type="text" placeholder="Busca por Tipo" /></th>
                             <th><input type="text" placeholder="Busca por Identificación" /></th>
-                            <th><input type="text" placeholder="Busca por Rezón Social" /></th>
+                            <th><input type="text" placeholder="Busca por Razón Social" /></th>
+                            <th><input type="text" placeholder="Busca por Identificación Razón Social" /></th>
                             <th><input type="text" placeholder="Busca por Dirección" /></th>
                             <th><input type="text" placeholder="Busca por Representante Legal" /></th>
+                            <th><input type="text" placeholder="Busca por Placa" /></th>
                             <th><input type="text" placeholder="Busca por Nivel de Riesgo" /></th>
                             <th><input type="text" placeholder="Busca por Estado" /></th>
                           </tr>
@@ -89,8 +93,10 @@
                               <%= hojavida.tipoIdentificacion %> - <%= hojavida.identificacion %>
                             </td>
                             <td><%= hojavida.razonSocial %></td>
+                            <td><%= hojavida.idenSocial %></td>
                             <td><%= hojavida.direccion %></td>
                             <td><%= hojavida.repreLegal %></td>
+                            <td><%= hojavida.placa %></td>
                             <td><%= hojavida.nivelRiesgo %></td>
                             <td><%= hojavida.estado %></td>
                           </tr>

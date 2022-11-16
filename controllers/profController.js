@@ -628,6 +628,9 @@ var authProf = (function () {
       motDevol,
       //PermanenciaMunicipio
       permMunicipio,
+      //Cronograma
+      cronograma,
+      mesCron,
       //Extra
       observacion,
     } = req.body;
@@ -649,6 +652,7 @@ var authProf = (function () {
     noveadministrativa =
       noveadministrativa == undefined ? "" : noveadministrativa;
     permMunicipio = permMunicipio == undefined ? "" : permMunicipio;
+    cronograma = cronograma == undefined ? "" : cronograma;
 
     var Ruta = await authProf.NextReport(req, decodificada);
 
@@ -660,6 +664,8 @@ var authProf = (function () {
           score: score,
           concepto: concepto,
           accion: accion,
+
+          mesCron: mesCron,
 
           acta: acta,
           actaLey: actaLey,
@@ -683,6 +689,7 @@ var authProf = (function () {
             viviSalu: viviSaluON,
             noveadministrativa: noveadministrativa,
             permMunicipio: permMunicipio,
+            cronograma: cronograma,
           },
 
           ForRotulado: {
@@ -868,9 +875,13 @@ var authProf = (function () {
             } else if (Ruta[0].consolidacion.antirrabica == "on") {
               var tipoRuta = "AntirrabicaAnimal/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.noveadministrativa == "on") {
-              var tipoRuta = "NoveAdministrativas/" + Ruta[0]._id;
+              var tipoRuta = "NoveAdministrativa/" + Ruta[0]._id;
             } else if (Ruta[0].consolidacion.permMunicipio == "on") {
               var tipoRuta = "PermMunicipio/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.cronograma == "on") {
+              var tipoRuta = "Cronograma/" + Ruta[0]._id;
+            } else if (Ruta[0].consolidacion.viviSalu == "on") {
+              var tipoRuta = "ViviendaSaludable/" + Ruta[0]._id;
             }
 
             authProf.isUser(
@@ -942,19 +953,9 @@ var authProf = (function () {
   var UpdateConsoli = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
 
-    var SendNovAdRes = "off";
-    if (
-      (tipCon == "Cronograma" && criterio == "Enviado") ||
-      (tipCon == "Alerta Sanitaria" && criterio == "Enviado") ||
-      (tipCon == "Permanencia En Municipio" && criterio == "Enviado")
-    ) {
-      SendNovAdRes = "on";
-    }
-
     await consolidaciones
       .findByIdAndUpdate(req.params._id, {
         $set: {
-          SendNovAd: SendNovAdRes,
           status: criterio,
           reporte: {
             motivo: motivo,
@@ -1001,10 +1002,6 @@ var authProf = (function () {
             var rutaValidar =
               "/profesional/Consolidaciones/Validar/Vehiculos/" +
               nextCons[0]._id;
-          } else if (nextCons[0].consolidacion.tomaMuestra == "on") {
-            var rutaValidar =
-              "/profesional/Consolidaciones/Validar/TomaMuestras/" +
-              nextCons[0]._id;
           } else if (nextCons[0].consolidacion.quejas == "on") {
             var rutaValidar =
               "/profesional/Consolidaciones/Validar/Quejas/" + nextCons[0]._id;
@@ -1019,6 +1016,10 @@ var authProf = (function () {
           } else if (nextCons[0].consolidacion.permMunicipio == "on") {
             var rutaValidar =
               "/profesional/Consolidaciones/Validar/PermMunicipio/" +
+              nextCons[0]._id;
+          }else if (nextCons[0].consolidacion.alertSani == "on") {
+            var rutaValidar =
+              "/profesional/Consolidaciones/Validar/AlertaSanitaria/" +
               nextCons[0]._id;
           }
           authProf.isUser(
@@ -1038,21 +1039,11 @@ var authProf = (function () {
   var UpdateCorreccion = async (req, next, nextCons) => {
     var { criterio, motivo, tipCon } = req.body;
 
-    var SendNovAdRes = "off";
-    if (
-      (tipCon == "Cronograma" && criterio == "Enviado") ||
-      (tipCon == "Alerta Sanitaria" && criterio == "Enviado") ||
-      (tipCon == "Permanencia En Municipio" && criterio == "Enviado")
-    ) {
-      SendNovAdRes = "on";
-    }
-
     await consolidaciones
       .findByIdAndUpdate(
         req.params._id,
         {
           $set: {
-            SendNovAd: SendNovAdRes,
             status: criterio,
             "reporte.motivo": motivo,
           },
@@ -1185,22 +1176,22 @@ var authProf = (function () {
       .limit(1);
   };
 
-  var ValidaMunicipio = async (municipio, mes) => {
-    let today = new Date();
-    console.log(today);
-    return await consolidaciones.find({
-      municipio: {
-        $eq: municipio,
-      },
-      "ForNAdmin.mesNA": {
-        $eq: mes,
-      },
-      "consolidacion.noveadministrativa": { $eq: "on" },
-      $expr: {
-        $and: [{ $eq: [{ $year: "$createdAt" }, 2021] }],
-      },
-    });
-  };
+  // var ValidaMunicipio = async (municipio, mes) => {
+  //   let today = new Date();
+  //   console.log(today);
+  //   return await consolidaciones.find({
+  //     municipio: {
+  //       $eq: municipio,
+  //     },
+  //     "ForNAdmin.mesNA": {
+  //       $eq: mes,
+  //     },
+  //     "consolidacion.noveadministrativa": { $eq: "on" },
+  //     $expr: {
+  //       $and: [{ $eq: [{ $year: "$createdAt" }, 2021] }],
+  //     },
+  //   });
+  // };
 
   return {
     isUser: isUser,
@@ -1215,7 +1206,7 @@ var authProf = (function () {
     UpdateActa: UpdateActa,
     SearchNextPendien: SearchNextPendien,
     SearchNextCorreg: SearchNextCorreg,
-    ValidaMunicipio: ValidaMunicipio,
+    // ValidaMunicipio: ValidaMunicipio,
   };
 })();
 
@@ -1371,6 +1362,109 @@ export const ConsolidaEstadosProf = async (req, res, next) => {
         }
       });
 
+    //Bar Chart
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            provincia: decodificada.provincia,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaVisit = data;
+      });
+
+    // Bar Chart - Favorable
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "FAVORABLE",
+            provincia: decodificada.provincia,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaFav = data;
+      });
+
+    // Bar Chart - Desfavorable
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "DESFAVORABLE",
+            provincia: decodificada.provincia,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaDes = data;
+      });
+
+    // Bar Chart - Favorable Con Requerimientos
+    await consolidaciones
+      .aggregate([
+        {
+          $match: {
+            status: "Aceptado",
+            "consolidacion.establecimiento": "on",
+            concepto: "FAVORABLE CON REQUERIMIENTOS",
+            provincia: decodificada.provincia,
+          },
+        },
+        {
+          $group: {
+            _id: {
+              anno: { $year: "$createdAt" },
+              mes: { $month: "$createdAt" },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { "_id.mes": 1 } },
+      ])
+      .then((data) => {
+        req.barChaFavRe = data;
+      });
+
     return next();
   } catch (error) {
     console.log(error);
@@ -1506,66 +1600,96 @@ export const hojavidaConsultAllProf = async (req, res, next) => {
   }
 };
 export const editHVProf = async (req, res, next) => {
-  const { municipio, phone, rSocial, direccion, rLegal, estado } = req.body;
+  const {
+    municipio,
+    phone,
+    rSocial,
+    direccion,
+    rLegal,
+    estado,
+    idenSocial,
+    placa,
+  } = req.body;
 
-  var nomHV = await hojavida.find({
+  var IdenRep = await hojavida.find({
     _id: {
       $ne: req.params.id,
     },
-    municipio: municipio,
-    razonSocial: rSocial,
+    idenSocial: idenSocial,
   });
 
-  if (nomHV.length == 0) {
-    await hojavida
-      .findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: {
-            telefono: phone,
-            razonSocial: rSocial,
-            direccion: direccion,
-            repreLegal: rLegal,
-            estado: estado,
+  if (IdenRep.length == 0) {
+    var nomHV = await hojavida.find({
+      _id: {
+        $ne: req.params.id,
+      },
+      municipio: municipio,
+      razonSocial: rSocial,
+    });
+
+    if (nomHV.length == 0) {
+      await hojavida
+        .findByIdAndUpdate(
+          req.params.id,
+          {
+            $set: {
+              telefono: phone,
+              razonSocial: rSocial,
+              direccion: direccion,
+              repreLegal: rLegal,
+              idenSocial: idenSocial,
+              placa: placa,
+              estado: estado,
+            },
           },
-        },
-        { new: true }
-      )
-      .then((result) => {
-        if (result) {
-          authProf.isUser(
-            req,
-            "Conexión exitosa",
-            "Establecimiento Actualizado Correctamente",
-            "success",
-            false,
-            800,
-            "profesional/HojaVida/ConsultarHV"
-          );
-        } else {
-          authProf.isUser(
-            req,
-            "Advertencia",
-            "Error en la Base de Datos",
-            "error",
-            true,
-            false,
-            "profesional/HojaVida/ConsultarHV"
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+          { new: true }
+        )
+        .then((result) => {
+          if (result) {
+            authProf.isUser(
+              req,
+              "Conexión exitosa",
+              "Establecimiento Actualizado Correctamente",
+              "success",
+              false,
+              800,
+              "profesional/HojaVida/ConsultarHV"
+            );
+          } else {
+            authProf.isUser(
+              req,
+              "Advertencia",
+              "Error en la Base de Datos",
+              "error",
+              true,
+              false,
+              "profesional/HojaVida/ConsultarHV"
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      authProf.isUser(
+        req,
+        "Advertencia",
+        "Ya se encuentra una razón social con el mismo nombre",
+        "error",
+        true,
+        false,
+        "profesional/HojaVida/ConsultarHV/Edit/" + req.params.id
+      );
+    }
   } else {
     authProf.isUser(
       req,
       "Advertencia",
-      "Ya se encuentra una razón social con el mismo nombre",
+      "Identificación de la Razón Social ya se encuentra inscrita",
       "error",
       true,
       false,
-      "profesional/HojaVida/ConsultarHV/Edit/" + req.params.id
+      "profesional/HojaVida/ConsultarHV"
     );
   }
   return next();

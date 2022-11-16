@@ -86,7 +86,6 @@
                         <label class="mr-sm-2" for="Nriesgo">Nivel de Riesgo</label>
                         <input type="text" class="form-control form-control-user" id="Nriesgo" name="Nriesgo" placeholder="Ninguno" readonly />
                       </div>
-
                     </div>
 
                     <div class="form-group row">
@@ -117,7 +116,7 @@
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="inputIden">Identificación</label>
-                        <input type="number" class="mayusPal form-control form-control-user" id="inputIden" name="inputIden" />
+                        <input type="number" class="form-control form-control-user" id="inputIden" name="inputIden" />
                       </div>
                       <div class="col-sm-3">
                         <label class="mr-sm-2" for="phone">Telefono</label>
@@ -126,20 +125,28 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-6">
+                      <div class="col-sm-4">
                         <label class="mr-sm-2" for="rSocial">Razón Social</label>
                         <input type="text" class="form-control form-control-user" id="rSocial" name="rSocial" onkeyup="mayus(this);" />
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="idenSocial">Identificación Razón Social</label>
+                        <input type="text" class="form-control form-control-user" id="idenSocial" name="idenSocial" />
+                      </div>
+                      <div class="col-sm-4">
                         <label class="mr-sm-2" for="direccion">Dirección</label>
                         <input type="text" class="form-control form-control-user" id="direccion" name="direccion" onkeyup="mayus(this);" />
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-8">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="rLegal">Representante Legal</label>
-                        <input type="text" class="form-control form-control-user" id="rLegal" name="rLegal" onkeyup="mayus(this);" />
+                        <input type="text" class="form-control form-control-user" onkeyup="mayus(this);" id="rLegal" name="rLegal" />
+                      </div>
+                      <div class="col-sm-2" id="placaDiv" style="display: none;">
+                        <label class="mr-sm-2" for="placa">Placa</label>
+                        <input type="text" class="form-control form-control-user" onkeyup="mayus(this);" id="placa" name="placa" />
                       </div>
                       <div class="col-sm-4">
                         <label class="mr-sm-2" for="estado">Estado</label>
@@ -157,8 +164,8 @@
                     <button class="btn btn-primary btn-user btn-block" type="submit">
                       Registrar Establecimiento
                     </button>
-
                   </form>
+
                 </div>
               </div>
             </div>
@@ -247,6 +254,14 @@
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
+    });
+
+    $("#grupEsta").change(function() {
+      if (document.getElementById("grupEsta").value == "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS") {
+        document.getElementById("placaDiv").removeAttribute("style")
+      } else {
+        document.getElementById("placaDiv").style.display = "none"
+      }
     });
   </script>
 

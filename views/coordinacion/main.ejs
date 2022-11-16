@@ -286,14 +286,14 @@
 
   <script type="text/JavaScript">
     //Meses
-    let MESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+    let barMESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
     
     //Visitas
     <% if(barChaVisit){ %>
     var barChaVisit = []
     <% barChaVisit.forEach((barChaVisit)=> { %>
       <% if(barChaVisit._id.anno == new Date().getFullYear()){ %>
-        barChaVisit.push("<%= barChaVisit._id.anno %>",MESES[<%= barChaVisit._id.mes %>- 1], "<%= barChaVisit.count %>")
+        barChaVisit.push("<%= barChaVisit._id.anno %>",barMESES[<%= barChaVisit._id.mes %>- 1], "<%= barChaVisit.count %>")
       <% } %>
     <% }) %>
     <% } %>
@@ -303,7 +303,7 @@
     var barChaFav = []
     <% barChaFav.forEach((barChaFav)=> { %>
       <% if(barChaFav._id.anno == new Date().getFullYear()){ %>
-        barChaFav.push("<%= barChaFav._id.anno %>", MESES[<%= barChaFav._id.mes %>- 1], "<%= barChaFav.count %>")
+        barChaFav.push("<%= barChaFav._id.anno %>", barMESES[<%= barChaFav._id.mes %>- 1], "<%= barChaFav.count %>")
       <% } %>
     <% }) %>
     <% } %>
@@ -313,7 +313,7 @@
     var barChaDes = []
     <% barChaDes.forEach((barChaDes)=> { %>
       <% if(barChaDes._id.anno == new Date().getFullYear()){ %>
-        barChaDes.push("<%= barChaDes._id.anno %>", MESES[<%= barChaDes._id.mes %>- 1], "<%= barChaDes.count %>")
+        barChaDes.push("<%= barChaDes._id.anno %>", barMESES[<%= barChaDes._id.mes %>- 1], "<%= barChaDes.count %>")
       <% } %>
     <% }) %>
     <% } %>
@@ -323,7 +323,7 @@
     var barChaFavRe = []
     <% barChaFavRe.forEach((barChaFavRe)=> { %>
       <% if(barChaFavRe._id.anno == new Date().getFullYear()){ %>
-        barChaFavRe.push("<%= barChaFavRe._id.anno %>", MESES[<%= barChaFavRe._id.mes %>- 1], "<%= barChaFavRe.count %>")
+        barChaFavRe.push("<%= barChaFavRe._id.anno %>", barMESES[<%= barChaFavRe._id.mes %>- 1], "<%= barChaFavRe.count %>")
       <% } %>
     <% }) %>
     <% } %>
