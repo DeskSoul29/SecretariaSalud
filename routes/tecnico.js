@@ -19,6 +19,7 @@ import {
   HVConsultOne,
   InsVivienda,
   LisViviendas,
+  HVConsolid,
   UpdRespTM,
   DownloadFileTM,
   ValConsolidaciones,
@@ -993,11 +994,13 @@ router.get(
   "/HojaVida/ConsultarHV/View/:id",
   isAuthenticatedTecnic,
   HVConsultOne,
+  HVConsolid,
   (req, res) => {
     res.render("tecnico/HojaVida/ViewHV", {
       user: req.user,
       consultHV: req.consultHV,
-      alert: undefined,
+      allConso: req.allConso,
+      moment: moment,
     });
   }
 );

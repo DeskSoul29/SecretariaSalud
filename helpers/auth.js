@@ -376,6 +376,19 @@ export const HVConsultOne = async (req, res, next) => {
   req.consultHV = CHVida;
   return next();
 };
+export const HVConsolid = async (req, res, next) => {
+  await consolidaciones
+    .find({ hojavida: { $eq: req.params.id } })
+    .then((result) => {
+      hojavida.populate(result, { path: "hojavida" }, function (err, hv) {
+        req.allConso = hv;
+        return next();
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 //Consolidaciones
 export const ValConsolidaciones = async (req, res, next) => {

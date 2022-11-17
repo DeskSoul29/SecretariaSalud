@@ -3,6 +3,12 @@
 
 <head>
   <%- include('../../tools/head'); %>
+  <!-- Custom styles for this page -->
+  <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.2/css/dataTables.dateTime.min.css">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 </head>
 
 <body id="page-top">
@@ -29,15 +35,15 @@
           <!-- Page Heading -->
           <div class="container">
 
-            <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/tecnico/HojaVida/ConsultarHV">Hojas de Vida</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">Detalles</li>
-              </ol>
-            </nav>
+            <div class="card shadow mb-4">
+              <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/tecnico/HojaVida/ConsultarHV">Hojas de Vida</a>
+                  </li>
+                  <li class="breadcrumb-item active" aria-current="page">Detalles</li>
+                </ol>
+              </nav>
 
-            <div class="card o-hidden border-0 shadow-lg my-5">
               <div class="card-body p-0">
                 <!-- Nested Row within Card Body -->
                 <div class="p-5">
@@ -130,7 +136,9 @@
                     </div>
                   </div>
 
+                  <% if (allConso){ %>
                   <div id="accordion">
+
                     <div class="card">
                       <div class="card-header" id="headingUno">
                         <h5 class="mb-0">
@@ -141,7 +149,130 @@
                       </div>
                       <div id="collapse1" class="collapse show" aria-labelledby="headingUno" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Tipo de Acta Utilizada</th>
+                                <th>Acta Anulada</th>
+                                <th>Acta_Ley 1335</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Tipo de Acta Utilizada</th>
+                                <th>Acta Anulada</th>
+                                <th>Acta_Ley 1335</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.codigo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.tipo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.score %>
+                                </td>
+                                <td>
+                                  <%= allConso.concepto %>
+                                </td>
+                                <td>
+                                  <%= allConso.accion %>
+                                </td>
+                                <td>
+                                  <%= allConso.acta %>
+                                </td>
+                                <td>
+                                  <%= allConso.actaAnul %>
+                                </td>
+                                <td>
+                                  <%= allConso.actaLey %>
+                                </td>
+                                <td>
+                                  <%= allConso.observaciones %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -156,7 +287,105 @@
                       </div>
                       <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.hojavida.tipo == "MORGUES"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.telefono %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.score %>
+                                </td>
+                                <td>
+                                  <%= allConso.concepto %>
+                                </td>
+                                <td>
+                                  <%= allConso.accion %>
+                                </td>
+                                <td>
+                                  <%= allConso.observaciones %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -171,7 +400,110 @@
                       </div>
                       <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable3" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Sala de Necropsia o Morgue</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Puntaje</th>
+                                <th>Concepto</th>
+                                <th>Acción Realizada</th>
+                                <th>Sala de Necropsia o Morgue</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.hojavida.tipo == "CEMENTERIOS (CON O SIN MORGUE)"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.telefono %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.score %>
+                                </td>
+                                <td>
+                                  <%= allConso.concepto %>
+                                </td>
+                                <td>
+                                  <%= allConso.accion %>
+                                </td>
+                                <td>
+                                  <%= allConso.salaNM %>
+                                </td>
+                                <td>
+                                  <%= allConso.observaciones %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -186,7 +518,116 @@
                       </div>
                       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
                         <div class="card-body">
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable4" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Medio Publicitario</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Registro/Permiso/Notificación Sanitario</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Medio Publicitario</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Registro/Permiso/Notificación Sanitario</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.publicidad == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.codigo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.tipo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForPublicidad.medioPublicitario %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForPublicidad.productoPublicidad %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForPublicidad.marcaPublicidad %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForPublicidad.registroSanitario %>
+                                </td>
+                                <td>
 
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -201,7 +642,100 @@
                       </div>
                       <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable5" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Producto</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Representante Legal</th>
+                                <th>Fecha_Visita</th>
+                                <th>Producto</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.rotulado == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsableuserResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.codigo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.tipo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForRotulado.productoRotulado %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -216,7 +750,115 @@
                       </div>
                       <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable6" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Medida Aplicada</th>
+                                <th>Fecha_Visita</th>
+                                <th>Motivo Aplicación</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Representante Legal</th>
+                                <th>Medida Aplicada</th>
+                                <th>Fecha_Visita</th>
+                                <th>Motivo Aplicación</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.MSEstablecimientos == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.codigo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.tipo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.telefono %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.repreLegal %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSEstablecimientos.medidaMSEstablecimientos %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSEstablecimientos.motivoMSEstablecimientos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSEstablecimientos.observacionMedEsta %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -231,7 +873,150 @@
                       </div>
                       <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable7" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Medida Aplicada</th>
+                                <th>Fecha_Visita</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Permiso o Notificación</th>
+                                <th>Presentación</th>
+                                <th>Cantidad</th>
+                                <th>Fabricante</th>
+                                <th>Lote</th>
+                                <th>Fecha_Vencimiento</th>
+                                <th>Motivo Aplicación</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Codigo</th>
+                                <th>Tipo del Establecimiento</th>
+                                <th>Razón Social</th>
+                                <th>Dirección</th>
+                                <th>Telefono</th>
+                                <th>Medida Aplicada</th>
+                                <th>Fecha_Visita</th>
+                                <th>Producto</th>
+                                <th>Marca</th>
+                                <th>Permiso o Notificación</th>
+                                <th>Presentación</th>
+                                <th>Cantidad</th>
+                                <th>Fabricante</th>
+                                <th>Lote</th>
+                                <th>Fecha_Vencimiento</th>
+                                <th>Motivo Aplicación</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.establecimiento == "on" && allConso.consolidacion.MSProductos == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.codigo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.tipo %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.direccion %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.telefono %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.medidaMSProductos %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.productoMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.marcaMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.permisoMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.presentacionMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.cantidadMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.fabricanteMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.loteMSProductos %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.ForMSProductos.vencimientoMSProductos,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.motivoMSProductos %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForMSProductos.observacionMedProd %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -246,7 +1031,112 @@
                       </div>
                       <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable8" width="100%" cellspacing="0" style="font-size: 13px;  text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Tipo de Queja</th>
+                                <th>Establecimiento (Si Aplica)</th>
+                                <th>Descripción de la Queja</th>
+                                <th>Persona que Causa la Queja</th>
+                                <th>Persona Afectada</th>
+                                <th>Fecha Recepción Queja</th>
+                                <th>Fecha_Visita</th>
+                                <th>Requerimientos</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Tipo de Queja</th>
+                                <th>Establecimiento (Si Aplica)</th>
+                                <th>Descripción de la Queja</th>
+                                <th>Persona que Causa la Queja</th>
+                                <th>Persona Afectada</th>
+                                <th>Fecha Recepción Queja</th>
+                                <th>Fecha_Visita</th>
+                                <th>Requerimientos</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.quejas == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status == "Enviado"){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForQuejas.tipoQueja %>
+                                </td>
+                                <td>
+                                  <% if(allConso.hojavida != undefined){ %>
+                                  <%= allConso.hojavida.razonSocial %>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForQuejas.descQueja %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForQuejas.perCausaQueja %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForQuejas.perAfectQueja %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.ForQuejas.frecep,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit,"YYYY/MM/DD").add(1, 'days').format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForQuejas.reqQueja %>
+                                </td>
+                                <td>
+                                  <%= allConso.observaciones %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -261,74 +1151,199 @@
                       </div>
                       <div id="collapse9" class="collapse" aria-labelledby="heading9" data-parent="#accordion">
                         <div class="card-body">
-
+                          <table class="table table-bordered table-hover display nowrap" id="dataTable9" width="100%" cellspacing="0" style="font-size: 13px; text-align: center !important;">
+                            <thead>
+                              <tr>
+                                <th>Estado</th>
+                                <th>Fecha_Enviado</th>
+                                <th>Responsable</th>
+                                <th>Provincia</th>
+                                <th>Municipio</th>
+                                <th>Tipo de Muestra</th>
+                                <th>Descripción de la Muestra</th>
+                                <th>Establecimiento</th>
+                                <th>Tipo de Analisis</th>
+                                <th>Rural / Urbano</th>
+                                <th>Objeto del Analisis</th>
+                                <th>Fecha_Visita</th>
+                                <th>Nombre Y Cargo del Acompañante</th>
+                                <th>Resultados</th>
+                                <th>Observaciones</th>
+                                <th>Archivos</th>
+                              </tr>
+                            </thead>
+                            <tfoot>
+                              <tr>
+                                <th><input type="text" placeholder="Busca por Estado" /></th>
+                                <th><input type="text" placeholder="Busca por Fecha_Enviado" /></th>
+                                <th><input type="text" placeholder="Busca por Responsable" /></th>
+                                <th><input type="text" placeholder="Busca por Provincia" /></th>
+                                <th><input type="text" placeholder="Busca por Municipio" /></th>
+                                <th><input type="text" placeholder="Busca por Tipo de Muestra" /></th>
+                                <th><input type="text" placeholder="Busca por Descripción de la Muestra" /></th>
+                                <th><input type="text" placeholder="Busca por Establecimiento" /></th>
+                                <th><input type="text" placeholder="Busca por Tipo de Analisis" /></th>
+                                <th><input type="text" placeholder="Busca por Rural / Urbano" /></th>
+                                <th><input type="text" placeholder="Busca por Objeto del Analisis" /></th>
+                                <th><input type="text" placeholder="Busca por Fecha_Visita" /></th>
+                                <th><input type="text" placeholder="Busca por Nombre Y Cargo Acompañante" /></th>
+                                <th>Resultados</th>
+                                <th><input type="text" placeholder="Busca por Observaciones" /></th>
+                                <th>Archivos</th>
+                              </tr>
+                            </tfoot>
+                            <tbody>
+                              <% allConso.forEach((allConso)=> { %>
+                              <% if (allConso.consolidacion.tomaMuestra == "on"){ %>
+                              <tr>
+                                <td>
+                                  <% if(allConso.status=="Pendiente" ){ %>
+                                  <span class="badge badge-warning text-uppercase">Pendiente</span></a>
+                                  <% }else if(allConso.status=="Corregido" ){ %>
+                                  <span class="badge badge-primary text-uppercase">Corregido</span></a>
+                                  <% }else if(allConso.status=="Rechazado" ){ %>
+                                  <span class="badge badge-danger text-uppercase">Rechazado</span>
+                                  <% }else if(allConso.status=="Enviado" ){ %>
+                                  <span class="badge badge-info text-uppercase">Enviado</span>
+                                  <% }else if(allConso.status=="Aceptado" ){ %>
+                                  <span class="badge badge-success text-uppercase">Aceptado</span>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.createdAt,"YYYY/MM/DD").format('YYYY-MM-DD'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.responsable.userResponsable %>
+                                  <%= allConso.responsable.nombreResponsable %>
+                                </td>
+                                <td>
+                                  <%= allConso.provincia %>
+                                </td>
+                                <td>
+                                  <%= allConso.municipio %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.tipMuestra %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.descMuestra %>
+                                </td>
+                                <td>
+                                  <%= allConso.hojavida.razonSocial %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.tipAnalisis %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.zona %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.objAnalisis %>
+                                </td>
+                                <td>
+                                  <%= moment(allConso.fvisit," YYYY/MM/DD").add(1, 'days' ).format('DD-MM-YYYY'); %>
+                                </td>
+                                <td>
+                                  <%= allConso.ForTomaMuestras.acompanante %>
+                                </td>
+                                <td>
+                                  <% if(allConso.status != "Pendiente"){ %>
+                                  <a href="/<%= user.rol %>/evidenciaTM/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                  <% } %>
+                                </td>
+                                <td>
+                                  <%= allConso.observaciones %>
+                                </td>
+                                <td>
+                                  <a href="/<%= user.rol %>/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                                </td>
+                              </tr>
+                              <% } %>
+                              <% }); %>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
 
                   </div>
+                  <% } %>
+
+
                 </div>
               </div>
+
             </div>
+            <!-- /.container-fluid -->
 
           </div>
-          <!-- /.container-fluid -->
+          <!-- End of Main Content -->
+
+          <!-- Footer -->
+          <%- include('../../tools/footer'); %>
+          <!-- End of Footer -->
 
         </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <%- include('../../tools/footer'); %>
-        <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
       </div>
-      <!-- End of Content Wrapper -->
+      <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+      </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Seleccione "Cerrar
-            sesión" a continuación si está listo para
-            finalizar su sesión actual.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-            <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Salida</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Seleccione "Cerrar
+              sesión" a continuación si está listo para
+              finalizar su sesión actual.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+              <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="/vendor/jquery/jquery.min.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="/js/sb-admin-2.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="/vendor/jquery/jquery.min.js"></script>
+      <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Validations -->
-    <script type="text/JavaScript" src="/js/Coordinador/formularios.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Alert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/js/sb-admin-2.min.js"></script>
 
-    <script type="text/JavaScript">
-      $(window).bind("load", function() {
+      <!-- Page level plugins -->
+      <script src="/vendor/datatables/jquery.dataTables.min.js"></script>
+      <script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+      <!-- Page level custom scripts -->
+      <script src="/js/demo/datatables-demo.js"></script>
+
+      <!-- Excel -->
+      <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+      <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
+      <!-- Search Advanced -->
+      <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+      <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
+
+      <script type="text/JavaScript">
+        $(window).bind("load", function() {
       var nav = document.getElementById("nav3");
       $("#navlink2").removeClass("collapsed");
       var nav3 = document.getElementById("collapseThree");
@@ -341,11 +1356,50 @@
         document.getElementById("placaDiv").removeAttribute("style")
       } 
     });
+
+    $('table.display tfoot th').each(function() {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var table = $('table.display').DataTable({
+      order: [
+        [1, 'desc']
+      ],
+      scrollY: true,
+      scrollX: true,
+      scrollCollapse: true,
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
+      dom: 'Bfrtlip',
+      buttons: [{
+        extend: 'excel',
+        filename: 'ANTIRRABICA_' + new Date().toJSON().substring(0, 10),
+        autoFilter: true,
+        sheetName: 'ANTIRRABICA ANIMAL',
+      }],
+    });
+    table.columns().every(function() {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function() {
+        that
+          .search(this.value)
+          .draw();
+      });
+    });
     </script>
 
-    <% if(typeof alert !="undefined" ) { %>
-    <script type="text/JavaScript">
-      Swal.fire({
+      <% if(typeof alert !="undefined" ) { %>
+      <script type="text/JavaScript">
+        Swal.fire({
         title: '<%= alert[0].alertTitle %>',
         text:'<%= alert[0].alertMessage %>',
         icon:'<%= alert[0].alertIcon %>',
@@ -355,7 +1409,7 @@
         window.location = '/<%= alert[0].ruta %>'
         })
     </script>
-    <% } %>
+      <% } %>
 </body>
 
 </html>
