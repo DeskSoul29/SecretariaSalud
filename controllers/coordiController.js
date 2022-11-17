@@ -169,7 +169,7 @@ var authCoordi = (function () {
           $ne: req.params._id,
         },
       })
-      .sort({ createdAt: 1 })
+      .sort({ createdAt: -1 })
       .limit(1);
   };
 

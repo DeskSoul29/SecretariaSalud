@@ -195,6 +195,35 @@ function tomMuestraForm(e) {
   }
 }
 
+function tomMuestraForm_2(e) {
+  if (
+    document.getElementById("rSocial").value ==
+      "Seleccione El Establecimiento" ||
+    document.getElementById("tipMues").value == "Seleccione" ||
+    document.getElementById("tipAnali").value == "Seleccione" ||
+    document.getElementById("zona").value == "Seleccione" ||
+    document.getElementById("objEst").value == "Seleccione" ||
+    document.getElementById("fVisit").value == 0 ||
+    document.getElementById("acompananteEmp").value == 0 ||
+    document.getElementById("myFile").files.length == 0 ||
+    document.getElementById("myFile2").files.length == 0
+  ) {
+    toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+    e.preventDefault();
+  } else if (
+    document.getElementById("tipMues").value == "ALIMENTOS" ||
+    document.getElementById("tipMues").value == "BEBIDAS ALCOHOLICAS"
+  ) {
+    if (document.getElementById("descripTip").value == 0) {
+      toast.toastInfo("Advertencia", "Ingresar todos los Campos");
+      e.preventDefault();
+    }
+  } else if (document.getElementById("myFile").files[0].size > 10000000) {
+    toast.toastWarning("Advertencia", "Archivo muy pesado");
+    e.preventDefault();
+  }
+}
+
 function eduSanitaria(e) {
   if (
     document.getElementById("muniSelect").value == "Seleccione el Municipio" ||

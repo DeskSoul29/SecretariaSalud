@@ -44,7 +44,7 @@
                     <h1 class="h4 text-gray-900 mb-4">TOMA DE MUESTRAS</h1>
                   </div>
 
-                  <form onsubmit="tomMuestraForm(event)" action="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
+                  <form onsubmit="tomMuestraForm_2(event)" action="/tecnico/Consolidaciones/Rechazado/TomaMuestras/<%= consolidacion._id %>" method="POST" autocomplete="off" enctype="multipart/form-data">
                     <input type="text" value="on" id="tomaMuestraON" name="tomaMuestraON" style="display: none;" readonly>
 
                     <div class="form-group row">
@@ -218,19 +218,31 @@
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2">Archivos Adjuntos</label>
                         <a href="/tecnico/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2">Resultados Laboratorio</label>
+                        <a href="/tecnico/evidenciaTM/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-12">
+                      <div class="col-sm-6">
                         <label class="mr-sm-2" for="fields">Adjuntar
                           Archivo(s) Nuevos</label>
                         <div class="drop-zone">
                           <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
                           <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
+                        </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <label class="mr-sm-2" for="fields">Adjuntar
+                          Resultado Nuevo</label>
+                        <div class="drop-zone">
+                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
+                          <input type="file" name="myFile2" id="myFile2" class="drop-zone__input" />
                         </div>
                       </div>
                     </div>

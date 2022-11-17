@@ -40,7 +40,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include('../../tools/sidebarTec'); %>
+    <%- include('../../tools/sidebarAdmin'); %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -62,7 +62,7 @@
             <div class="card shadow mb-4">
               <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/tecnico/HojaVida/ConsultarHV">Hojas de Vida</a>
+                  <li class="breadcrumb-item"><a href="/coordinacion/HojaVida/ConsultarHV">Hojas de Vida</a>
                   </li>
                   <li class="breadcrumb-item active" aria-current="page">Detalles</li>
                 </ol>
@@ -208,7 +208,7 @@
               finalizar su sesión actual.</div>
             <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-              <a class="btn btn-primary" href="/tecnico/logout">Cerrar Sesión</a>
+              <a class="btn btn-primary" href="/coordinacion/logout">Cerrar Sesión</a>
             </div>
           </div>
         </div>
@@ -242,11 +242,11 @@
       <script src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.min.js"></script>
 
       <script type="text/JavaScript">
-        $(window).bind("load", function() {
-      var nav = document.getElementById("nav3");
-      $("#navlink2").removeClass("collapsed");
-      var nav3 = document.getElementById("collapseThree");
-      var nav4 = document.getElementById("show3");
+        $(window).bind('load', function() {
+      var nav = document.getElementById('nav3');
+      $('#navlink2').removeClass('collapsed');
+      var nav3 = document.getElementById('collapseThree');
+      var nav4 = document.getElementById('show3');
       nav.className += "  active";
       nav3.className += "  show";
       nav4.className += "  active";
@@ -277,19 +277,6 @@
     // });
     </script>
 
-      <% if(typeof alert !="undefined" ) { %>
-      <script type="text/JavaScript">
-        Swal.fire({
-        title: '<%= alert[0].alertTitle %>',
-        text:'<%= alert[0].alertMessage %>',
-        icon:'<%= alert[0].alertIcon %>',
-        showConfirmButton: <%= alert[0].showConfirmButton %>,
-        timer: <%= alert[0].timer %>
-        }).then(()=>{
-        window.location = '/<%= alert[0].ruta %>'
-        })
-    </script>
-      <% } %>
 </body>
 
 </html>

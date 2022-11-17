@@ -4,6 +4,7 @@ import hojavida from "../models/hojavida.js";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import upload from "../middleware/upload.js";
+import uploadResult from "../middleware/uploadResult.js";
 import { promisify } from "util";
 
 var authTec = (function () {

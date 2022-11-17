@@ -26,6 +26,7 @@ import {
   consultUser,
   configConsult,
   HVConsultOne,
+  HVConsolid,
   ValConsolidaciones,
   LisViviendas,
   inscribirEstablecimiento,
@@ -862,6 +863,20 @@ router.get(
     res.render("coordinacion/HojaVida/ConsultarHV", {
       user: req.user,
       hv: req.hojavida,
+    });
+  }
+);
+router.get(
+  "/HojaVida/ConsultarHV/View/:id",
+  isAuthenticatedCoordinacion,
+  HVConsultOne,
+  HVConsolid,
+  (req, res) => {
+    res.render("coordinacion/HojaVida/ViewHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      allConso: req.allConso,
+      moment: moment,
     });
   }
 );

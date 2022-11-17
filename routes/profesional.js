@@ -14,6 +14,7 @@ import {
   EditConsolidacionRech,
   editHVProf,
   CountActas,
+  SendManyAcept,
   SendReport,
   EditReport,
 } from "../controllers/profController.js";
@@ -24,6 +25,7 @@ import {
   consultUser,
   configConsult,
   HVConsultOne,
+  HVConsolid,
   UpdRespTM,
   LisViviendas,
   InsVivienda,
@@ -172,6 +174,20 @@ router.get(
     res.render("profesional/HojaVida/ConsultarHVProf", {
       user: req.user,
       hojavida: req.hojavida,
+    });
+  }
+);
+router.get(
+  "/HojaVida/ConsultarHV/View/:id",
+  isAuthenticatedProf,
+  HVConsultOne,
+  HVConsolid,
+  (req, res) => {
+    res.render("profesional/HojaVida/ViewHV", {
+      user: req.user,
+      consultHV: req.consultHV,
+      allConso: req.allConso,
+      moment: moment,
     });
   }
 );
@@ -1129,6 +1145,19 @@ router.get(
 );
 
 //Consolidaciones - Validar
+router.get(
+  "/Consolidaciones/UpdateAcept/:tipCons",
+  isAuthenticatedProf,
+  SendManyAcept,
+  (req, res) => {
+    res.render("profesional/Visitas/mainVer", {
+      user: req.user,
+      allConso: undefined,
+      moment: moment,
+      alert: req.alert,
+    });
+  }
+);
 router.get(
   "/Consolidaciones/Validar/Establecimientos/:_id",
   isAuthenticatedProf,

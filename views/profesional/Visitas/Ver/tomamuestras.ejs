@@ -82,7 +82,6 @@
                       <th>Resultados</th>
                       <th>Observaciones</th>
                       <th>Archivos</th>
-                      <th>Acción</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -103,7 +102,6 @@
                       <th>Resultados</th>
                       <th><input type="text" placeholder="Busca por Observaciones" /></th>
                       <th>Archivos</th>
-                      <th>Acción</th>
                     </tr>
                   </tfoot>
                   <tbody>
@@ -176,13 +174,6 @@
                       </td>
                       <td>
                         <a href="/profesional/evidencia/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
-                      </td>
-                      <td>
-                        <% if(allConso.SendNovAd == "off"){ %>
-                        <a type="button" onclick='modalsEstablecimientos.eliminar_cons("<%= allConso._id %>")' data-target="#deleteModal" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                        <% } %>
                       </td>
                     </tr>
                     <% } %>
