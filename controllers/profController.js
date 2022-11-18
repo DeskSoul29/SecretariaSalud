@@ -927,14 +927,14 @@ var authProf = (function () {
       });
   };
 
-  var updateResEvi = async (req) => {
+  var updateResEvi = async (req, res) => {
     await uploadResult(req, res);
 
     return await consolidaciones.findByIdAndUpdate(
       req.params._id,
       {
         $set: {
-          "ForTomaMuestras.resultado": req.file.filename,
+          "ForTomaMuestras.resultado": req.file.filename2,
         },
       },
       { new: true }

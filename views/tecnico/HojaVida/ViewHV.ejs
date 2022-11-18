@@ -256,25 +256,41 @@
       } 
     });
 
-    // $('table.display tfoot th').each(function() {
-    //   var title = $(this).text();
-    //   $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    // });
-    $('#dataTable').DataTable({
-    "scrollX": true
-  });
-  $('#dataTable4').DataTable({
-    "scrollX": true
-  });
-  $('.dataTables_length').addClass('bs-select');
-    // table.columns().every(function() {
-    //   var that = this;
-    //   $('input', this.footer()).on('keyup change', function() {
-    //     that
-    //       .search(this.value)
-    //       .draw();
-    //   });
-    // });
+    $('table.display tfoot th').each(function() {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Buscar ' + title + '" />');
+    });
+    var table = $('table.display').DataTable({
+      order: [
+        [1, 'desc']
+      ],
+      language: {
+        search: "Buscar:",
+        info: "Mostrando _START_ elementos a _END_ de _TOTAL_ entradas",
+        zeroRecords: "Sin Datos en esta Tabla",
+        infoFiltered: " - filtrado desde _MAX_ entradas",
+        lengthMenu: "Mostrando _MENU_ entradas",
+        paginate: {
+          previous: "Anterior",
+          next: "Siguiente",
+        },
+      },
+      dom: 'Bfrtlip',
+      buttons: [{
+        extend: 'excel',
+        filename: 'ANTIRRABICA_' + new Date().toJSON().substring(0, 10),
+        autoFilter: true,
+        sheetName: 'ANTIRRABICA ANIMAL',
+      }],
+    });
+    table.columns().every(function() {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function() {
+        that
+          .search(this.value)
+          .draw();
+      });
+    });
     </script>
 
       <% if(typeof alert !="undefined" ) { %>

@@ -45,7 +45,7 @@
                     <h1 class="h4 text-gray-900 mb-4">PERMANENCIA EN MUNICIPIO</h1>
                   </div>
 
-                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/PermMunicipio/<%= consolidacion._id %>" method="POST" >
+                  <form onsubmit="validConsolidacion(event)" action="/profesional/Consolidaciones/Validar/PermMunicipio/<%= consolidacion._id %>" method="POST">
                     <input type="text" value="Permanencia En Municipio" id="tipCon" name="tipCon" style="display: none;" readonly>
 
                     <div class="form-row align-items-center mb-sm-2">
@@ -62,7 +62,7 @@
                     <div class="form-group row">
                       <div class="col-sm-12">
                         <label class="mr-sm-2">Archivos Adjuntos</label>
-                        <a href="/profesional/evidencia/<%= consolidacion._id %>" type="button" class="btn btn-info">Descargar</a>
+                        <a href="/profesional/evidencia/<%= consolidacion._id %>" target="_blank" type="button" class="btn btn-info">Descargar</a>
                       </div>
                     </div>
 

@@ -8,7 +8,8 @@ import { promisify } from "util";
 import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import settings from "../models/settings.js";
-import https from "https";
+import path from "path";
+import { fileURLToPath } from 'url';
 
 var authLogin = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -404,11 +405,28 @@ export const ValConsolidaciones = async (req, res, next) => {
       console.log(err);
     });
 };
+// export const DownloadFile = async (req, res, next) => {
+//   await consolidaciones
+//     .findOne({ _id: req.params.id })
+//     .then((result) => {
+//       res.download("./upload/" + result.evidencia.file, (err) => {
+//         if (err) console.log(err);
+//         res.status(200);
+//       });
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       return next();
+//     });
+// };
 export const DownloadFile = async (req, res, next) => {
   await consolidaciones
     .findOne({ _id: req.params.id })
     .then((result) => {
-      res.download("./upload/" + result.evidencia.file, (err) => {
+      var __filename = fileURLToPath(import.meta.url);
+      __filename = __filename.replace('helpers', 'upload/')
+      const __dirname = path.dirname(__filename);
+      res.sendFile(__dirname + result.evidencia.file, (err) => {
         if (err) console.log(err);
         res.status(200);
       });
