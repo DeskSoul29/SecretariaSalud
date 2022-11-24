@@ -847,9 +847,9 @@ var authProf = (function () {
       .then((result) => {
         if (result != null) {
           authProf.DeleteFile(nameFile);
-          if (tomaMuestraON == "on") {
-            authProf.updateResEvi(req, res);
-          }
+          // if (tomaMuestraON == "on") {
+          //   authProf.updateResEvi(req, res);
+          // }
           if (Ruta.length === 0) {
             authProf.isUser(
               req,
@@ -2154,6 +2154,8 @@ export const editHVProf = async (req, res, next) => {
     estado,
     idenSocial,
     placa,
+    iDueno,
+    nDueno,
   } = req.body;
 
   var IdenRep = await hojavida.find({
@@ -2185,6 +2187,8 @@ export const editHVProf = async (req, res, next) => {
               idenSocial: idenSocial,
               placa: placa,
               estado: estado,
+              iDueno: iDueno,
+              nDueno: nDueno,
             },
           },
           { new: true }

@@ -52,12 +52,14 @@
                             <th>Tipo</th>
                             <th>Identificiación</th>
                             <th>Razón Social</th>
-                            <th>Identificación Razón Social</th>
+                            <th>Codigo Inscripción</th>
                             <th>Dirección</th>
                             <th>Representante Legal</th>
                             <th>Placa</th>
                             <th>Nivel de Riesgo</th>
                             <th>Estado</th>
+                            <th>Identificación Dueño</th>
+                            <th>Nombre Dueño</th>
                           </tr>
                         </thead>
                         <tfoot>
@@ -69,12 +71,14 @@
                             <th><input type="text" placeholder="Busca por Tipo" /></th>
                             <th><input type="text" placeholder="Busca por Identificación" /></th>
                             <th><input type="text" placeholder="Busca por Razón Social" /></th>
-                            <th><input type="text" placeholder="Busca por Identificación Razón Social" /></th>
+                            <th><input type="text" placeholder="Busca por Codigo Inscripción" /></th>
                             <th><input type="text" placeholder="Busca por Dirección" /></th>
                             <th><input type="text" placeholder="Busca por Representante Legal" /></th>
                             <th><input type="text" placeholder="Busca por Placa" /></th>
                             <th><input type="text" placeholder="Busca por Nivel de Riesgo" /></th>
                             <th><input type="text" placeholder="Busca por Estado" /></th>
+                            <th><input type="text" placeholder="Busca por Identificación Dueño" /></th>
+                            <th><input type="text" placeholder="Busca por Nombre Dueño" /></th>
                           </tr>
                         </tfoot>
                         <tbody>
@@ -120,6 +124,12 @@
                             <td><%= hojavida.nivelRiesgo %></td>
                             <td>
                               <%= hojavida.estado %>
+                            </td>
+                            <td>
+                              <%= hojavida.nDueno %>
+                            </td>
+                            <td>
+                              <%= hojavida.iDueno %>
                             </td>
                           </tr>
                           <% }); %>

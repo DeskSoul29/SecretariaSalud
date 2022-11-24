@@ -9,7 +9,7 @@ import jwt from "jsonwebtoken";
 import bcryptjs from "bcryptjs";
 import settings from "../models/settings.js";
 import path from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 
 var authLogin = (function () {
   var isUser = function (req, title, mess, icon, button, timer, ruta) {
@@ -272,6 +272,8 @@ export const inscribirEstablecimiento = async (req, res, next) => {
         direccion,
         rLegal,
         estado,
+        iDueno,
+        nDueno,
       } = req.body;
 
       var salida = false;
@@ -322,6 +324,8 @@ export const inscribirEstablecimiento = async (req, res, next) => {
             direccion: direccion,
             repreLegal: rLegal,
             estado: estado,
+            iDueno: iDueno,
+            nDueno: nDueno,
             createdAt: new Date(),
           });
           await estaNew
@@ -424,7 +428,7 @@ export const DownloadFile = async (req, res, next) => {
     .findOne({ _id: req.params.id })
     .then((result) => {
       var __filename = fileURLToPath(import.meta.url);
-      __filename = __filename.replace('helpers', 'upload/')
+      __filename = __filename.replace("helpers", "upload/");
       const __dirname = path.dirname(__filename);
       res.sendFile(__dirname + result.evidencia.file, (err) => {
         if (err) console.log(err);
@@ -453,7 +457,10 @@ export const DownloadFileTM = async (req, res, next) => {
   await consolidaciones
     .findOne({ _id: req.params.id })
     .then((result) => {
-      res.download("./upload/" + result.ForTomaMuestras.resultado, (err) => {
+      var __filename = fileURLToPath(import.meta.url);
+      __filename = __filename.replace("helpers", "upload/");
+      const __dirname = path.dirname(__filename);
+      res.sendFile(__dirname + result.ForTomaMuestras.resultado, (err) => {
         if (err) console.log(err);
         res.status(200);
       });

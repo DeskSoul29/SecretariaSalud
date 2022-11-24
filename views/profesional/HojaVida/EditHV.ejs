@@ -107,7 +107,7 @@
                         <input type="text" class="form-control form-control-user" id="rSocial" name="rSocial" onkeyup="mayus(this);" value="<%= consultHV.razonSocial %>" />
                       </div>
                       <div class="col-sm-4">
-                        <label class="mr-sm-2" for="idenSocial">Identificación Razón Social</label>
+                        <label class="mr-sm-2" for="idenSocial">Codigo Inscripción</label>
                         <input type="text" class="form-control form-control-user" id="idenSocial" name="idenSocial" value="<%= consultHV.idenSocial %>" />
                       </div>
                       <div class="col-sm-4">
@@ -138,6 +138,17 @@
                           </option>
                           <option value="CERRADO">CERRADO</option>
                         </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
+                      <div class="col-sm-4">
+                        <label class="mr-sm-2" for="iDueno">Identificación Dueño (Opcional)</label>
+                        <input type="number" class="form-control form-control-user" id="iDueno" name="iDueno" onkeyup="mayus(this);" value="<%= consultHV.iDueno %>" />
+                      </div>
+                      <div class="col-sm-8">
+                        <label class="mr-sm-2" for="nDueno">Nombre Dueño (Opcional)</label>
+                        <input type="text" class="form-control form-control-user" id="nDueno" name="nDueno" onkeyup="mayus(this);" value="<%= consultHV.nDueno %>" />
                       </div>
                     </div>
 

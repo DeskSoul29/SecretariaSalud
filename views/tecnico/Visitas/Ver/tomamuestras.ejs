@@ -158,8 +158,10 @@
                         <a type="button" data-target="#resultModal" onclick="ActionTM('<%= allConso._id %>')" data-toggle="modal" class="btn btn-danger btn-circle btn-sm">
                           <i class="fas fa-download"></i>
                         </a>
+                        <% }else if(allConso.ForTomaMuestras.resultado == null){ %>
+
                         <% }else if(allConso.status == "Rechazado" || allConso.status == "Aceptado" || allConso.status == "Enviado"){ %>
-                        <a href="/tecnico/evidenciaTM/<%= allConso._id %>"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <a href="/tecnico/evidenciaTM/<%= allConso._id %>" target="_blank"><span class="badge badge-primary text-uppercase">Descargar</span></a>
                         <% } %>
                       </td>
                       <td>

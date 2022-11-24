@@ -2,11 +2,11 @@ import { config } from "dotenv";
 
 config();
 
-const usuario = "desksoul29";
-const password = "desk123";
-const dbName = "SecretariaSalud";
+const usuario = "saludambiental";
+const password = "Cambio2022";
+const dbName = "saludambiental";
 
-export const PORT = process.env.PORT || 4000;
+export const PORT = process.env.PORT || 80;
 export const MONGODB_URI =
   process.env.MONGODB_URI ||
-  `mongodb+srv://${usuario}:${password}@clusterup.yuxje.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+  `mongodb://${usuario}:${password}@172.16.7.237:27017/${dbName}`;

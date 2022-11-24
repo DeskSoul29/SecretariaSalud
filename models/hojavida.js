@@ -17,6 +17,8 @@ var HojaVidaSchema = new Schema({
   repreLegal: { type: String },
   placa: { type: String },
   estado: { type: String, required: true },
+  iDueno: { type: String },
+  nDueno: { type: String },
   createdAt: { type: Date },
 });
 

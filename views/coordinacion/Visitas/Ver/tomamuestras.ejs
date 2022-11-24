@@ -83,6 +83,7 @@
                       <th>Objeto del Analisis</th>
                       <th>Fecha_Visita</th>
                       <th>Nombre Y Cargo del Acompañante</th>
+                      <th>Resultados</th>
                       <th>Observaciones</th>
                       <th>Archivos</th>
                       <th>Acción</th>
@@ -103,6 +104,7 @@
                       <th><input type="text" placeholder="Busca por Objeto Del Analisis" /></th>
                       <th><input type="text" placeholder="Busca por Fecha_Visita" /></th>
                       <th><input type="text" placeholder="Busca por Nombe/Cargo Acompañante" /></th>
+                      <th>Resultados</th>
                       <th><input type="text" placeholder="Busca por Observaciones" /></th>
                       <th>Archivos</th>
                       <th>Acción</th>
@@ -156,6 +158,12 @@
                       </td>
                       <td>
                         <%= allConso.ForTomaMuestras.acompanante %>
+                      </td>
+                      <td>
+                        <% if(allConso.ForTomaMuestras.resultado == null){ %>
+                        <% }else{ %>
+                        <a href="/coordinacion/evidenciaTM/<%= allConso._id %>" target="_blank"><span class="badge badge-primary text-uppercase">Descargar</span></a>
+                        <% } %>
                       </td>
                       <td>
                         <%= allConso.observaciones %>

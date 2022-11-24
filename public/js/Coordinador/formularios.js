@@ -151,13 +151,6 @@ function hvForm(e) {
     toast.toastInfo("Advertencia", "Ingresar la placa del vehiculo");
     e.preventDefault();
   } else if (
-    document.getElementById("grupEsta").value !=
-      "VEHÍCULOS TRANSPORTADORES DE ALIMENTOS Y BEBIDAS" &&
-    document.getElementById("rLegal").value == ""
-  ) {
-    toast.toastInfo("Advertencia", "Ingresar el Representante Legal");
-    e.preventDefault();
-  } else if (
     document.getElementById("user").value.length < 6 ||
     document.getElementById("user").value.length >= 11
   ) {

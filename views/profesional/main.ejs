@@ -308,7 +308,7 @@
                             <tbody>
                               <% if (allConso){ %>
                               <% allConso.forEach((allConso)=> { %>
-                              <% if(allConso.status=="Corregido" ){ %>
+                              <% if(allConso.status=="Corregido" && allConso.consolidacion.tomaMuestra!="on"){ %>
                               <tr>
                                 <td>
                                   <% if(allConso.consolidacion.establecimiento=="on"){ %>

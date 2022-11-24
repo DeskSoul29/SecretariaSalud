@@ -1324,8 +1324,12 @@ export const editHV = async (req, res, next) => {
     phone,
     rSocial,
     direccion,
+    placa,
     rLegal,
+    idenSocial,
     estado,
+    iDueno,
+    nDueno,
   } = req.body;
 
   var IdenRep = await hojavida.find({
@@ -1363,6 +1367,8 @@ export const editHV = async (req, res, next) => {
               direccion: direccion,
               repreLegal: rLegal,
               estado: estado,
+              iDueno: iDueno,
+              nDueno: nDueno,
             },
           },
           { new: true }

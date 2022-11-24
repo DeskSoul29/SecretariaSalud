@@ -9,30 +9,6 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.15/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.6/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
-  <style>
-    .dtHorizontalExampleWrapper {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    #dtHorizontalExample th,
-    td {
-      white-space: nowrap;
-    }
-
-    table.dataTable thead .sorting:after,
-    table.dataTable thead .sorting:before,
-    table.dataTable thead .sorting_asc:after,
-    table.dataTable thead .sorting_asc:before,
-    table.dataTable thead .sorting_asc_disabled:after,
-    table.dataTable thead .sorting_asc_disabled:before,
-    table.dataTable thead .sorting_desc:after,
-    table.dataTable thead .sorting_desc:before,
-    table.dataTable thead .sorting_desc_disabled:after,
-    table.dataTable thead .sorting_desc_disabled:before {
-      bottom: .5em;
-    }
-  </style>
 </head>
 
 <body id="page-top">
@@ -135,7 +111,7 @@
                       <input type="text" class="form-control form-control-user" value="<%= consultHV.razonSocial %>" readonly />
                     </div>
                     <div class="col-sm-4">
-                      <label class="mr-sm-2" for="idenSocial">Identificación Razón Social</label>
+                      <label class="mr-sm-2" for="idenSocial">Codigo Inscripción</label>
                       <input type="text" class="form-control form-control-user" value="<%= consultHV.idenSocial %>" readonly />
                     </div>
                     <div class="col-sm-4">
@@ -157,6 +133,17 @@
                     <div class="col-sm-4">
                       <label class="mr-sm-2" for="estado">Estado</label>
                       <input type="text" class="form-control form-control-user" value="<%= consultHV.estado %>" readonly />
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col-sm-4">
+                      <label class="mr-sm-2" for="iDueno">Identificación Dueño (Opcional)</label>
+                      <input type="number" class="form-control form-control-user" value="<%= consultHV.iDueno %>" readonly />
+                    </div>
+                    <div class="col-sm-8">
+                      <label class="mr-sm-2" for="nDueno">Nombre Dueño (Opcional)</label>
+                      <input type="text" class="form-control form-control-user" value="<%= consultHV.nDueno %>" readonly />
                     </div>
                   </div>
 

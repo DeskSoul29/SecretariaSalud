@@ -1566,33 +1566,6 @@ router.post(
   }
 );
 router.get(
-  "/Consolidaciones/Correccion/TomaMuestras/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/tomamuestras", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      alert: undefined,
-      moment: moment,
-    });
-  }
-);
-router.post(
-  "/Consolidaciones/Correccion/TomaMuestras/:_id",
-  isAuthenticatedProf,
-  ValConsolidaciones,
-  EditReport,
-  (req, res) => {
-    res.render("profesional/Visitas/Ver/Correccion/tomamuestras", {
-      user: req.user,
-      consolidacion: req.consolidacion,
-      alert: req.alert,
-      moment: moment,
-    });
-  }
-);
-router.get(
   "/Consolidaciones/Correccion/EduSanitaria/:_id",
   isAuthenticatedProf,
   ValConsolidaciones,

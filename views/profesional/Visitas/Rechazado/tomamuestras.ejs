@@ -222,27 +222,21 @@
                         <label class="mr-sm-2">Archivos Adjuntos</label>
                         <a href="/profesional/evidencia/<%= consolidacion._id %>" target="_blank" type="button" class="btn btn-info">Descargar</a>
                       </div>
+                      <% if(allConso.ForTomaMuestras.resultado != null){ %>
                       <div class="col-sm-6">
                         <label class="mr-sm-2">Resultados Laboratorio</label>
                         <a href="/profesional/evidenciaTM/<%= consolidacion._id %>" target="_blank" type="button" class="btn btn-info">Descargar</a>
                       </div>
+                      <% } %>
                     </div>
 
                     <div class="form-group row">
-                      <div class="col-sm-6">
+                      <div class="col-sm-12">
                         <label class="mr-sm-2" for="fields">Adjuntar
                           Archivo(s) Nuevos</label>
                         <div class="drop-zone">
                           <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
                           <input type="file" name="myFile" id="myFile" class="drop-zone__input" />
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="mr-sm-2" for="fields">Adjuntar
-                          Resultado Nuevo</label>
-                        <div class="drop-zone">
-                          <span class="drop-zone__prompt">Arrastra el archivo o da click para buscar</span>
-                          <input type="file" name="fileRes" id="fileRes" class="drop-zone__input" />
                         </div>
                       </div>
                     </div>

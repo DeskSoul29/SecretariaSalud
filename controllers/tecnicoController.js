@@ -567,6 +567,8 @@ var authTec = (function () {
       observacion,
     } = req.body;
 
+    var stado = "Corregido";
+
     establecimientoON = establecimientoON == undefined ? "" : establecimientoON;
     rotuladoON = rotuladoON == undefined ? "" : rotuladoON;
     publicidadON = publicidadON == undefined ? "" : publicidadON;
@@ -585,12 +587,16 @@ var authTec = (function () {
     permMunicipio = permMunicipio == undefined ? "" : permMunicipio;
     alertSaniON = alertSaniON == undefined ? "" : alertSaniON;
 
+    if (tomaMuestraON == "on") {
+      stado = "Enviado";
+    }
+
     var Ruta = await authTec.NextReport(req, decodificada);
 
     await consolidaciones
       .findByIdAndUpdate(req.params._id, {
         $set: {
-          status: "Corregido",
+          status: stado,
           fvisit: fVisit,
           score: score,
           concepto: concepto,
@@ -1253,6 +1259,8 @@ export const editHVTec = async (req, res, next) => {
     estado,
     idenSocial,
     placa,
+    iDueno,
+    nDueno,
   } = req.body;
 
   var IdenRep = await hojavida.find({
@@ -1284,6 +1292,8 @@ export const editHVTec = async (req, res, next) => {
               placa: placa,
               repreLegal: rLegal,
               estado: estado,
+              iDueno: iDueno,
+              nDueno: nDueno,
             },
           },
           { new: true }
